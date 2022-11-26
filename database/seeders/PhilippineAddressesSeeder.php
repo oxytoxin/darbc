@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +26,11 @@ class PhilippineAddressesSeeder extends Seeder
         DB::unprepared(file_get_contents(database_path('ph_addresses/cities.sql')));
         $this->command->info('Cities seeded!');
         $this->command->info('Seeding barangays!');
-        DB::unprepared(file_get_contents(database_path('ph_addresses/barangays.sql')));
+        if (App::isProduction()) {
+            DB::unprepared(file_get_contents(database_path('ph_addresses/barangays.sql')));
+        } else {
+            DB::unprepared(file_get_contents(database_path('ph_addresses/barangays-test.sql')));
+        }
         $this->command->info('Barangays seeded!');
     }
 }

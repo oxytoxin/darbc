@@ -49,6 +49,32 @@ return [
             'root' => database_path('snapshots'),
         ],
 
+        'media' => [
+            'driver' => 'local',
+            'root'   => public_path('media'),
+            'url'    => env('APP_URL') . '/media',
+        ],
+        'signatures' => [
+            'driver' => 'local',
+            'root'   => public_path('signatures'),
+            'url'    => env('APP_URL') . '/signatures',
+        ],
+        'profile_photos' => [
+            'driver' => 'local',
+            'root'   => public_path('profile_photo'),
+            'url'    => env('APP_URL') . '/profile_photo',
+        ],
+        'consent_forms' => [
+            'driver' => 'local',
+            'root'   => public_path('consent_forms'),
+            'url'    => env('APP_URL') . '/consent_forms',
+        ],
+        'identification_documents' => [
+            'driver' => 'local',
+            'root'   => public_path('identification_documents'),
+            'url'    => env('APP_URL') . '/identification_documents',
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

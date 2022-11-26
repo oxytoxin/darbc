@@ -5,6 +5,8 @@ namespace App\Providers;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
+use Filament\Facades\Filament;
+use Illuminate\Foundation\Vite;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,5 +30,9 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
         Model::unguard();
         Model::shouldBeStrict();
+
+        Filament::serving(function () {
+            Filament::registerViteTheme('resources/css/filament.css');
+        });
     }
 }

@@ -1,5 +1,159 @@
 @import '../../vendor/filament/forms/dist/module.esm.css';
 
 @tailwind base;
+
+/**
+ * Remove the default box-shadow for invalid elements to prevent
+ * inputs in Livewire components showing with a
+ * red border by default in Firefox.
+ *
+ * See: https://github.com/laravel-frontend-presets/tall/issues/7
+ */
+input:invalid,
+textarea:invalid,
+select:invalid {
+    box-shadow: none;
+}
+
+
+body {
+    background-color: #F9F9FB;
+}
+
+progress {
+    border-radius: 7px;
+    width: 100%;
+    height: 13px;
+}
+
+progress::-webkit-progress-bar {
+    background-color: #E9E9E9;
+    border-radius: 7px;
+}
+
+progress::-webkit-progress-value {
+    background-color: #EF9A47;
+    border-radius: 7px;
+}
+
+.bar-chart {
+    border-radius: 7px;
+    width: 3rem;
+    height: 20%;
+    -webkit-transform: rotate(-90deg);
+}
+
+.bar-chart::-webkit-progress-value {
+    background-color: #EF9A47;
+}
+
+video {
+    object-fit: cover;
+}
+
+
+.hasImage:hover section {
+    background-color: rgba(5, 5, 5, 0.4);
+}
+
+.hasImage:hover button:hover {
+    background: rgba(5, 5, 5, 0.45);
+}
+
+#overlay p,
+i {
+    opacity: 0;
+}
+
+#overlay.draggedover {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+#overlay.draggedover p,
+#overlay.draggedover i {
+    opacity: 1;
+}
+
+.group:hover .group-hover\:text-blue-800 {
+    color: #2b6cb0;
+}
+
 @tailwind components;
 @tailwind utilities;
+
+[x-cloak] {
+    display: none !important;
+}
+
+
+/* Calendar styles */
+
+.fc-today-button {
+    @apply  !hidden;
+}
+
+.fc-toolbar-title {
+    @apply  !text-lg !font-semibold;
+}
+
+.fc-daygrid-day-frame {
+    @apply  !flex !items-center !justify-center;
+}
+
+.fc-daygrid-day-events {
+    @apply  !hidden;
+}
+
+.fc-theme-standard td,
+.fc-theme-standard th {
+    @apply border-x-transparent;
+}
+
+.fc-scroller {
+    @apply  !overflow-auto;
+}
+
+
+.fc-daygrid-body table,
+.fc-daygrid-body,
+.fc-col-header {
+    @apply  !w-full;
+}
+
+.fc-daygrid-body table tr {
+    @apply  !p-1;
+}
+
+.fc-button-primary {
+    @apply  !bg-primary-500;
+}
+
+.fc-daygrid-day {
+    @apply  !w-8 !h-8;
+}
+
+.fc-day-today .fc-daygrid-day-number {
+    @apply  !bg-primary-500 !text-white !rounded-full !px-2;
+}
+
+.fc-day-today {
+    @apply  !bg-transparent;
+}
+
+/* Filament Tables Customization */
+
+.filament-tables-table-container {
+    @apply  !rounded;
+}
+
+.filament-tables-container {
+    @apply  !rounded;
+}
+
+.filament-tables-header-cell button {
+    @apply  !text-white;
+}
+
+.filament-tables-table>thead tr {
+    @apply  !bg-primary-500;
+}

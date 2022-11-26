@@ -1,0 +1,54 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+
+class Dividend extends Model
+{
+    use HasFactory;
+
+    protected $casts = [
+        'restriction_entries' => 'array',
+    ];
+
+    const PENDING = 1;
+    const FOR_RELEASE = 2;
+    const ON_HOLD = 3;
+    const RELEASED = 4;
+
+    public function netAmount(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) => $this->gross_amount - $this->deductions_amount,
+        );
+    }
+
+    public function grossAmount(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) => $value / 100,
+            set: fn ($value) => $value * 100,
+        );
+    }
+
+    public function deductionsAmount(): Attribute
+    {
+        return new Attribute(
+            get: fn ($value) => $value / 100,
+            set: fn ($value) => $value * 100,
+        );
+    }
+
+    public function release()
+    {
+        return $this->belongsTo(Release::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+}
