@@ -3,6 +3,10 @@
 /public/hot
 /public/storage
 /public/media
+/public/consent_forms
+/public/identification_documents
+/public/signatures
+/public/profile_photo
 /storage/*.key
 /vendor
 .env
