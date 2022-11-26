@@ -118,8 +118,8 @@
                                     <p class="font-medium text-gray-500">{{ $latest_release->name }} release statistics</p>
                                 </section>
                             </div>
+                        @endif
                     </div>
-                    @endif
 
                     <div class="my-3 bg-white border p-3 h-[250px]">
                         <h1 class="font-semibold text-custom-blue">2022 members grow chart</h1>
