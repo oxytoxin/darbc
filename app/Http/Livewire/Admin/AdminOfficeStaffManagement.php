@@ -115,7 +115,7 @@ class AdminOfficeStaffManagement extends Component implements HasTable
         $user = User::create($this->office_data);
         $user->roles()->attach(Role::OFFICE_STAFF);
         DB::commit();
-        Notification::make()->title('Cashier created.')->success()->send();
+        Notification::make()->title('Office staff created.')->success()->send();
         $this->emitSelf('closeModal');
     }
 }

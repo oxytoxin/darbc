@@ -223,6 +223,7 @@ class AdminRegisterMember extends Component implements HasForms
         if ($isReplacement) {
             $toReplace = MemberInformation::firstWhere('user_id', $this->data['replacement_member']);
             if (!$toReplace) {
+                DB::rollBack();
                 Notification::make()->title('Member for replacement not found.')->danger()->send();
                 return;
             } else {
