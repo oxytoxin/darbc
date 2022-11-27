@@ -83,6 +83,5 @@
         <canvas @mouseup="stopDrawing" @mousedown="startDrawing" @mouseleave="shouldDraw = false;" @mousemove="draw" x-ref="ctx" height="200" width="400" class="bg-white border-2 border-black rounded">
         </canvas>
         <button @click="clear">Clear</button>
-        <button wire:click="test">Test</button>
     </div>
 </x-dynamic-component>
