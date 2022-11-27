@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\MiscellaneousController;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Auth\Passwords\Confirm;
 use App\Http\Livewire\Auth\Passwords\Email;
@@ -21,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::view('/', 'welcome')->middleware('auth')->name('home');
+Route::get('/', [MiscellaneousController::class, 'redirect'])->middleware('auth')->name('home');
 
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)
