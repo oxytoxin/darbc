@@ -91,32 +91,34 @@
                             </section>
                         </x-card-stat>
 
-                        <div class="bg-white border flex flex-col justify-between p-3 rounded-md h-[140px]">
-                            <div class="flex items-center justify-between">
-                                <h1 class="text-sm font-medium">Bonus 3</h1>
-                                <section class="flex items-center space-x-1 text-custom-blue">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
-                                    </svg>
-                                    <h1 class="text-sm font-medium">November 23, 2022</h1>
+                        @if ($latest_release)
+                            <div class="bg-white border flex flex-col justify-between p-3 rounded-md h-[140px]">
+                                <div class="flex items-center justify-between">
+                                    <h1 class="text-sm font-medium">{{ $latest_release->name }}</h1>
+                                    <section class="flex items-center space-x-1 text-custom-blue">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                                        </svg>
+                                        <h1 class="text-sm font-medium">{{ $latest_release->created_at->format('M d, Y') }}</h1>
+                                    </section>
+                                </div>
+                                <div class="leading-3">
+                                    <section class="flex items-center justify-between">
+                                        <h1 class="text-2xl font-medium text-custom-orange">{{ $latest_release->released_dividends_count }}</h1>
+                                        <h1 class="text-2xl font-bold text-custom-blue">{{ $latest_release->dividends_count }}</h1>
+                                    </section>
+                                    <progress id="file" value="{{ $latest_release->released_dividends_count }}" max="{{ $latest_release->dividends_count }}"></progress>
+                                    <section class="flex items-center justify-between mt-1">
+                                        <h1 class="text-sm font-medium text-gray-500">{{ Akaunting\Money\Money::PHP(($latest_release->released_dividends_gross ?? 0) - ($latest_release->released_dividends_deductions ?? 0), true) }}</h1>
+                                        <h1 class="text-sm font-bold text-custom-blue">{{ Akaunting\Money\Money::PHP($latest_release->total_amount, true) }}</h1>
+                                    </section>
+                                </div>
+                                <section>
+                                    <p class="font-medium text-gray-500">{{ $latest_release->name }} release statistics</p>
                                 </section>
                             </div>
-                            <div class="leading-3">
-                                <section class="flex items-center justify-between">
-                                    <h1 class="text-2xl font-medium text-custom-orange">125</h1>
-                                    <h1 class="text-2xl font-bold text-custom-blue">504</h1>
-                                </section>
-                                <progress id="file" value="32" max="100" style=""> 100% </progress>
-                                <section class="flex items-center justify-between mt-1">
-                                    <h1 class="text-sm font-medium text-gray-500">₱ 7,498,123.75</h1>
-                                    <h1 class="text-sm font-bold text-custom-blue">₱ 30,232,435.00</h1>
-                                </section>
-                            </div>
-                            <section>
-                                <p class="font-medium text-gray-500">Bonus 3 released statistic</p>
-                            </section>
-                        </div>
+                        @endif
                     </div>
 
                     <div class="my-3 bg-white border p-3 h-[250px]">

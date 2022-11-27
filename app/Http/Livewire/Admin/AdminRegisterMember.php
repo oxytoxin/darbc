@@ -76,9 +76,12 @@ class AdminRegisterMember extends Component implements HasForms
                             MemberInformation::STATUS_ACTIVE => 'Active',
                             MemberInformation::STATUS_DECEASED => 'Deceased',
                             MemberInformation::STATUS_INACTIVE => 'Inactive',
-                        ])->required(),
+                        ])
+                            ->default(MemberInformation::STATUS_ACTIVE)
+                            ->required(),
                         Select::make('data.membership_status')
                             ->options(MembershipStatus::pluck('name', 'id'))
+                            ->default(MembershipStatus::ORIGINAL)
                             ->reactive()
                             ->required(),
                         Section::make('Replacement Details')
@@ -130,6 +133,7 @@ class AdminRegisterMember extends Component implements HasForms
                     ->schema([
                         Radio::make('data.occupation')
                             ->options(Occupation::pluck('name', 'id'))
+                            ->default(Occupation::first()->id)
                             ->required(),
                         TextInput::make('data.occupation_details')
                             ->label('If others, please specify')
