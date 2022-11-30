@@ -150,6 +150,9 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
         $data->chunk(1000)->each(function ($chunk) {
             Dividend::insert($chunk->toArray());
         });
+        $this->release->update([
+            'disbursed' => true,
+        ]);
         DB::commit();
         Notification::make()->title('Dividends regenerated.')->success()->send();
     }
