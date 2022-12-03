@@ -223,7 +223,7 @@ class OfficeStaffRegisterMember extends Component implements HasForms
             'password' => Hash::make(now()->timestamp),
         ]);
         $isReplacement = $this->data['membership_status'] == 2;
-        $successor_number = 0;
+        $succession_number = 0;
         $original_member_id = null;
         if ($isReplacement) {
             $toReplace = MemberInformation::firstWhere('user_id', $this->data['replacement_member']);
@@ -234,7 +234,7 @@ class OfficeStaffRegisterMember extends Component implements HasForms
                 $toReplace->update([
                     'status' => 3,
                 ]);
-                $successor_number = $toReplace->successor_number + 1;
+                $succession_number = $toReplace->succession_number + 1;
                 $original_member_id = $toReplace->user_id;
             }
         }
@@ -243,7 +243,7 @@ class OfficeStaffRegisterMember extends Component implements HasForms
             'darbc_id' => $this->data['darbc_id'],
             'user_id' => $user->id,
             'cluster_id' => $this->data['cluster_id'],
-            'successor_number' => $successor_number,
+            'succession_number' => $succession_number,
             'original_member_id' => $original_member_id,
             'date_of_birth' => $this->data['date_of_birth'],
             'place_of_birth' => $this->data['place_of_birth'],

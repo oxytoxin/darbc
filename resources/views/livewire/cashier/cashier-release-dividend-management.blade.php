@@ -8,7 +8,7 @@
                         <h1 class="font-semibold">{{ $dividend->user->full_name }}</h1>
                         <p class="text-sm text-gray-400">
                             {{
-                            $dividend->user->member_information->successor_number == '0'
+                            $dividend->user->member_information->succession_number == '0'
                             ? 'Original Owner' :
                             ordinal($state) . ' Successor'
                             }}

@@ -44,7 +44,7 @@ class AdminMemberManagement extends Component implements HasTable
                 ->searchable(['first_name', 'surname'])
                 ->extraAttributes(['class' => 'font-semibold text-sm'])
                 ->sortable(['surname']),
-            BadgeColumn::make('successor_number')
+            BadgeColumn::make('succession_number')
                 ->colors([
                     'success'
                 ])

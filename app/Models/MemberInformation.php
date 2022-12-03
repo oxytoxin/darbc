@@ -17,7 +17,7 @@ class MemberInformation extends Model implements HasMedia
 
     protected $casts = [
         'date_of_birth' => 'immutable_date',
-        'childred' => 'array',
+        'children' => 'array',
         'application_date' => 'immutable_date',
     ];
 

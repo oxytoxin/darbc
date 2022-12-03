@@ -19,7 +19,8 @@ return new class extends Migration
             $table->string('darbc_id');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('cluster_id')->constrained();
-            $table->smallInteger('successor_number')->default(0);
+            $table->mediumInteger('succession_number')->default(0);
+            $table->string('lineage_identifier');
             $table->foreignId('original_member_id')->nullable()->constrained('users');
             $table->date('date_of_birth');
             $table->text('place_of_birth');

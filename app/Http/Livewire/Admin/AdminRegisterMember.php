@@ -32,6 +32,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 
 class AdminRegisterMember extends Component implements HasForms
 {
@@ -225,6 +226,7 @@ class AdminRegisterMember extends Component implements HasForms
         $isReplacement = $this->data['membership_status'] == 2;
         $successor_number = 0;
         $original_member_id = null;
+        $lineage_identifier = Str::random(10);
         if ($isReplacement) {
             $toReplace = MemberInformation::firstWhere('user_id', $this->data['replacement_member']);
             if (!$toReplace) {
@@ -235,7 +237,8 @@ class AdminRegisterMember extends Component implements HasForms
                 $toReplace->update([
                     'status' => 3,
                 ]);
-                $successor_number = $toReplace->successor_number + 1;
+                $lineage_identifier = $toReplace->lineage_identifier;
+                $successor_number = $toReplace->succession_number + 1;
                 $original_member_id = $toReplace->user_id;
             }
         }
@@ -244,7 +247,8 @@ class AdminRegisterMember extends Component implements HasForms
             'darbc_id' => $this->data['darbc_id'],
             'user_id' => $user->id,
             'cluster_id' => $this->data['cluster_id'],
-            'successor_number' => $successor_number,
+            'succession_number' => $successor_number,
+            'lineage_identifier' => $lineage_identifier,
             'original_member_id' => $original_member_id,
             'date_of_birth' => $this->data['date_of_birth'],
             'place_of_birth' => $this->data['place_of_birth'],

@@ -8,11 +8,11 @@ $user = App\Models\User::make([
 ]);
 
 $isReplacement = $this->data['membership_status'] == 2;
-$successor_number = 0;
+$succession_number = 0;
 $original_member_id = null;
 if ($isReplacement && $this->data['replacement_member']) {
 $toReplace = App\Models\MemberInformation::firstWhere('user_id', $this->data['replacement_member']);
-$successor_number = $toReplace->successor_number + 1;
+$succession_number = $toReplace->succession_number + 1;
 $original_member_id = $toReplace->user_id;
 }
 
@@ -21,7 +21,7 @@ $member_information = App\Models\MemberInformation::make([
 'darbc_id' => $this->data['darbc_id'],
 'user_id' => $user->id,
 'cluster_id' => $this->data['cluster_id'],
-'successor_number' => $successor_number,
+'succession_number' => $succession_number,
 'original_member_id' => $original_member_id,
 'date_of_birth' => $this->data['date_of_birth'],
 'place_of_birth' => $this->data['place_of_birth'],

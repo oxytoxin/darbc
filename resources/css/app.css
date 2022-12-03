@@ -79,6 +79,12 @@ i {
 }
 
 @tailwind components;
+
+.simple-card {
+    @apply p-4 bg-white rounded shadow;
+}
+
+
 @tailwind utilities;
 
 [x-cloak] {
@@ -89,19 +95,19 @@ i {
 /* Calendar styles */
 
 .fc-today-button {
-    @apply  !hidden;
+    @apply !hidden;
 }
 
 .fc-toolbar-title {
-    @apply  !text-lg !font-semibold;
+    @apply !text-lg !font-semibold;
 }
 
 .fc-daygrid-day-frame {
-    @apply  !flex !items-center !justify-center;
+    @apply !flex !items-center !justify-center;
 }
 
 .fc-daygrid-day-events {
-    @apply  !hidden;
+    @apply !hidden;
 }
 
 .fc-theme-standard td,
@@ -110,50 +116,50 @@ i {
 }
 
 .fc-scroller {
-    @apply  !overflow-auto;
+    @apply !overflow-auto;
 }
 
 
 .fc-daygrid-body table,
 .fc-daygrid-body,
 .fc-col-header {
-    @apply  !w-full;
+    @apply !w-full;
 }
 
 .fc-daygrid-body table tr {
-    @apply  !p-1;
+    @apply !p-1;
 }
 
 .fc-button-primary {
-    @apply  !bg-primary-500;
+    @apply !bg-primary-500;
 }
 
 .fc-daygrid-day {
-    @apply  !w-8 !h-8;
+    @apply !w-8 !h-8;
 }
 
 .fc-day-today .fc-daygrid-day-number {
-    @apply  !bg-primary-500 !text-white !rounded-full !px-2;
+    @apply !bg-primary-500 !text-white !rounded-full !px-2;
 }
 
 .fc-day-today {
-    @apply  !bg-transparent;
+    @apply !bg-transparent;
 }
 
 /* Filament Tables Customization */
 
 .filament-tables-table-container {
-    @apply  !rounded;
+    @apply !rounded;
 }
 
 .filament-tables-container {
-    @apply  !rounded;
+    @apply !rounded;
 }
 
 .filament-tables-header-cell button {
-    @apply  !text-white;
+    @apply !text-white;
 }
 
 .filament-tables-table>thead tr {
-    @apply  !bg-primary-500;
+    @apply !bg-primary-500;
 }

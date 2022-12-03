@@ -38,6 +38,7 @@ class CashierReleasedDividendsHistory extends Component implements HasTable
                 ->money('PHP', true),
             TextColumn::make('net_amount')
                 ->label('Net')
+                ->sortable(['gross_amount', 'deductions_amount'])
                 ->money('PHP', true),
         ];
     }
