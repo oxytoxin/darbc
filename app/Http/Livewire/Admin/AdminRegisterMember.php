@@ -32,7 +32,6 @@ use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\HtmlString;
-use Stringable;
 
 class AdminRegisterMember extends Component implements HasForms
 {
@@ -88,7 +87,7 @@ class AdminRegisterMember extends Component implements HasForms
                             ->description('Provide details of the member being replaced.')
                             ->schema([
                                 Select::make('data.replacement_member')
-                                    ->options(User::get()->pluck('full_name', 'id'))
+                                    ->options(User::has('member_information')->get()->pluck('full_name', 'id'))
                                     ->searchable()
                                     ->required(),
                                 Placeholder::make('data.membership_status_requirements')->view('forms.components.members.membership-status-requirements'),
@@ -151,11 +150,14 @@ class AdminRegisterMember extends Component implements HasForms
                             ->required()
                             ->default(1),
                         SlimRepeater::make('data.children')
-                            ->columns(2)
+                            ->columns(4)
                             ->schema([
-                                TextInput::make('name')->disableLabel(),
-                                DatePicker::make('date_of_birth')->disableLabel()->withoutTime(),
+                                TextInput::make('name')->required()->disableLabel(),
+                                DatePicker::make('date_of_birth')->required()->disableLabel()->withoutTime(),
+                                TextInput::make('educational_attainment')->required()->disableLabel(),
+                                TextInput::make('blood_type')->required()->disableLabel(),
                             ])
+                            ->disableItemMovement()
                             ->default([])
                             ->createItemButtonLabel('Add Child'),
                     ]),
@@ -198,11 +200,14 @@ class AdminRegisterMember extends Component implements HasForms
                     ]),
                 Step::make('Summary')
                     ->description('Review and submit.')
-                    ->schema([]),
+                    ->schema([
+                        Placeholder::make('data.summary')->view('forms.components.members.summary', [
+                            'summary' => $this->data,
+                        ]),
+                    ]),
 
             ])
                 ->submitAction(new HtmlString('<button class="p-1 px-2 text-sm font-semibold text-white rounded bg-primary-500" wire:click="register">Finish <span wire:loading class="animate-bounce">...</span></button>'))
-            // ->skippable()
         ];
     }
 
@@ -228,7 +233,7 @@ class AdminRegisterMember extends Component implements HasForms
                 return;
             } else {
                 $toReplace->update([
-                    'status' => 2,
+                    'status' => 3,
                 ]);
                 $successor_number = $toReplace->successor_number + 1;
                 $original_member_id = $toReplace->user_id;
@@ -283,6 +288,45 @@ class AdminRegisterMember extends Component implements HasForms
     public function mount()
     {
         $this->form->fill();
+
+        // $this->data['first_name'] = 'John';
+        // $this->data['surname'] = 'Casero';
+        // $this->data['date_of_birth'] = now()->subYears(20);
+        // $this->data['place_of_birth'] = 'Somewhere';
+        // $this->data['gender_id'] = 1;
+        // $this->data['blood_type'] = 'A';
+        // $this->data['religion'] = 'Roman Catholic';
+        // $this->data['address']['region_code'] = '01';
+        // $this->data['address']['province_code'] = '0128';
+        // $this->data['address']['city_code'] = '012801';
+        // $this->data['address']['barangay_code'] = '012801001';
+        // $this->data['address']['address_line'] = 'Block 14, Lot 9';
+        // $this->data['darbc_id'] = '1234';
+        // $this->data['sss_number'] = '1234';
+        // $this->data['philhealth_number'] = '1234';
+        // $this->data['tin_number'] = '1234';
+        // $this->data['contact_number'] = '1234';
+        // $this->data['cluster_id'] = 1;
+        // $this->data['children'] = [
+        //     [
+        //         'name' => 'John Doe',
+        //         'date_of_birth' => now()->subYears(5),
+        //         'educational_attainment' => 'College',
+        //         'blood_type' => 'A',
+        //     ],
+        //     [
+        //         'name' => 'Jane Doe',
+        //         'date_of_birth' => now()->subYears(3),
+        //         'educational_attainment' => 'College',
+        //         'blood_type' => 'B',
+        //     ],
+        //     [
+        //         'name' => 'Jay Doe',
+        //         'date_of_birth' => now()->subYears(3),
+        //         'educational_attainment' => 'College',
+        //         'blood_type' => 'O',
+        //     ],
+        // ];
     }
 
 

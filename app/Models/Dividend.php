@@ -5,19 +5,29 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 
-class Dividend extends Model
+class Dividend extends Model implements HasMedia
 {
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $casts = [
         'restriction_entries' => 'array',
+        'released_at' => 'immutable_datetime',
     ];
 
     const PENDING = 1;
     const FOR_RELEASE = 2;
     const ON_HOLD = 3;
     const RELEASED = 4;
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('proof_of_release')
+            ->singleFile()
+            ->useDisk('proof_of_release');
+    }
 
     public function netAmount(): Attribute
     {

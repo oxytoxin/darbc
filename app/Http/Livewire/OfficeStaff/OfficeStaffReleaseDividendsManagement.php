@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\OfficeStaff;
 
 use App\Models\Dividend;
+use App\Models\MemberInformation;
 use App\Models\Release;
 use App\Models\User;
 use DB;
@@ -41,7 +42,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                 ->minValue(0)
                 ->placeholder('0.00')
                 ->numeric()
-                ->label('Enter initial amount applicable for majority of members')
+                ->label('Enter initial amount applicable for majority of members.')
                 ->required(),
         ];
     }
@@ -130,7 +131,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
         $this->release->pending_dividends()->delete();
 
         $data = collect();
-        $users = User::with('active_restriction')->has('member_information')->get();
+        $users = User::with('active_restriction')->whereRelation('member_information', 'status', MemberInformation::STATUS_ACTIVE)->get();
         $now = now();
         foreach ($users as $user) {
             if ($this->restrict_by_default) {
@@ -150,9 +151,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
         $data->chunk(1000)->each(function ($chunk) {
             Dividend::insert($chunk->toArray());
         });
-        $this->release->update([
-            'disbursed' => true,
-        ]);
+
         DB::commit();
         Notification::make()->title('Dividends regenerated.')->success()->send();
     }

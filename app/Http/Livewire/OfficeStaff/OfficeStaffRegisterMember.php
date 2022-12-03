@@ -87,7 +87,7 @@ class OfficeStaffRegisterMember extends Component implements HasForms
                             ->description('Provide details of the member being replaced.')
                             ->schema([
                                 Select::make('data.replacement_member')
-                                    ->options(User::get()->pluck('full_name', 'id'))
+                                    ->options(User::has('member_information')->get()->pluck('full_name', 'id'))
                                     ->searchable()
                                     ->required(),
                                 Placeholder::make('data.membership_status_requirements')->view('forms.components.members.membership-status-requirements'),
@@ -150,11 +150,14 @@ class OfficeStaffRegisterMember extends Component implements HasForms
                             ->required()
                             ->default(1),
                         SlimRepeater::make('data.children')
-                            ->columns(2)
+                            ->columns(4)
                             ->schema([
-                                TextInput::make('name')->disableLabel(),
-                                DatePicker::make('date_of_birth')->disableLabel()->withoutTime(),
+                                TextInput::make('name')->required()->disableLabel(),
+                                DatePicker::make('date_of_birth')->required()->disableLabel()->withoutTime(),
+                                TextInput::make('educational_attainment')->required()->disableLabel(),
+                                TextInput::make('blood_type')->required()->disableLabel(),
                             ])
+                            ->disableItemMovement()
                             ->default([])
                             ->createItemButtonLabel('Add Child'),
                     ]),
@@ -197,11 +200,14 @@ class OfficeStaffRegisterMember extends Component implements HasForms
                     ]),
                 Step::make('Summary')
                     ->description('Review and submit.')
-                    ->schema([]),
+                    ->schema([
+                        Placeholder::make('data.summary')->view('forms.components.members.summary', [
+                            'summary' => $this->data,
+                        ]),
+                    ]),
 
             ])
                 ->submitAction(new HtmlString('<button class="p-1 px-2 text-sm font-semibold text-white rounded bg-primary-500" wire:click="register">Finish <span wire:loading class="animate-bounce">...</span></button>'))
-            // ->skippable()
         ];
     }
 
@@ -226,7 +232,7 @@ class OfficeStaffRegisterMember extends Component implements HasForms
                 return;
             } else {
                 $toReplace->update([
-                    'status' => 2,
+                    'status' => 3,
                 ]);
                 $successor_number = $toReplace->successor_number + 1;
                 $original_member_id = $toReplace->user_id;

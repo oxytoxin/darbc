@@ -22,6 +22,7 @@ return new class extends Migration
             $table->tinyInteger('status')->default(1);
             $table->json('restriction_entries');
             $table->foreignId('released_by')->nullable()->constrained('users');
+            $table->dateTime('released_at')->nullable();
             $table->timestamps();
         });
     }

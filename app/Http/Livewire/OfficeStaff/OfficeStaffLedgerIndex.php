@@ -36,6 +36,7 @@ class OfficeStaffLedgerIndex extends Component implements HasTable
                     2 => 'Deceased',
                     3 => 'Inactive',
                 ])
+                ->default(MemberInformation::STATUS_ACTIVE)
                 ->label('Member Status')
                 ->query(function ($query, $state) {
                     $query->when($state['value'], fn ($query) => $query->whereRelation('member_information', 'status', $state));

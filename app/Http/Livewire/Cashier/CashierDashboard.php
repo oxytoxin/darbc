@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Livewire\OfficeStaff;
+namespace App\Http\Livewire\Cashier;
 
 use App\Models\User;
+use App\Models\Release;
 use Livewire\Component;
 use App\Models\MemberInformation;
-use App\Models\Release;
 
-class OfficeStaffDashboard extends Component
+class CashierDashboard extends Component
 {
     public function render()
     {
-        return view('livewire.office-staff.office-staff-dashboard', [
+        return view('livewire.cashier.cashier-dashboard', [
             'active_members_count' => MemberInformation::active()->count(),
             'deceased_members_count' => MemberInformation::deceased()->count(),
             'original_members_count' => MemberInformation::original()->count(),

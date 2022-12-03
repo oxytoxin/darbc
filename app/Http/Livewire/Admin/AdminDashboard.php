@@ -17,7 +17,7 @@ class AdminDashboard extends Component
             'original_members_count' => MemberInformation::original()->count(),
             'replacement_members_count' => MemberInformation::replacement()->count(),
             'members_on_hold_count' => User::onHold()->count(),
-            'latest_release' => Release::latest()
+            'latest_release' => Release::whereDisbursed(true)->latest()
                 ->withCount(['dividends', 'released_dividends'])
                 ->withSum('released_dividends as released_dividends_gross', 'gross_amount')
                 ->withSum('released_dividends as released_dividends_deductions', 'deductions_amount')

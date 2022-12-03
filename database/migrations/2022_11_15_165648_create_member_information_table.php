@@ -29,10 +29,10 @@ return new class extends Migration
             $table->foreignId('membership_status_id')->constrained();
             $table->foreignId('occupation_id')->constrained();
             $table->text('occupation_details')->nullable();
-            $table->foreignId('province_code')->nullable()->index();
-            $table->foreignId('region_code')->nullable()->index();
-            $table->foreignId('city_code')->nullable()->index();
-            $table->foreignId('barangay_code')->nullable()->index();
+            $table->string('province_code')->nullable()->index();
+            $table->string('region_code')->nullable()->index();
+            $table->string('city_code')->nullable()->index();
+            $table->string('barangay_code')->nullable()->index();
             $table->text('address_line')->nullable();
             $table->tinyInteger('civil_status')->default(1);
             $table->json('children');

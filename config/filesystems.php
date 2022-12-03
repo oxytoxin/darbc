@@ -64,6 +64,11 @@ return [
             'root'   => public_path('profile_photo'),
             'url'    => env('APP_URL') . '/profile_photo',
         ],
+        'proof_of_release' => [
+            'driver' => 'local',
+            'root'   => public_path('proof_of_release'),
+            'url'    => env('APP_URL') . '/proof_of_release',
+        ],
         'consent_forms' => [
             'driver' => 'local',
             'root'   => public_path('consent_forms'),
