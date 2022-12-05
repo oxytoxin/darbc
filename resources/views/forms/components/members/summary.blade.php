@@ -85,10 +85,11 @@ $member_information = App\Models\MemberInformation::make([
             @endif
             <p>
                 <span class="font-semibold">Status: </span>
-                <span>{{ match($member_information->status){
-                    App\Models\MemberInformation::STATUS_ACTIVE => 'Active',
-                    App\Models\MemberInformation::STATUS_DECEASED => 'Deceased',
-                    App\Models\MemberInformation::STATUS_INACTIVE => 'Inactive',
+                <span>{{ match(strval($member_information->status)){
+                    default => '',
+                    strval(App\Models\MemberInformation::STATUS_ACTIVE) => 'Active',
+                    strval(App\Models\MemberInformation::STATUS_DECEASED) => 'Deceased',
+                    strval(App\Models\MemberInformation::STATUS_INACTIVE) => 'Inactive',
                     } }}</span>
             </p>
         </div>
@@ -128,10 +129,11 @@ $member_information = App\Models\MemberInformation::make([
         @endif
         <p>
             <span class="font-semibold">Civil Status: </span>
-            <span>{{ match($member_information->civil_status){
-                1 => 'Single',
-                2 => 'Married',
-                3 => 'Widowed',
+            <span>{{ match(strval($member_information->civil_status)){
+                default => '',
+                "1" => 'Single',
+                "2" => 'Married',
+                "3" => 'Widowed',
                 } }}</span>
         </p>
         @if (count($member_information->children))
