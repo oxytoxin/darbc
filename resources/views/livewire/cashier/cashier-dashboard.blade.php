@@ -162,8 +162,8 @@
         <!-- Recent Transactions -->
         <div class="p-3 bg-white border rounded-md">
             <div class="flex items-center justify-between">
-                <h1 class="font-semibold text-custom-blue">Recent Transactions</h1>
-                <a href="#" class="flex items-center space-x-1 text-custom-blue">
+                <h1 class="font-semibold text-custom-blue">Recent Releases</h1>
+                <a href="{{ route('cashier.releases.index') }}" class="flex items-center space-x-1 text-custom-blue">
                     <span class="text-sm">Show all</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-4 h-4">
@@ -181,114 +181,64 @@
                                     <tr>
                                         <th scope="col"
                                             class="py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 pl-3 w-[15rem]">
-                                            Date</th>
+                                            DATE</th>
                                         <th scope="col"
                                             class="py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 w-[40rem]">
-                                            Member name</th>
-                                        <th scope="col"
-                                            class="py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 w-[25rem]">
-                                            Cashier</th>
+                                            TITLE</th>
                                         <th scope="col"
                                             class="py-3 text-xs font-medium tracking-wide text-left text-gray-500 uppercase">
-                                            Status
+                                            STATUS
                                         </th>
                                         <th scope="col"
                                             class="px-3 py-3 text-right text-xs font-medium uppercase tracking-wide text-gray-500 w-[15rem]">
-                                            Amount
+                                            TOTAL AMOUNT
+                                        </th>
+                                        <th scope="col"
+                                            class="px-3 py-3 text-right text-xs font-medium uppercase tracking-wide text-gray-500 w-[15rem]">
+                                            RELEASED AMOUNT
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
+                                    @forelse ($latest_releases as $release)
                                     <tr>
-                                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">07 Aug. 2022 9:15
-                                            AM</td>
-                                        <td class="py-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap">Rebeca
-                                            Miller</td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">Cashier 3 - Jennifer
+                                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            {{ $release->created_at->format('h:i A F d, Y') }}
+                                        </td>
+                                        <td class="py-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            {{ $release->name }}
                                         </td>
                                         <td class="py-4 text-sm text-gray-500 whitespace-nowrap">
-                                            <span
-                                                class="inline-flex items-center rounded-full bg-custom-green/[8%] px-3 py-0.5 text-sm font-medium text-custom-green">completed</span>
+                                            @if ($release->disbursed)
+                                            <div>
+                                                <span
+                                                    class="bg-custom-green/[8%] py-1 px-4 rounded-full text-custom-green">DISBURSED</span>
+                                            </div>
+                                            @else
+                                            <div>
+                                                <span
+                                                    class="bg-red-500/[8%] py-1 px-4 rounded-full text-red-700">PENDING</span>
+                                            </div>
+                                            @endif
                                         </td>
                                         <td
                                             class="px-3 py-4 text-sm font-bold text-right text-gray-500 whitespace-nowrap">
-                                            ₱1,049,836.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">07 Aug. 2022 9:42
-                                            AM</td>
-                                        <td class="py-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap">Thomas
-                                            Morgan</td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">Cashier 3 - Jennifer
-                                        </td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">
-                                            <span
-                                                class="inline-flex items-center rounded-full bg-custom-green/[8%] px-3 py-0.5 text-sm font-medium text-custom-green">completed</span>
+                                            {{ Akaunting\Money\Money::PHP($release->total_amount, true) }}
                                         </td>
                                         <td
                                             class="px-3 py-4 text-sm font-bold text-right text-gray-500 whitespace-nowrap">
-                                            ₱1,049,836.00</td>
+                                            {{ Akaunting\Money\Money::PHP($release->gross - $release->deductions, false)
+                                            }}
+                                        </td>
                                     </tr>
+                                    @empty
                                     <tr>
-                                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">07 Aug. 2022 9:42
-                                            AM</td>
-                                        <td class="py-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap">Thomas
-                                            Morgan</td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">Cashier 3 - Jennifer
+                                        <td colspan="5"
+                                            class="px-3 py-4 text-sm text-center text-gray-500 whitespace-nowrap">07
+                                            No releases found.
                                         </td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">
-                                            <span
-                                                class="inline-flex items-center rounded-full bg-custom-green/[8%] px-3 py-0.5 text-sm font-medium text-custom-green">completed</span>
-                                        </td>
-                                        <td
-                                            class="px-3 py-4 text-sm font-bold text-right text-gray-500 whitespace-nowrap">
-                                            ₱1,049,836.00</td>
                                     </tr>
-                                    <tr>
-                                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">07 Aug. 2022 9:42
-                                            AM</td>
-                                        <td class="py-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap">Thomas
-                                            Morgan</td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">Cashier 3 - Jennifer
-                                        </td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">
-                                            <span
-                                                class="inline-flex items-center rounded-full bg-custom-green/[8%] px-3 py-0.5 text-sm font-medium text-custom-green">completed</span>
-                                        </td>
-                                        <td
-                                            class="px-3 py-4 text-sm font-bold text-right text-gray-500 whitespace-nowrap">
-                                            ₱1,049,836.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">07 Aug. 2022 9:42
-                                            AM</td>
-                                        <td class="py-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap">Thomas
-                                            Morgan</td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">Cashier 3 - Jennifer
-                                        </td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">
-                                            <span
-                                                class="inline-flex items-center rounded-full bg-custom-green/[8%] px-3 py-0.5 text-sm font-medium text-custom-green">completed</span>
-                                        </td>
-                                        <td
-                                            class="px-3 py-4 text-sm font-bold text-right text-gray-500 whitespace-nowrap">
-                                            ₱1,049,836.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">07 Aug. 2022 9:41
-                                            AM</td>
-                                        <td class="py-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap">Josiah
-                                            Clayton</td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">Cashier 3 - Jennifer
-                                        </td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">
-                                            <span
-                                                class="inline-flex items-center rounded-full bg-custom-green/[8%] px-3 py-0.5 text-sm font-medium text-custom-green">completed</span>
-                                        </td>
-                                        <td
-                                            class="px-3 py-4 text-sm font-bold text-right text-gray-500 whitespace-nowrap">
-                                            ₱1,049,836.00</td>
-                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

@@ -61,4 +61,9 @@ class Dividend extends Model implements HasMedia
     {
         return $this->belongsTo(User::class);
     }
+
+    public function cashier()
+    {
+        return $this->belongsTo(User::class, 'released_by');
+    }
 }

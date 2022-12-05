@@ -1,5 +1,5 @@
 <div>
-    <div x-data="{ showStatGraph: false }">
+    <div>
         <div class="mt-10">
             <h1 class="text-xl font-bold text-custom-blue">Overview</h1>
             <div class="flex items-start justify-between h-full mt-2 space-x-2">
@@ -163,7 +163,8 @@
         <div class="p-3 bg-white border rounded-md">
             <div class="flex items-center justify-between">
                 <h1 class="font-semibold text-custom-blue">Recent Transactions</h1>
-                <a href="#" class="flex items-center space-x-1 text-custom-blue">
+                <a href="{{ route('administrator.transactions') }}"
+                    class="flex items-center space-x-1 text-custom-blue">
                     <span class="text-sm">Show all</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                         stroke="currentColor" class="w-4 h-4">
@@ -187,6 +188,9 @@
                                             Member name</th>
                                         <th scope="col"
                                             class="py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 w-[25rem]">
+                                            Release Name</th>
+                                        <th scope="col"
+                                            class="py-3 text-left text-xs font-medium uppercase tracking-wide text-gray-500 w-[25rem]">
                                             Cashier</th>
                                         <th scope="col"
                                             class="py-3 text-xs font-medium tracking-wide text-left text-gray-500 uppercase">
@@ -199,12 +203,19 @@
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
+                                    @forelse ($recent_transactions as $dividend)
                                     <tr>
-                                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">07 Aug. 2022 9:15
-                                            AM</td>
-                                        <td class="py-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap">Rebeca
-                                            Miller</td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">Cashier 3 - Jennifer
+                                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            {{ $dividend->created_at->format('h:i A F d, Y') }}
+                                        </td>
+                                        <td class="py-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            {{ $dividend->user->full_name }}
+                                        </td>
+                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            {{ $dividend->release->name }}
+                                        </td>
+                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">
+                                            {{ $dividend->cashier->full_name }}
                                         </td>
                                         <td class="py-4 text-sm text-gray-500 whitespace-nowrap">
                                             <span
@@ -212,83 +223,18 @@
                                         </td>
                                         <td
                                             class="px-3 py-4 text-sm font-bold text-right text-gray-500 whitespace-nowrap">
-                                            ₱1,049,836.00</td>
+                                            {{ Akaunting\Money\Money::PHP($dividend->gross_amount -
+                                            $dividend->deductions_amount, true) }}
+                                        </td>
                                     </tr>
+                                    @empty
                                     <tr>
-                                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">07 Aug. 2022 9:42
-                                            AM</td>
-                                        <td class="py-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap">Thomas
-                                            Morgan</td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">Cashier 3 - Jennifer
+                                        <td colspan="6"
+                                            class="px-3 py-4 text-sm text-center text-gray-500 whitespace-nowrap">
+                                            No recent transactions found.
                                         </td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">
-                                            <span
-                                                class="inline-flex items-center rounded-full bg-custom-green/[8%] px-3 py-0.5 text-sm font-medium text-custom-green">completed</span>
-                                        </td>
-                                        <td
-                                            class="px-3 py-4 text-sm font-bold text-right text-gray-500 whitespace-nowrap">
-                                            ₱1,049,836.00</td>
                                     </tr>
-                                    <tr>
-                                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">07 Aug. 2022 9:42
-                                            AM</td>
-                                        <td class="py-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap">Thomas
-                                            Morgan</td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">Cashier 3 - Jennifer
-                                        </td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">
-                                            <span
-                                                class="inline-flex items-center rounded-full bg-custom-green/[8%] px-3 py-0.5 text-sm font-medium text-custom-green">completed</span>
-                                        </td>
-                                        <td
-                                            class="px-3 py-4 text-sm font-bold text-right text-gray-500 whitespace-nowrap">
-                                            ₱1,049,836.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">07 Aug. 2022 9:42
-                                            AM</td>
-                                        <td class="py-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap">Thomas
-                                            Morgan</td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">Cashier 3 - Jennifer
-                                        </td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">
-                                            <span
-                                                class="inline-flex items-center rounded-full bg-custom-green/[8%] px-3 py-0.5 text-sm font-medium text-custom-green">completed</span>
-                                        </td>
-                                        <td
-                                            class="px-3 py-4 text-sm font-bold text-right text-gray-500 whitespace-nowrap">
-                                            ₱1,049,836.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">07 Aug. 2022 9:42
-                                            AM</td>
-                                        <td class="py-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap">Thomas
-                                            Morgan</td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">Cashier 3 - Jennifer
-                                        </td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">
-                                            <span
-                                                class="inline-flex items-center rounded-full bg-custom-green/[8%] px-3 py-0.5 text-sm font-medium text-custom-green">completed</span>
-                                        </td>
-                                        <td
-                                            class="px-3 py-4 text-sm font-bold text-right text-gray-500 whitespace-nowrap">
-                                            ₱1,049,836.00</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">07 Aug. 2022 9:41
-                                            AM</td>
-                                        <td class="py-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap">Josiah
-                                            Clayton</td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">Cashier 3 - Jennifer
-                                        </td>
-                                        <td class="py-4 text-sm text-gray-500 whitespace-nowrap">
-                                            <span
-                                                class="inline-flex items-center rounded-full bg-custom-green/[8%] px-3 py-0.5 text-sm font-medium text-custom-green">completed</span>
-                                        </td>
-                                        <td
-                                            class="px-3 py-4 text-sm font-bold text-right text-gray-500 whitespace-nowrap">
-                                            ₱1,049,836.00</td>
-                                    </tr>
+                                    @endforelse
                                 </tbody>
                             </table>
                         </div>

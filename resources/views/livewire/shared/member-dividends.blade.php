@@ -5,7 +5,7 @@
             <h5 class="text-sm font-semibold text-gray-600">
                 {{ $member->succession_number == '0' ?
                 'Original Owner' :
-                ordinal($member->succession_number) . 'Successor' }}
+                ordinal($member->succession_number) . ' Successor' }}
             </h5>
         </div>
         <div>
@@ -19,7 +19,9 @@
         <div>
             <p class="font-semibold text-gray-600">Release Status</p>
             @if ($member->user->active_restriction)
-            <div class="bg-red-500/[8%] py-1 rounded-full text-red-700">on-hold</div>
+            <div>
+                <span class="bg-red-500/[8%] py-1 px-4 rounded-full text-red-700">on-hold</span>
+            </div>
             @else
             <div>
                 <span class="bg-custom-green/[8%] py-1 px-4 rounded-full text-custom-green">release</span>
@@ -47,7 +49,7 @@
                         <h5 class="text-xs font-semibold text-gray-400">
                             {{ $lineage_member->succession_number == '0' ?
                             'Original Owner' :
-                            ordinal($lineage_member->succession_number) . 'Successor' }}
+                            ordinal($lineage_member->succession_number) . ' Successor' }}
                             @if ($lineage_member->id == $member->id)
                             <span class="text-green-600">(Current)</span>
                             @endif
@@ -68,6 +70,9 @@
                         <th class="px-2">Status</th>
                     </tr>
                 <tbody>
+                    @php
+                    $isCashier = auth()->user()->roles()->where('name', 'cashier')->exists();
+                    @endphp
                     @forelse ($dividends_by_year as $year => $dividends)
                     @foreach ($dividends as $dividend)
                     <tr>
@@ -85,10 +90,12 @@
                         </td>
                         <td class="px-2 py-2 border-b">{{ $dividend->release->created_at->format('F d, Y') }}</td>
                         <td class="px-2 py-2 border-b">
-                            <span class="px-2 py-1 text-xs font-semibold rounded-full {{
+                            <a href="{{ $dividend->status == App\Models\Dividend::FOR_RELEASE && $isCashier
+                            ? route('cashier.dividends.manage', ['dividend' => $dividend])
+                            : " #" }}" class="px-2 py-1 text-xs font-semibold rounded-full {{
                                      match($dividend->status) {
                                     App\Models\Dividend::PENDING => 'bg-yellow-200 text-yellow-800',
-                                    App\Models\Dividend::FOR_RELEASE => 'bg-success-200 text-success-800',
+                                    App\Models\Dividend::FOR_RELEASE => 'bg-success-200 text-success-800 underline',
                                     App\Models\Dividend::ON_HOLD => 'bg-red-200 text-red-800',
                                     App\Models\Dividend::RELEASED => 'bg-gray-200 text-gray-800'
                                 }
@@ -98,7 +105,8 @@
                                 App\Models\Dividend::FOR_RELEASE => 'For Release',
                                 App\Models\Dividend::ON_HOLD => 'On Hold',
                                 App\Models\Dividend::RELEASED => 'Released',
-                                } }}</span>
+                                } }}
+                            </a>
                         </td>
                     </tr>
                     @endforeach

@@ -22,6 +22,10 @@ class CashierDashboard extends Component
                 ->withSum('released_dividends as released_dividends_gross', 'gross_amount')
                 ->withSum('released_dividends as released_dividends_deductions', 'deductions_amount')
                 ->first(),
+            'latest_releases' => Release::take(5)
+                ->withSum('released_dividends as gross', 'gross_amount')
+                ->withSum('released_dividends as deductions', 'deductions_amount')
+                ->latest()->get(),
         ]);
     }
 }

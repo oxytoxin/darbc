@@ -91,4 +91,9 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasOne(Restriction::class)->ofMany('active')->whereActive(true);
     }
+
+    public function cashier_released_dividends()
+    {
+        return $this->hasMany(Dividend::class, 'released_by');
+    }
 }

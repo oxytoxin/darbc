@@ -10,7 +10,7 @@
                             {{
                             $dividend->user->member_information->succession_number == '0'
                             ? 'Original Owner' :
-                            ordinal($state) . ' Successor'
+                            ordinal($dividend->user->member_information->succession_number) . ' Successor'
                             }}
                         </p>
                     </section>

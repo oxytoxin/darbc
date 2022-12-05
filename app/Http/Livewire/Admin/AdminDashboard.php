@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Dividend;
 use App\Models\User;
 use App\Models\Release;
 use Livewire\Component;
@@ -22,6 +23,7 @@ class AdminDashboard extends Component
                 ->withSum('released_dividends as released_dividends_gross', 'gross_amount')
                 ->withSum('released_dividends as released_dividends_deductions', 'deductions_amount')
                 ->first(),
+            'recent_transactions' => Dividend::whereStatus(Dividend::RELEASED)->with(['cashier', 'user', 'release'])->latest()->take(7)->get(),
         ]);
     }
 }

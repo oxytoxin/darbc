@@ -59,7 +59,8 @@ class OfficeStaffMemberRestrictionsManagement extends Component implements HasTa
                 ->action(function ($data) {
                     $this->validate();
                     $this->member->user->restrictions()->create([
-                        'entries' => $data['entries']
+                        'entries' => $data['entries'],
+                        'active' => true
                     ]);
                     Notification::make()->title('Restriction added successfully.')->success()->send();
                 })
