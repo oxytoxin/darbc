@@ -294,44 +294,44 @@ class AdminRegisterMember extends Component implements HasForms
         $this->form->fill();
 
         if (app()->environment('local')) {
-            $this->data['first_name'] = 'John';
-            $this->data['surname'] = 'Casero';
-            $this->data['date_of_birth'] = now()->subYears(20);
-            $this->data['place_of_birth'] = 'Somewhere';
-            $this->data['gender_id'] = 1;
-            $this->data['blood_type'] = 'A';
-            $this->data['religion'] = 'Roman Catholic';
-            $this->data['address']['region_code'] = '01';
-            $this->data['address']['province_code'] = '0128';
-            $this->data['address']['city_code'] = '012801';
-            $this->data['address']['barangay_code'] = '012801001';
-            $this->data['address']['address_line'] = 'Block 14, Lot 9';
-            $this->data['darbc_id'] = '1234';
-            $this->data['sss_number'] = '1234';
-            $this->data['philhealth_number'] = '1234';
-            $this->data['tin_number'] = '1234';
-            $this->data['contact_number'] = '1234';
-            $this->data['cluster_id'] = 1;
-            $this->data['children'] = [
-                [
-                    'name' => 'John Doe',
-                    'date_of_birth' => now()->subYears(5),
-                    'educational_attainment' => 'College',
-                    'blood_type' => 'A',
-                ],
-                [
-                    'name' => 'Jane Doe',
-                    'date_of_birth' => now()->subYears(3),
-                    'educational_attainment' => 'College',
-                    'blood_type' => 'B',
-                ],
-                [
-                    'name' => 'Jay Doe',
-                    'date_of_birth' => now()->subYears(3),
-                    'educational_attainment' => 'College',
-                    'blood_type' => 'O',
-                ],
-            ];
+            // $this->data['first_name'] = 'John';
+            // $this->data['surname'] = 'Casero';
+            // $this->data['date_of_birth'] = now()->subYears(20);
+            // $this->data['place_of_birth'] = 'Somewhere';
+            // $this->data['gender_id'] = 1;
+            // $this->data['blood_type'] = 'A';
+            // $this->data['religion'] = 'Roman Catholic';
+            // $this->data['address']['region_code'] = '01';
+            // $this->data['address']['province_code'] = '0128';
+            // $this->data['address']['city_code'] = '012801';
+            // $this->data['address']['barangay_code'] = '012801001';
+            // $this->data['address']['address_line'] = 'Block 14, Lot 9';
+            // $this->data['darbc_id'] = '1234';
+            // $this->data['sss_number'] = '1234';
+            // $this->data['philhealth_number'] = '1234';
+            // $this->data['tin_number'] = '1234';
+            // $this->data['contact_number'] = '1234';
+            // $this->data['cluster_id'] = 1;
+            // $this->data['children'] = [
+            //     [
+            //         'name' => 'John Doe',
+            //         'date_of_birth' => now()->subYears(5),
+            //         'educational_attainment' => 'College',
+            //         'blood_type' => 'A',
+            //     ],
+            //     [
+            //         'name' => 'Jane Doe',
+            //         'date_of_birth' => now()->subYears(3),
+            //         'educational_attainment' => 'College',
+            //         'blood_type' => 'B',
+            //     ],
+            //     [
+            //         'name' => 'Jay Doe',
+            //         'date_of_birth' => now()->subYears(3),
+            //         'educational_attainment' => 'College',
+            //         'blood_type' => 'O',
+            //     ],
+            // ];
         }
     }
 
