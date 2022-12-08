@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use Artisan;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,5 +24,6 @@ class DatabaseSeeder extends Seeder
         $this->call(MembershipStatusSeeder::class);
         $this->call(PhilippineAddressesSeeder::class);
         // $this->call(MemberInformationSeeder::class);
+        $this->command->call('seed:original');
     }
 }

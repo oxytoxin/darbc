@@ -144,9 +144,11 @@ class ReleaseAdminRegisterMember extends Component implements HasForms
                     ->schema([
                         Select::make('data.civil_status')
                             ->options([
-                                1 => 'Single',
-                                2 => 'Married',
-                                3 => 'Widowed',
+                                MemberInformation::CS_SINGLE => 'Single',
+                                MemberInformation::CS_MARRIED => 'Married',
+                                MemberInformation::CS_WIDOW => 'Widow',
+                                MemberInformation::CS_LEGALLY_SEPARATED => 'Legally Separated',
+                                MemberInformation::CS_UNKNOWN => 'Unknown',
                             ])
                             ->required()
                             ->default(1),

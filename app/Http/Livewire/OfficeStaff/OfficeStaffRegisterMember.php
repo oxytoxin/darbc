@@ -11,6 +11,7 @@ use Livewire\Component;
 use App\Models\Barangay;
 use App\Models\Province;
 use App\Models\Occupation;
+use Illuminate\Support\Str;
 use App\Models\MembershipStatus;
 use App\Models\MemberInformation;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +23,7 @@ use Filament\Forms\Components\Select;
 use Intervention\Image\Facades\Image;
 use App\Forms\Components\SlimRepeater;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Contracts\HasForms;
 use App\Forms\Components\VerticalWizard;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ViewField;
@@ -31,7 +33,6 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 
 class OfficeStaffRegisterMember extends Component implements HasForms
 {
@@ -143,9 +144,11 @@ class OfficeStaffRegisterMember extends Component implements HasForms
                     ->schema([
                         Select::make('data.civil_status')
                             ->options([
-                                1 => 'Single',
-                                2 => 'Married',
-                                3 => 'Widowed',
+                                MemberInformation::CS_SINGLE => 'Single',
+                                MemberInformation::CS_MARRIED => 'Married',
+                                MemberInformation::CS_WIDOW => 'Widow',
+                                MemberInformation::CS_LEGALLY_SEPARATED => 'Legally Separated',
+                                MemberInformation::CS_UNKNOWN => 'Unknown',
                             ])
                             ->required()
                             ->default(1),
@@ -223,18 +226,21 @@ class OfficeStaffRegisterMember extends Component implements HasForms
             'password' => Hash::make(now()->timestamp),
         ]);
         $isReplacement = $this->data['membership_status'] == 2;
-        $succession_number = 0;
+        $successor_number = 0;
         $original_member_id = null;
+        $lineage_identifier = Str::random(10);
         if ($isReplacement) {
             $toReplace = MemberInformation::firstWhere('user_id', $this->data['replacement_member']);
             if (!$toReplace) {
+                DB::rollBack();
                 Notification::make()->title('Member for replacement not found.')->danger()->send();
                 return;
             } else {
                 $toReplace->update([
                     'status' => 3,
                 ]);
-                $succession_number = $toReplace->succession_number + 1;
+                $lineage_identifier = $toReplace->lineage_identifier;
+                $successor_number = $toReplace->succession_number + 1;
                 $original_member_id = $toReplace->user_id;
             }
         }
@@ -243,7 +249,8 @@ class OfficeStaffRegisterMember extends Component implements HasForms
             'darbc_id' => $this->data['darbc_id'],
             'user_id' => $user->id,
             'cluster_id' => $this->data['cluster_id'],
-            'succession_number' => $succession_number,
+            'succession_number' => $successor_number,
+            'lineage_identifier' => $lineage_identifier,
             'original_member_id' => $original_member_id,
             'date_of_birth' => $this->data['date_of_birth'],
             'place_of_birth' => $this->data['place_of_birth'],
@@ -275,13 +282,15 @@ class OfficeStaffRegisterMember extends Component implements HasForms
         foreach ($this->id_documents as $document) {
             $member_information->addMedia($document)->toMediaCollection('identification_documents');
         }
-        $path = storage_path('app/signatures/' . now()->timestamp . '-signature.png');
-        Image::make($this->data['signature'])->save($path);
-        $user->addMedia($path)->toMediaCollection('signature');
-        DB::commit();
 
+        if ($this->data['signature']) {
+            $path = storage_path('app/signatures/' . now()->timestamp . '-signature.png');
+            Image::make($this->data['signature'])->save($path);
+            $user->addMedia($path)->toMediaCollection('signature');
+        }
+        DB::commit();
         Notification::make()->title('Member successfully registered.')->success()->send();
-        $this->redirect(route('office-staff.manage-members'));
+        $this->redirect(route('release-admin.manage-members'));
     }
 
     public function mount()

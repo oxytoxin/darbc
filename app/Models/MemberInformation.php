@@ -15,6 +15,12 @@ class MemberInformation extends Model implements HasMedia
     const STATUS_DECEASED = 2;
     const STATUS_INACTIVE = 3;
 
+    const CS_SINGLE = 1;
+    const CS_MARRIED = 2;
+    const CS_WIDOW = 3;
+    const CS_LEGALLY_SEPARATED = 4;
+    const CS_UNKNOWN = 5;
+
     protected $casts = [
         'date_of_birth' => 'immutable_date',
         'children' => 'array',

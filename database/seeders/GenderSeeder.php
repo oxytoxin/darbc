@@ -22,5 +22,9 @@ class GenderSeeder extends Seeder
         Gender::create([
             'name' => 'Female'
         ]);
+
+        Gender::create([
+            'name' => 'Unknown'
+        ]);
     }
 }

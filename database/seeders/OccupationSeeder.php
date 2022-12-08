@@ -32,5 +32,9 @@ class OccupationSeeder extends Seeder
         Occupation::create([
             'name' => 'Others',
         ]);
+
+        Occupation::create([
+            'name' => 'Unknown',
+        ]);
     }
 }

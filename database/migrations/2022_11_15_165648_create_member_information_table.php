@@ -18,11 +18,11 @@ return new class extends Migration
             $table->tinyInteger('status')->default(1);
             $table->string('darbc_id');
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('cluster_id')->constrained();
+            $table->foreignId('cluster_id')->nullable()->constrained();
             $table->mediumInteger('succession_number')->default(0);
             $table->string('lineage_identifier');
             $table->foreignId('original_member_id')->nullable()->constrained('users');
-            $table->date('date_of_birth');
+            $table->date('date_of_birth')->nullable();
             $table->text('place_of_birth')->nullable();
             $table->foreignId('gender_id')->constrained();
             $table->string('blood_type')->nullable();
