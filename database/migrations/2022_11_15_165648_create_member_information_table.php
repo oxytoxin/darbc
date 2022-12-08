@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('member_information', function (Blueprint $table) {
             $table->id();
             $table->tinyInteger('status')->default(1);
-            $table->string('darbc_id');
+            $table->bigInteger('darbc_id');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('cluster_id')->nullable()->constrained();
             $table->mediumInteger('succession_number')->default(0);

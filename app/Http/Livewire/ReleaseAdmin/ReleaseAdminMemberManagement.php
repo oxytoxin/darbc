@@ -28,7 +28,17 @@ class ReleaseAdminMemberManagement extends Component implements HasTable
 
     protected function getTableQuery()
     {
-        return MemberInformation::orderBy('darbc_id');
+        return MemberInformation::query();
+    }
+
+    protected function getDefaultTableSortDirection(): ?string
+    {
+        return 'asc';
+    }
+
+    protected function getDefaultTableSortColumn(): ?string
+    {
+        return 'darbc_id';
     }
 
     protected function getTableColumns()
@@ -37,6 +47,7 @@ class ReleaseAdminMemberManagement extends Component implements HasTable
             TextColumn::make('darbc_id')
                 ->label('DARBC ID')
                 ->extraAttributes(['class' => 'font-semibold text-sm'])
+                ->sortable()
                 ->searchable(),
             TextColumn::make('user.full_name')
                 ->label('Name')
