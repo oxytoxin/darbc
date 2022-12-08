@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        $admin = User::create([
+        $release_admin = User::create([
             'first_name' => 'Mark John Lerry',
             'middle_name' => 'Acosta',
             'surname' => 'Casero',
@@ -25,7 +25,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
 
-        $admin->roles()->attach(Role::RELEASE_ADMIN);
+        $release_admin->roles()->attach(Role::RELEASE_ADMIN);
 
         $cashier = User::create([
             'first_name' => 'Johnrey',
@@ -44,5 +44,14 @@ class UserSeeder extends Seeder
         ]);
 
         $office_staff->roles()->attach(Role::OFFICE_STAFF);
+
+        $land_admin = User::create([
+            'first_name' => 'Mogyahid',
+            'surname' => 'Ansid',
+            'username' => 'land-admin',
+            'password' => Hash::make('password'),
+        ]);
+
+        $land_admin->roles()->attach(Role::LAND_ADMIN);
     }
 }
