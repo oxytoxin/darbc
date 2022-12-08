@@ -19,6 +19,11 @@ class OfficeStaffLedgerIndex extends Component implements HasTable
 {
     use InteractsWithTable;
 
+    protected function shouldPersistTableFiltersInSession(): bool
+    {
+        return true;
+    }
+
     protected function getTableQuery()
     {
         return User::has('member_information')
@@ -46,7 +51,7 @@ class OfficeStaffLedgerIndex extends Component implements HasTable
                 ->default(today()->year)
                 ->label('Year')
                 ->query(function ($query, $state) {
-                    $query->when($state['value'], fn ($query) => $query->whereYear('created_at', $state));
+                    $query;
                 }),
         ];
     }

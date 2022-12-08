@@ -21,6 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(ClusterSeeder::class);
         $this->call(MembershipStatusSeeder::class);
         $this->call(PhilippineAddressesSeeder::class);
-        // $this->call(MemberInformationSeeder::class);
+        $this->call(MemberInformationSeeder::class);
     }
 }
