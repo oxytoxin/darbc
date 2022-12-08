@@ -1,29 +1,28 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\ReleaseAdmin;
 
 use App\Models\Role;
 use App\Models\User;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Notifications\Notification;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Concerns\InteractsWithTable;
-use Filament\Tables\Contracts\HasTable;
+use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Livewire\Component;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+use Filament\Tables\Concerns\InteractsWithTable;
 
-class AdminOfficeStaffManagement extends Component implements HasTable
+class ReleaseAdminCashierManagement extends Component implements HasTable
 {
     use InteractsWithTable;
 
-    public $office_data;
+    public $data;
 
     protected function getFormStatePath(): string
     {
-        return 'office_data';
+        return 'data';
     }
 
     protected function getTableColumns()
@@ -42,7 +41,7 @@ class AdminOfficeStaffManagement extends Component implements HasTable
     protected function getTableQuery()
     {
         return User::whereHas('roles', function ($query) {
-            $query->where('role_id', Role::OFFICE_STAFF);
+            $query->where('role_id', Role::CASHIER);
         })->with('member_information');
     }
 
@@ -63,7 +62,7 @@ class AdminOfficeStaffManagement extends Component implements HasTable
                     ->unique('users', 'username', $record)
                     ->required(),
             ])
-                ->modalHeading('Edit Office Staff')
+                ->modalHeading('Edit Cashier')
                 ->modalWidth('md')
                 ->action(function ($record, $data) {
                     $record->update($data);
@@ -103,19 +102,23 @@ class AdminOfficeStaffManagement extends Component implements HasTable
 
     public function render()
     {
-        return view('livewire.admin.admin-office-staff-management');
+        return view('livewire.release-admin.release-admin-cashier-management', [
+            'cashiers' => User::whereHas('roles', function ($query) {
+                $query->where('role_id', Role::CASHIER);
+            })->with('member_information')->paginate(),
+        ]);
     }
 
-    public function addOfficeStaff()
+    public function addCashier()
     {
         $this->form->validate();
-        unset($this->office_data['password_confirmation']);
-        $this->office_data['password'] = Hash::make($this->office_data['password']);
+        unset($this->data['password_confirmation']);
+        $this->data['password'] = Hash::make($this->data['password']);
         DB::beginTransaction();
-        $user = User::create($this->office_data);
-        $user->roles()->attach(Role::OFFICE_STAFF);
+        $user = User::create($this->data);
+        $user->roles()->attach(Role::CASHIER);
         DB::commit();
-        Notification::make()->title('Office staff created.')->success()->send();
+        Notification::make()->title('Office Staff created.')->success()->send();
         $this->emitSelf('closeModal');
     }
 }

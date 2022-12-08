@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\ReleaseAdmin;
 
 use App\Models\Dividend;
 use App\Models\User;
@@ -8,11 +8,11 @@ use App\Models\Release;
 use Livewire\Component;
 use App\Models\MemberInformation;
 
-class AdminDashboard extends Component
+class ReleaseAdminDashboard extends Component
 {
     public function render()
     {
-        return view('livewire.admin.admin-dashboard', [
+        return view('livewire.release-admin.release-admin-dashboard', [
             'active_members_count' => MemberInformation::active()->count(),
             'deceased_members_count' => MemberInformation::deceased()->count(),
             'original_members_count' => MemberInformation::original()->count(),

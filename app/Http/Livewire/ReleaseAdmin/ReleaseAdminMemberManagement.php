@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\ReleaseAdmin;
 
 use App\Models\Gender;
 use Livewire\Component;
@@ -22,10 +22,9 @@ use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Illuminate\Support\Facades\DB;
 
-class AdminMemberManagement extends Component implements HasTable
+class ReleaseAdminMemberManagement extends Component implements HasTable
 {
     use InteractsWithTable;
-
 
     protected function getTableQuery()
     {
@@ -175,6 +174,6 @@ class AdminMemberManagement extends Component implements HasTable
 
     public function render()
     {
-        return view('livewire.admin.admin-member-management');
+        return view('livewire.release-admin.release-admin-member-management');
     }
 }

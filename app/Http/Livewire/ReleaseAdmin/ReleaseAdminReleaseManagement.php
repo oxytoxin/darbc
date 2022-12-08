@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\ReleaseAdmin;
 
 use App\Models\Release;
 use Livewire\Component;
@@ -13,7 +13,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 
-class AdminReleaseManagement extends Component implements HasTable
+class ReleaseAdminReleaseManagement extends Component implements HasTable
 {
     use InteractsWithTable;
 
@@ -85,7 +85,7 @@ class AdminReleaseManagement extends Component implements HasTable
 
     public function render()
     {
-        return view('livewire.admin.admin-release-management');
+        return view('livewire.release-admin.release-admin-release-management');
     }
 
     public function createRelease()

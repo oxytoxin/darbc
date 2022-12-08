@@ -163,7 +163,7 @@
         <div class="p-3 bg-white border rounded-md">
             <div class="flex items-center justify-between">
                 <h1 class="font-semibold text-custom-blue">Recent Transactions</h1>
-                <a href="{{ route('administrator.transactions') }}"
+                <a href="{{ route('release-admin.transactions') }}"
                     class="flex items-center space-x-1 text-custom-blue">
                     <span class="text-sm">Show all</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"

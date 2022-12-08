@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\ReleaseAdmin;
 
 use App\Models\MemberInformation;
 use App\Models\Restriction;
@@ -17,7 +17,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Livewire\Component;
 
-class AdminMemberRestrictionsManagement extends Component implements HasTable
+class ReleaseAdminMemberRestrictionsManagement extends Component implements HasTable
 {
     use InteractsWithTable;
 
@@ -88,6 +88,6 @@ class AdminMemberRestrictionsManagement extends Component implements HasTable
 
     public function render()
     {
-        return view('livewire.admin.admin-member-restrictions-management');
+        return view('livewire.release-admin.release-admin-member-restrictions-management');
     }
 }

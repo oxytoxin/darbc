@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\ReleaseAdmin;
 
 use App\Models\Dividend;
 use Filament\Tables\Columns\BadgeColumn;
@@ -9,7 +9,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Livewire\Component;
 
-class AdminTransactionsHistory extends Component implements HasTable
+class ReleaseAdminTransactionsHistory extends Component implements HasTable
 {
     use InteractsWithTable;
 
@@ -60,6 +60,6 @@ class AdminTransactionsHistory extends Component implements HasTable
 
     public function render()
     {
-        return view('livewire.admin.admin-transactions-history');
+        return view('livewire.release-admin.release-admin-transactions-history');
     }
 }

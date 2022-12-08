@@ -23,10 +23,10 @@ return new class extends Migration
             $table->string('lineage_identifier');
             $table->foreignId('original_member_id')->nullable()->constrained('users');
             $table->date('date_of_birth');
-            $table->text('place_of_birth');
+            $table->text('place_of_birth')->nullable();
             $table->foreignId('gender_id')->constrained();
-            $table->string('blood_type');
-            $table->string('religion');
+            $table->string('blood_type')->nullable();
+            $table->string('religion')->nullable();
             $table->foreignId('membership_status_id')->constrained();
             $table->foreignId('occupation_id')->constrained();
             $table->text('occupation_details')->nullable();

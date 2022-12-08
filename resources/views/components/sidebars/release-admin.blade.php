@@ -6,8 +6,8 @@
         </section>
 
         <div class="mt-[2.5rem] z-[9999]">
-            <x-minor.nav-link href="{{ route('administrator.dashboard') }}"
-                :active="request()->routeIs('administrator.dashboard')">
+            <x-minor.nav-link href="{{ route('release-admin.dashboard') }}"
+                :active="request()->routeIs('release-admin.dashboard')">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -15,8 +15,8 @@
                 </svg>
                 <span class="font-medium">Overview</span>
             </x-minor.nav-link>
-            <x-minor.nav-link href="{{ route('administrator.manage-members') }}"
-                :active="request()->routeIs('administrator.manage-members')">
+            <x-minor.nav-link href="{{ route('release-admin.manage-members') }}"
+                :active="request()->routeIs('release-admin.manage-members')">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                     stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -24,8 +24,8 @@
                 </svg>
                 <span class="font-medium">Members</span>
             </x-minor.nav-link>
-            <x-minor.nav-link href="{{ route('administrator.manage-clusters') }}"
-                :active="request()->routeIs('administrator.manage-clusters')">
+            <x-minor.nav-link href="{{ route('release-admin.manage-clusters') }}"
+                :active="request()->routeIs('release-admin.manage-clusters')">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" stroke-width=".1"
                     stroke="currentColor" class="w-5 h-5">
                     <path class="fill-current"
@@ -33,16 +33,16 @@
                 </svg>
                 <span class="font-semibold">Clusters</span>
             </x-minor.nav-link>
-            <x-minor.nav-link href="{{ route('administrator.manage-users') }}"
-                :active="request()->routeIs('administrator.manage-users')">
+            <x-minor.nav-link href="{{ route('release-admin.manage-users') }}"
+                :active="request()->routeIs('release-admin.manage-users')">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5" class="w-5 h-5">
                     <path class="fill-current"
                         d="M4 22a8 8 0 1 1 16 0H4zm9-5.917V20h4.659A6.009 6.009 0 0 0 13 16.083zM11 20v-3.917A6.009 6.009 0 0 0 6.341 20H11zm1-7c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z" />
                 </svg>
                 <span class="font-semibold">Staff management</span>
             </x-minor.nav-link>
-            <x-minor.nav-link href="{{ route('administrator.manage-releases') }}"
-                :active="request()->routeIs('administrator.manage-releases')">
+            <x-minor.nav-link href="{{ route('release-admin.manage-releases') }}"
+                :active="request()->routeIs('release-admin.manage-releases')">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                     stroke="currentColor" class="w-5 h-5">
                     <path stroke-linecap="round" stroke-linejoin="round"

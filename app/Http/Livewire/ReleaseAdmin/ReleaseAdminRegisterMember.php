@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\ReleaseAdmin;
 
 use App\Models\City;
 use App\Models\User;
@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\HtmlString;
 use Illuminate\Support\Str;
 
-class AdminRegisterMember extends Component implements HasForms
+class ReleaseAdminRegisterMember extends Component implements HasForms
 {
     use InteractsWithForms;
 
@@ -167,24 +167,24 @@ class AdminRegisterMember extends Component implements HasForms
                     ->schema([
                         TextInput::make('data.darbc_id')
                             ->label('DARBC ID number')
+                            ->validationAttribute('DARBC ID')
+                            ->unique('member_information', 'darbc_id')
                             ->required(),
                         TextInput::make('data.sss_number')
-                            ->label('SSS Number')
-                            ->required(),
+                            ->validationAttribute('SSS Number')
+                            ->label('SSS Number'),
                         TextInput::make('data.philhealth_number')
-                            ->label('PhilHealth Number')
-                            ->required(),
+                            ->validationAttribute('PhilHealth Number')
+                            ->label('PhilHealth Number'),
                         TextInput::make('data.tin_number')
-                            ->label('TIN number')
-                            ->required(),
+                            ->validationAttribute('TIN Number')
+                            ->label('TIN number'),
                         TextInput::make('data.contact_number')
-                            ->label('Contact No.')
-                            ->required(),
+                            ->label('Contact No.'),
                         Select::make('data.cluster_id')
                             ->label('Cluster')
                             ->options(Cluster::pluck('name', 'id'))
                             ->required()
-
                     ]),
                 Step::make('Date and Signature')
                     ->description('Date of membership application and signature is required.')
@@ -196,8 +196,7 @@ class AdminRegisterMember extends Component implements HasForms
                             ->required(),
                         ViewField::make('data.signature')
                             ->view('forms.components.members.signature')
-                            ->label('Signature')
-                            ->required(),
+                            ->label('Signature'),
                     ]),
                 Step::make('Summary')
                     ->description('Review and submit.')
@@ -280,13 +279,15 @@ class AdminRegisterMember extends Component implements HasForms
         foreach ($this->id_documents as $document) {
             $member_information->addMedia($document)->toMediaCollection('identification_documents');
         }
-        $path = storage_path('app/signatures/' . now()->timestamp . '-signature.png');
-        Image::make($this->data['signature'])->save($path);
-        $user->addMedia($path)->toMediaCollection('signature');
-        DB::commit();
 
+        if ($this->data['signature']) {
+            $path = storage_path('app/signatures/' . now()->timestamp . '-signature.png');
+            Image::make($this->data['signature'])->save($path);
+            $user->addMedia($path)->toMediaCollection('signature');
+        }
+        DB::commit();
         Notification::make()->title('Member successfully registered.')->success()->send();
-        $this->redirect(route('administrator.manage-members'));
+        $this->redirect(route('release-admin.manage-members'));
     }
 
     public function mount()
@@ -294,50 +295,50 @@ class AdminRegisterMember extends Component implements HasForms
         $this->form->fill();
 
         if (app()->environment('local')) {
-            // $this->data['first_name'] = 'John';
-            // $this->data['surname'] = 'Casero';
-            // $this->data['date_of_birth'] = now()->subYears(20);
-            // $this->data['place_of_birth'] = 'Somewhere';
-            // $this->data['gender_id'] = 1;
-            // $this->data['blood_type'] = 'A';
-            // $this->data['religion'] = 'Roman Catholic';
-            // $this->data['address']['region_code'] = '01';
-            // $this->data['address']['province_code'] = '0128';
-            // $this->data['address']['city_code'] = '012801';
-            // $this->data['address']['barangay_code'] = '012801001';
-            // $this->data['address']['address_line'] = 'Block 14, Lot 9';
-            // $this->data['darbc_id'] = '1234';
-            // $this->data['sss_number'] = '1234';
-            // $this->data['philhealth_number'] = '1234';
-            // $this->data['tin_number'] = '1234';
-            // $this->data['contact_number'] = '1234';
-            // $this->data['cluster_id'] = 1;
-            // $this->data['children'] = [
-            //     [
-            //         'name' => 'John Doe',
-            //         'date_of_birth' => now()->subYears(5),
-            //         'educational_attainment' => 'College',
-            //         'blood_type' => 'A',
-            //     ],
-            //     [
-            //         'name' => 'Jane Doe',
-            //         'date_of_birth' => now()->subYears(3),
-            //         'educational_attainment' => 'College',
-            //         'blood_type' => 'B',
-            //     ],
-            //     [
-            //         'name' => 'Jay Doe',
-            //         'date_of_birth' => now()->subYears(3),
-            //         'educational_attainment' => 'College',
-            //         'blood_type' => 'O',
-            //     ],
-            // ];
+            $this->data['first_name'] = 'John';
+            $this->data['surname'] = 'Casero';
+            $this->data['date_of_birth'] = now()->subYears(20);
+            $this->data['place_of_birth'] = 'Somewhere';
+            $this->data['gender_id'] = 1;
+            $this->data['blood_type'] = 'A';
+            $this->data['religion'] = 'Roman Catholic';
+            $this->data['address']['region_code'] = '01';
+            $this->data['address']['province_code'] = '0128';
+            $this->data['address']['city_code'] = '012801';
+            $this->data['address']['barangay_code'] = '012801001';
+            $this->data['address']['address_line'] = 'Block 14, Lot 9';
+            $this->data['darbc_id'] = '1234';
+            $this->data['sss_number'] = '1234';
+            $this->data['philhealth_number'] = '1234';
+            $this->data['tin_number'] = '1234';
+            $this->data['contact_number'] = '1234';
+            $this->data['cluster_id'] = 1;
+            $this->data['children'] = [
+                [
+                    'name' => 'John Doe',
+                    'date_of_birth' => now()->subYears(5),
+                    'educational_attainment' => 'College',
+                    'blood_type' => 'A',
+                ],
+                [
+                    'name' => 'Jane Doe',
+                    'date_of_birth' => now()->subYears(3),
+                    'educational_attainment' => 'College',
+                    'blood_type' => 'B',
+                ],
+                [
+                    'name' => 'Jay Doe',
+                    'date_of_birth' => now()->subYears(3),
+                    'educational_attainment' => 'College',
+                    'blood_type' => 'O',
+                ],
+            ];
         }
     }
 
 
     public function render()
     {
-        return view('livewire.admin.admin-register-member');
+        return view('livewire.release-admin.release-admin-register-member');
     }
 }

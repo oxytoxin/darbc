@@ -21,11 +21,11 @@ class UserSeeder extends Seeder
             'first_name' => 'Mark John Lerry',
             'middle_name' => 'Acosta',
             'surname' => 'Casero',
-            'username' => 'admin',
+            'username' => 'release-admin',
             'password' => Hash::make('password'),
         ]);
 
-        $admin->roles()->attach(Role::ADMIN);
+        $admin->roles()->attach(Role::RELEASE_ADMIN);
 
         $cashier = User::create([
             'first_name' => 'Johnrey',

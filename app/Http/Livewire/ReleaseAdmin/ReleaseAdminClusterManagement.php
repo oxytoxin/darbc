@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\ReleaseAdmin;
 
 use App\Models\User;
 use App\Models\Cluster;
@@ -13,7 +13,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-class AdminClusterManagement extends Component implements HasTable
+class ReleaseAdminClusterManagement extends Component implements HasTable
 {
     use InteractsWithTable;
 
@@ -72,6 +72,6 @@ class AdminClusterManagement extends Component implements HasTable
 
     public function render()
     {
-        return view('livewire.admin.admin-cluster-management');
+        return view('livewire.release-admin.release-admin-cluster-management');
     }
 }

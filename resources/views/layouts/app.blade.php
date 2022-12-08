@@ -3,7 +3,7 @@
 @section('body')
     @switch(auth()->user()?->active_role->id)
         @case(1)
-            <x-sidebars.administrator />
+            <x-sidebars.release-admin />
         @break
 
         @case(2)

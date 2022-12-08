@@ -1,28 +1,29 @@
 <?php
 
-namespace App\Http\Livewire\Admin;
+namespace App\Http\Livewire\ReleaseAdmin;
 
 use App\Models\Role;
 use App\Models\User;
-use Livewire\Component;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Notifications\Notification;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Contracts\HasTable;
-use Filament\Forms\Components\TextInput;
-use Filament\Notifications\Notification;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Livewire\Component;
 
-class AdminCashierManagement extends Component implements HasTable
+class ReleaseAdminOfficeStaffManagement extends Component implements HasTable
 {
     use InteractsWithTable;
 
-    public $data;
+    public $office_data;
 
     protected function getFormStatePath(): string
     {
-        return 'data';
+        return 'office_data';
     }
 
     protected function getTableColumns()
@@ -41,7 +42,7 @@ class AdminCashierManagement extends Component implements HasTable
     protected function getTableQuery()
     {
         return User::whereHas('roles', function ($query) {
-            $query->where('role_id', Role::CASHIER);
+            $query->where('role_id', Role::OFFICE_STAFF);
         })->with('member_information');
     }
 
@@ -62,7 +63,7 @@ class AdminCashierManagement extends Component implements HasTable
                     ->unique('users', 'username', $record)
                     ->required(),
             ])
-                ->modalHeading('Edit Cashier')
+                ->modalHeading('Edit Office Staff')
                 ->modalWidth('md')
                 ->action(function ($record, $data) {
                     $record->update($data);
@@ -102,23 +103,19 @@ class AdminCashierManagement extends Component implements HasTable
 
     public function render()
     {
-        return view('livewire.admin.admin-cashier-management', [
-            'cashiers' => User::whereHas('roles', function ($query) {
-                $query->where('role_id', Role::CASHIER);
-            })->with('member_information')->paginate(),
-        ]);
+        return view('livewire.release-admin.release-admin-office-staff-management');
     }
 
-    public function addCashier()
+    public function addOfficeStaff()
     {
         $this->form->validate();
-        unset($this->data['password_confirmation']);
-        $this->data['password'] = Hash::make($this->data['password']);
+        unset($this->office_data['password_confirmation']);
+        $this->office_data['password'] = Hash::make($this->office_data['password']);
         DB::beginTransaction();
-        $user = User::create($this->data);
-        $user->roles()->attach(Role::CASHIER);
+        $user = User::create($this->office_data);
+        $user->roles()->attach(Role::OFFICE_STAFF);
         DB::commit();
-        Notification::make()->title('Office Staff created.')->success()->send();
+        Notification::make()->title('Office staff created.')->success()->send();
         $this->emitSelf('closeModal');
     }
 }
