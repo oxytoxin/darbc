@@ -12,7 +12,9 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Concerns\InteractsWithTable;
+use PDO;
 
 class ReleaseAdminCashierManagement extends Component implements HasTable
 {
@@ -69,6 +71,11 @@ class ReleaseAdminCashierManagement extends Component implements HasTable
                     Notification::make()->title('Saved!')->success()->send();
                 })
                 ->button(),
+            DeleteAction::make()->action(function ($record) {
+                $record->roles()->detach();
+                $record->delete();
+                Notification::make()->title('Deleted!')->success()->send();
+            })->requiresConfirmation(),
         ];
     }
 
@@ -118,6 +125,7 @@ class ReleaseAdminCashierManagement extends Component implements HasTable
         $user = User::create($this->data);
         $user->roles()->attach(Role::CASHIER);
         DB::commit();
+        $this->reset('data');
         Notification::make()->title('Office Staff created.')->success()->send();
         $this->emitSelf('closeModal');
     }

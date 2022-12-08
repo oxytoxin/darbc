@@ -4,16 +4,17 @@ namespace App\Http\Livewire\ReleaseAdmin;
 
 use App\Models\Role;
 use App\Models\User;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Notifications\Notification;
-use Filament\Tables\Actions\EditAction;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Concerns\InteractsWithTable;
-use Filament\Tables\Contracts\HasTable;
+use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Livewire\Component;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Filament\Tables\Concerns\InteractsWithTable;
 
 class ReleaseAdminOfficeStaffManagement extends Component implements HasTable
 {
@@ -70,6 +71,11 @@ class ReleaseAdminOfficeStaffManagement extends Component implements HasTable
                     Notification::make()->title('Saved!')->success()->send();
                 })
                 ->button(),
+            DeleteAction::make()->action(function ($record) {
+                $record->roles()->detach();
+                $record->delete();
+                Notification::make()->title('Deleted!')->success()->send();
+            })->requiresConfirmation(),
         ];
     }
 
@@ -116,6 +122,7 @@ class ReleaseAdminOfficeStaffManagement extends Component implements HasTable
         $user->roles()->attach(Role::OFFICE_STAFF);
         DB::commit();
         Notification::make()->title('Office staff created.')->success()->send();
+        $this->reset('office_data');
         $this->emitSelf('closeModal');
     }
 }
