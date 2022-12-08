@@ -4,6 +4,7 @@ namespace App\Http\Livewire\ReleaseAdmin;
 
 use App\Models\User;
 use App\Models\Cluster;
+use App\Models\MemberInformation;
 use Livewire\Component;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Actions\EditAction;
@@ -27,6 +28,8 @@ class ReleaseAdminClusterManagement extends Component implements HasTable
         return [
             TextColumn::make('name')
                 ->extraAttributes(['class' => 'font-semibold text-sm']),
+            TextColumn::make('address')
+                ->extraAttributes(['class' => 'font-semibold text-sm']),
             TextColumn::make('members_count')
                 ->counts('members')
                 ->extraAttributes(['class' => 'font-semibold text-sm']),
@@ -41,10 +44,11 @@ class ReleaseAdminClusterManagement extends Component implements HasTable
         return [
             CreateAction::make('create')
                 ->form([
-                    TextInput::make('name'),
+                    TextInput::make('name')->required(),
+                    TextInput::make('address')->required(),
                     Select::make('leader_id')
                         ->searchable()
-                        ->options(fn () => User::all()->pluck('full_name', 'id'))
+                        ->options(fn () => MemberInformation::with('user')->get()->pluck('user.full_name', 'user_id'))
                         ->label('Leader'),
                 ])
                 ->icon('heroicon-o-plus')
@@ -57,10 +61,11 @@ class ReleaseAdminClusterManagement extends Component implements HasTable
         return [
             EditAction::make('edit')
                 ->form([
-                    TextInput::make('name'),
+                    TextInput::make('name')->required(),
+                    TextInput::make('address')->required(),
                     Select::make('leader_id')
                         ->searchable()
-                        ->options(fn () => User::all()->pluck('full_name', 'id'))
+                        ->options(fn () => MemberInformation::with('user')->get()->pluck('user.full_name', 'user_id'))
                         ->label('Leader'),
                 ])
                 ->modalWidth('md')

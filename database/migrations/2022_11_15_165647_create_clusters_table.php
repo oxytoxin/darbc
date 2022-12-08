@@ -16,7 +16,8 @@ return new class extends Migration
         Schema::create('clusters', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('leader_id')->constrained('users');
+            $table->string('address')->nullable();
+            $table->foreignId('leader_id')->nullable()->constrained('users');
             $table->timestamps();
         });
     }

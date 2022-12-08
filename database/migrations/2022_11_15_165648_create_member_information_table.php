@@ -36,6 +36,8 @@ return new class extends Migration
             $table->string('barangay_code')->nullable()->index();
             $table->text('address_line')->nullable();
             $table->tinyInteger('civil_status')->default(1);
+            $table->string('mother_maiden_name')->nullable();
+            $table->string('spouse')->nullable();
             $table->json('children');
             $table->string('sss_number')->nullable();
             $table->string('philhealth_number')->nullable();

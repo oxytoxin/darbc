@@ -47,6 +47,11 @@ class User extends Authenticatable implements HasMedia
         return new Attribute(get: fn () => $this->first_name . ' ' . $this->surname);
     }
 
+    public function name(): Attribute
+    {
+        return new Attribute(get: fn () => $this->first_name . ' ' . $this->surname);
+    }
+
     public function roles()
     {
         return $this->belongsToMany(Role::class);

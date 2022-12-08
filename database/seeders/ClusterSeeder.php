@@ -21,7 +21,7 @@ class ClusterSeeder extends Seeder
         ]);
         Cluster::create([
             'name' => 'Cluster 2',
-            'leader_id' => 1,
+            'leader_id' => null,
         ]);
     }
 }
