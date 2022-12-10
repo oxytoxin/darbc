@@ -209,6 +209,7 @@ class ReleaseAdminRegisterMember extends Component implements HasForms
                     ]),
 
             ])
+                ->skippable()
                 ->submitAction(new HtmlString('<button class="p-1 px-2 text-sm font-semibold text-white rounded bg-primary-500" wire:click="register">Finish <span wire:loading class="animate-bounce">...</span></button>'))
         ];
     }

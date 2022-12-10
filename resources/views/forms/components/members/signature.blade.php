@@ -29,7 +29,7 @@
             $dispatch('input', $refs.ctx.toDataURL());
         },
         drawPoints(ctx, points) {
-            if (points.length < 6) {
+            if (points.length < 5) {
                 var b = points[0];
                 ctx.beginPath(), ctx.arc(b.x, b.y, ctx.lineWidth / 2, 0, Math.PI * 2, !0), ctx.closePath(), ctx.fill();
                 return
@@ -80,7 +80,7 @@
             this.memCtx = this.memCanvas.getContext('2d');
         },
     }" x-init="init">
-        <canvas @mouseup="stopDrawing" @mousedown="startDrawing" @mouseleave="shouldDraw = false;" @mousemove="draw" x-ref="ctx" height="200" width="400" class="bg-white border-2 border-black rounded">
+        <canvas @pointerup="stopDrawing" @pointerdown="startDrawing" @pointerleave="shouldDraw = false;" @pointermove="draw" x-ref="ctx" height="200" width="400" class="bg-white border-2 border-black rounded touch-none">
         </canvas>
         <button @click="clear">Clear</button>
     </div>
