@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->tinyInteger('status')->default(1);
             $table->bigInteger('darbc_id');
+            $table->decimal('percentage', 12, 8)->default(100);
             $table->foreignId('user_id')->constrained();
             $table->foreignId('cluster_id')->nullable()->constrained();
             $table->mediumInteger('succession_number')->default(0);
@@ -43,7 +44,7 @@ return new class extends Migration
             $table->string('philhealth_number')->nullable();
             $table->string('tin_number')->nullable();
             $table->string('contact_number')->nullable();
-            $table->date('application_date');
+            $table->date('application_date')->nullable();
             $table->timestamps();
         });
     }

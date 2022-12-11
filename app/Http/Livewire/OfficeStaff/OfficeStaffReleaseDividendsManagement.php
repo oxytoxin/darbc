@@ -53,6 +53,8 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
             TextColumn::make('user.member_information.darbc_id')
                 ->label('DARBC ID')
                 ->searchable(),
+            TextColumn::make('user.member_information.percentage')
+                ->label('Percentage'),
             TextColumn::make('user.full_name')
                 ->label('Name')
                 ->url(fn ($record) => route('office-staff.manage-member-restrictions', ['member' => $record->user->member_information]))
@@ -61,6 +63,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
             TextColumn::make('gross_amount')
                 ->sortable()
                 ->label('Gross')
+                ->searchable()
                 ->money('PHP', true),
             TextColumn::make('deductions_amount')
                 ->sortable()
@@ -131,7 +134,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
         $this->release->pending_dividends()->delete();
 
         $data = collect();
-        $users = User::with('active_restriction')->whereRelation('member_information', 'status', MemberInformation::STATUS_ACTIVE)->get();
+        $users = User::with(['active_restriction', 'member_information'])->whereRelation('member_information', 'status', MemberInformation::STATUS_ACTIVE)->get();
         $now = now();
         foreach ($users as $user) {
             if ($this->restrict_by_default) {
@@ -140,7 +143,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
             $data->push([
                 'release_id' => $this->release->id,
                 'user_id' => $user->id,
-                'gross_amount' => $this->amount * 100,
+                'gross_amount' => $this->amount * $user->member_information->percentage,
                 'status' => Dividend::PENDING,
                 'restriction_entries' => json_encode($restrictions ?? []),
                 'created_at' => $now,

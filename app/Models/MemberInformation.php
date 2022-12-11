@@ -25,6 +25,7 @@ class MemberInformation extends Model implements HasMedia
         'date_of_birth' => 'immutable_date',
         'children' => 'array',
         'application_date' => 'immutable_date',
+        'percentage' => 'decimal:2',
     ];
 
     public function registerMediaCollections(): void

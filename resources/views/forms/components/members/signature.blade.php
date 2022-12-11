@@ -82,6 +82,6 @@
     }" x-init="init">
         <canvas @pointerup="stopDrawing" @pointerdown="startDrawing" @pointerleave="shouldDraw = false;" @pointermove="draw" x-ref="ctx" height="200" width="400" class="bg-white border-2 border-black rounded touch-none">
         </canvas>
-        <button @click="clear">Clear</button>
+        <x-filament-support::button class="mt-4" @click="clear">Clear</x-filament-support::button>
     </div>
 </x-dynamic-component>

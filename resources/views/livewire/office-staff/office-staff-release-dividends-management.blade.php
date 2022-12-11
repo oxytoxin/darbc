@@ -28,25 +28,23 @@
                                 Deductions</x-forms::button>
                         </div>
                         <div class="mt-2">
-                            @if ($release->total_amount == $dividends_net_amount)
-                            <x-filament::modal>
-                                <x-slot name="trigger">
-                                    <x-forms::button @click="isOpen = true"
-                                        class="!px-44 whitespace-nowrap bg-custom-green hover:!bg-green-hover focus:!bg-green-hover focus:!ring-0 focus:!ring-offset-0">
-                                        Finalize and Disburse Dividends
-                                    </x-forms::button>
-                                </x-slot>
+                            @if (round($release->total_amount) == round($dividends_net_amount))
+                                <x-filament::modal>
+                                    <x-slot name="trigger">
+                                        <x-forms::button @click="isOpen = true" class="!px-44 whitespace-nowrap bg-custom-green hover:!bg-green-hover focus:!bg-green-hover focus:!ring-0 focus:!ring-offset-0">
+                                            Finalize and Disburse Dividends
+                                        </x-forms::button>
+                                    </x-slot>
 
-                                <strong>Are you sure you want to disburse the selected dividends?</strong>
+                                    <strong>Are you sure you want to disburse the selected dividends?</strong>
 
-                                <x-slot name="actions">
-                                    <div class="flex justify-end">
-                                        <x-forms::button wire:click="finalize" wire:target="finalize"
-                                            class="bg-custom-green hover:!bg-green-hover focus:!bg-green-hover focus:!ring-0 focus:!ring-offset-0">
-                                            Submit</x-forms::button>
-                                    </div>
-                                </x-slot>
-                            </x-filament::modal>
+                                    <x-slot name="actions">
+                                        <div class="flex justify-end">
+                                            <x-forms::button wire:click="finalize" wire:target="finalize" class="bg-custom-green hover:!bg-green-hover focus:!bg-green-hover focus:!ring-0 focus:!ring-offset-0">
+                                                Submit</x-forms::button>
+                                        </div>
+                                    </x-slot>
+                                </x-filament::modal>
                             @endif
                         </div>
                     </div>
@@ -55,9 +53,7 @@
                 <div class='mt-4'>
                     <div class='flex items-center w-full space-x-3'>
                         <form action="#" x-data="{ files: null }">
-                            <label
-                                class="border p-2.5 w-full block rounded-md cursor-pointer my-2 bg-custom-green text-white"
-                                for="excelfile">
+                            <label class="border p-2.5 w-full block rounded-md cursor-pointer my-2 bg-custom-green text-white" for="excelfile">
                                 <div class='flex items-center space-x-2'>
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                                         <path class="fill-current"
@@ -65,8 +61,7 @@
                                     </svg>
                                     <h1>Import from Excel</h1>
                                 </div>
-                                <input type="file" class="sr-only" id="excelfile"
-                                    x-on:change="files = Object.values($event.target.files)">
+                                <input type="file" class="sr-only" id="excelfile" x-on:change="files = Object.values($event.target.files)">
                             </label>
                         </form>
                     </div>
