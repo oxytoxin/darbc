@@ -44,7 +44,7 @@ class User extends Authenticatable implements HasMedia
 
     public function fullName(): Attribute
     {
-        return new Attribute(get: fn () => $this->first_name . ' ' . $this->surname);
+        return new Attribute(get: fn () => $this->surname . ', ' . $this->first_name);
     }
 
     public function name(): Attribute

@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Shared;
 use App\Models\Gender;
 use Livewire\Component;
 use App\Models\MemberInformation;
+use App\Models\MembershipStatus;
 use Illuminate\Support\Facades\DB;
 use Filament\Forms\Components\Grid;
 use Filament\Tables\Actions\Action;
@@ -96,6 +97,10 @@ class MemberManagement extends Component implements HasTable
                     MemberInformation::STATUS_DECEASED => 'Deceased',
                     MemberInformation::STATUS_INACTIVE => 'Inactive',
                 ]),
+            SelectFilter::make('membership_status_id')
+                ->label('Membership')
+                ->placeholder('All')
+                ->options(MembershipStatus::pluck('name', 'id')),
         ];
     }
 
