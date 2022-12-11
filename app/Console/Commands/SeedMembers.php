@@ -114,7 +114,7 @@ class SeedMembers extends Command
                     else
                         $member->membership_status_id = MembershipStatus::REPLACEMENT;
                 } else {
-                    $member->membership_status_id = $data["MEMBER STATUS"] == "REGULAR" ? MembershipStatus::ORIGINAL : MembershipStatus::REPLACEMENT;
+                    $member->membership_status_id = $data["MEMBER STATUS"] == "REPLACEMENT" ? MembershipStatus::REPLACEMENT : MembershipStatus::ORIGINAL;
                 }
                 if ($key == count($names) - 1) {
                     $member->date_of_birth = (filled($data["DATE OF BIRTH"]) && date_create($data["DATE OF BIRTH"])) ? date_create($data["DATE OF BIRTH"]) : null;
