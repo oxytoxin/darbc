@@ -107,8 +107,15 @@ class SeedMembers extends Command
                 $member = MemberInformation::make();
                 $member->user_id = $user->id;
                 $member->percentage = $percentage;
-                $member->membership_status_id = ($key == 0 && $data["MEMBER STATUS"] != "REPLACEMENT") ? MembershipStatus::ORIGINAL : MembershipStatus::REPLACEMENT;
 
+                if (count($names) > 1) {
+                    if ($key == 0)
+                        $member->membership_status_id = MembershipStatus::ORIGINAL;
+                    else
+                        $member->membership_status_id = MembershipStatus::REPLACEMENT;
+                } else {
+                    $member->membership_status_id = $data["MEMBER STATUS"] == "REGULAR" ? MembershipStatus::ORIGINAL : MembershipStatus::REPLACEMENT;
+                }
                 if ($key == count($names) - 1) {
                     $member->date_of_birth = (filled($data["DATE OF BIRTH"]) && date_create($data["DATE OF BIRTH"])) ? date_create($data["DATE OF BIRTH"]) : null;
                     $member->place_of_birth = strtoupper(trim($data["PLACE OF BIRTH"])) ?? null;
@@ -185,7 +192,7 @@ class SeedMembers extends Command
                     $member->occupation_id = 5;
                 }
                 $member->lineage_identifier = $lineage_identifier;
-                $member->succession_number = ($key == 0 && $data["MEMBER STATUS"] == "REPLACEMENT") ? 1 : $key;
+                $member->succession_number = ($data["MEMBER STATUS"] == "REPLACEMENT" && count($names) == 1) ? 1 : $key;
                 if ($key > 0) {
                     $member->original_member_id = $original_member_id ?? null;
                 }
