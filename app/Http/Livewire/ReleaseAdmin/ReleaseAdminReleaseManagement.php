@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\ReleaseAdmin;
 
 use App\Models\Release;
+use Filament\Forms\Components\TagsInput;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
 use Filament\Tables\Actions\EditAction;
@@ -10,6 +11,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 
@@ -37,6 +39,7 @@ class ReleaseAdminReleaseManagement extends Component implements HasTable
                 ->label('Total Amount')
                 ->money('PHP', true)
                 ->extraAttributes(['class' => 'font-semibold text-sm']),
+            TagsColumn::make('particulars'),
             IconColumn::make('disbursed')
                 ->alignCenter()
                 ->extraAttributes(['class' => 'flex justify-center'])
@@ -59,6 +62,10 @@ class ReleaseAdminReleaseManagement extends Component implements HasTable
                     ->numeric()
                     ->minValue(1)
                     ->label('Total Amount'),
+                TagsInput::make('particulars')
+                    ->default([])
+                    ->hint('Press Enter for each entry')
+                    ->placeholder('Gift Certificate, Give Aways, etc.')
             ])
                 ->modalHeading('Edit Release')
                 ->modalWidth('md')
@@ -80,7 +87,16 @@ class ReleaseAdminReleaseManagement extends Component implements HasTable
                 ->numeric()
                 ->minValue(1)
                 ->label('Total Amount'),
+            TagsInput::make('particulars')
+                ->default([])
+                ->hint('Press Enter for each entry')
+                ->placeholder('Gift Certificate, Give Aways, etc.')
         ];
+    }
+
+    public function mount()
+    {
+        $this->form->fill();
     }
 
     public function render()
@@ -95,6 +111,7 @@ class ReleaseAdminReleaseManagement extends Component implements HasTable
         Release::create([
             'name' => $this->data['name'],
             'total_amount' => $this->data['total_amount'],
+            'particulars' => $this->data['particulars'],
         ]);
         DB::commit();
         Notification::make()->title('New release created.')->success()->send();

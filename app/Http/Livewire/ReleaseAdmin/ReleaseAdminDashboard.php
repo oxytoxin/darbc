@@ -13,7 +13,7 @@ class ReleaseAdminDashboard extends Component
     public function render()
     {
         return view('livewire.release-admin.release-admin-dashboard', [
-            'active_members_count' => MemberInformation::active()->count(),
+            'total_members_count' => MemberInformation::darbcMember()->count(),
             'deceased_members_count' => MemberInformation::deceased()->count(),
             'original_members_count' => MemberInformation::original()->count(),
             'replacement_members_count' => MemberInformation::replacement()->count(),

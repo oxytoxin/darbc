@@ -42,9 +42,14 @@ class MemberInformation extends Model implements HasMedia
             ->useDisk('identification_documents');
     }
 
+    public function scopeDarbcMember($query)
+    {
+        $query->whereIsDarbcMember(true);
+    }
+
     public function scopeOriginal($query)
     {
-        $query->whereMembershipStatusId(MembershipStatus::ORIGINAL);
+        $query->whereIsDarbcMember(true)->whereMembershipStatusId(MembershipStatus::ORIGINAL);
     }
 
     public function scopeReplacement($query)

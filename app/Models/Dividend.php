@@ -14,6 +14,7 @@ class Dividend extends Model implements HasMedia
 
     protected $casts = [
         'restriction_entries' => 'array',
+        'particulars' => 'array',
         'released_at' => 'immutable_datetime',
     ];
 

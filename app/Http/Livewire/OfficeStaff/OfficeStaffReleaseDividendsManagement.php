@@ -112,12 +112,12 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
 
     protected function getDefaultTableSortColumn(): ?string
     {
-        return 'restriction_entries';
+        return 'user_id';
     }
 
     protected function getDefaultTableSortDirection(): ?string
     {
-        return 'desc';
+        return 'asc';
     }
 
     public function render()
@@ -136,6 +136,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
         $data = collect();
         $users = User::with(['active_restriction', 'member_information'])->whereRelation('member_information', 'status', MemberInformation::STATUS_ACTIVE)->get();
         $now = now();
+        $particulars = json_encode(collect($this->release->particulars)->flatMap(fn ($particular) => [$particular => ''])->toArray());
         foreach ($users as $user) {
             if ($this->restrict_by_default) {
                 $restrictions = $user->active_restriction?->entries ?? [];
@@ -145,6 +146,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                 'user_id' => $user->id,
                 'gross_amount' => $this->amount * $user->member_information->percentage,
                 'status' => Dividend::PENDING,
+                'particulars' => $particulars,
                 'restriction_entries' => json_encode($restrictions ?? []),
                 'created_at' => $now,
                 'updated_at' => $now,

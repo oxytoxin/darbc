@@ -10,6 +10,11 @@ class Release extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'disbursed' => 'boolean',
+        'particulars' => 'array'
+    ];
+
     public function totalAmount(): Attribute
     {
         return new Attribute(

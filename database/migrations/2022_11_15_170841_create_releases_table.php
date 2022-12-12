@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('total_amount');
+            $table->json('particulars')->default(DB::raw('(JSON_ARRAY())'));
             $table->boolean('disbursed')->default(false);
             $table->timestamps();
         });
