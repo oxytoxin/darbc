@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('member_information', function (Blueprint $table) {
             $table->id();
+            $table->boolean('is_darbc_member')->default(true);
             $table->tinyInteger('status')->default(1);
             $table->bigInteger('darbc_id');
             $table->decimal('percentage', 12, 8)->default(100);
@@ -39,11 +40,12 @@ return new class extends Migration
             $table->tinyInteger('civil_status')->default(1);
             $table->string('mother_maiden_name')->nullable();
             $table->string('spouse')->nullable();
-            $table->json('children');
+            $table->json('children')->default(DB::raw('(JSON_ARRAY())'));
             $table->string('sss_number')->nullable();
             $table->string('philhealth_number')->nullable();
             $table->string('tin_number')->nullable();
             $table->string('contact_number')->nullable();
+            $table->json('spa')->default(DB::raw('(JSON_ARRAY())'));
             $table->date('application_date')->nullable();
             $table->timestamps();
         });

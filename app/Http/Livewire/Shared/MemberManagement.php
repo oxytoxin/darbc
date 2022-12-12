@@ -56,7 +56,7 @@ class MemberManagement extends Component implements HasTable
                 ->sortable(),
             TextColumn::make('user.full_name')
                 ->label('Name')
-                ->searchable(['first_name', 'surname'])
+                ->searchable(query: fn ($query, $search) => $query->orWhereRelation('user', 'surname', 'like',  "$search%"))
                 ->extraAttributes(['class' => 'font-semibold text-sm'])
                 ->sortable(['surname']),
             BadgeColumn::make('succession_number')

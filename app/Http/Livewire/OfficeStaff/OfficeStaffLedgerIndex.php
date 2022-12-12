@@ -61,10 +61,9 @@ class OfficeStaffLedgerIndex extends Component implements HasTable
         return [
             TextColumn::make('member_information.darbc_id')
                 ->searchable(),
-            TextColumn::make('first_name')
-                ->searchable(),
+            TextColumn::make('first_name'),
             TextColumn::make('surname')
-                ->searchable(),
+                ->searchable(query: fn ($query, $search) => $query->orWhere('surname', 'like',  "$search%")),
         ];
     }
 

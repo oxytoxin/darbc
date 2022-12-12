@@ -26,7 +26,7 @@ class CashierReleasedDividendsHistory extends Component implements HasTable
                 ->searchable(),
             TextColumn::make('user.full_name')
                 ->label('Name')
-                ->searchable(['first_name', 'surname'])
+                ->searchable(query: fn ($query, $search) => $query->orWhereRelation('user', 'surname', 'like',  "$search%"))
                 ->sortable(['surname']),
             TextColumn::make('gross_amount')
                 ->sortable()

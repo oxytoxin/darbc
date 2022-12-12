@@ -42,7 +42,7 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                 ->sortable(['cashier.surname']),
             TextColumn::make('user.full_name')
                 ->label('MEMBER NAME')
-                ->searchable(['first_name', 'surname']),
+                ->searchable(query: fn ($query, $search) => $query->orWhereRelation('user', 'surname', 'like',  "$search%")),
             BadgeColumn::make('status')
                 ->label('STATUS')
                 ->enum([

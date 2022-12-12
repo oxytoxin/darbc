@@ -28,7 +28,7 @@ class CashierLedgerIndex extends Component implements HasTable
                 ->label('DARBC ID')
                 ->searchable(),
             TextColumn::make('user.full_name')
-                ->searchable(['first_name', 'surname'])
+                ->searchable(query: fn ($query, $search) => $query->orWhereRelation('user', 'surname', 'like',  "$search%"))
                 ->label('Name'),
             BadgeColumn::make('succession_number')
                 ->colors([

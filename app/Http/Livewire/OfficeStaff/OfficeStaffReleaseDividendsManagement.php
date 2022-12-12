@@ -58,7 +58,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
             TextColumn::make('user.full_name')
                 ->label('Name')
                 ->url(fn ($record) => route('office-staff.manage-member-restrictions', ['member' => $record->user->member_information]))
-                ->searchable(['first_name', 'surname'])
+                ->searchable(query: fn ($query, $search) => $query->orWhereRelation('user', 'surname', 'like',  "$search%"))
                 ->sortable(['surname']),
             TextColumn::make('gross_amount')
                 ->sortable()

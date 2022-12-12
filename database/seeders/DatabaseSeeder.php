@@ -26,5 +26,6 @@ class DatabaseSeeder extends Seeder
         // $this->call(MemberInformationSeeder::class);
         $this->command->call('seed:members');
         $this->command->call('seed:extra');
+        $this->command->call('seed:spa');
     }
 }

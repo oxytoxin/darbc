@@ -1,57 +1,57 @@
-﻿DARBC ID,NAME,PERCENTAGE
-472.2,"Arcamo, Lydia",60%
-478.2,"Arcebes, Ma. Mena L.",40%
-524.2,"Placencia, Elmer D.",50%
-638.2,"Baco, Rosemarie",22%
-729.2,"Nilong, Entan M. - 50%",50%
-820.2,"Bandoja, Angelita - 50%",50%
-830.2,"Banggo, Irenea D. - 50%",50%
-862.2,Carmen M. Barcatan 20%,20%
-862.3,Jigger Barcatan 50%,50%
-951.2,"Basilad, Juliet L.   -     40%",40%
-1078.2,"Bayron, Benie  -  50% Dec./ Marvy Munsayac ",50%
-1152.2,"Berame, Merly/Cherry   -  100%",100%
-1301.2,"Bongcawil, Jeferson    -  50%",50%
-1309.2,"Bonita, Loreta Q.   -  50%",50%
-1314.2,"Bontigao, Berlene T.  -   50%",50%
-1774.2,"Carnaje, Asuncion  -  50%",50%
-1884.2,"Cato, Zenaida J, - 50 %",50%
-1930.2,"Celis, Rachel M. - 50%",50%
-2163.2,"Cuyag, Rosario   -  60%",60%
-2197.2,Susan Sagabaen Dadulo - 50%,50%
-2346.2,"De Pedro, Luz -  70%",70%
-2815.2,"Enerio, Rosie   -  60%",60%
-2962.2,"Esteva, Julienlyn   -  50%",50%
-3240.2,"Gadian, Elvie P. - 50%",50%
-3455.2,"Giducos, Perla C.  - 50%",50%
-3553.2,Arlie S. Gorumba - 50%,50%
-3673.2,"Hechanova, Adelfa   - 60%",60%
-3726.2,"Ibanez, Leonida  -  67%",67%
-3838.2,"Jarquio, Wilma   -  75%",75%
-3899.2,"Jotajot, Romelita O. - 50%",50%
-3927.2,"Jumalon, Romeo  -  50%",50%
-4042.2,"Lagcao, Fely   -  75%",75%
-4332.2,Zenaida Longay - 50 %,50%
-4511.2,Elizabeth Mahusay Delatina - 50%,50%
-4611.2,Sheiwa Eve Lopez Cainap,20%
-4655.2,"Maquiling, Julia F. - 50%",50%
-4898.2,"Montefalcon, Virginia  -  50%",50%
-4999.2,"Nalugon, Lito    -  50%",50%
-5437.2,"Tabiling, Liza  - 10%",10%
-5494.2,"Paragoso, Perlida  - 50%",50%
-5606.2,Sarah Lomocso Pelino 60%,60%
-5705.2,"Perocillo, Melina  -  50%",50%
-5739.2,"Pilon, Juanita   -  33%",33%
-5793.2,"Pon, Eleazer L. - 33.33%",33.33%
-5793.3,"Pon, Maria Veda Luz L. - 33.33%",33.33%
-5864.2,"Pundavela, Eula  -  75%",75%
-6193.2,"Ruta, Clarita  -  50% Dec./ Genaro L. Ruta",50%
-6285.2,Villa Do-ong Salazar - 50%,50%
-6522.2,"Servano, Nelia - 50% ",50%
-6539.2,"Sesura, Eufrosina  - 20% - Dec. Marjorie Sesura",20%
-6621.2,"Sobrio, Felciminda  -  50%",50%
-6722.2,"Subac, Johnny/David Jr.  -   67%",67%
-6736.2,"Suela, Rosalinda M.   -   50%",50%
-6883.2,"Tajala, Jemima M.   - 60%",60%
-7190.2,"Tuling, Jeig  - 50 %",50%
-7381.2,"Perocha, Lolita   -   Dec./  Jeric Villapando",50%
+﻿DARBC ID,NAME,PERCENTAGE,SPA
+472.2,"Arcamo, Lydia",60%,"Basilad, Elbern L."
+478.2,"Arcebes, Ma. Mena L.",40%,
+524.2,"Placencia, Elmer D.",50%,
+638.2,"Baco, Rosemarie",22%,
+729.2,"Nilong, Entan M. - 50%",50%,Sharmen N. Balamula
+820.2,"Bandoja, Angelita - 50%",50%,Gimema C. Hayao
+830.2,"Banggo, Irenea D. - 50%",50%,
+862.2,Carmen M. Barcatan 20%,20%,
+862.3,Jigger Barcatan 50%,50%,
+951.2,"Basilad, Juliet L.   -     40%",40%,
+1078.2,"Bayron, Benie  -  50% Dec./ Marvy Munsayac ",50%,
+1152.2,"Berame, Merly/Cherry   -  100%",100%,
+1301.2,"Bongcawil, Jeferson    -  50%",50%,
+1309.2,"Bonita, Loreta Q.   -  50%",50%,
+1314.2,"Bontigao, Berlene T.  -   50%",50%,
+1774.2,"Carnaje, Asuncion  -  50%",50%,
+1884.2,"Cato, Zenaida J, - 50 %",50%,
+1930.2,"Celis, Rachel M. - 50%",50%,
+2163.2,"Cuyag, Rosario   -  60%",60%,
+2197.2,Susan Sagabaen Dadulo - 50%,50%,
+2346.2,"De Pedro, Luz -  70%",70%,
+2815.2,"Enerio, Rosie   -  60%",60%,
+2962.2,"Esteva, Julienlyn   -  50%",50%,
+3240.2,"Gadian, Elvie P. - 50%",50%,
+3455.2,"Giducos, Perla C.  - 50%",50%,
+3553.2,Arlie S. Gorumba - 50%,50%,
+3673.2,"Hechanova, Adelfa   - 60%",60%,
+3726.2,"Ibanez, Leonida  -  67%",67%,
+3838.2,"Jarquio, Wilma   -  75%",75%,Melody Jarquio
+3899.2,"Jotajot, Romelita O. - 50%",50%,
+3927.2,"Jumalon, Romeo  -  50%",50%,
+4042.2,"Lagcao, Fely   -  75%",75%,
+4332.2,Zenaida Longay - 50 %,50%,
+4511.2,Elizabeth Mahusay Delatina - 50%,50%,
+4611.2,Sheiwa Eve Lopez Cainap,20%,
+4655.2,"Maquiling, Julia F. - 50%",50%,
+4898.2,"Montefalcon, Virginia  -  50%",50%,
+4999.2,"Nalugon, Lito    -  50%",50%,
+5437.2,"Tabiling, Liza  - 10%",10%,
+5494.2,"Paragoso, Perlida  - 50%",50%,
+5606.2,Sarah Lomocso Pelino 60%,60%,
+5705.2,"Perocillo, Melina  -  50%",50%,
+5739.2,"Pilon, Juanita   -  33%",33%,
+5793.2,"Pon, Eleazer L. - 33.33%",33.33%,
+5793.3,"Pon, Maria Veda Luz L. - 33.33%",33.33%,
+5864.2,"Pundavela, Eula  -  75%",75%,
+6193.2,"Ruta, Clarita  -  50% Dec./ Genaro L. Ruta",50%,
+6285.2,Villa Do-ong Salazar - 50%,50%,
+6522.2,"Servano, Nelia - 50% ",50%,
+6539.2,"Sesura, Eufrosina  - 20% - Dec. Marjorie Sesura",20%,
+6621.2,"Sobrio, Felciminda  -  50%",50%,
+6722.2,"Subac, Johnny/David Jr.  -   67%",67%,
+6736.2,"Suela, Rosalinda M.   -   50%",50%,
+6883.2,"Tajala, Jemima M.   - 60%",60%,
+7190.2,"Tuling, Jeig  - 50 %",50%,Erbeto Tuling
+7381.2,"Perocha, Lolita   -   Dec./  Jeric Villapando",50%,

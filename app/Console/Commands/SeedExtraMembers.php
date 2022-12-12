@@ -107,9 +107,11 @@ class SeedExtraMembers extends Command
 
                 $member = MemberInformation::make();
                 $member->user_id = $user->id;
+                $member->is_darbc_member = false;
                 $member->percentage = $percentage;
                 $member->gender_id = Gender::UNKNOWN;
                 $member->occupation_id = 5;
+                $member->spa = $data['SPA'] ? [$data['SPA']] : [];
 
                 $member->lineage_identifier = $lineage_identifier;
                 $member->succession_number = $succession;
