@@ -27,14 +27,13 @@ class CashierReleaseDividendManagement extends Component implements HasForms
     public $data;
     public $has_representative;
     public $claimed_by;
-    public $prefix = 'PS2023';
 
     public function getFormSchema()
     {
         $k = 0;
         $fields = collect($this->dividend->release->particulars)->map(function ($value, $key) use ($k) {
             if (!str($value)->contains(['sets', 'set', 'can', 'cans'])) {
-                return TextInput::make(str($key)->prepend('data.')->replace(' ', '_'))->prefix($this->prefix)->label($key);
+                return TextInput::make(str($key)->prepend('data.')->replace(' ', '_'))->prefix($this->dividend->release->control_number_prefix)->label($key);
             }
             return Checkbox::make(str($key)->prepend('data.')->replace(' ', '_'))->label($key);
         });
