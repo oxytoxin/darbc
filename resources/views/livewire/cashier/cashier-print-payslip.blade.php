@@ -22,12 +22,12 @@
                 <div class="flex px-4 text-xs">
                     <p class="flex-1">&nbsp;</p>
                     <p class="font-bold">Date:</p>
-                    <p class="w-20 font-sans font-semibold">&nbsp;{{ $dividend->created_at->format('m/d/Y') }}</p>
+                    <p class="w-20 font-sans font-semibold">&nbsp;{{ $dividend->released_at->format('m/d/Y') }}</p>
                 </div>
                 <div class="flex px-4 text-xs">
                     <p class="flex-1">&nbsp;</p>
                     <p class="font-bold">Time:</p>
-                    <p class="w-20 font-sans font-semibold">&nbsp;{{ $dividend->created_at->format('h:i A') }}</p>
+                    <p class="w-20 font-sans font-semibold">&nbsp;{{ $dividend->released_at->format('h:i A') }}</p>
                 </div>
                 <div class="mt-2 text-center border-black border-y-2">
                     <p class="p-2 underline">{{ $dividend->release->name }}</p>
@@ -91,12 +91,12 @@
                 <div class="flex px-4 text-xs">
                     <p class="flex-1">&nbsp;</p>
                     <p class="font-bold">Date:</p>
-                    <p class="w-20 font-sans font-semibold">&nbsp;{{ $dividend->created_at->format('m/d/Y') }}</p>
+                    <p class="w-20 font-sans font-semibold">&nbsp;{{ $dividend->released_at->format('m/d/Y') }}</p>
                 </div>
                 <div class="flex px-4 text-xs">
                     <p class="flex-1">&nbsp;</p>
                     <p class="font-bold">Time:</p>
-                    <p class="w-20 font-sans font-semibold">&nbsp;{{ $dividend->created_at->format('h:i A') }}</p>
+                    <p class="w-20 font-sans font-semibold">&nbsp;{{ $dividend->released_at->format('h:i A') }}</p>
                 </div>
                 <div class="mt-2 text-center border-black border-y-2">
                     <p class="p-2 underline">{{ $dividend->release->name }}</p>
