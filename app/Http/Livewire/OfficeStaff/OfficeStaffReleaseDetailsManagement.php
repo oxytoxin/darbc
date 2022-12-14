@@ -30,9 +30,13 @@ class OfficeStaffReleaseDetailsManagement extends Component implements HasTable
     protected function getTableColumns()
     {
         return [
-            TextColumn::make('user.full_name')
-                ->sortable(['surname'])
-                ->label('Name'),
+            TextColumn::make('user.surname')
+                ->label('Last Name')
+                ->sortable()
+                ->searchable(isIndividual: true),
+            TextColumn::make('user.first_name')
+                ->label('First Name')
+                ->searchable(isIndividual: true),
             TextColumn::make('gross_amount')
                 ->sortable()
                 ->label('Gross')
@@ -66,7 +70,7 @@ class OfficeStaffReleaseDetailsManagement extends Component implements HasTable
 
     protected function getDefaultTableSortColumn(): ?string
     {
-        return 'user.full_name';
+        return 'user.surname';
     }
 
     protected function getDefaultTableSortDirection(): ?string

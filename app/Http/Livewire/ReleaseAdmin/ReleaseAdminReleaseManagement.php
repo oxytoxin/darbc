@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\ReleaseAdmin;
 
 use App\Models\Release;
+use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\TagsInput;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
@@ -39,7 +40,8 @@ class ReleaseAdminReleaseManagement extends Component implements HasTable
                 ->label('Total Amount')
                 ->money('PHP', true)
                 ->extraAttributes(['class' => 'font-semibold text-sm']),
-            TagsColumn::make('particulars'),
+            TagsColumn::make('particulars')
+                ->getStateUsing(fn ($record) => collect($record->particulars)->map(fn ($value, $key) => $key)->toArray()),
             IconColumn::make('disbursed')
                 ->alignCenter()
                 ->extraAttributes(['class' => 'flex justify-center'])
@@ -62,10 +64,8 @@ class ReleaseAdminReleaseManagement extends Component implements HasTable
                     ->numeric()
                     ->minValue(1)
                     ->label('Total Amount'),
-                TagsInput::make('particulars')
-                    ->default([])
-                    ->hint('Press Enter for each entry')
-                    ->placeholder('Gift Certificate, Give Aways, etc.')
+                TextInput::make('control_number_prefix'),
+                KeyValue::make('particulars'),
             ])
                 ->modalHeading('Edit Release')
                 ->modalWidth('md')
@@ -87,10 +87,14 @@ class ReleaseAdminReleaseManagement extends Component implements HasTable
                 ->numeric()
                 ->minValue(1)
                 ->label('Total Amount'),
-            TagsInput::make('particulars')
-                ->default([])
-                ->hint('Press Enter for each entry')
-                ->placeholder('Gift Certificate, Give Aways, etc.')
+            TextInput::make('control_number_prefix')
+                ->default('PS2023'),
+            KeyValue::make('particulars')
+                ->default([
+                    'DARBC Gift Certificate' => 'worth 1000',
+                    'Calendar' => '1 set',
+                    'Pineapple Products' => '2 cans'
+                ]),
         ];
     }
 

@@ -27,9 +27,25 @@ class CashierLedgerIndex extends Component implements HasTable
             TextColumn::make('darbc_id')
                 ->label('DARBC ID')
                 ->searchable(),
-            TextColumn::make('user.full_name')
-                ->searchable(query: fn ($query, $search) => $query->orWhereRelation('user', 'surname', 'like',  "$search%"))
-                ->label('Name'),
+            TextColumn::make('user.surname')
+                ->label('Last Name')
+                ->searchable(isIndividual: true),
+            TextColumn::make('user.first_name')
+                ->label('First Name')
+                ->searchable(isIndividual: true),
+            BadgeColumn::make('status')
+                ->enum([
+                    MemberInformation::STATUS_ACTIVE => 'Active',
+                    MemberInformation::STATUS_DECEASED => 'Deceased',
+                    MemberInformation::STATUS_INACTIVE => 'Inactive',
+                ])
+                ->colors([
+                    'primary',
+                    'success' => MemberInformation::STATUS_ACTIVE,
+                    'danger' => MemberInformation::STATUS_DECEASED,
+                    'warning' => MemberInformation::STATUS_INACTIVE,
+                ])
+                ->label('Status'),
             BadgeColumn::make('succession_number')
                 ->colors([
                     'success'
@@ -45,6 +61,7 @@ class CashierLedgerIndex extends Component implements HasTable
         return [
             Action::make('view')
                 ->button()
+                ->visible(fn ($record) => $record->status == MemberInformation::STATUS_ACTIVE)
                 ->color('success')
                 ->url(fn ($record) => route('cashier.member-dividends', ['member' => $record]))
         ];

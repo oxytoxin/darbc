@@ -91,9 +91,8 @@
                         </x-card-stat>
 
                         @if ($latest_release)
-                            <div class="bg-white border flex flex-col justify-between p-3 rounded-md h-[140px]">
-                                <div class="flex items-center justify-between">
-                                    <h1 class="text-sm font-medium">{{ $latest_release->name }}</h1>
+                            <div class="flex flex-col justify-between p-3 bg-white border rounded-md">
+                                <div class="flex items-center justify-end">
                                     <section class="flex items-center space-x-1 text-custom-blue">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
                                             <path stroke-linecap="round" stroke-linejoin="round"

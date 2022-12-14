@@ -29,10 +29,12 @@ class CashierReleaseDividends extends Component implements HasTable
             TextColumn::make('user.member_information.darbc_id')
                 ->label('DARBC ID')
                 ->searchable(),
-            TextColumn::make('user.full_name')
-                ->label('Name')
-                ->searchable(query: fn ($query, $search) => $query->orWhereRelation('user', 'surname', 'like',  "$search%"))
-                ->sortable(['surname']),
+            TextColumn::make('user.surname')
+                ->label('Last Name')
+                ->searchable(isIndividual: true),
+            TextColumn::make('user.first_name')
+                ->label('First Name')
+                ->searchable(isIndividual: true),
             TextColumn::make('gross_amount')
                 ->sortable()
                 ->label('Gross')

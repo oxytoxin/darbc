@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedBigInteger('total_amount');
             $table->json('particulars')->default(DB::raw('(JSON_ARRAY())'));
+            $table->string('control_number_prefix')->nullable();
             $table->boolean('disbursed')->default(false);
             $table->timestamps();
         });

@@ -1,7 +1,17 @@
 <table class="min-w-full border divide-y divide-gray-500">
     <thead class="bg-primary-500">
         <tr>
-            <th scope="col" class="w-[17rem] py-2.5 text-white px-3 text-left font-semibold col-span-3">Name</th>
+            <th scope="col" class="py-2.5 w-[6rem] text-white px-3 text-left font-semibold col-span-3">
+                DARBC ID
+            </th>
+            <th scope="col" class="py-2.5 w-[12rem] text-white px-3 text-left font-semibold col-span-3">
+                Last Name
+                <x-tables::search-input class="text-black" wire-model="tableColumnSearchQueries.surname" />
+            </th>
+            <th scope="col" class="py-2.5 w-[12rem] text-white px-3 text-left font-semibold col-span-3">
+                First Name
+                <x-tables::search-input class="text-black" wire-model="tableColumnSearchQueries.first_name" />
+            </th>
             @foreach ($releases as $release)
                 <th scope="col" class="w-[8rem] py-2.5 text-white px-3 font-semibold @if ($release->disbursed) bg-custom-green
                 @else
@@ -35,11 +45,10 @@
                     </div>
                 </th>
             @endforeach
-            <th scope="col" class="w-[7rem] py-2.5 text-white px-3 font-semibold border text-center leading-4"></th>
+            <th scope="col" class="py-2.5 text-white px-3 font-semibold border text-center leading-4">&nbsp;</th>
             <th scope="col" class="w-[7rem] py-2.5 text-white px-3 font-semibold border text-center leading-4">Status
             </th>
-            <th scope="col" class="w-[10rem] py-2.5 text-white px-3 font-semibold border-r text-center leading-4">Amount
-                to claim</th>
+            <th scope="col" class="w-[10rem] py-2.5 text-white px-3 font-semibold border-r text-center leading-4">Amount</th>
         </tr>
     </thead>
     <tbody class="divide-y divide-gray-200">
@@ -47,8 +56,17 @@
             <tr>
                 <td class="py-3 pl-3 text-sm font-bold bg-gray-100 border whitespace-nowrap">
                     <a href="{{ route('office-staff.member-dividends', ['member' => $user->member_information]) }}">
-                        <p>{{ $user->full_name }}</p>
-                        <p class="text-gray-500">{{ $user->member_information->darbc_id }}</p>
+                        <p>{{ $user->member_information->darbc_id }}</p>
+                    </a>
+                </td>
+                <td class="py-3 pl-3 text-sm font-bold bg-gray-100 border whitespace-nowrap">
+                    <a href="{{ route('office-staff.member-dividends', ['member' => $user->member_information]) }}">
+                        <p>{{ $user->surname }}</p>
+                    </a>
+                </td>
+                <td class="py-3 pl-3 text-sm font-bold bg-gray-100 border whitespace-nowrap">
+                    <a href="{{ route('office-staff.member-dividends', ['member' => $user->member_information]) }}">
+                        <p>{{ $user->first_name }}</p>
                     </a>
                 </td>
                 @php

@@ -62,10 +62,12 @@
                         </ul>
                     </section>
                 </div>
+                <hr>
                 <div>
                     {{ $this->form }}
                 </div>
             </div>
+
             <div x-data="{ captured: false }" class="w-1/3 p-4 bg-white rounded shadow">
                 <img src="{{ $proof_of_release ?? 'https://media.istockphoto.com/id/1357365823/vector/default-image-icon-vector-missing-picture-page-for-website-design-or-mobile-app-no-photo.jpg?s=612x612&w=0&k=20&c=PM_optEhHBTZkuJQLlCjLz-v3zzxp-1mpNQZsdjrbns=' }}"
                     alt="proof_of_release" class="mx-auto my-2 rounded h-44 aspect-auto">
@@ -134,12 +136,10 @@
                     </div>
                 </x-modal>
                 <div class="mt-2">
-                    @if ($proof_of_release)
-                        <x-filament-support::button onclick="return confirm('Are you sure?') || event.stopImmediatePropagation()" wire:click="release" wire:target="release" class="w-full" color="success" iconPosition="after"
-                            icon="heroicon-o-check-circle">
-                            Release Now
-                        </x-filament-support::button>
-                    @endif
+                    <x-filament-support::button onclick="return confirm('Are you sure?') || event.stopImmediatePropagation()" wire:click="release" wire:target="release" class="w-full" color="success" iconPosition="after"
+                        icon="heroicon-o-check-circle">
+                        Release Now
+                    </x-filament-support::button>
                 </div>
             </div>
         </div>

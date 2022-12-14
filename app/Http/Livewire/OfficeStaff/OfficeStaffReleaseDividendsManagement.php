@@ -55,11 +55,13 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                 ->searchable(),
             TextColumn::make('user.member_information.percentage')
                 ->label('Percentage'),
-            TextColumn::make('user.full_name')
-                ->label('Name')
-                ->url(fn ($record) => route('office-staff.manage-member-restrictions', ['member' => $record->user->member_information]))
-                ->searchable(query: fn ($query, $search) => $query->orWhereRelation('user', 'surname', 'like',  "$search%"))
-                ->sortable(['surname']),
+            TextColumn::make('user.surname')
+                ->label('Last Name')
+                ->sortable()
+                ->searchable(isIndividual: true),
+            TextColumn::make('user.first_name')
+                ->label('First Name')
+                ->searchable(isIndividual: true),
             TextColumn::make('gross_amount')
                 ->sortable()
                 ->label('Gross')
@@ -136,7 +138,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
         $data = collect();
         $users = User::with(['active_restriction', 'member_information'])->whereRelation('member_information', 'status', MemberInformation::STATUS_ACTIVE)->get();
         $now = now();
-        $particulars = json_encode(collect($this->release->particulars)->flatMap(fn ($particular) => [$particular => ''])->toArray());
+        $particulars = json_encode(collect($this->release->particulars)->flatMap(fn ($particular, $key) => [$key => ''])->toArray());
         foreach ($users as $user) {
             if ($this->restrict_by_default) {
                 $restrictions = $user->active_restriction?->entries ?? [];

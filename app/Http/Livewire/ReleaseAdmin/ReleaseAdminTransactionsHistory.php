@@ -35,14 +35,18 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                 ->label('DATE')
                 ->sortable()
                 ->dateTime('h:i A, F d, Y'),
+            TextColumn::make('user.surname')
+                ->label('Last Name')
+                ->sortable()
+                ->searchable(isIndividual: true),
+            TextColumn::make('user.first_name')
+                ->label('First Name')
+                ->searchable(isIndividual: true),
             TextColumn::make('release.name')
                 ->label('RELEASE NAME'),
             TextColumn::make('cashier.full_name')
                 ->label('CASHIER')
                 ->sortable(['cashier.surname']),
-            TextColumn::make('user.full_name')
-                ->label('MEMBER NAME')
-                ->searchable(query: fn ($query, $search) => $query->orWhereRelation('user', 'surname', 'like',  "$search%")),
             BadgeColumn::make('status')
                 ->label('STATUS')
                 ->enum([

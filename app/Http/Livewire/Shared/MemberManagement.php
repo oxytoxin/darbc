@@ -54,11 +54,14 @@ class MemberManagement extends Component implements HasTable
             TextColumn::make('percentage')
                 ->extraAttributes(['class' => 'font-semibold text-sm'])
                 ->sortable(),
-            TextColumn::make('user.full_name')
-                ->label('Name')
-                ->searchable(query: fn ($query, $search) => $query->orWhereRelation('user', 'surname', 'like',  "$search%"))
+            TextColumn::make('user.surname')
+                ->label('Last Name')
                 ->extraAttributes(['class' => 'font-semibold text-sm'])
-                ->sortable(['surname']),
+                ->searchable(isIndividual: true),
+            TextColumn::make('user.first_name')
+                ->label('First Name')
+                ->extraAttributes(['class' => 'font-semibold text-sm'])
+                ->searchable(isIndividual: true),
             BadgeColumn::make('succession_number')
                 ->colors([
                     'success'

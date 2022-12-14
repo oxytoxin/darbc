@@ -5,12 +5,18 @@ namespace App\Http\Livewire\Cashier;
 use Livewire\Component;
 use App\Models\Dividend;
 use DB;
+use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Intervention\Image\Facades\Image;
 use Filament\Notifications\Notification;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use PDO;
 
 class CashierReleaseDividendManagement extends Component implements HasForms
 {
@@ -18,18 +24,26 @@ class CashierReleaseDividendManagement extends Component implements HasForms
 
     public Dividend $dividend;
     public $proof_of_release;
-    public $particulars = [];
+    public $data;
+    public $has_representative;
+    public $claimed_by;
+    public $prefix = 'PS2023';
 
     public function getFormSchema()
     {
+        $k = 0;
+        $fields = collect($this->dividend->release->particulars)->map(function ($value, $key) use ($k) {
+            if (!str($value)->contains(['sets', 'set', 'can', 'cans'])) {
+                return TextInput::make(str($key)->prepend('data.')->replace(' ', '_'))->prefix($this->prefix)->label($key);
+            }
+            return Checkbox::make(str($key)->prepend('data.')->replace(' ', '_'))->label($key);
+        });
         return [
-            KeyValue::make('particulars')
-                ->default($this->dividend->particulars)
-                ->disableAddingRows()
-                ->disableDeletingRows()
-                ->disableEditingKeys()
-                ->keyLabel('Particulars')
-                ->valueLabel('Control Number (Claimed/Unclaimed)'),
+            Fieldset::make('representative')->schema([
+                Checkbox::make('has_representative')->reactive()->label('Has Representative?'),
+                TextInput::make('claimed_by')->label('Representative Name')->visible(fn ($get) => $get('has_representative')),
+            ])->label('Claimed By Representative'),
+            Grid::make(2)->schema($fields->toArray())
         ];
     }
 
@@ -54,22 +68,21 @@ class CashierReleaseDividendManagement extends Component implements HasForms
     public function release()
     {
         DB::beginTransaction();
-        $path = storage_path('app/proof_of_release/' . $this->dividend->id . '-' . now()->timestamp . '-proof.png');
-        Image::make($this->proof_of_release)->save($path);
-
-        $this->dividend->addMedia($path)->toMediaCollection('proof_of_release');
-        $new_particulars = collect();
-
-        foreach ($this->particulars as $key => $value) {
-            $new_particulars->push([
-                $key => filled($value) ? $value : 'UNCLAIMED',
-            ]);
+        if ($this->proof_of_release) {
+            $path = storage_path('app/proof_of_release/' . $this->dividend->id . '-' . now()->timestamp . '-proof.png');
+            Image::make($this->proof_of_release)->save($path);
+            $this->dividend->addMedia($path)->toMediaCollection('proof_of_release');
+        }
+        $new_particulars = $this->dividend->particulars;
+        foreach ($this->data as $key => $value) {
+            $new_particulars[str($key)->replace('_', ' ')->toString()] = $value;
         }
         $this->dividend->update([
             'status' => Dividend::RELEASED,
             'released_by' => auth()->id(),
             'released_at' => now(),
-            'particulars' => $new_particulars->mapWithKeys(fn ($v) => $v)->toArray(),
+            'particulars' => $new_particulars,
+            'claimed_by' => $this->claimed_by,
         ]);
 
         DB::commit();
