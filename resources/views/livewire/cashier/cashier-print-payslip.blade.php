@@ -128,9 +128,9 @@
     <x-filament-support::button @click="printOut($refs.print.outerHTML)">Print</x-filament-support::button>
     <script>
         function printOut(data) {
-            var mywindow = window.open('', 'Report On Paid Petty Cash Vouchers', 'height=1000,width=1000');
+            var mywindow = window.open('', 'DARBC PAYSLIP', 'height=1000,width=1000');
             mywindow.document.write('<html><head>');
-            mywindow.document.write('<title>Report On Paid Petty Cash Vouchers</title>');
+            mywindow.document.write('<title>DARBC PAYSLIP</title>');
             mywindow.document.write(`<link rel="stylesheet" href="{{ Vite::asset('resources/css/app.css') }}" />`);
             mywindow.document.write('</head><body >');
             mywindow.document.write(data);
