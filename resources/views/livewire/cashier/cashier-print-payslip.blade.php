@@ -85,12 +85,23 @@
             mywindow.document.write(`<link rel="stylesheet" href="{{ Vite::asset('resources/css/app.css') }}" />`);
             mywindow.document.write('</head><body >');
             mywindow.document.write(data);
+            mywindow.document.write('<script>(' + (function() {
+                function checkReadyState() {
+                    if (document.readyState === 'complete') {
+                        window.focus();
+                        window.print();
+                        window.close();
+                    } else {
+                        setTimeout(checkReadyState, 500); // May need to change interval
+                    }
+                }
+
+                checkReadyState();
+            }) + ')();</sc' + 'ript>');
             mywindow.document.write('</body></html>');
 
             mywindow.document.close();
             mywindow.focus();
-
-            mywindow.print();
             return true;
         }
     </script>
