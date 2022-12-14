@@ -114,6 +114,7 @@ class ReleaseAdminReleaseManagement extends Component implements HasTable
         DB::beginTransaction();
         Release::create([
             'name' => $this->data['name'],
+            'control_number_prefix' => $this->data['control_number_prefix'],
             'total_amount' => $this->data['total_amount'],
             'particulars' => $this->data['particulars'],
         ]);
