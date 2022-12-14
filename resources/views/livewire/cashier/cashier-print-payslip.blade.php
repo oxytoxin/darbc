@@ -7,7 +7,7 @@
                 <div class="flex px-4">
                     <p class="flex-1 italic font-bold text-red-600 underline">MEMBER'S COPY</p>
                     <p class="font-bold">Member's No.</p>
-                    <p class="w-20">&nbsp;{{ $dividend->user->member_information->darbc_id }}</p>
+                    <p class="w-12">&nbsp;{{ $dividend->user->member_information->darbc_id }}</p>
                 </div>
                 <div class="flex px-4 mt-4 text-xs">
                     <p class="font-bold">Name:</p>
@@ -69,7 +69,7 @@
                 <div class="flex px-4">
                     <p class="flex-1 italic font-bold text-red-600 underline">DARBC COPY</p>
                     <p class="font-bold">Member's No.</p>
-                    <p class="w-20">&nbsp;{{ $dividend->user->member_information->darbc_id }}</p>
+                    <p class="w-12">&nbsp;{{ $dividend->user->member_information->darbc_id }}</p>
                 </div>
                 <div class="flex px-4 mt-4 text-xs">
                     <p class="font-bold">Name:</p>
