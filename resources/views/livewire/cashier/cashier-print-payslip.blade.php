@@ -52,12 +52,19 @@
                     @endforeach
                 </div>
                 <div class="flex border-t-2 border-black divide-x-2 divide-black">
-                    <div class="flex-1 px-4 py-4">
+                    <div class="flex flex-col flex-1 h-40 px-4 py-4">
                         <p class="text-xs italic font-semibold">CASHIER NAME:</p>
-                        <p class="mt-12 text-center">{{ $dividend->cashier->first_name . ' ' . $dividend->cashier->surname }}</p>
+                        <div class="flex-1">&nbsp;</div>
+                        <p class="text-xs text-center uppercase whitespace-nowrap">{{ $dividend->cashier->first_name . ' ' . $dividend->cashier->surname }}</p>
                     </div>
-                    <div class="flex-1 px-4 py-4">
+                    <div class="flex flex-col flex-1 h-40 px-4 py-4">
                         <p class="text-xs italic font-semibold">{{ $dividend->claimed_by ? "REPRESENTATIVE'S" : "MEMBER'S" }} SIGNATURE</p>
+                        <div class="flex-1">&nbsp;</div>
+                        @if ($dividend->claimed_by)
+                            <p class="text-xs text-center uppercase whitespace-nowrap">{{ $dividend->claimed_by }}</p>
+                        @else
+                            <p class="text-xs text-center uppercase whitespace-nowrap">{{ $dividend->user->full_name }}</p>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -114,12 +121,19 @@
                     @endforeach
                 </div>
                 <div class="flex border-t-2 border-black divide-x-2 divide-black">
-                    <div class="flex-1 px-4 py-4">
+                    <div class="flex flex-col flex-1 h-40 px-4 py-4">
                         <p class="text-xs italic font-semibold">CASHIER NAME:</p>
-                        <p class="mt-12 text-center">{{ $dividend->cashier->first_name . ' ' . $dividend->cashier->surname }}</p>
+                        <div class="flex-1">&nbsp;</div>
+                        <p class="text-xs text-center uppercase whitespace-nowrap">{{ $dividend->cashier->first_name . ' ' . $dividend->cashier->surname }}</p>
                     </div>
-                    <div class="flex-1 px-4 py-4">
+                    <div class="flex flex-col flex-1 h-40 px-4 py-4">
                         <p class="text-xs italic font-semibold">{{ $dividend->claimed_by ? "REPRESENTATIVE'S" : "MEMBER'S" }} SIGNATURE</p>
+                        <div class="flex-1">&nbsp;</div>
+                        @if ($dividend->claimed_by)
+                            <p class="text-xs text-center uppercase whitespace-nowrap">{{ $dividend->claimed_by }}</p>
+                        @else
+                            <p class="text-xs text-center uppercase whitespace-nowrap">{{ $dividend->user->full_name }}</p>
+                        @endif
                     </div>
                 </div>
             </div>

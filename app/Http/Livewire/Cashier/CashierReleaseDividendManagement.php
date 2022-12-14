@@ -81,7 +81,7 @@ class CashierReleaseDividendManagement extends Component implements HasForms
             'released_by' => auth()->id(),
             'released_at' => now(),
             'particulars' => $new_particulars,
-            'claimed_by' => $this->claimed_by,
+            'claimed_by' => $this->has_representative ? $this->claimed_by : null,
         ]);
 
         DB::commit();
