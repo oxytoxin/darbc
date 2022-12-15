@@ -12,7 +12,8 @@ class Release extends Model
 
     protected $casts = [
         'disbursed' => 'boolean',
-        'particulars' => 'array'
+        'particulars' => 'array',
+        'gift_certificate_amount' => 'decimal:2',
     ];
 
     public function totalAmount(): Attribute

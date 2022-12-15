@@ -9,6 +9,8 @@ use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\KeyValue;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -16,6 +18,7 @@ use Filament\Forms\Contracts\HasForms;
 use Intervention\Image\Facades\Image;
 use Filament\Notifications\Notification;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Validation\Rule;
 use PDO;
 
 class CashierReleaseDividendManagement extends Component implements HasForms
@@ -25,24 +28,48 @@ class CashierReleaseDividendManagement extends Component implements HasForms
     public Dividend $dividend;
     public $proof_of_release;
     public $data;
-    public $has_representative;
-    public $claimed_by;
 
     public function getFormSchema()
     {
-        $k = 0;
-        $fields = collect($this->dividend->release->particulars)->map(function ($value, $key) use ($k) {
-            if (!str($value)->contains(['sets', 'set', 'can', 'cans'])) {
-                return TextInput::make(str($key)->prepend('data.')->replace(' ', '_'))->prefix($this->dividend->release->control_number_prefix)->label($key);
-            }
-            return Checkbox::make(str($key)->prepend('data.')->replace(' ', '_'))->label($key);
+        $fields = collect($this->dividend->particulars)->map(function ($value, $key) {
+            return Checkbox::make('data.particulars.' . $key)->default(true)->label($value['name'])->visible(!$value['claimed']);
         });
         return [
-            Fieldset::make('representative')->schema([
-                Checkbox::make('has_representative')->reactive()->label('Has Representative?'),
-                TextInput::make('claimed_by')->label('Representative Name')->visible(fn ($get) => $get('has_representative')),
-            ])->label('Claimed By Representative'),
-            Grid::make(2)->schema($fields->toArray())
+
+            Grid::make(2)->schema([
+                Checkbox::make('data.claimed')->default(true)->label('Claim Dividend?')->inline(false),
+                TextInput::make('data.gift_certificate_control_number')
+                    ->prefix($this->dividend->release->gift_certificate_prefix)
+                    ->maxLength(4)
+                    ->required()
+                    ->rule(Rule::unique('dividends', 'gift_certificate_control_number')->where('release_id', $this->dividend->release_id))
+                    ->visible($this->dividend->release->gift_certificate_amount > 0 || $this->dividend->release->gift_certificate_prefix)
+                    ->hidden($this->dividend->gift_certificate_control_number != null),
+            ]),
+            Fieldset::make('Particulars')->schema(collect($this->dividend->particulars)->contains('claimed', false) ? $fields->toArray() : [
+                Placeholder::make('claimed_particulars')->content('All particulars claimed.')->disableLabel()
+            ]),
+            Fieldset::make('Claimed By')->schema([
+                Radio::make('data.claimed_by')->options([
+                    1 => 'Member',
+                    2 => 'SPA',
+                    3 => 'Authorized Representative',
+                ])->disableLabel()
+                    ->default(1)
+                    ->afterStateUpdated(function ($set, $state) {
+                        if ($state == 2) {
+                            $set('data.claimed_by_name', collect($this->dividend->user->member_information->spa)->first());
+                        } else {
+                            $set('data.claimed_by_name', null);
+                        }
+                    })
+                    ->reactive(),
+                TextInput::make('data.claimed_by_name')->label(fn ($get) => match (intval($get('data.claimed_by'))) {
+                    2 => 'SPA Name',
+                    3 => 'Representative Name',
+                    default => 'Member Name',
+                })->validationAttribute('name')->required()->visible(fn ($get) => $get('data.claimed_by') != 1),
+            ]),
         ];
     }
 
@@ -66,6 +93,8 @@ class CashierReleaseDividendManagement extends Component implements HasForms
 
     public function release()
     {
+        $this->form->validate();
+
         DB::beginTransaction();
         if ($this->proof_of_release) {
             $path = storage_path('app/proof_of_release/' . $this->dividend->id . '-' . now()->timestamp . '-proof.png');
@@ -73,16 +102,22 @@ class CashierReleaseDividendManagement extends Component implements HasForms
             $this->dividend->addMedia($path)->toMediaCollection('proof_of_release');
         }
         $new_particulars = $this->dividend->particulars;
-        foreach ($this->data as $key => $value) {
-            $new_particulars[str($key)->replace('_', ' ')->toString()] = $value;
+        foreach ($this->data['particulars'] ?? [] as $key => $value) {
+            if (!$new_particulars[$key]['claimed'])
+                $new_particulars[$key]['claimed'] = $value;
         }
+
         $this->dividend->update([
-            'status' => Dividend::RELEASED,
+            'status' => $this->data['claimed'] ? Dividend::RELEASED : Dividend::FOR_RELEASE,
+            'claimed' => $this->data['claimed'],
             'released_by' => auth()->id(),
             'released_at' => now(),
+            'gift_certificate_control_number' => $this->dividend->gift_certificate_control_number ?? $this->data['gift_certificate_control_number'],
             'particulars' => $new_particulars,
-            'claimed_by' => $this->has_representative ? $this->claimed_by : null,
+            'claimed_by' => $this->data['claimed_by'] != 1 && $this->data['claimed'] ? $this->data['claimed_by_name'] : null,
         ]);
+
+
 
         DB::commit();
         Notification::make()->title('Dividend released successfully.')->success()->send();

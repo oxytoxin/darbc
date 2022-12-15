@@ -138,7 +138,10 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
         $data = collect();
         $users = User::with(['active_restriction', 'member_information'])->whereRelation('member_information', 'status', MemberInformation::STATUS_ACTIVE)->get();
         $now = now();
-        $particulars = json_encode(collect($this->release->particulars)->flatMap(fn ($particular, $key) => [$key => ''])->toArray());
+        $particulars = json_encode(collect($this->release->particulars)->map(fn ($particular, $key) => [
+            'name' => $key,
+            'claimed' => false,
+        ])->values()->toArray());
         foreach ($users as $user) {
             if ($this->restrict_by_default) {
                 $restrictions = $user->active_restriction?->entries ?? [];

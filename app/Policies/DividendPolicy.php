@@ -12,6 +12,6 @@ class DividendPolicy
 
     public function release(User $user, Dividend $dividend)
     {
-        return $dividend->status === Dividend::FOR_RELEASE;
+        return $dividend->status === Dividend::FOR_RELEASE || (Dividend::RELEASED && !$dividend->claimed);
     }
 }

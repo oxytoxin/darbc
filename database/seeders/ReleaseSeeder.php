@@ -15,5 +15,15 @@ class ReleaseSeeder extends Seeder
      */
     public function run()
     {
+        Release::create([
+            'name' => 'Pamaskong Handog 2022',
+            'gift_certificate_prefix' => 'PS2023',
+            'gift_certificate_amount' => 1000,
+            'total_amount' => 15130000,
+            'particulars' => [
+                'Calendar' => '1 set',
+                'Pineapple Products' => '2 cans',
+            ],
+        ]);
     }
 }

@@ -1,14 +1,14 @@
 <table class="min-w-full border divide-y divide-gray-500">
     <thead class="bg-primary-500">
         <tr>
-            <th scope="col" class="py-2.5 w-[6rem] text-white px-3 text-left font-semibold col-span-3">
+            <th scope="col" class="py-2.5 min-w-[6rem] text-white px-3 text-left font-semibold col-span-3">
                 DARBC ID
             </th>
-            <th scope="col" class="py-2.5 w-[12rem] text-white px-3 text-left font-semibold col-span-3">
+            <th scope="col" class="py-2.5 min-w-[12rem] text-white px-3 text-left font-semibold col-span-3">
                 Last Name
                 <x-tables::search-input class="text-black" wire-model="tableColumnSearchQueries.surname" />
             </th>
-            <th scope="col" class="py-2.5 w-[12rem] text-white px-3 text-left font-semibold col-span-3">
+            <th scope="col" class="py-2.5 min-w-[12rem] text-white px-3 text-left font-semibold col-span-3">
                 First Name
                 <x-tables::search-input class="text-black" wire-model="tableColumnSearchQueries.first_name" />
             </th>

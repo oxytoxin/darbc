@@ -66,6 +66,7 @@ class MemberManagement extends Component implements HasTable
                 ->colors([
                     'success'
                 ])
+                ->sortable()
                 ->formatStateUsing(fn ($state) => $state == '0' ? 'Original' : ordinal($state) . ' Successor')
                 ->label('Ownership'),
             BadgeColumn::make('status')

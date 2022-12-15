@@ -41,8 +41,11 @@ class SeedExtraMembers extends Command
             $names = array_map('trim', explode('/', $data["NAME"]));
             $darbc_segments = explode('.', $data["DARBC ID"]);
             $darbc_id = $darbc_segments[0];
+            $original_user = User::with('member_information')->whereRelation('member_information', 'darbc_id', $darbc_id)->whereRelation('member_information', 'is_darbc_member', true)->first();
             $succession = $darbc_segments[1] - 1;
-            $lineage_identifier = Str::random(10);
+            // if (!$original_user)
+            //     dd($darbc_id);
+            $lineage_identifier = $original_user->member_information->lineage_identifier;
 
             foreach ($names as $key => $name) {
                 $status = 1;
@@ -115,16 +118,13 @@ class SeedExtraMembers extends Command
 
                 $member->lineage_identifier = $lineage_identifier;
                 $member->succession_number = $succession;
-                if ($key > 0) {
-                    $member->original_member_id = $original_member_id ?? null;
-                }
-                $member->membership_status_id = $key == 0 ? MembershipStatus::ORIGINAL : MembershipStatus::REPLACEMENT;
+                $member->original_member_id = $original_user->id;
+                $member->membership_status_id = MembershipStatus::REPLACEMENT;
                 $member->darbc_id = $darbc_id;
                 $member->status = $status;
                 $member->children = [];
 
                 $member->save();
-                $original_member_id = $user->id;
                 $succession += 1;
             }
             $this->output->progressAdvance();

@@ -9,7 +9,7 @@ class MiscellaneousController extends Controller
 {
     public function redirect()
     {
-        switch (auth()->user()->active_role?->id) {
+        switch (session('active_role') ?? auth()->user()->active_role?->id) {
             case Role::RELEASE_ADMIN:
                 return redirect()->route('release-admin.dashboard');
                 break;

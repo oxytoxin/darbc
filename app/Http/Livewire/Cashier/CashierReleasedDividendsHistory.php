@@ -4,9 +4,12 @@ namespace App\Http\Livewire\Cashier;
 
 use Livewire\Component;
 use App\Models\Dividend;
+use App\Models\User;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Filters\Layout;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Concerns\InteractsWithTable;
 
 class CashierReleasedDividendsHistory extends Component implements HasTable
@@ -15,7 +18,7 @@ class CashierReleasedDividendsHistory extends Component implements HasTable
 
     protected function getTableQuery()
     {
-        return Dividend::with('user.member_information')->whereStatus(Dividend::RELEASED)->whereReleasedBy(auth()->id());
+        return Dividend::with('user.member_information')->whereNotNull('released_by')->latest('released_at');
     }
 
     protected function getTableColumns()
@@ -24,24 +27,17 @@ class CashierReleasedDividendsHistory extends Component implements HasTable
             TextColumn::make('user.member_information.darbc_id')
                 ->label('DARBC ID')
                 ->searchable(),
+            TextColumn::make('cashier.full_name')
+                ->label('Cashier'),
             TextColumn::make('user.surname')
-                ->label('Last Name')
+                ->label('Member Last Name')
                 ->searchable(isIndividual: true),
             TextColumn::make('user.first_name')
-                ->label('First Name')
+                ->label('Member First Name')
                 ->searchable(isIndividual: true),
-            TextColumn::make('gross_amount')
-                ->sortable()
-                ->label('Gross')
-                ->money('PHP', true),
-            TextColumn::make('deductions_amount')
-                ->sortable()
-                ->label('Deductions')
-                ->money('PHP', true),
-            TextColumn::make('net_amount')
-                ->label('Net')
-                ->sortable(['gross_amount', 'deductions_amount'])
-                ->money('PHP', true),
+            TextColumn::make('released_at')
+                ->label('Release Date')
+                ->dateTime('h:i A m/d/Y'),
         ];
     }
 
@@ -53,6 +49,21 @@ class CashierReleasedDividendsHistory extends Component implements HasTable
                 ->button()
                 ->url(fn (Dividend $record) => route('cashier.dividends.payslip', ['dividend' => $record])),
         ];
+    }
+
+    protected function getTableFilters(): array
+    {
+        return [
+            SelectFilter::make('released_by')
+                ->label('Cashier')
+                ->placeholder('All')
+                ->options(User::whereRelation('roles', 'name', 'cashier')->get()->pluck('full_name', 'id')),
+        ];
+    }
+
+    protected function getTableFiltersLayout(): ?string
+    {
+        return Layout::AboveContent;
     }
 
     public function render()

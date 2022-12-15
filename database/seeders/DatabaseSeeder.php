@@ -22,8 +22,9 @@ class DatabaseSeeder extends Seeder
         $this->call(UserSeeder::class);
         $this->call(ClusterSeeder::class);
         $this->call(MembershipStatusSeeder::class);
-        $this->call(PhilippineAddressesSeeder::class);
+        // $this->call(PhilippineAddressesSeeder::class);
         // $this->call(MemberInformationSeeder::class);
+        $this->call(ReleaseSeeder::class);
         $this->command->call('seed:members');
         $this->command->call('seed:extra');
         $this->command->call('seed:spa');

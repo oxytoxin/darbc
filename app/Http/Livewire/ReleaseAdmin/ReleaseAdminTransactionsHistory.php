@@ -2,12 +2,20 @@
 
 namespace App\Http\Livewire\ReleaseAdmin;
 
-use App\Models\Dividend;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Concerns\InteractsWithTable;
-use Filament\Tables\Contracts\HasTable;
+use App\Models\User;
 use Livewire\Component;
+use App\Models\Dividend;
+use Illuminate\Support\HtmlString;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Filters\Layout;
+use Filament\Forms\Components\Textarea;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Concerns\InteractsWithTable;
 
 class ReleaseAdminTransactionsHistory extends Component implements HasTable
 {
@@ -20,7 +28,7 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
 
     protected function getDefaultTableSortColumn(): ?string
     {
-        return 'created_at';
+        return 'released_at';
     }
 
     protected function getDefaultTableSortDirection(): ?string
@@ -31,10 +39,11 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
     protected function getTableColumns()
     {
         return [
-            TextColumn::make('created_at')
+            TextColumn::make('released_at')
                 ->label('DATE')
                 ->sortable()
-                ->dateTime('h:i A, F d, Y'),
+                ->wrap()
+                ->dateTime('h:i A m/d/Y'),
             TextColumn::make('user.surname')
                 ->label('Last Name')
                 ->sortable()
@@ -60,6 +69,63 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                 ->sortable(['gross_amount'])
                 ->money('PHP', true),
         ];
+    }
+
+    protected function getTableActions()
+    {
+        return [
+
+
+            Action::make('void')
+                ->action(fn ($record, $data) => $record->update([
+                    'remarks' => $data['remarks'],
+                    'voided' => true,
+                ]))
+                ->form([
+                    Textarea::make('remarks')
+                        ->label('Remarks')
+                        ->required(),
+                ])
+                ->modalWidth('md')
+                ->visible(fn ($record) => !$record->voided)
+                ->label('Void')
+                ->button(),
+            ViewAction::make('remarks')
+                ->label('Remarks')
+                ->icon(null)
+                ->button()
+                ->visible(fn ($record) => $record->remarks && $record->voided)
+                ->modalContent(fn ($record) => new HtmlString('<div class="p-4 whitespace-pre">' . $record->remarks . '</div>'))
+                ->modalHeading('Payslip'),
+            ActionGroup::make([
+                ViewAction::make('proof_of_release')
+                    ->label('Proof of Release')
+                    ->icon('heroicon-o-photograph')
+                    ->modalContent(fn ($record) => view('livewire.cashier.components.proof_of_release', ['dividend' => $record]))
+                    ->modalHeading('Proof of Release')
+                    ->visible(fn ($record) => $record->getFirstMedia('proof_of_release')),
+                ViewAction::make('payslip')
+                    ->label('Payslip')
+                    ->icon('heroicon-o-document')
+                    ->modalContent(fn ($record) => view('livewire.cashier.components.payslip', ['dividend' => $record]))
+                    ->modalHeading('Payslip'),
+            ]),
+        ];
+    }
+
+    protected function getTableFilters(): array
+    {
+        return [
+            SelectFilter::make('released_by')
+                ->label('Cashier')
+                ->placeholder('All')
+                ->options(User::whereRelation('roles', 'name', 'cashier')->get()->pluck('full_name', 'id')),
+        ];
+    }
+
+    protected function getTableFiltersLayout(): ?string
+    {
+        return Layout::AboveContent;
     }
 
     public function render()

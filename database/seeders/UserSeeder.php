@@ -18,14 +18,15 @@ class UserSeeder extends Seeder
     public function run()
     {
         $release_admin = User::create([
-            'first_name' => 'MARK JOHN LERRY',
-            'middle_name' => 'ACOSTA',
-            'surname' => 'CASERO',
+            'first_name' => 'JOHN EFFIE',
+            'surname' => 'BELARMA',
             'username' => 'admin',
             'password' => Hash::make('password'),
         ]);
 
         $release_admin->roles()->attach(Role::RELEASE_ADMIN);
+        $release_admin->roles()->attach(Role::OFFICE_STAFF);
+        $release_admin->roles()->attach(Role::CASHIER);
 
         $cashier = User::create([
             'first_name' => 'JOHNREY',

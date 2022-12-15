@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Cashier;
 
 use App\Models\Release;
 use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -26,6 +27,8 @@ class CashierReleasesIndex extends Component implements HasTable
                 ->sortable()
                 ->label('Total Amount')
                 ->money('PHP', true),
+            IconColumn::make('disbursed')
+                ->boolean(),
             TextColumn::make('created_at')
                 ->sortable()
                 ->label('Date Created')

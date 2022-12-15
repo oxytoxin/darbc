@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Livewire\ReleaseAdmin\ReleaseAdminClusterManagement;
+use App\Models\Role;
+use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\Shared\MemberDividends;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminDashboard;
-use App\Http\Livewire\ReleaseAdmin\ReleaseAdminMemberManagement;
-use App\Http\Livewire\ReleaseAdmin\ReleaseAdminMemberRestrictionsManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminRegisterMember;
+use App\Http\Livewire\ReleaseAdmin\ReleaseAdminUserManagement;
+use App\Http\Livewire\ReleaseAdmin\ReleaseAdminMemberManagement;
+use App\Http\Livewire\ReleaseAdmin\ReleaseAdminClusterManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminReleaseManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminTransactionsHistory;
-use App\Http\Livewire\ReleaseAdmin\ReleaseAdminUserManagement;
-use App\Http\Livewire\Shared\MemberDividends;
-use Illuminate\Support\Facades\Route;
+use App\Http\Livewire\ReleaseAdmin\ReleaseAdminMemberRestrictionsManagement;
 
-Route::middleware('auth')->prefix('release-admin')->name('release-admin.')->group(function () {
+Route::middleware(['auth', 'role:' . Role::RELEASE_ADMIN])->prefix('release-admin')->name('release-admin.')->group(function () {
     Route::get('/', ReleaseAdminDashboard::class)->name('dashboard');
     Route::get('/manage-members', ReleaseAdminMemberManagement::class)->name('manage-members');
     Route::get('/register-members', ReleaseAdminRegisterMember::class)->name('register-members');

@@ -16,6 +16,7 @@ class Dividend extends Model implements HasMedia
         'restriction_entries' => 'array',
         'particulars' => 'array',
         'released_at' => 'immutable_datetime',
+        'voided' => 'boolean',
     ];
 
     const PENDING = 1;

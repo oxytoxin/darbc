@@ -9,8 +9,9 @@ use App\Http\Livewire\OfficeStaff\OfficeStaffMemberManagement;
 use App\Http\Livewire\OfficeStaff\OfficeStaffReleaseDetailsManagement;
 use App\Http\Livewire\OfficeStaff\OfficeStaffReleaseDividendsManagement;
 use App\Http\Livewire\OfficeStaff\OfficeStaffMemberRestrictionsManagement;
+use App\Models\Role;
 
-Route::middleware('auth')->prefix('office-staff')->name('office-staff.')->group(function () {
+Route::middleware(['auth', 'role:' . Role::OFFICE_STAFF])->prefix('office-staff')->name('office-staff.')->group(function () {
     Route::get('/', OfficeStaffDashboard::class)->name('dashboard');
     Route::get('/manage-members', OfficeStaffMemberManagement::class)->name('manage-members');
     Route::get('/register-members', OfficeStaffRegisterMember::class)->name('register-members');

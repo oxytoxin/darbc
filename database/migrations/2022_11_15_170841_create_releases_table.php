@@ -17,8 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->unsignedBigInteger('total_amount');
+            $table->string('gift_certificate_prefix')->nullable();
+            $table->decimal('gift_certificate_amount')->default(0);
             $table->json('particulars')->default(DB::raw('(JSON_ARRAY())'));
-            $table->string('control_number_prefix')->nullable();
             $table->boolean('disbursed')->default(false);
             $table->timestamps();
         });

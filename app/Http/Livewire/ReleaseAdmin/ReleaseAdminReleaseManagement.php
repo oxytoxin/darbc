@@ -11,6 +11,7 @@ use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -64,7 +65,8 @@ class ReleaseAdminReleaseManagement extends Component implements HasTable
                     ->numeric()
                     ->minValue(1)
                     ->label('Total Amount'),
-                TextInput::make('control_number_prefix'),
+                TextInput::make('gift_certificate_prefix'),
+                TextInput::make('gift_certificate_amount')->numeric()->minValue(0),
                 KeyValue::make('particulars'),
             ])
                 ->modalHeading('Edit Release')
@@ -75,6 +77,11 @@ class ReleaseAdminReleaseManagement extends Component implements HasTable
                 })
                 ->visible(fn ($record) => $record->disbursed == false)
                 ->button(),
+            DeleteAction::make()->action(function ($record) {
+                $record->dividends()->delete();
+                $record->delete();
+                Notification::make()->title('Deleted!')->success()->send();
+            })->visible(fn ($record) => $record->disbursed == false)->button(),
         ];
     }
 
@@ -87,11 +94,15 @@ class ReleaseAdminReleaseManagement extends Component implements HasTable
                 ->numeric()
                 ->minValue(1)
                 ->label('Total Amount'),
-            TextInput::make('control_number_prefix')
-                ->default('PS2023'),
+            TextInput::make('gift_certificate_prefix')
+                ->label('Gift Certificate Control Number Prefix')
+                ->nullable(),
+            TextInput::make('gift_certificate_amount')
+                ->label('Gift Certificate Amount')
+                ->default(0)
+                ->numeric()->minValue(0),
             KeyValue::make('particulars')
                 ->default([
-                    'DARBC Gift Certificate' => 'worth 1000',
                     'Calendar' => '1 set',
                     'Pineapple Products' => '2 cans'
                 ]),
@@ -114,7 +125,8 @@ class ReleaseAdminReleaseManagement extends Component implements HasTable
         DB::beginTransaction();
         Release::create([
             'name' => $this->data['name'],
-            'control_number_prefix' => $this->data['control_number_prefix'],
+            'gift_certificate_prefix' => $this->data['gift_certificate_prefix'],
+            'gift_certificate_amount' => $this->data['gift_certificate_amount'],
             'total_amount' => $this->data['total_amount'],
             'particulars' => $this->data['particulars'],
         ]);

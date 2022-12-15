@@ -2,6 +2,33 @@
 
 @tailwind base;
 
+:root {
+    --primary: #1B0052;
+    --secondary: cornflowerblue;
+}
+
+/* Firefox */
+.sidebar {
+    scrollbar-width: thin;
+    scrollbar-color: var(--secondary) var(--primary);
+}
+
+/* Chrome, Edge, and Safari */
+.sidebar::-webkit-scrollbar {
+    width: 10px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: var(--primary);
+    border-radius: 5px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background-color: var(--secondary);
+    border-radius: 14px;
+    border: 3px solid var(--primary);
+}
+
 /**
  * Remove the default box-shadow for invalid elements to prevent
  * inputs in Livewire components showing with a

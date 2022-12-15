@@ -20,11 +20,15 @@ return new class extends Migration
             $table->integer('gross_amount');
             $table->integer('deductions_amount')->default(0);
             $table->tinyInteger('status')->default(1);
+            $table->boolean('voided')->default(false);
+            $table->boolean('claimed')->default(false);
             $table->json('particulars');
             $table->json('restriction_entries');
             $table->foreignId('released_by')->nullable()->constrained('users');
             $table->dateTime('released_at')->nullable();
+            $table->string('gift_certificate_control_number')->nullable();
             $table->string('claimed_by')->nullable();
+            $table->text('remarks')->nullable();
             $table->timestamps();
         });
     }

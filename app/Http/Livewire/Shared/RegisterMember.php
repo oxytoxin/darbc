@@ -262,6 +262,7 @@ class RegisterMember extends Component implements HasForms
             'gender_id' => $this->data['gender_id'],
             'blood_type' => $this->data['blood_type'],
             'religion' => $this->data['religion'],
+            'is_darbc_member' => $this->data['membership_status'] == MembershipStatus::ORIGINAL,
             'membership_status_id' => $this->data['membership_status'],
             'occupation_id' => $this->data['occupation'],
             'occupation_details' => $this->data['occupation_details'],

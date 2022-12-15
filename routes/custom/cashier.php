@@ -8,9 +8,10 @@ use App\Http\Livewire\Cashier\CashierReleasedDividendsHistory;
 use App\Http\Livewire\Cashier\CashierReleaseDividendManagement;
 use App\Http\Livewire\Cashier\CashierReleaseDividends;
 use App\Http\Livewire\Cashier\CashierReleasesIndex;
+use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('auth')->prefix('cashier')->name('cashier.')->group(function () {
+Route::middleware(['auth', 'role:' . Role::CASHIER])->prefix('cashier')->name('cashier.')->group(function () {
     Route::get('/', CashierDashboard::class)->name('dashboard');
     Route::get('/releases', CashierReleasesIndex::class)->name('releases.index');
     Route::get('/releases/{release}/dividends', CashierReleaseDividends::class)->name('releases.dividends');
