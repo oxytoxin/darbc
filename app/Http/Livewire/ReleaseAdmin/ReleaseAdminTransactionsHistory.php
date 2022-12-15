@@ -102,7 +102,7 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                     ->label('Proof of Release')
                     ->icon('heroicon-o-photograph')
                     ->modalContent(fn ($record) => view('livewire.cashier.components.proof_of_release', ['dividend' => $record]))
-                    ->modalHeading('Proof of Release')
+                    ->modalHeading('Proof of Release'),
                 ViewAction::make('payslip')
                     ->label('Payslip')
                     ->icon('heroicon-o-document')
