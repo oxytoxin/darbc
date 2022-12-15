@@ -92,6 +92,23 @@
 
                         @if ($latest_release)
                             <div class="flex flex-col justify-between p-3 bg-white border rounded-md">
+                                <section>
+                                    <p class="font-medium text-gray-500">{{ $latest_release->name }}</p>
+                                </section>
+
+                                <div class="leading-3">
+                                    <section class="flex items-center justify-between text-xs">
+                                        <div>
+                                            <h3>Total Releases</h3>
+                                            <h3 class="text-2xl font-medium text-custom-orange">{{ $latest_release->released_dividends_count }}</h3>
+                                        </div>
+                                        <div>
+                                            <h3>Amount Released</h3>
+                                            <h3 class="text-sm font-medium text-custom-blue">
+                                                {{ Akaunting\Money\Money::PHP(($latest_release->released_dividends_gross ?? 0) - ($latest_release->released_dividends_deductions ?? 0), false) }}</h3>
+                                        </div>
+                                    </section>
+                                </div>
                                 <div class="flex items-center justify-end">
                                     <section class="flex items-center space-x-1 text-custom-blue">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
@@ -102,21 +119,6 @@
                                         </h1>
                                     </section>
                                 </div>
-                                <div class="leading-3">
-                                    <section class="flex items-center justify-between">
-                                        <h1 class="text-2xl font-medium text-custom-orange">{{ $latest_release->released_dividends_count }}</h1>
-                                        <h1 class="text-2xl font-bold text-custom-blue">{{ $latest_release->dividends_count }}</h1>
-                                    </section>
-                                    <progress id="file" value="{{ $latest_release->released_dividends_count }}" max="{{ $latest_release->dividends_count }}"></progress>
-                                    <section class="flex items-center justify-between mt-1">
-                                        <h1 class="text-sm font-medium text-gray-500">
-                                            {{ Akaunting\Money\Money::PHP(($latest_release->released_dividends_gross ?? 0) - ($latest_release->released_dividends_deductions ?? 0), false) }}</h1>
-                                        <h1 class="text-sm font-bold text-custom-blue">{{ Akaunting\Money\Money::PHP($latest_release->total_amount, true) }}</h1>
-                                    </section>
-                                </div>
-                                <section>
-                                    <p class="font-medium text-gray-500">{{ $latest_release->name }} release statistics</p>
-                                </section>
                             </div>
                         @endif
                     </div>
