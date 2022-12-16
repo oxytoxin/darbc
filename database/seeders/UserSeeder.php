@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'first_name' => 'John Effie',
             'surname' => 'Belarma',
             'username' => 'admin',
-            'password' => Hash::make('password'),
+            'password' => Hash::make('Admindarbc1988'),
         ]);
 
         $release_admin->roles()->attach(Role::RELEASE_ADMIN);
