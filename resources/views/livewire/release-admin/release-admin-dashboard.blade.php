@@ -121,13 +121,38 @@
                             </div>
                         @endif
                     </div>
+                    <h1 class="flex items-center justify-between mt-10 mb-2 text-xl font-bold text-custom-blue">
+                        <p>Cashier Releases</p>
+                        <select wire:model.live="release_id" class="text-sm rounded-lg" id="releases">
+                            @foreach ($releases as $release)
+                                <option value="{{ $release->id }}">{{ $release->name }}</option>
+                            @endforeach
+                        </select>
+                    </h1>
+                    <div wire:poll.2000ms class="grid grid-cols-3 gap-2">
+                        @foreach ($cashiers as $cashier)
+                            <div class="flex flex-col justify-between p-3 bg-white border rounded-md">
+                                <section>
+                                    <p class="font-medium text-gray-500">{{ $cashier->first_name . ' ' . $cashier->surname }}</p>
+                                </section>
 
-                    <div class="my-3 bg-white border p-3 h-[250px]">
-                        <h1 class="font-semibold text-custom-blue">2022 members grow chart</h1>
-                        <div class="grid h-full place-content-center">
-                            <h1 class="text-gray-500 animate-bounce">Coming soon</h1>
-                        </div>
+                                <div class="leading-3">
+                                    <section class="flex justify-between text-xs">
+                                        <div>
+                                            <h3>Total Releases</h3>
+                                            <h3 class="text-2xl font-medium text-custom-orange">{{ $cashier->cashier_released_dividends_count }}</h3>
+                                        </div>
+                                        <div>
+                                            <h3>Amount Released</h3>
+                                            <h3 class="text-lg font-medium text-custom-blue">
+                                                {{ Akaunting\Money\Money::PHP(($cashier->cashier_released_dividends_gross ?? 0) - ($cashier->cashier_released_dividends_deductions ?? 0), false) }}</h3>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
+
                 </div>
                 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
                 <script>
@@ -139,7 +164,7 @@
                         calendar.render();
                     });
                 </script>
-                <div class="bg-white w-[22rem] p-2 rounded-md border">
+                <div wire:ignore class="bg-white w-[22rem] p-2 rounded-md border">
                     <div id="calendar"></div>
                     <section class="px-3 mt-3">
                         <h2 class="font-semibold text-gray-900">Upcoming Events</h2>
@@ -149,7 +174,7 @@
         </div>
 
         <!-- Recent Transactions -->
-        <div class="p-3 bg-white border rounded-md">
+        <div class="p-3 mt-8 bg-white border rounded-md">
             <div class="flex items-center justify-between">
                 <h1 class="font-semibold text-custom-blue">Recent Transactions</h1>
                 <a href="{{ route('release-admin.transactions') }}" class="flex items-center space-x-1 text-custom-blue">
@@ -217,6 +242,12 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="my-3 bg-white border p-3 h-[250px]">
+        <h1 class="font-semibold text-custom-blue">2022 members grow chart</h1>
+        <div class="grid h-full place-content-center">
+            <h1 class="text-gray-500 animate-bounce">Coming soon</h1>
         </div>
     </div>
     <!-- Components -->

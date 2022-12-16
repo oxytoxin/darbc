@@ -97,7 +97,7 @@
                                 </section>
 
                                 <div class="leading-3">
-                                    <section class="flex items-center justify-between text-xs">
+                                    <section class="flex justify-between text-xs">
                                         <div>
                                             <h3>Total Releases</h3>
                                             <h3 class="text-2xl font-medium text-custom-orange">{{ $latest_release->released_dividends_count }}</h3>

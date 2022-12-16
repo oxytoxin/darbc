@@ -7,23 +7,40 @@ use App\Models\User;
 use App\Models\Release;
 use Livewire\Component;
 use App\Models\MemberInformation;
+use App\Models\Role;
 
 class ReleaseAdminDashboard extends Component
 {
+    public $release_id;
+
+    public function mount()
+    {
+        $this->release_id = Release::latest()->whereDisbursed(true)->first()->id;
+    }
+
     public function render()
     {
+        $latest_release = Release::whereDisbursed(true)->latest()
+            ->withCount(['dividends', 'released_dividends'])
+            ->withSum('released_dividends as released_dividends_gross', 'gross_amount')
+            ->withSum('released_dividends as released_dividends_deductions', 'deductions_amount')
+            ->first();
+
+
         return view('livewire.release-admin.release-admin-dashboard', [
             'total_members_count' => MemberInformation::darbcMember()->count(),
             'deceased_members_count' => MemberInformation::deceased()->count(),
             'original_members_count' => MemberInformation::original()->count(),
             'replacement_members_count' => MemberInformation::replacement()->count(),
             'members_on_hold_count' => User::onHold()->count(),
-            'latest_release' => Release::whereDisbursed(true)->latest()
-                ->withCount(['dividends', 'released_dividends'])
-                ->withSum('released_dividends as released_dividends_gross', 'gross_amount')
-                ->withSum('released_dividends as released_dividends_deductions', 'deductions_amount')
-                ->first(),
+            'latest_release' => $latest_release,
+            'releases' => Release::get(),
             'recent_transactions' => Dividend::whereStatus(Dividend::RELEASED)->with(['cashier', 'user', 'release'])->latest()->take(7)->get(),
+            'cashiers' => User::whereRelation('roles', 'role_id', Role::CASHIER)
+                ->withCount(['cashier_released_dividends' => fn ($query) => $query->whereReleaseId($this->release_id)])
+                ->withSum(['cashier_released_dividends as cashier_released_dividends_gross' => fn ($query) => $query->whereReleaseId($this->release_id)], 'gross_amount')
+                ->withSum(['cashier_released_dividends as cashier_released_dividends_deductions' => fn ($query) => $query->whereReleaseId($this->release_id)], 'deductions_amount')
+                ->get(),
         ]);
     }
 }
