@@ -4,25 +4,27 @@
 @endphp
 @section('body')
     <div class="relative h-full">
-        <div class="w-[18rem] fixed top-0 left-0 bottom-0 bg-white overflow-x-hidden sidebar  px-[1rem] py-[1.2rem]">
+        <div class="w-[18rem] fixed top-0 left-0 bottom-0 bg-white flex flex-col overflow-hidden  px-[1rem] py-[1.2rem]">
             <section class="flex items-center space-x-2">
                 <img src="/assets/darbc-logo.svg" alt="darbc logo" class="w-[3rem] h-[3rem]">
                 <h1 class="text-3xl font-[900] text-custom-blue">DARBC</h1>
             </section>
 
-            <div class="mt-[2.5rem] z-[9999]">
-                @if ($roles->find(1))
-                    <x-sidebars.release-admin />
-                @endif
-                @if ($roles->find(2))
-                    <x-sidebars.cashier />
-                @endif
-                @if ($roles->find(3))
-                    <x-sidebars.office-staff />
-                @endif
-                @if ($roles->find(4))
-                    <x-sidebars.land-admin />
-                @endif
+            <div class="overflow-y-auto h-full sidebar mt-[2.5rem] z-[9999]">
+                <div>
+                    @if ($roles->find(1))
+                        <x-sidebars.release-admin />
+                    @endif
+                    @if ($roles->find(2))
+                        <x-sidebars.cashier />
+                    @endif
+                    @if ($roles->find(3))
+                        <x-sidebars.office-staff />
+                    @endif
+                    @if ($roles->find(4))
+                        <x-sidebars.land-admin />
+                    @endif
+                </div>
             </div>
 
             <!-- SVG lines -->

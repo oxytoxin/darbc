@@ -72,8 +72,7 @@ class ReleaseAdminOfficeStaffManagement extends Component implements HasTable
                 })
                 ->button(),
             DeleteAction::make()->action(function ($record) {
-                $record->roles()->detach();
-                $record->delete();
+                $record->roles()->detach(Role::OFFICE_STAFF);
                 Notification::make()->title('Deleted!')->success()->send();
             })->requiresConfirmation(),
         ];

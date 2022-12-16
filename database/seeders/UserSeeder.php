@@ -18,8 +18,8 @@ class UserSeeder extends Seeder
     public function run()
     {
         $release_admin = User::create([
-            'first_name' => 'JOHN EFFIE',
-            'surname' => 'BELARMA',
+            'first_name' => 'John Effie',
+            'surname' => 'Belarma',
             'username' => 'admin',
             'password' => Hash::make('password'),
         ]);
@@ -28,31 +28,33 @@ class UserSeeder extends Seeder
         $release_admin->roles()->attach(Role::OFFICE_STAFF);
         $release_admin->roles()->attach(Role::CASHIER);
 
-        $cashier = User::create([
-            'first_name' => 'JOHNREY',
-            'surname' => 'NACEDA',
-            'username' => 'cashier',
-            'password' => Hash::make('password'),
-        ]);
+        if (app()->environment('local')) {
+            $cashier = User::create([
+                'first_name' => 'JOHNREY',
+                'surname' => 'NACEDA',
+                'username' => 'cashier',
+                'password' => Hash::make('password'),
+            ]);
 
-        $cashier->roles()->attach(Role::CASHIER);
+            $cashier->roles()->attach(Role::CASHIER);
 
-        $office_staff = User::create([
-            'first_name' => 'JOHNREX',
-            'surname' => 'NACEDA',
-            'username' => 'office-staff',
-            'password' => Hash::make('password'),
-        ]);
+            $office_staff = User::create([
+                'first_name' => 'JOHNREX',
+                'surname' => 'NACEDA',
+                'username' => 'office-staff',
+                'password' => Hash::make('password'),
+            ]);
 
-        $office_staff->roles()->attach(Role::OFFICE_STAFF);
+            $office_staff->roles()->attach(Role::OFFICE_STAFF);
 
-        $land_admin = User::create([
-            'first_name' => 'MOGYAHID',
-            'surname' => 'ANSID',
-            'username' => 'land-admin',
-            'password' => Hash::make('password'),
-        ]);
+            $land_admin = User::create([
+                'first_name' => 'MOGYAHID',
+                'surname' => 'ANSID',
+                'username' => 'land-admin',
+                'password' => Hash::make('password'),
+            ]);
 
-        $land_admin->roles()->attach(Role::LAND_ADMIN);
+            $land_admin->roles()->attach(Role::LAND_ADMIN);
+        }
     }
 }

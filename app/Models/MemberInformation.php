@@ -28,6 +28,7 @@ class MemberInformation extends Model implements HasMedia
         'application_date' => 'immutable_date',
         'percentage' => 'decimal:2',
         'is_darbc_member' => 'boolean',
+        'split_claim' => 'boolean',
     ];
 
     public function registerMediaCollections(): void

@@ -151,7 +151,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                 'user_id' => $user->id,
                 'gross_amount' => $this->amount * $user->member_information->percentage,
                 'status' => Dividend::PENDING,
-                'particulars' => $particulars,
+                'particulars' => $user->member_information->split_claim ? json_encode([]) : $particulars,
                 'restriction_entries' => json_encode($restrictions ?? []),
                 'created_at' => $now,
                 'updated_at' => $now,

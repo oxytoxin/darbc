@@ -43,11 +43,11 @@ class CashierReleaseDividendManagement extends Component implements HasForms
                     ->maxLength(4)
                     ->required()
                     ->rule(Rule::unique('dividends', 'gift_certificate_control_number')->where('release_id', $this->dividend->release_id))
-                    ->visible($this->dividend->release->gift_certificate_amount > 0 || $this->dividend->release->gift_certificate_prefix)
+                    ->visible(!$this->dividend->user->member_information->split_claim && ($this->dividend->release->gift_certificate_amount > 0 || $this->dividend->release->gift_certificate_prefix))
                     ->hidden($this->dividend->gift_certificate_control_number != null),
             ]),
             Fieldset::make('Particulars')->schema(collect($this->dividend->particulars)->contains('claimed', false) ? $fields->toArray() : [
-                Placeholder::make('claimed_particulars')->content('All particulars claimed.')->disableLabel()
+                Placeholder::make('claimed_particulars')->content('No items to claim.')->disableLabel()
             ]),
             Fieldset::make('Claimed By')->schema([
                 Radio::make('data.claimed_by')->options([

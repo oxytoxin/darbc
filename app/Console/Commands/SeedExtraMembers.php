@@ -43,8 +43,6 @@ class SeedExtraMembers extends Command
             $darbc_id = $darbc_segments[0];
             $original_user = User::with('member_information')->whereRelation('member_information', 'darbc_id', $darbc_id)->whereRelation('member_information', 'is_darbc_member', true)->first();
             $succession = $darbc_segments[1] - 1;
-            // if (!$original_user)
-            //     dd($darbc_id);
             $lineage_identifier = $original_user->member_information->lineage_identifier;
 
             foreach ($names as $key => $name) {
@@ -111,6 +109,7 @@ class SeedExtraMembers extends Command
                 $member = MemberInformation::make();
                 $member->user_id = $user->id;
                 $member->is_darbc_member = false;
+                $member->split_claim = true;
                 $member->percentage = $percentage;
                 $member->gender_id = Gender::UNKNOWN;
                 $member->occupation_id = 5;

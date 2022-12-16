@@ -37,7 +37,7 @@
                         <p>Advance Profit Share</p>
                         <p>&nbsp;{{ $dividend->claimed ? Akaunting\Money\Money::PHP($dividend->net_amount, true) : 'UNCLAIMED' }}</p>
                     </div>
-                    @if ($dividend->release->gift_certificate_prefix || $dividend->release->gift_certificate_amount > 0)
+                    @if (!$this->dividend->user->member_information->split_claim && ($dividend->release->gift_certificate_prefix || $dividend->release->gift_certificate_amount > 0))
                         <div class="flex justify-between">
                             <p>Gift Certificate <br><span class="ml-2 text-xs font-semibold">(worth {{ Akaunting\Money\Money::PHP($dividend->release->gift_certificate_amount, true) }})</span></p>
                             <p class="font-sans font-semibold">{{ $dividend->gift_certificate_control_number ? $dividend->release->gift_certificate_prefix . $dividend->gift_certificate_control_number : 'UNCLAIMED' }}</p>

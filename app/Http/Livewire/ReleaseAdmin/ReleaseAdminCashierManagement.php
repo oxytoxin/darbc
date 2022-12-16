@@ -72,8 +72,7 @@ class ReleaseAdminCashierManagement extends Component implements HasTable
                 })
                 ->button(),
             DeleteAction::make()->action(function ($record) {
-                $record->roles()->detach();
-                $record->delete();
+                $record->roles()->detach(Role::CASHIER);
                 Notification::make()->title('Deleted!')->success()->send();
             })->requiresConfirmation(),
         ];

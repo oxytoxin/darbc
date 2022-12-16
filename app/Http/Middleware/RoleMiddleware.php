@@ -16,8 +16,10 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, $role)
     {
-        if (!$request->user()->roles()->where('role_id', $role)->exists())
-            abort(403);
+        if (!$request->user()->roles()->where('role_id', $role)->exists()) {
+            session(['active_role' => $request->user()->roles()->first()?->id]);
+            return redirect()->route('home');
+        }
         session(['active_role' => $role]);
         return $next($request);
     }

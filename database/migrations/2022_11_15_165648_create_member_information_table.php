@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('member_information', function (Blueprint $table) {
             $table->id();
             $table->boolean('is_darbc_member')->default(false);
+            $table->boolean('split_claim')->default(false);
             $table->tinyInteger('status')->default(1);
             $table->bigInteger('darbc_id');
             $table->decimal('percentage', 12, 8)->default(100);
