@@ -45,6 +45,7 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                 ->label('DATE')
                 ->sortable()
                 ->wrap()
+                ->size('sm')
                 ->dateTime('h:i A m/d/Y'),
             TextColumn::make('user.surname')
                 ->label('Last Name')
@@ -54,7 +55,9 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                 ->label('First Name')
                 ->searchable(isIndividual: true),
             TextColumn::make('release.name')
-                ->label('RELEASE NAME'),
+                ->label('RELEASE NAME')
+                ->wrap()
+                ->size('sm'),
             TextColumn::make('cashier.full_name')
                 ->label('CASHIER')
                 ->sortable(['cashier.surname']),
