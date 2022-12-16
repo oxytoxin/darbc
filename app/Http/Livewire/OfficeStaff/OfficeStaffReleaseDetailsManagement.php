@@ -30,6 +30,10 @@ class OfficeStaffReleaseDetailsManagement extends Component implements HasTable
     protected function getTableColumns()
     {
         return [
+            TextColumn::make('user.member_information.darbc_id')
+                ->label('DARBC ID')
+                ->sortable()
+                ->searchable(),
             TextColumn::make('user.surname')
                 ->label('Last Name')
                 ->sortable()
@@ -68,21 +72,14 @@ class OfficeStaffReleaseDetailsManagement extends Component implements HasTable
         ];
     }
 
-    protected function getDefaultTableSortColumn(): ?string
-    {
-        return 'user.surname';
-    }
-
-    protected function getDefaultTableSortDirection(): ?string
-    {
-        return 'asc';
-    }
-
     protected function getTableActions()
     {
         return [
             EditAction::make('edit')
                 ->action(function ($record, $data) {
+                    if (count($data['restriction_entries'])) {
+                        $data['status'] = Dividend::ON_HOLD;
+                    }
                     $record->update($data);
                     Notification::make()->title('Dividend updated!')->success()->send();
                 })

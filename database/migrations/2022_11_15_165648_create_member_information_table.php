@@ -19,6 +19,7 @@ return new class extends Migration
             $table->boolean('split_claim')->default(false);
             $table->tinyInteger('status')->default(1);
             $table->bigInteger('darbc_id');
+            $table->string('reference_number')->nullable();
             $table->decimal('percentage', 12, 8)->default(100);
             $table->foreignId('user_id')->constrained();
             $table->foreignId('cluster_id')->nullable()->constrained();

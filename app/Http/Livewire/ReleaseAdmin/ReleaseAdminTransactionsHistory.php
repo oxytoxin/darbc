@@ -12,6 +12,8 @@ use Filament\Forms\Components\Textarea;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -23,7 +25,7 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
 
     protected function getTableQuery()
     {
-        return Dividend::whereStatus(Dividend::RELEASED);
+        return Dividend::whereClaimed(true);
     }
 
     protected function getDefaultTableSortColumn(): ?string
@@ -74,8 +76,25 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
     protected function getTableActions()
     {
         return [
-
-
+            Action::make('edit')
+                ->action(function ($record, $data) {
+                    $record->update($data);
+                    Notification::make()->title('Control number updated.')->success()->send();
+                })
+                ->form([
+                    TextInput::make('gift_certificate_control_number')
+                        ->prefix(fn ($record) => $record->release->gift_certificate_prefix)
+                        ->label('Gift Certificate Control Number')
+                        ->maxLength(4)
+                ])
+                ->mountUsing(fn ($form, $record) => $form->fill([
+                    'gift_certificate_control_number' => $record->gift_certificate_control_number,
+                ]))
+                ->modalWidth('md')
+                ->visible(fn ($record) => !$record->voided)
+                ->label('GC')
+                ->outlined()
+                ->button(),
             Action::make('void')
                 ->action(fn ($record, $data) => $record->update([
                     'remarks' => $data['remarks'],

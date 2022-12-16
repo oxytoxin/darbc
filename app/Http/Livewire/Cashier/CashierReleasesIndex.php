@@ -28,6 +28,7 @@ class CashierReleasesIndex extends Component implements HasTable
                 ->label('Total Amount')
                 ->money('PHP', true),
             IconColumn::make('disbursed')
+                ->label('Disbursed By Office Staff')
                 ->boolean(),
             TextColumn::make('created_at')
                 ->sortable()
@@ -42,6 +43,7 @@ class CashierReleasesIndex extends Component implements HasTable
             ViewAction::make('view')
                 ->button()
                 ->color('success')
+                ->visible(fn ($record) => $record->disbursed)
                 ->url(fn ($record) => route('cashier.releases.dividends', ['release' => $record])),
         ];
     }

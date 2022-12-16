@@ -109,6 +109,7 @@ class SeedExtraMembers extends Command
                 $member = MemberInformation::make();
                 $member->user_id = $user->id;
                 $member->is_darbc_member = false;
+                $member->reference_number = $data["DARBC ID"];
                 $member->split_claim = true;
                 $member->percentage = $percentage;
                 $member->gender_id = Gender::UNKNOWN;

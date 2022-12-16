@@ -106,6 +106,7 @@ class SeedMembers extends Command
 
                 $member = MemberInformation::make();
                 $member->user_id = $user->id;
+                $member->reference_number = $data["REF"];
                 $member->is_darbc_member = $key == 0;
                 $member->percentage = $percentage;
 
