@@ -47,6 +47,10 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                 ->wrap()
                 ->size('sm')
                 ->dateTime('h:i A m/d/Y'),
+            TextColumn::make('gift_certificate_control_number')
+                ->label('GC')
+                ->size('sm')
+                ->prefix(fn ($record) => $record->release->gift_certificate_prefix),
             TextColumn::make('user.surname')
                 ->label('Last Name')
                 ->sortable()
