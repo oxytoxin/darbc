@@ -123,11 +123,14 @@
                     </div>
                     <h1 class="flex items-center justify-between mt-10 mb-2 text-xl font-bold text-custom-blue">
                         <p>Cashier Releases</p>
-                        <select wire:model.live="release_id" class="text-sm rounded-lg" id="releases">
-                            @foreach ($releases as $release)
-                                <option value="{{ $release->id }}">{{ $release->name }}</option>
-                            @endforeach
-                        </select>
+                        <div x-cloak x-data>
+                            <input wire:model="since" type="date" class="text-sm rounded">
+                            <select wire:model.live="release_id" class="text-sm rounded" id="releases">
+                                @foreach ($releases as $release)
+                                    <option value="{{ $release->id }}">{{ $release->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </h1>
                     <div wire:poll.2000ms class="grid grid-cols-3 gap-2">
                         @foreach ($cashiers as $cashier)
