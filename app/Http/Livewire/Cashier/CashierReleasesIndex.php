@@ -22,7 +22,8 @@ class CashierReleasesIndex extends Component implements HasTable
     protected function getTableColumns()
     {
         return [
-            TextColumn::make('name'),
+            TextColumn::make('name')
+                ->searchable(),
             TextColumn::make('total_amount')
                 ->sortable()
                 ->label('Total Amount')
