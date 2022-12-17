@@ -35,7 +35,7 @@ class ReleaseAdminDashboard extends Component
             'members_on_hold_count' => User::onHold()->count(),
             'latest_release' => $latest_release,
             'releases' => Release::get(),
-            'recent_transactions' => Dividend::whereStatus(Dividend::RELEASED)->with(['cashier', 'user', 'release'])->latest()->take(7)->get(),
+            'recent_transactions' => Dividend::whereStatus(Dividend::RELEASED)->with(['cashier', 'user', 'release'])->latest('released_at')->take(7)->get(),
             'cashiers' => User::whereRelation('roles', 'role_id', Role::CASHIER)
                 ->withCount(['cashier_released_dividends' => fn ($query) => $query->whereReleaseId($this->release_id)])
                 ->withSum(['cashier_released_dividends as cashier_released_dividends_gross' => fn ($query) => $query->whereReleaseId($this->release_id)], 'gross_amount')
