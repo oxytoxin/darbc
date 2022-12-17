@@ -29,17 +29,17 @@ class SeedUnclaimedReleases extends Command
      */
     public function handle()
     {
-        $this->output->writeln("Seeding Unclaimed Releases...");
-        $rows = SimpleExcelReader::create(storage_path('csv/unclaimed_releases.csv'))->getRows();
-        $rows->each(function ($data) {
-            Release::create([
-                'name' => $data["NAME"],
-                'total_amount' => $data["AMOUNT"],
-                'created_at' => date_create('01/01/' . $data["DATE"]),
-                'updated_at' => date_create('01/01/' . $data["DATE"]),
-                'disbursed' => true,
-            ]);
-        });
+        // $this->output->writeln("Seeding Unclaimed Releases...");
+        // $rows = SimpleExcelReader::create(storage_path('csv/unclaimed_releases.csv'))->getRows();
+        // $rows->each(function ($data) {
+        //     Release::create([
+        //         'name' => $data["NAME"],
+        //         'total_amount' => $data["AMOUNT"],
+        //         'created_at' => date_create('01/01/' . $data["DATE"]),
+        //         'updated_at' => date_create('01/01/' . $data["DATE"]),
+        //         'disbursed' => true,
+        //     ]);
+        // });
         return Command::SUCCESS;
     }
 }

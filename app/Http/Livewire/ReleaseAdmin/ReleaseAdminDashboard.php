@@ -8,13 +8,16 @@ use App\Models\Release;
 use Livewire\Component;
 use App\Models\MemberInformation;
 use App\Models\Role;
+use Carbon\Carbon;
 
 class ReleaseAdminDashboard extends Component
 {
     public $release_id;
+    public $since;
 
     public function mount()
     {
+        $this->since = today()->format('Y-m-d');
         $this->release_id = Release::latest()->whereDisbursed(true)->first()->id;
     }
 
@@ -37,9 +40,9 @@ class ReleaseAdminDashboard extends Component
             'releases' => Release::get(),
             'recent_transactions' => Dividend::whereStatus(Dividend::RELEASED)->with(['cashier', 'user', 'release'])->latest('released_at')->take(7)->get(),
             'cashiers' => User::whereRelation('roles', 'role_id', Role::CASHIER)
-                ->withCount(['cashier_released_dividends' => fn ($query) => $query->whereReleaseId($this->release_id)])
-                ->withSum(['cashier_released_dividends as cashier_released_dividends_gross' => fn ($query) => $query->whereReleaseId($this->release_id)], 'gross_amount')
-                ->withSum(['cashier_released_dividends as cashier_released_dividends_deductions' => fn ($query) => $query->whereReleaseId($this->release_id)], 'deductions_amount')
+                ->withCount(['cashier_released_dividends' => fn ($query) => $query->whereDate('released_at', $this->since)->whereReleaseId($this->release_id)])
+                ->withSum(['cashier_released_dividends as cashier_released_dividends_gross' => fn ($query) => $query->whereDate('released_at', $this->since)->whereReleaseId($this->release_id)], 'gross_amount')
+                ->withSum(['cashier_released_dividends as cashier_released_dividends_deductions' => fn ($query) => $query->whereDate('released_at', $this->since)->whereReleaseId($this->release_id)], 'deductions_amount')
                 ->get(),
         ]);
     }

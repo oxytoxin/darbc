@@ -29,19 +29,19 @@ class SeedSPA extends Command
      */
     public function handle()
     {
-        $this->output->writeln("Seeding SPA...");
-        $rows = SimpleExcelReader::create(storage_path('csv/spa.csv'))->getRows();
-        $this->output->progressStart(730);
-        $rows->each(function ($data) {
-            $matches = [];
-            preg_match('/SPA.+/', $data['NAME'], $matches);
-            if (count($matches)) {
-                $spa_name = $matches[0];
-                $spa_name = preg_replace("/(\/)|(SPA)/", '', $spa_name);
-                MemberInformation::where('darbc_id', $data['DARBC ID'])->update(['spa' => [strtoupper(trim($spa_name))]]);
-            }
-            $this->output->progressAdvance();
-        });
+        // $this->output->writeln("Seeding SPA...");
+        // $rows = SimpleExcelReader::create(storage_path('csv/spa.csv'))->getRows();
+        // $this->output->progressStart(730);
+        // $rows->each(function ($data) {
+        //     $matches = [];
+        //     preg_match('/SPA.+/', $data['NAME'], $matches);
+        //     if (count($matches)) {
+        //         $spa_name = $matches[0];
+        //         $spa_name = preg_replace("/(\/)|(SPA)/", '', $spa_name);
+        //         MemberInformation::where('darbc_id', $data['DARBC ID'])->update(['spa' => [strtoupper(trim($spa_name))]]);
+        //     }
+        //     $this->output->progressAdvance();
+        // });
         return Command::SUCCESS;
     }
 }
