@@ -4,12 +4,15 @@ namespace App\Http\Livewire\Cashier;
 
 use App\Models\User;
 use Livewire\Component;
+use App\Models\MembershipStatus;
 use App\Models\MemberInformation;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Filters\Layout;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Concerns\InteractsWithTable;
 
 class CashierLedgerIndex extends Component implements HasTable
@@ -54,6 +57,30 @@ class CashierLedgerIndex extends Component implements HasTable
                 ->label('Ownership'),
 
         ];
+    }
+
+    protected function getTableFilters(): array
+    {
+        return [
+            SelectFilter::make('status')
+                ->label('Status')
+                ->placeholder('All')
+                ->options([
+                    MemberInformation::STATUS_ACTIVE => 'Active',
+                    MemberInformation::STATUS_DECEASED => 'Deceased',
+                    MemberInformation::STATUS_INACTIVE => 'Inactive',
+                ]),
+            SelectFilter::make('membership_status_id')
+                ->label('Membership')
+                ->placeholder('All')
+                ->options(MembershipStatus::pluck('name', 'id')),
+        ];
+    }
+
+
+    protected function getTableFiltersLayout(): ?string
+    {
+        return Layout::AboveContent;
     }
 
     protected function getTableActions()

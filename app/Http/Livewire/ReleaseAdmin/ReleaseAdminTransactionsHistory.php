@@ -3,10 +3,12 @@
 namespace App\Http\Livewire\ReleaseAdmin;
 
 use App\Models\User;
+use App\Models\Release;
 use Livewire\Component;
 use App\Models\Dividend;
 use Illuminate\Support\HtmlString;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
 use Filament\Tables\Actions\Position;
 use Filament\Forms\Components\Textarea;
@@ -17,8 +19,10 @@ use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Illuminate\Database\Eloquent\Builder;
 
 class ReleaseAdminTransactionsHistory extends Component implements HasTable
 {
@@ -149,10 +153,31 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
     protected function getTableFilters(): array
     {
         return [
+
+            Filter::make('released_at')
+                ->form([
+                    DatePicker::make('released_from'),
+                    DatePicker::make('released_until'),
+                ])
+                ->query(function (Builder $query, array $data): Builder {
+                    return $query
+                        ->when(
+                            $data['released_from'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('released_at', '>=', $date),
+                        )
+                        ->when(
+                            $data['released_until'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('released_at', '<=', $date),
+                        );
+                }),
             SelectFilter::make('released_by')
                 ->label('Cashier')
                 ->placeholder('All')
                 ->options(User::whereRelation('roles', 'name', 'cashier')->get()->pluck('full_name', 'id')),
+            SelectFilter::make('release_id')
+                ->label('Release')
+                ->placeholder('All')
+                ->options(Release::pluck('name', 'id')),
         ];
     }
 
