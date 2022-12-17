@@ -211,7 +211,7 @@
                                     @forelse ($recent_transactions as $dividend)
                                         <tr>
                                             <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                {{ $dividend->created_at->format('h:i A F d, Y') }}
+                                                {{ $dividend->released_at->format('h:i A F d, Y') }}
                                             </td>
                                             <td class="py-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap">
                                                 {{ $dividend->user->full_name }}
