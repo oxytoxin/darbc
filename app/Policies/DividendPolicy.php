@@ -14,4 +14,9 @@ class DividendPolicy
     {
         return $dividend->status === Dividend::FOR_RELEASE || (Dividend::RELEASED && !$dividend->claimed);
     }
+
+    public function payslip(User $user, Dividend $dividend)
+    {
+        return $dividend->status === Dividend::RELEASED && $dividend->claimed;
+    }
 }
