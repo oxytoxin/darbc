@@ -8,6 +8,7 @@ use App\Models\Dividend;
 use Illuminate\Support\HtmlString;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Layout;
+use Filament\Tables\Actions\Position;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
@@ -79,6 +80,11 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                 ->sortable(['gross_amount'])
                 ->money('PHP', true),
         ];
+    }
+
+    protected function getTableActionsPosition(): ?string
+    {
+        return Position::BeforeCells;
     }
 
     protected function getTableActions()
