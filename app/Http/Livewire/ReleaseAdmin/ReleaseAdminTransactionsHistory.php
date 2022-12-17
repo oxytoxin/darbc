@@ -90,6 +90,18 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
     protected function getTableActions()
     {
         return [
+            ActionGroup::make([
+                ViewAction::make('proof_of_release')
+                    ->label('Proof of Release')
+                    ->icon('heroicon-o-photograph')
+                    ->modalContent(fn ($record) => view('livewire.cashier.components.proof_of_release', ['dividend' => $record]))
+                    ->modalHeading('Proof of Release'),
+                ViewAction::make('payslip')
+                    ->label('Payslip')
+                    ->icon('heroicon-o-document')
+                    ->modalContent(fn ($record) => view('livewire.cashier.components.payslip', ['dividend' => $record]))
+                    ->modalHeading('Payslip'),
+            ]),
             Action::make('edit')
                 ->action(function ($record, $data) {
                     $record->update($data);
@@ -130,18 +142,7 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                 ->visible(fn ($record) => $record->remarks && $record->voided)
                 ->modalContent(fn ($record) => new HtmlString('<div class="p-4 whitespace-pre">' . $record->remarks . '</div>'))
                 ->modalHeading('Payslip'),
-            ActionGroup::make([
-                ViewAction::make('proof_of_release')
-                    ->label('Proof of Release')
-                    ->icon('heroicon-o-photograph')
-                    ->modalContent(fn ($record) => view('livewire.cashier.components.proof_of_release', ['dividend' => $record]))
-                    ->modalHeading('Proof of Release'),
-                ViewAction::make('payslip')
-                    ->label('Payslip')
-                    ->icon('heroicon-o-document')
-                    ->modalContent(fn ($record) => view('livewire.cashier.components.payslip', ['dividend' => $record]))
-                    ->modalHeading('Payslip'),
-            ]),
+
         ];
     }
 
