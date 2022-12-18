@@ -97,25 +97,6 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
     {
         return [
             ActionGroup::make([
-                Action::make('upload_proof_of_release')
-                    ->button()
-                    ->label('Upload Proof')
-                    ->outlined()
-                    ->icon('heroicon-o-upload')
-                    ->color('primary')
-                    ->action(function ($data, $record) {
-                        $record->addMedia(storage_path('app/livewire-tmp/') . $data['proof_of_release'])
-                            ->toMediaCollection('proof_of_release');
-                        Notification::make()->title('Proof of release uploaded.')->success()->send();
-                    })
-                    ->form([
-                        FileUpload::make('proof_of_release')
-                            ->label('Proof of Release')
-                            ->acceptedFileTypes(['image/*'])
-                            ->maxFiles(1)
-                            ->disk('temp')
-                            ->required(),
-                    ]),
                 ViewAction::make('proof_of_release')
                     ->label('Proof of Release')
                     ->icon('heroicon-o-photograph')
