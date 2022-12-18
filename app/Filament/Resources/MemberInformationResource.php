@@ -15,6 +15,7 @@ use App\Models\Gender;
 use App\Models\MembershipStatus;
 use App\Models\Occupation;
 use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Str;
 
@@ -148,12 +149,7 @@ class MemberInformationResource extends Resource
                     ->maxLength(191),
                 Forms\Components\TextInput::make('contact_number')
                     ->maxLength(191),
-                SlimRepeater::make('spa')
-                    ->default([])
-                    ->schema([
-                        TextInput::make('name')->required()->disableLabel(),
-                    ])
-                    ->columns(1),
+                TagsInput::make('spa'),
                 Forms\Components\DatePicker::make('application_date')
                     ->default(today()),
             ]);
