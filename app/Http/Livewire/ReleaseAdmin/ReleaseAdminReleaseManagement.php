@@ -3,19 +3,20 @@
 namespace App\Http\Livewire\ReleaseAdmin;
 
 use App\Models\Release;
-use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\TagsInput;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
+use Filament\Forms\Components\KeyValue;
 use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Columns\IconColumn;
-use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
-use Filament\Tables\Contracts\HasTable;
 
 class ReleaseAdminReleaseManagement extends Component implements HasTable
 {
@@ -34,7 +35,7 @@ class ReleaseAdminReleaseManagement extends Component implements HasTable
             TextColumn::make('created_at')
                 ->extraAttributes(['class' => 'font-semibold text-sm'])
                 ->label('Date Released')
-                ->date(),
+                ->date('F d, Y'),
             TextColumn::make('name')
                 ->extraAttributes(['class' => 'font-semibold text-sm']),
             TextColumn::make('total_amount')
@@ -82,6 +83,11 @@ class ReleaseAdminReleaseManagement extends Component implements HasTable
                 $record->delete();
                 Notification::make()->title('Deleted!')->success()->send();
             })->visible(fn ($record) => $record->disbursed == false)->button(),
+            ViewAction::make('view')
+                ->button()
+                ->color('success')
+                ->visible(fn ($record) => $record->disbursed)
+                ->url(fn ($record) => route('release-admin.releases.dividends', ['release' => $record])),
         ];
     }
 

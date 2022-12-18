@@ -10,6 +10,7 @@ use Illuminate\Support\HtmlString;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
+use Filament\Forms\Components\Select;
 use Filament\Tables\Actions\Position;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Actions\ViewAction;
@@ -20,9 +21,10 @@ use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Concerns\InteractsWithTable;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Tables\Concerns\InteractsWithTable;
 
 class ReleaseAdminTransactionsHistory extends Component implements HasTable
 {
@@ -95,6 +97,25 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
     {
         return [
             ActionGroup::make([
+                Action::make('upload_proof_of_release')
+                    ->button()
+                    ->label('Upload Proof')
+                    ->outlined()
+                    ->icon('heroicon-o-upload')
+                    ->color('primary')
+                    ->action(function ($data, $record) {
+                        $record->addMedia(storage_path('app/livewire-tmp/') . $data['proof_of_release'])
+                            ->toMediaCollection('proof_of_release');
+                        Notification::make()->title('Proof of release uploaded.')->success()->send();
+                    })
+                    ->form([
+                        FileUpload::make('proof_of_release')
+                            ->label('Proof of Release')
+                            ->acceptedFileTypes(['image/*'])
+                            ->maxFiles(1)
+                            ->disk('temp')
+                            ->required(),
+                    ]),
                 ViewAction::make('proof_of_release')
                     ->label('Proof of Release')
                     ->icon('heroicon-o-photograph')

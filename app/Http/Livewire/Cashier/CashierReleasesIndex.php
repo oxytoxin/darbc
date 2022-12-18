@@ -3,12 +3,13 @@
 namespace App\Http\Livewire\Cashier;
 
 use App\Models\Release;
+use Livewire\Component;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
-use Livewire\Component;
+use Filament\Tables\Concerns\InteractsWithTable;
 
 class CashierReleasesIndex extends Component implements HasTable
 {
@@ -22,19 +23,22 @@ class CashierReleasesIndex extends Component implements HasTable
     protected function getTableColumns()
     {
         return [
-            TextColumn::make('name')
-                ->searchable(),
-            TextColumn::make('total_amount')
-                ->sortable()
-                ->label('Total Amount')
-                ->money('PHP', true),
-            IconColumn::make('disbursed')
-                ->label('Disbursed By Office Staff')
-                ->boolean(),
             TextColumn::make('created_at')
-                ->sortable()
-                ->label('Date Created')
+                ->extraAttributes(['class' => 'font-semibold text-sm'])
+                ->label('Date Released')
                 ->date('F d, Y'),
+            TextColumn::make('name')
+                ->extraAttributes(['class' => 'font-semibold text-sm']),
+            TextColumn::make('total_amount')
+                ->label('Total Amount')
+                ->money('PHP', true)
+                ->extraAttributes(['class' => 'font-semibold text-sm']),
+            TagsColumn::make('particulars')
+                ->getStateUsing(fn ($record) => collect($record->particulars)->map(fn ($value, $key) => $key)->toArray()),
+            IconColumn::make('disbursed')
+                ->alignCenter()
+                ->extraAttributes(['class' => 'flex justify-center'])
+                ->boolean(),
         ];
     }
 
