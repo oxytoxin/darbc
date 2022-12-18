@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Models\Contracts\HasName;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -12,7 +14,7 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable implements HasMedia, FilamentUser, HasName
 {
     use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
 
@@ -34,6 +36,17 @@ class User extends Authenticatable implements HasMedia
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+    public function getFilamentName(): string
+    {
+        return "{$this->first_name} {$this->surname}";
+    }
+
+    public function canAccessFilament(): bool
+    {
+        return $this->username == 'admin';
+    }
 
     public function registerMediaCollections(): void
     {

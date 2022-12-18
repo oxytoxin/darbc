@@ -114,7 +114,7 @@
                         </div>
                     </div>
                     <div class="relative">
-                        <div wire:loading.delay wire:target="to, from, release_id" class="absolute inset-0 bg-white">
+                        <div wire:loading.delay wire:target="to, from, release_id" class="absolute inset-0 z-30 bg-white">
                             <div class="grid w-full h-full place-items-center">
                                 <p class="animate-bounce">Loading data...</p>
                             </div>
