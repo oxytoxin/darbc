@@ -163,8 +163,8 @@ class MemberInformationResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user_id')->label('UID'),
-                Tables\Columns\TextColumn::make('user.full_name'),
+                Tables\Columns\TextColumn::make('user_id')->label('UID')->searchable(),
+                Tables\Columns\TextColumn::make('user.full_name')->searchable(['surname', 'first_name']),
                 Tables\Columns\TextColumn::make('cluster.name'),
                 Tables\Columns\TextColumn::make('original_member_id')->label('Original'),
                 Tables\Columns\TextColumn::make('membership_status.name'),
