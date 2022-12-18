@@ -28,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
-        Model::unguard(app()->environment('local'));
+        Model::unguard();
         Model::shouldBeStrict(app()->environment('local'));
 
         Filament::serving(function () {
