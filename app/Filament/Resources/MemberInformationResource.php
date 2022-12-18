@@ -149,7 +149,7 @@ class MemberInformationResource extends Resource
                     ->maxLength(191),
                 Forms\Components\TextInput::make('contact_number')
                     ->maxLength(191),
-                TagsInput::make('spa')->placeholder('New SPA'),
+                TagsInput::make('spa')->placeholder('New SPA (first-name last-name)'),
                 Forms\Components\DatePicker::make('application_date')
                     ->default(today()),
             ]);
