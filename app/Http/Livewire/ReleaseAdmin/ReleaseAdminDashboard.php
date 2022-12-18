@@ -19,7 +19,7 @@ class ReleaseAdminDashboard extends Component
     public function mount()
     {
         $this->from = today()->format('Y-m-d H:i');
-        $this->to = today()->format('Y-m-d H:i');
+        $this->to = today()->addDay()->format('Y-m-d H:i');
         $this->release_id = Release::latest()->whereDisbursed(true)->first()->id;
     }
 
