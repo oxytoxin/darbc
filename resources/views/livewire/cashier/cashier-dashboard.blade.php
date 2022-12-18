@@ -150,7 +150,7 @@
                         calendar.render();
                     });
                 </script>
-                <div class="bg-white w-[22rem] p-2 rounded-md border">
+                <div wire:ignore class="bg-white w-[22rem] p-2 rounded-md border">
                     <div id="calendar"></div>
                     <section class="px-3 mt-3">
                         <h2 class="font-semibold text-gray-900">Upcoming Events</h2>
