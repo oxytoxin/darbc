@@ -9,6 +9,7 @@ use Livewire\Component;
 use App\Models\MemberInformation;
 use App\Models\Role;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 
 class ReleaseAdminDashboard extends Component
 {
@@ -26,9 +27,21 @@ class ReleaseAdminDashboard extends Component
     public function render()
     {
         $selected_release = Release::whereDisbursed(true)->latest()
-            ->withCount(['dividends', 'released_dividends'])
-            ->withSum('released_dividends as released_dividends_gross', 'gross_amount')
-            ->withSum('released_dividends as released_dividends_deductions', 'deductions_amount')
+            ->withCount(['dividends', 'released_dividends' => function (Builder $query) {
+                $query->when($this->from, fn ($query) => $query->whereDate('released_at', '>=', $this->from))
+                    ->when($this->to, fn ($query) => $query->whereDate('released_at', '<=', $this->to));
+            }])
+            ->withSum(['released_dividends as released_dividends_gross' => function (Builder $query) {
+                $query->when($this->from, fn ($query) => $query->whereDate('released_at', '>=', $this->from))
+                    ->when($this->to, fn ($query) => $query->whereDate('released_at', '<=', $this->to));
+            }], 'gross_amount')
+            ->withSum(['released_dividends as released_dividends_deductions' => function (Builder $query) {
+                $query->when($this->from, fn ($query) => $query->whereDate('released_at', '>=', $this->from))
+                    ->when($this->to, fn ($query) => $query->whereDate('released_at', '<=', $this->to));
+            }], 'deductions_amount')
+            ->withCount('released_dividends as overall_released_dividends_count')
+            ->withSum('released_dividends as overall_released_dividends_gross', 'gross_amount')
+            ->withSum('released_dividends as overall_released_dividends_deductions', 'deductions_amount')
             ->find($this->release_id);
 
 
