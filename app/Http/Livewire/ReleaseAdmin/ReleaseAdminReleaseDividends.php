@@ -23,11 +23,12 @@ class ReleaseAdminReleaseDividends extends ReleaseDividends
                     ]);
                     Notification::make()->title('Dividend transferred')->success()->send();
                 })
-                ->form([
+                ->form(fn ($record) => [
                     Select::make('user_id')
                         ->label('User')
-                        ->options(User::has('member_information')->pluck('full_name', 'id'))
+                        ->options(User::has('member_information')->whereRelation('member_information', 'lineage_identifier', $record->user->member_information->lineage_identifier)->pluck('full_name', 'id'))
                         ->searchable()
+                        ->preload()
                 ]),
         ];
     }
