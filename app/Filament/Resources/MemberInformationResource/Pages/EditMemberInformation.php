@@ -43,6 +43,7 @@ class EditMemberInformation extends EditRecord
         unset($data["middle_name"]);
         unset($data["surname"]);
         unset($data["suffix"]);
+        $data["reference_number"] = $data["darbc_id"];
         $record->user()->update($user_data);
         $record->update($data);
         DB::commit();

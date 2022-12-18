@@ -29,6 +29,7 @@ class CreateMemberInformation extends CreateRecord
         unset($data["middle_name"]);
         unset($data["surname"]);
         unset($data["suffix"]);
+        $data["reference_number"] = $data["darbc_id"];
         $user = User::create($user_data);
         $data["user_id"] = $user->id;
         $member = MemberInformation::create($data);
