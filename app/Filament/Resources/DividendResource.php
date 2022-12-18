@@ -49,6 +49,7 @@ class DividendResource extends Resource
                     ->limit(10)
                     ->tooltip(fn ($record) => $record->release->name),
                 Tables\Columns\TextColumn::make('user.full_name')
+                    ->searchable(['surname', 'first_name'])
                     ->label('Member'),
                 Tables\Columns\TextColumn::make('cashier.name'),
                 Tables\Columns\TextColumn::make('gross_amount')->money('PHP', true),
