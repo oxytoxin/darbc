@@ -92,6 +92,16 @@
 
                         @if ($latest_release)
                             <div class="flex flex-col justify-between p-3 bg-white border rounded-md">
+                                <div x-cloak x-data class="space-y-2">
+                                    <div>
+                                        <p class="text-xs">Date From</p>
+                                        <input wire:model="from" type="date" class="w-full text-xs rounded">
+                                    </div>
+                                    <div>
+                                        <p class="text-xs">Date To</p>
+                                        <input wire:model="to" type="date" class="w-full text-xs rounded">
+                                    </div>
+                                </div>
                                 <section>
                                     <p class="font-medium text-gray-500">{{ $latest_release->name }}</p>
                                 </section>
