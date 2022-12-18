@@ -229,6 +229,9 @@ return [
                     'alignment' => 'left',
                 ],
             ],
+            'cell' => [
+                'alignment' => 'left', // `right`, `left` or `center`
+            ],
         ],
         'forms' => [
             'actions' => [
