@@ -12,6 +12,7 @@ use App\Http\Livewire\ReleaseAdmin\ReleaseAdminReleaseManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminTransactionsHistory;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminMemberRestrictionsManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminReleaseDividends;
+use App\Http\Livewire\ReleaseAdmin\ReleaseAdminReportsIndex;
 
 Route::middleware(['auth', 'role:' . Role::RELEASE_ADMIN])->prefix('release-admin')->name('release-admin.')->group(function () {
     Route::get('/', ReleaseAdminDashboard::class)->name('dashboard');
@@ -24,4 +25,5 @@ Route::middleware(['auth', 'role:' . Role::RELEASE_ADMIN])->prefix('release-admi
     Route::get('/transactions', ReleaseAdminTransactionsHistory::class)->name('transactions');
     Route::get('/releases/{release}/dividends', ReleaseAdminReleaseDividends::class)->name('releases.dividends');
     Route::get('/member-dividends/{member}', MemberDividends::class)->name('member-dividends');
+    Route::get('/reports', ReleaseAdminReportsIndex::class)->name('reports');
 });
