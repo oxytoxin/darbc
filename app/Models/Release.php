@@ -39,6 +39,26 @@ class Release extends Model
         return $this->hasMany(Dividend::class)->where('status', Dividend::RELEASED);
     }
 
+    public function voided_dividends()
+    {
+        return $this->hasMany(Dividend::class)->where('status', Dividend::RELEASED)->whereVoided(true);
+    }
+
+    public function member_claimed_dividends()
+    {
+        return $this->hasMany(Dividend::class)->where('status', Dividend::RELEASED)->whereClaimType(Dividend::CLAIM_MEMBER);
+    }
+
+    public function spa_claimed_dividends()
+    {
+        return $this->hasMany(Dividend::class)->where('status', Dividend::RELEASED)->whereClaimType(Dividend::CLAIM_SPA);
+    }
+
+    public function representative_claimed_dividends()
+    {
+        return $this->hasMany(Dividend::class)->where('status', Dividend::RELEASED)->whereClaimType(Dividend::CLAIM_REPRESENTATIVE);
+    }
+
     public function unclaimed_dividends()
     {
         return $this->hasMany(Dividend::class)->where('status', Dividend::FOR_RELEASE);

@@ -9,6 +9,8 @@ class Occupation extends Model
 {
     use HasFactory;
 
+    const UNKNOWN = 5;
+
     public function members()
     {
         return $this->hasMany(MemberInformation::class);

@@ -91,7 +91,7 @@ class MemberInformationResource extends Resource
                     ->required(),
                 Forms\Components\Select::make('occupation_id')
                     ->relationship('occupation', 'name')
-                    ->default(5)
+                    ->default(Occupation::UNKNOWN)
                     ->required(),
                 Forms\Components\TextInput::make('percentage')
                     ->default(100)

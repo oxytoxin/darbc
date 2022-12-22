@@ -24,6 +24,10 @@ class Dividend extends Model implements HasMedia
     const ON_HOLD = 3;
     const RELEASED = 4;
 
+    const CLAIM_MEMBER = 1;
+    const CLAIM_SPA = 2;
+    const CLAIM_REPRESENTATIVE = 3;
+
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('proof_of_release')

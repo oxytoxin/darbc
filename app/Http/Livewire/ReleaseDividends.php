@@ -20,6 +20,11 @@ class ReleaseDividends extends Component implements HasTable
 
     public Release $release;
 
+    protected function getTableHeading()
+    {
+        return $this->release->name;
+    }
+
     protected function getTableQuery()
     {
         return Dividend::whereReleaseId($this->release->id);

@@ -55,10 +55,10 @@ class User extends Authenticatable implements HasMedia, FilamentUser, HasName
             ->useDisk('signatures');
     }
 
-    public function fullName(): Attribute
-    {
-        return new Attribute(get: fn () => $this->surname . ', ' . $this->first_name);
-    }
+    // public function fullName(): Attribute
+    // {
+    //     return new Attribute(get: fn () => $this->surname . ', ' . $this->first_name);
+    // }
 
     public function name(): Attribute
     {
