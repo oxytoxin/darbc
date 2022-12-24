@@ -54,6 +54,9 @@ class ReleaseAdminReleaseDividends extends ReleaseDividends
                             'occupation_id' => Occupation::UNKNOWN,
                             'application_date' => today(),
                         ]);
+                        $original_user->update([
+                            'status' => MemberInformation::STATUS_INACTIVE,
+                        ]);
                         $record->update([
                             'user_id' => $user->id
                         ]);
