@@ -119,7 +119,7 @@ class ReportsDownloadController extends Controller
                         $dividend->user->member_information->darbc_id,
                         $dividend->user->alt_full_name,
                         $dividend->net_amount,
-                        implode($dividend->restriction_entries, ', '),
+                        implode(', ', $dividend->restriction_entries),
                     ]);
                 }
             });
