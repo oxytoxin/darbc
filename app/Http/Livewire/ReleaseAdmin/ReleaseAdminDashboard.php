@@ -7,9 +7,16 @@ use App\Models\User;
 use App\Models\Release;
 use Livewire\Component;
 use App\Models\MemberInformation;
+use App\Models\Role;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 
 class ReleaseAdminDashboard extends Component
 {
+
+
+
+
     public function render()
     {
         return view('livewire.release-admin.release-admin-dashboard', [
@@ -18,12 +25,7 @@ class ReleaseAdminDashboard extends Component
             'original_members_count' => MemberInformation::original()->count(),
             'replacement_members_count' => MemberInformation::replacement()->count(),
             'members_on_hold_count' => User::onHold()->count(),
-            'latest_release' => Release::whereDisbursed(true)->latest()
-                ->withCount(['dividends', 'released_dividends'])
-                ->withSum('released_dividends as released_dividends_gross', 'gross_amount')
-                ->withSum('released_dividends as released_dividends_deductions', 'deductions_amount')
-                ->first(),
-            'recent_transactions' => Dividend::whereStatus(Dividend::RELEASED)->with(['cashier', 'user', 'release'])->latest()->take(7)->get(),
+            'recent_transactions' => Dividend::whereStatus(Dividend::RELEASED)->with(['cashier', 'user', 'release'])->latest('released_at')->take(7)->get(),
         ]);
     }
 }

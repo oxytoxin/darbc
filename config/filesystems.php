@@ -92,6 +92,12 @@ return [
             'throw' => false,
         ],
 
+        'temp' => [
+            'driver' => 'local',
+            'root' => storage_path('app/livewire-tmp'),
+            'throw' => false,
+        ],
+
     ],
 
     /*

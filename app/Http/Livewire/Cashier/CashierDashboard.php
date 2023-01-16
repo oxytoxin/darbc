@@ -10,6 +10,15 @@ use Illuminate\Database\Eloquent\Builder;
 
 class CashierDashboard extends Component
 {
+    public $from;
+    public $to;
+
+    public function mount()
+    {
+        $this->from = today()->format('Y-m-d');
+        $this->to = today()->format('Y-m-d');
+    }
+
     public function render()
     {
         return view('livewire.cashier.cashier-dashboard', [
@@ -20,13 +29,19 @@ class CashierDashboard extends Component
             'members_on_hold_count' => User::onHold()->count(),
             'latest_release' => Release::whereDisbursed(true)->latest()
                 ->withCount(['dividends', 'released_dividends' => function (Builder $query) {
-                    $query->where('released_by', auth()->id());
+                    $query->where('released_by', auth()->id())
+                        ->when($this->from, fn ($query) => $query->whereDate('released_at', '>=', $this->from))
+                        ->when($this->to, fn ($query) => $query->whereDate('released_at', '<=', $this->to));
                 }])
                 ->withSum(['released_dividends as released_dividends_gross' => function (Builder $query) {
-                    $query->where('released_by', auth()->id());
+                    $query->where('released_by', auth()->id())
+                        ->when($this->from, fn ($query) => $query->whereDate('released_at', '>=', $this->from))
+                        ->when($this->to, fn ($query) => $query->whereDate('released_at', '<=', $this->to));
                 }], 'gross_amount')
                 ->withSum(['released_dividends as released_dividends_deductions' => function (Builder $query) {
-                    $query->where('released_by', auth()->id());
+                    $query->where('released_by', auth()->id())
+                        ->when($this->from, fn ($query) => $query->whereDate('released_at', '>=', $this->from))
+                        ->when($this->to, fn ($query) => $query->whereDate('released_at', '<=', $this->to));
                 }], 'deductions_amount')
                 ->first(),
             'latest_releases' => Release::take(5)

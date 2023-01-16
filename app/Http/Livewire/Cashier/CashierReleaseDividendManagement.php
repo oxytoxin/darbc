@@ -50,7 +50,7 @@ class CashierReleaseDividendManagement extends Component implements HasForms
                 Placeholder::make('claimed_particulars')->content('No items to claim.')->disableLabel()
             ]),
             Fieldset::make('Claimed By')->schema([
-                Radio::make('data.claimed_by')->options([
+                Radio::make('data.claim_type')->options([
                     1 => 'Member',
                     2 => 'SPA',
                     3 => 'Authorized Representative',
@@ -58,17 +58,17 @@ class CashierReleaseDividendManagement extends Component implements HasForms
                     ->default(1)
                     ->afterStateUpdated(function ($set, $state) {
                         if ($state == 2) {
-                            $set('data.claimed_by_name', collect($this->dividend->user->member_information->spa)->first());
+                            $set('data.claimed_by', collect($this->dividend->user->member_information->spa)->first());
                         } else {
-                            $set('data.claimed_by_name', null);
+                            $set('data.claimed_by', null);
                         }
                     })
                     ->reactive(),
-                TextInput::make('data.claimed_by_name')->label(fn ($get) => match (intval($get('data.claimed_by'))) {
+                TextInput::make('data.claimed_by')->label(fn ($get) => match (intval($get('data.claim_type'))) {
                     2 => 'SPA Name',
                     3 => 'Representative Name',
                     default => 'Member Name',
-                })->validationAttribute('name')->required()->visible(fn ($get) => $get('data.claimed_by') != 1),
+                })->validationAttribute('name')->required()->visible(fn ($get) => $get('data.claim_type') != 1),
             ]),
         ];
     }
@@ -114,10 +114,9 @@ class CashierReleaseDividendManagement extends Component implements HasForms
             'released_at' => now(),
             'gift_certificate_control_number' => $this->dividend->gift_certificate_control_number ?? $this->data['gift_certificate_control_number'],
             'particulars' => $new_particulars,
-            'claimed_by' => $this->data['claimed_by'] != 1 && $this->data['claimed'] ? $this->data['claimed_by_name'] : null,
+            'claim_type' => $this->data['claim_type'],
+            'claimed_by' => $this->data['claim_type'] != 1 && $this->data['claimed'] ? $this->data['claimed_by'] : null,
         ]);
-
-
 
         DB::commit();
         Notification::make()->title('Dividend released successfully.')->success()->send();

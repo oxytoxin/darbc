@@ -2,14 +2,18 @@
 
 namespace App\Http\Livewire\Cashier;
 
+use App\Models\User;
+use App\Models\Release;
 use Livewire\Component;
 use App\Models\Dividend;
-use App\Models\User;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
 
 class CashierReleasedDividendsHistory extends Component implements HasTable
@@ -24,6 +28,15 @@ class CashierReleasedDividendsHistory extends Component implements HasTable
     protected function getTableColumns()
     {
         return [
+            TextColumn::make('released_at')
+                ->label('Release Date')
+                ->dateTime('h:i A m/d/Y')
+                ->size('sm')
+                ->wrap(),
+            TextColumn::make('release.name')
+                ->label('Release')
+                ->size('sm')
+                ->wrap(),
             TextColumn::make('user.member_information.darbc_id')
                 ->label('DARBC ID')
                 ->searchable(),
@@ -35,9 +48,7 @@ class CashierReleasedDividendsHistory extends Component implements HasTable
             TextColumn::make('user.first_name')
                 ->label('Member First Name')
                 ->searchable(isIndividual: true),
-            TextColumn::make('released_at')
-                ->label('Release Date')
-                ->dateTime('h:i A m/d/Y'),
+
         ];
     }
 
@@ -54,10 +65,30 @@ class CashierReleasedDividendsHistory extends Component implements HasTable
     protected function getTableFilters(): array
     {
         return [
+            Filter::make('released_at')
+                ->form([
+                    DatePicker::make('released_from'),
+                    DatePicker::make('released_until'),
+                ])
+                ->query(function (Builder $query, array $data): Builder {
+                    return $query
+                        ->when(
+                            $data['released_from'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('released_at', '>=', $date),
+                        )
+                        ->when(
+                            $data['released_until'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('released_at', '<=', $date),
+                        );
+                }),
             SelectFilter::make('released_by')
                 ->label('Cashier')
                 ->placeholder('All')
                 ->options(User::whereRelation('roles', 'name', 'cashier')->get()->pluck('full_name', 'id')),
+            SelectFilter::make('release_id')
+                ->label('Release')
+                ->placeholder('All')
+                ->options(Release::pluck('name', 'id')),
         ];
     }
 

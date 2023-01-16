@@ -190,7 +190,6 @@ class MemberManagement extends Component implements HasTable
                                 MemberInformation::STATUS_DECEASED => 'Deceased',
                                 MemberInformation::STATUS_INACTIVE => 'Inactive',
                             ])->required(),
-                            TextInput::make('religion'),
                             TextInput::make('percentage')->required()->numeric()->minValue(0)->maxValue(100),
                         ])
                     ])

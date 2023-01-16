@@ -29,7 +29,7 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Model::unguard();
-        Model::shouldBeStrict();
+        Model::shouldBeStrict(app()->environment('local'));
 
         Filament::serving(function () {
             Filament::registerViteTheme('resources/css/filament.css');

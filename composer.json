@@ -10,6 +10,7 @@
     "require": {
         "php": "^8.0.2",
         "filament/filament": "^2.0",
+        "filament/spatie-laravel-media-library-plugin": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "laravel-frontend-presets/tall": "^5.0",
@@ -23,6 +24,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-ide-helper": "^2.12",
+        "doctrine/dbal": "^3.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.0.1",

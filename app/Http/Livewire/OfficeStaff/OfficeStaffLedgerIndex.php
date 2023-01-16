@@ -28,12 +28,13 @@ class OfficeStaffLedgerIndex extends Component implements HasTable
     {
         return User::has('member_information')
             ->orderBy('surname')
+            ->whereHas('dividends', fn ($query) => $query->when($this->tableFilters['created_at']['value'], fn ($q) => $q->whereHas('release', fn ($q) => $q->whereYear('created_at', $this->tableFilters['created_at']['value']))))
             ->with(['member_information', 'dividends', 'active_restriction']);
     }
 
     protected function getTableFilters()
     {
-        $years = collect(today()->subYears(5)->yearsUntil(today())->toArray())->mapWithKeys(fn ($y) => [$y->year => $y->year])->toArray();
+        $years = Release::selectRaw("YEAR(created_at) year")->orderByDesc('year')->groupBy('year')->pluck('year')->mapWithKeys(fn ($y) => [$y => $y])->toArray();
         return [
             SelectFilter::make('status')
                 ->options([

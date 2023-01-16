@@ -14,8 +14,8 @@
                     <p class="flex-1">&nbsp;{{ $dividend->user->full_name }}</p>
                 </div>
                 @if ($dividend->claimed_by)
-                    <div class="px-4 text-xs">
-                        <p class="font-bold">SPA/Authorized Representative:</p>
+                    <div class="flex px-4 text-xs">
+                        <p class="font-bold">{{ $dividend->claim_type == 2 ? 'SPA' : 'Authorized Representative' }}:&nbsp;</p>
                         <p class="flex-1">{{ $dividend->claimed_by }}</p>
                     </div>
                 @endif
@@ -37,7 +37,7 @@
                         <p>Advance Profit Share</p>
                         <p>&nbsp;{{ $dividend->claimed ? Akaunting\Money\Money::PHP($dividend->net_amount, true) : 'UNCLAIMED' }}</p>
                     </div>
-                    @if (!$this->dividend->user->member_information->split_claim && ($dividend->release->gift_certificate_prefix || $dividend->release->gift_certificate_amount > 0))
+                    @if (!$dividend->user->member_information->split_claim && ($dividend->release->gift_certificate_prefix || $dividend->release->gift_certificate_amount > 0))
                         <div class="flex justify-between">
                             <p>Gift Certificate <br><span class="ml-2 text-xs font-semibold">(worth {{ Akaunting\Money\Money::PHP($dividend->release->gift_certificate_amount, true) }})</span></p>
                             <p class="font-sans font-semibold">{{ $dividend->gift_certificate_control_number ? $dividend->release->gift_certificate_prefix . $dividend->gift_certificate_control_number : 'UNCLAIMED' }}</p>
@@ -57,7 +57,15 @@
                         <p class="text-xs text-center uppercase whitespace-nowrap">{{ $dividend->cashier->first_name . ' ' . $dividend->cashier->surname }}</p>
                     </div>
                     <div class="flex flex-col flex-1 h-24 px-4 py-4">
-                        <p class="text-xs italic font-semibold">{{ $dividend->claimed_by ? "REPRESENTATIVE'S" : "MEMBER'S" }} SIGNATURE</p>
+                        @php
+                            $claim_type_name = match ($dividend->claim_type) {
+                                1 => 'MEMBER',
+                                2 => 'SPA',
+                                3 => 'REPRESENTATIVE',
+                                default => 'MEMBER',
+                            };
+                        @endphp
+                        <p class="text-xs italic font-semibold">{{ $claim_type_name }}'S SIGNATURE</p>
                         <div class="flex-1">&nbsp;</div>
                         @if ($dividend->claimed_by)
                             <p class="text-xs text-center uppercase whitespace-nowrap">{{ $dividend->claimed_by }}</p>

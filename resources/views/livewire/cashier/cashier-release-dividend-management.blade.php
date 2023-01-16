@@ -135,12 +135,14 @@
                         </div>
                     </div>
                 </x-modal>
-                <div class="mt-2">
-                    <x-filament-support::button onclick="return confirm('Are you sure?') || event.stopImmediatePropagation()" wire:click="release" wire:target="release" class="w-full" color="success" iconPosition="after"
-                        icon="heroicon-o-check-circle">
-                        Release Now
-                    </x-filament-support::button>
-                </div>
+                @if ($proof_of_release)
+                    <div class="mt-2">
+                        <x-filament-support::button onclick="return confirm('Are you sure?') || event.stopImmediatePropagation()" wire:click="release" wire:target="release" class="w-full" color="success" iconPosition="after"
+                            icon="heroicon-o-check-circle">
+                            Release Now
+                        </x-filament-support::button>
+                    </div>
+                @endif
             </div>
         </div>
     </div>

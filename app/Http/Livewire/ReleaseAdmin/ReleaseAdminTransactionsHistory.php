@@ -3,11 +3,16 @@
 namespace App\Http\Livewire\ReleaseAdmin;
 
 use App\Models\User;
+use App\Models\Release;
 use Livewire\Component;
 use App\Models\Dividend;
 use Illuminate\Support\HtmlString;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Actions\Position;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
@@ -16,7 +21,10 @@ use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\BadgeColumn;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
 
 class ReleaseAdminTransactionsHistory extends Component implements HasTable
@@ -45,7 +53,13 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                 ->label('DATE')
                 ->sortable()
                 ->wrap()
+                ->size('sm')
                 ->dateTime('h:i A m/d/Y'),
+            TextColumn::make('gift_certificate_control_number')
+                ->label('GC')
+                ->searchable()
+                ->size('sm')
+                ->prefix(fn ($record) => $record->release->gift_certificate_prefix),
             TextColumn::make('user.surname')
                 ->label('Last Name')
                 ->sortable()
@@ -54,7 +68,9 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                 ->label('First Name')
                 ->searchable(isIndividual: true),
             TextColumn::make('release.name')
-                ->label('RELEASE NAME'),
+                ->label('RELEASE NAME')
+                ->wrap()
+                ->size('sm'),
             TextColumn::make('cashier.full_name')
                 ->label('CASHIER')
                 ->sortable(['cashier.surname']),
@@ -73,26 +89,65 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
         ];
     }
 
+    protected function getTableActionsPosition(): ?string
+    {
+        return Position::BeforeCells;
+    }
+
     protected function getTableActions()
     {
         return [
+            ActionGroup::make([
+                ViewAction::make('proof_of_release')
+                    ->label('Proof of Release')
+                    ->icon('heroicon-o-photograph')
+                    ->modalContent(fn ($record) => view('livewire.cashier.components.proof_of_release', ['dividend' => $record]))
+                    ->modalHeading('Proof of Release'),
+                ViewAction::make('payslip')
+                    ->label('Payslip')
+                    ->icon('heroicon-o-document')
+                    ->modalContent(fn ($record) => view('livewire.cashier.components.payslip', ['dividend' => $record]))
+                    ->modalHeading('Payslip'),
+            ]),
             Action::make('edit')
                 ->action(function ($record, $data) {
                     $record->update($data);
-                    Notification::make()->title('Control number updated.')->success()->send();
+                    Notification::make()->title('Dividend updated.')->success()->send();
                 })
-                ->form([
+                ->form(fn ($record) => [
                     TextInput::make('gift_certificate_control_number')
                         ->prefix(fn ($record) => $record->release->gift_certificate_prefix)
                         ->label('Gift Certificate Control Number')
                         ->maxLength(4)
+                        ->visible(fn ($record) => $record->release->gift_certificate_prefix),
+                    Radio::make('claim_type')->options([
+                        1 => 'Member',
+                        2 => 'SPA',
+                        3 => 'Authorized Representative',
+                    ])->disableLabel()
+                        ->default(1)
+                        ->afterStateUpdated(function ($set, $state) use ($record) {
+                            if ($state == 2) {
+                                $set('claimed_by', collect($record->user->member_information->spa)->first());
+                            } else {
+                                $set('claimed_by', null);
+                            }
+                        })
+                        ->reactive(),
+                    TextInput::make('claimed_by')->label(fn ($get) => match (intval($get('claim_type'))) {
+                        2 => 'SPA Name',
+                        3 => 'Representative Name',
+                        default => 'Member Name',
+                    })->validationAttribute('name')->required()->visible(fn ($get) => $get('claim_type') != 1),
+
                 ])
                 ->mountUsing(fn ($form, $record) => $form->fill([
                     'gift_certificate_control_number' => $record->gift_certificate_control_number,
+                    'claim_type' => $record->claim_type,
+                    'claimed_by' => $record->claimed_by,
                 ]))
                 ->modalWidth('md')
-                ->visible(fn ($record) => !$record->voided)
-                ->label('GC')
+                ->label('Edit')
                 ->outlined()
                 ->button(),
             Action::make('void')
@@ -116,28 +171,38 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                 ->visible(fn ($record) => $record->remarks && $record->voided)
                 ->modalContent(fn ($record) => new HtmlString('<div class="p-4 whitespace-pre">' . $record->remarks . '</div>'))
                 ->modalHeading('Payslip'),
-            ActionGroup::make([
-                ViewAction::make('proof_of_release')
-                    ->label('Proof of Release')
-                    ->icon('heroicon-o-photograph')
-                    ->modalContent(fn ($record) => view('livewire.cashier.components.proof_of_release', ['dividend' => $record]))
-                    ->modalHeading('Proof of Release'),
-                ViewAction::make('payslip')
-                    ->label('Payslip')
-                    ->icon('heroicon-o-document')
-                    ->modalContent(fn ($record) => view('livewire.cashier.components.payslip', ['dividend' => $record]))
-                    ->modalHeading('Payslip'),
-            ]),
+
         ];
     }
 
     protected function getTableFilters(): array
     {
         return [
+
+            Filter::make('released_at')
+                ->form([
+                    DatePicker::make('released_from'),
+                    DatePicker::make('released_until'),
+                ])
+                ->query(function (Builder $query, array $data): Builder {
+                    return $query
+                        ->when(
+                            $data['released_from'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('released_at', '>=', $date),
+                        )
+                        ->when(
+                            $data['released_until'],
+                            fn (Builder $query, $date): Builder => $query->whereDate('released_at', '<=', $date),
+                        );
+                }),
             SelectFilter::make('released_by')
                 ->label('Cashier')
                 ->placeholder('All')
                 ->options(User::whereRelation('roles', 'name', 'cashier')->get()->pluck('full_name', 'id')),
+            SelectFilter::make('release_id')
+                ->label('Release')
+                ->placeholder('All')
+                ->options(Release::latest()->pluck('name', 'id')),
         ];
     }
 

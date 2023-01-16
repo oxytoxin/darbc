@@ -90,44 +90,8 @@
                                 </button>
                             </section>
                         </x-card-stat>
-
-                        @if ($latest_release)
-                            <div class="flex flex-col justify-between p-3 bg-white border rounded-md">
-                                <div class="flex items-center justify-end">
-                                    <section class="flex items-center space-x-1 text-custom-blue">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
-                                        </svg>
-                                        <h1 class="text-sm font-medium">{{ $latest_release->created_at->format('M d, Y') }}
-                                        </h1>
-                                    </section>
-                                </div>
-                                <div class="leading-3">
-                                    <section class="flex items-center justify-between">
-                                        <h1 class="text-2xl font-medium text-custom-orange">{{ $latest_release->released_dividends_count }}</h1>
-                                        <h1 class="text-2xl font-bold text-custom-blue">{{ $latest_release->dividends_count }}</h1>
-                                    </section>
-                                    <progress id="file" value="{{ $latest_release->released_dividends_count }}" max="{{ $latest_release->dividends_count }}"></progress>
-                                    <section class="flex items-center justify-between mt-1">
-                                        <h1 class="text-sm font-medium text-gray-500">
-                                            {{ Akaunting\Money\Money::PHP(($latest_release->released_dividends_gross ?? 0) - ($latest_release->released_dividends_deductions ?? 0), false) }}</h1>
-                                        <h1 class="text-sm font-bold text-custom-blue">{{ Akaunting\Money\Money::PHP($latest_release->total_amount, true) }}</h1>
-                                    </section>
-                                </div>
-                                <section>
-                                    <p class="font-medium text-gray-500">{{ $latest_release->name }} release statistics</p>
-                                </section>
-                            </div>
-                        @endif
                     </div>
-
-                    <div class="my-3 bg-white border p-3 h-[250px]">
-                        <h1 class="font-semibold text-custom-blue">2022 members grow chart</h1>
-                        <div class="grid h-full place-content-center">
-                            <h1 class="text-gray-500 animate-bounce">Coming soon</h1>
-                        </div>
-                    </div>
+                    @livewire('release-admin.release-admin-cashier-releases')
                 </div>
                 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
                 <script>
@@ -139,7 +103,7 @@
                         calendar.render();
                     });
                 </script>
-                <div class="bg-white w-[22rem] p-2 rounded-md border">
+                <div wire:ignore class="bg-white w-[22rem] p-2 rounded-md border">
                     <div id="calendar"></div>
                     <section class="px-3 mt-3">
                         <h2 class="font-semibold text-gray-900">Upcoming Events</h2>
@@ -149,7 +113,7 @@
         </div>
 
         <!-- Recent Transactions -->
-        <div class="p-3 bg-white border rounded-md">
+        <div class="p-3 mt-8 bg-white border rounded-md">
             <div class="flex items-center justify-between">
                 <h1 class="font-semibold text-custom-blue">Recent Transactions</h1>
                 <a href="{{ route('release-admin.transactions') }}" class="flex items-center space-x-1 text-custom-blue">
@@ -186,7 +150,7 @@
                                     @forelse ($recent_transactions as $dividend)
                                         <tr>
                                             <td class="px-3 py-4 text-sm text-gray-500 whitespace-nowrap">
-                                                {{ $dividend->created_at->format('h:i A F d, Y') }}
+                                                {{ $dividend->released_at->format('h:i A F d, Y') }}
                                             </td>
                                             <td class="py-4 pr-3 text-sm font-medium text-gray-900 whitespace-nowrap">
                                                 {{ $dividend->user->full_name }}
@@ -217,6 +181,12 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="my-3 bg-white border p-3 h-[250px]">
+        <h1 class="font-semibold text-custom-blue">2022 members grow chart</h1>
+        <div class="grid h-full place-content-center">
+            <h1 class="text-gray-500 animate-bounce">Coming soon</h1>
         </div>
     </div>
     <!-- Components -->
