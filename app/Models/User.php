@@ -101,4 +101,9 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->hasMany(Dividend::class, 'released_by');
     }
+
+    public function lotInfo()
+    {
+        return $this->hasOne(LotInformation::class);
+    }
 }

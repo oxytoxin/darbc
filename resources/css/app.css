@@ -1,4 +1,6 @@
 @import '../../vendor/filament/forms/dist/module.esm.css';
+/* @import 'node_modules/flatpickr/dist/flatpickr.min'; */
+@import 'flatpickr/dist/flatpickr.css';
 
 @tailwind base;
 
@@ -189,4 +191,23 @@ i {
 
 .filament-tables-table>thead tr {
     @apply !bg-primary-500;
+}
+
+
+/* Flatpickr v4 Style */
+.flatpickr-day.today {
+    border: #220068;
+    color: #220068;
+    border-style: solid;
+    border-width: 1px;
+}
+
+.flatpickr-day.selected {
+    background: #220068;
+    color: #fff;
+}
+
+/* margin */
+.ml18rem{
+    margin-left: 18rem;
 }
