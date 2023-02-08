@@ -31,5 +31,10 @@ class DatabaseSeeder extends Seeder
         $this->command->call('seed:unclaimed_releases');
         $this->command->call('seed:unclaimed_shares');
         $this->call(ReleaseSeeder::class);
+
+        $this->call(BlockAddressSeeder::class);
+        $this->call(LotAddressSeeder::class);
+        $this->call(AreaAddressSeeder::class);
+        $this->call(LotInformationSeeder::class);
     }
 }

@@ -12,6 +12,7 @@
 
     <link rel="icon" type="image/png" href="{{ asset('/assets/darbc-logo.svg') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+    {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
     @livewireScripts
@@ -24,6 +25,10 @@
     @yield('body')
 
     @livewire('notifications')
+
+    {{-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
+    <script src="https://unpkg.com/create-file-list"></script>
+    @stack('file-upload')
 </body>
 
 </html>
