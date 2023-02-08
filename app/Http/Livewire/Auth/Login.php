@@ -23,8 +23,8 @@ class Login extends Component
     public function authenticate()
     {
         $this->validate();
-        if (!Auth::attempt(['username' => $this->username, 'password' => $this->password])) {
-            Notification::make()->title('Invalid credentials.')->danger()->send();
+        if (!Auth::attempt(['username' => $this->username, 'password' => $this->password, 'active' => true])) {
+            Notification::make()->title('Invalid credentials.')->body('Account may be inactive. Please contact your administrator.')->danger()->send();
             return;
         }
 
