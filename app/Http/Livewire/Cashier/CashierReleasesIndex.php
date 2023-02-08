@@ -24,15 +24,12 @@ class CashierReleasesIndex extends Component implements HasTable
     {
         return [
             TextColumn::make('created_at')
-                ->extraAttributes(['class' => 'font-semibold text-sm'])
                 ->label('Date Released')
                 ->date('F d, Y'),
-            TextColumn::make('name')
-                ->extraAttributes(['class' => 'font-semibold text-sm']),
+            TextColumn::make('name'),
             TextColumn::make('total_amount')
                 ->label('Total Amount')
-                ->money('PHP', true)
-                ->extraAttributes(['class' => 'font-semibold text-sm']),
+                ->money('PHP', true),
             TagsColumn::make('particulars')
                 ->getStateUsing(fn ($record) => collect($record->particulars)->map(fn ($value, $key) => $key)->toArray()),
             IconColumn::make('disbursed')

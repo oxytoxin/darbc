@@ -12,10 +12,10 @@ use App\Models\MemberInformation;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
-use App\Http\Livewire\ReleaseDividends;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
+use App\Http\Livewire\Shared\ReleaseDividends;
 
 class ReleaseAdminReleaseDividends extends ReleaseDividends
 {

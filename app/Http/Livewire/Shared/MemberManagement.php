@@ -48,19 +48,15 @@ class MemberManagement extends Component implements HasTable
         return [
             TextColumn::make('darbc_id')
                 ->label('DARBC ID')
-                ->extraAttributes(['class' => 'font-semibold text-sm'])
                 ->sortable()
                 ->searchable(),
             TextColumn::make('percentage')
-                ->extraAttributes(['class' => 'font-semibold text-sm'])
                 ->sortable(),
             TextColumn::make('user.surname')
                 ->label('Last Name')
-                ->extraAttributes(['class' => 'font-semibold text-sm'])
                 ->searchable(isIndividual: true),
             TextColumn::make('user.first_name')
                 ->label('First Name')
-                ->extraAttributes(['class' => 'font-semibold text-sm'])
                 ->searchable(isIndividual: true),
             BadgeColumn::make('succession_number')
                 ->colors([
@@ -83,11 +79,9 @@ class MemberManagement extends Component implements HasTable
                 ])
                 ->label('Status'),
             TextColumn::make('application_date')
-                ->extraAttributes(['class' => 'font-semibold text-sm'])
                 ->label('Member since')
                 ->date(),
             BadgeColumn::make('missing_details_count')
-                ->extraAttributes(['class' => 'font-semibold text-sm'])
                 ->label('Missing Details')
                 ->color('warning'),
 

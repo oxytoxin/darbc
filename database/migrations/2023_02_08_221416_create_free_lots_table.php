@@ -13,17 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('lot_information', function (Blueprint $table) {
+        Schema::create('free_lots', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
-            $table->foreignId('block_id')->constrained('block_addresses');
-            $table->foreignId('lot_id')->constrained('lot_addresses');
-            $table->foreignId('area_id')->constrained('area_addresses');
-            $table->boolean('status')->default(0);
+            $table->foreignId('cluster_id')->nullable()->constrained();
+            $table->string('reference_name')->nullable();
+            $table->string('block')->nullable();
+            $table->string('lot')->nullable();
+            $table->string('area')->nullable();
+            $table->smallInteger('status')->default(1);
             $table->string('buyer')->nullable();
-            $table->string('date_sold')->nullable();
-            $table->string('draw_date')->nullable();
-            $table->string('map_url')->nullable();
+            $table->date('sold_at')->nullable();
+            $table->date('draw_date')->nullable();
             $table->timestamps();
         });
     }
@@ -35,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('lot_information');
+        Schema::dropIfExists('free_lots');
     }
 };

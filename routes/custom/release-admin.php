@@ -9,6 +9,7 @@ use App\Http\Livewire\ReleaseAdmin\ReleaseAdminRegisterMember;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminUserManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminMemberManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminClusterManagement;
+use App\Http\Livewire\ReleaseAdmin\ReleaseAdminFreeLotManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminManageProofOfRelease;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminReleaseManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminTransactionsHistory;
@@ -29,6 +30,7 @@ Route::middleware(['auth', 'role:' . Role::RELEASE_ADMIN])->prefix('release-admi
     Route::get('/member-dividends/{member}', MemberDividends::class)->name('member-dividends');
     Route::get('/reports', ReleaseAdminReportsIndex::class)->name('reports');
     Route::get('/manage-proof-of-release/{dividend}', ReleaseAdminManageProofOfRelease::class)->name('manage-proof-of-release');
+    Route::get('/free-lots', ReleaseAdminFreeLotManagement::class)->name('manage-free-lots');
 
     Route::prefix('download-report')->name('download-report.')->group(function () {
         Route::get('/released/{release}/status/{status}', [ReportsDownloadController::class, 'releasesByStatus'])->name('releases-by-status');

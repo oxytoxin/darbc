@@ -26,15 +26,11 @@ class ReleaseAdminClusterManagement extends Component implements HasTable
     protected function getTableColumns()
     {
         return [
-            TextColumn::make('name')
-                ->extraAttributes(['class' => 'font-semibold text-sm']),
-            TextColumn::make('address')
-                ->extraAttributes(['class' => 'font-semibold text-sm']),
+            TextColumn::make('name'),
+            TextColumn::make('address'),
             TextColumn::make('members_count')
-                ->counts('members')
-                ->extraAttributes(['class' => 'font-semibold text-sm']),
-            TextColumn::make('leader.full_name')
-                ->extraAttributes(['class' => 'font-semibold text-sm']),
+                ->counts('members'),
+            TextColumn::make('leader.full_name'),
 
         ];
     }

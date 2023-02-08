@@ -32,7 +32,6 @@ class ReleaseAdminUserManagement extends Component implements HasTable
     {
         return [
             TextColumn::make('full_name')
-                ->extraAttributes(['class' => 'font-semibold text-sm'])
                 ->label('Name'),
             TagsColumn::make('roles.name')
         ];

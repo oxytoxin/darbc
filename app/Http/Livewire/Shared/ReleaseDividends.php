@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire;
+namespace App\Http\Livewire\Shared;
 
 use Livewire\Component;
 use App\Models\Dividend;
@@ -99,6 +99,6 @@ class ReleaseDividends extends Component implements HasTable
     }
     public function render()
     {
-        return view('livewire.release-dividends');
+        return view('livewire.shared.release-dividends');
     }
 }

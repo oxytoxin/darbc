@@ -24,7 +24,6 @@ class MemberInformation extends Model implements HasMedia
 
     const FIELDS = [
         'cluster_id',
-        'date_of_birth',
         'place_of_birth',
         'blood_type',
         'religion',
@@ -41,7 +40,6 @@ class MemberInformation extends Model implements HasMedia
         'philhealth_number',
         'tin_number',
         'contact_number',
-        'application_date',
     ];
 
     protected $casts = [

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\Shared\MemberDividends;
 use App\Http\Livewire\OfficeStaff\OfficeStaffDashboard;
+use App\Http\Livewire\OfficeStaff\OfficeStaffFreeLotManagement;
 use App\Http\Livewire\OfficeStaff\OfficeStaffLedgerIndex;
 use App\Http\Livewire\OfficeStaff\OfficeStaffRegisterMember;
 use App\Http\Livewire\OfficeStaff\OfficeStaffMemberManagement;
@@ -20,4 +21,5 @@ Route::middleware(['auth', 'role:' . Role::OFFICE_STAFF])->prefix('office-staff'
     Route::get('/release-dividends/{release}', OfficeStaffReleaseDividendsManagement::class)->name('ledger.release-dividends');
     Route::get('/release-details/{release}', OfficeStaffReleaseDetailsManagement::class)->name('ledger.release-details');
     Route::get('/member-dividends/{member}', MemberDividends::class)->name('member-dividends');
+    Route::get('/free-lots', OfficeStaffFreeLotManagement::class)->name('manage-free-lots');
 });
