@@ -45,12 +45,12 @@ class SeedLotDistribution extends Command
             app_path('Models/MapImage.php'),
         ];
         $migration_files = [
-            'migrations/2022_01_12_124342_create_block_addresses_table.php',
-            'migrations/2023_01_12_124344_create_lot_addresses_table.php',
-            'migrations/2023_01_12_124345_create_area_addresses_table.php',
-            'migrations/2023_01_12_154342_create_lot_information_table.php',
-            'migrations/2023_01_16_103631_create_map_images_table.php',
-            'migrations/2023_01_16_145736_create_land_documents_table.php',
+            database_path('migrations/2022_01_12_124342_create_block_addresses_table.php'),
+            database_path('migrations/2023_01_12_124344_create_lot_addresses_table.php'),
+            database_path('migrations/2023_01_12_124345_create_area_addresses_table.php'),
+            database_path('migrations/2023_01_12_154342_create_lot_information_table.php'),
+            database_path('migrations/2023_01_16_103631_create_map_images_table.php'),
+            database_path('migrations/2023_01_16_145736_create_land_documents_table.php'),
         ];
         foreach ($model_files as $key => $file) {
             if (file_exists($file)) {
