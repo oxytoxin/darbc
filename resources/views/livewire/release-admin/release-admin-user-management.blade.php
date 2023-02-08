@@ -1,13 +1,8 @@
-<div>
+<div class="pb-8">
+    <div class="mt-10">
+        <h1 class="text-xl font-bold text-custom-blue">Staff Management</h1>
+    </div>
     <div>
-        <!--- Content -->
-        <div class="mt-10">
-            <div>
-                @livewire('release-admin.release-admin-office-staff-management')
-            </div>
-            <div>
-                @livewire('release-admin.release-admin-cashier-management')
-            </div>
-        </div>
+        {{ $this->table }}
     </div>
 </div>

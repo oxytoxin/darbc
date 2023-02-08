@@ -5,9 +5,103 @@ namespace App\Http\Livewire\ReleaseAdmin;
 use App\Models\Role;
 use App\Models\User;
 use Livewire\Component;
+use Illuminate\Support\Facades\Hash;
+use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
+use Filament\Tables\Actions\CreateAction;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Columns\TagsColumn;
+use Filament\Tables\Concerns\InteractsWithTable;
 
-class ReleaseAdminUserManagement extends Component
+class ReleaseAdminUserManagement extends Component implements HasTable
 {
+
+    use InteractsWithTable;
+
+    protected function getTableQuery()
+    {
+        return User::query()->doesntHave('member_information');
+    }
+
+    protected function getTableColumns()
+    {
+        return [
+            TextColumn::make('full_name')
+                ->extraAttributes(['class' => 'font-semibold text-sm'])
+                ->label('Name'),
+            TagsColumn::make('roles.name')
+        ];
+    }
+
+    protected function getTableHeaderActions(): array
+    {
+        return [
+            CreateAction::make()
+                ->form($this->getFormFields())
+        ];
+    }
+
+    protected function getTableActions(): array
+    {
+        return [
+            EditAction::make()
+                ->button()
+                ->outlined()
+                ->action(function ($record, $data) {
+                    if (filled($data['password'])) {
+                        $data['password'] = Hash::make($data['password']);
+                    } else {
+                        unset($data['password']);
+                    }
+                    $record->update($data);
+                    Notification::make()->title('User updated.')->success()->send();
+                })
+                ->form(fn ($record) => $this->getFormFields($record)),
+            DeleteAction::make()
+                ->action(function ($record) {
+                    $record->roles()->detach();
+                    $record->delete();
+                    Notification::make()->title('User deleted.')->success()->send();
+                })
+        ];
+    }
+
+    protected function getFormFields($record = null)
+    {
+        return [
+            Fieldset::make('User Information')
+                ->schema([
+                    TextInput::make('first_name')
+                        ->label('First Name')
+                        ->required(),
+                    TextInput::make('surname')
+                        ->label('Last Name')
+                        ->required(),
+                    TextInput::make('middle_name')
+                        ->label('Middle Name'),
+                    TextInput::make('suffix')
+                        ->label('Suffix'),
+                    TextInput::make('username')
+                        ->label('Username')
+                        ->unique('users', 'username', $record)
+                        ->required(),
+                    TextInput::make('password')
+                        ->label('Password')
+                        ->password(),
+                    Select::make('roles')
+                        ->relationship('roles', 'name')
+                        ->multiple()
+                        ->preload()
+                        ->required()
+                ]),
+        ];
+    }
+
     public function render()
     {
         return view('livewire.release-admin.release-admin-user-management');

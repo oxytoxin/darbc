@@ -1,3 +1,4 @@
 *
 !public/
 !.gitignore
+!proof_of_release/

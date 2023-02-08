@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use DB;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -21,6 +22,28 @@ class MemberInformation extends Model implements HasMedia
     const CS_LEGALLY_SEPARATED = 4;
     const CS_UNKNOWN = 5;
 
+    const FIELDS = [
+        'cluster_id',
+        'date_of_birth',
+        'place_of_birth',
+        'blood_type',
+        'religion',
+        'membership_status_id',
+        'occupation_details',
+        'province_code',
+        'region_code',
+        'city_code',
+        'barangay_code',
+        'address_line',
+        'mother_maiden_name',
+        'spouse',
+        'sss_number',
+        'philhealth_number',
+        'tin_number',
+        'contact_number',
+        'application_date',
+    ];
+
     protected $casts = [
         'date_of_birth' => 'immutable_date',
         'children' => 'array',
@@ -30,6 +53,21 @@ class MemberInformation extends Model implements HasMedia
         'is_darbc_member' => 'boolean',
         'split_claim' => 'boolean',
     ];
+
+    public static function getMissingFieldsDBQuery($field_name = ' as missing_details')
+    {
+        $fields = static::FIELDS;
+        $query_string_parts = [];
+        foreach ($fields as $field) {
+            $query_string_parts[] = "isnull(case {$field} when '' then null else 1 end)";
+            $query_string_parts[] = "isnull({$field})";
+        }
+        $query_string = implode('+', $query_string_parts);
+        if ($field_name) {
+            $query_string .= $field_name;
+        }
+        return DB::raw($query_string);
+    }
 
     public function registerMediaCollections(): void
     {

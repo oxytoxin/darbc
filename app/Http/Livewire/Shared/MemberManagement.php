@@ -86,6 +86,10 @@ class MemberManagement extends Component implements HasTable
                 ->extraAttributes(['class' => 'font-semibold text-sm'])
                 ->label('Member since')
                 ->date(),
+            BadgeColumn::make('missing_details_count')
+                ->extraAttributes(['class' => 'font-semibold text-sm'])
+                ->label('Missing Details')
+                ->color('warning'),
 
         ];
     }
