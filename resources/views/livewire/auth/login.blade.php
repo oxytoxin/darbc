@@ -13,6 +13,7 @@
             <div class="space-y-2 mx-auto text-center mt-4">
                 <x-login-link :user-attributes="['username' => 'admin']" label="Login as admin" />
                 <x-login-link :user-attributes="['username' => 'cashier1']" label="Login as cashier" />
+                <x-login-link :user-attributes="['username' => 'land-admin']" label="Login as land-admin" />
             </div>
             @endenv
 

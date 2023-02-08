@@ -184,6 +184,8 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                     DatePicker::make('released_from'),
                     DatePicker::make('released_until'),
                 ])
+                ->columns(2)
+                ->columnSpan(2)
                 ->query(function (Builder $query, array $data): Builder {
                     return $query
                         ->when(

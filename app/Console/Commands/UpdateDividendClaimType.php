@@ -28,23 +28,23 @@ class UpdateDividendClaimType extends Command
      */
     public function handle()
     {
-        $dividends = Dividend::with(['user.member_information'])->whereNotNull('claimed_by')->get();
-        $claimedBySPA = $dividends->filter(function ($dividend) {
-            return collect($dividend->user->member_information->spa)->contains($dividend->claimed_by);
-        });
-        $claimedBySPA->each(function ($dividend) {
-            $dividend->update([
-                'claim_type' => 2
-            ]);
-        });
-        $claimedByRepresentative = $dividends->filter(function ($dividend) {
-            return !collect($dividend->user->member_information->spa)->contains($dividend->claimed_by);
-        });
-        $claimedByRepresentative->each(function ($dividend) {
-            $dividend->update([
-                'claim_type' => 3
-            ]);
-        });
+        // $dividends = Dividend::with(['user.member_information'])->whereNotNull('claimed_by')->get();
+        // $claimedBySPA = $dividends->filter(function ($dividend) {
+        //     return collect($dividend->user->member_information->spa)->contains($dividend->claimed_by);
+        // });
+        // $claimedBySPA->each(function ($dividend) {
+        //     $dividend->update([
+        //         'claim_type' => 2
+        //     ]);
+        // });
+        // $claimedByRepresentative = $dividends->filter(function ($dividend) {
+        //     return !collect($dividend->user->member_information->spa)->contains($dividend->claimed_by);
+        // });
+        // $claimedByRepresentative->each(function ($dividend) {
+        //     $dividend->update([
+        //         'claim_type' => 3
+        //     ]);
+        // });
         return Command::SUCCESS;
     }
 }

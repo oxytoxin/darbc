@@ -14,11 +14,8 @@ class LandInformation extends Component
     public $information = [];
     public $landId;
 
-    // public $uploadMapModal = true;
-
     public $mapImage;
     public $ownerInfo;
-    // public $userId;
 
     public function mount($id)
     {
@@ -33,9 +30,10 @@ class LandInformation extends Component
         ]);
     }
 
-    public function updateMap(){
+    public function updateMap()
+    {
         $imageName = $this->mapImage->store('maps', 'public');
-        
+
         $this->ownerInfo->update(['map_url' => str_replace("maps/", "", $imageName)]);
         dd('Updated');
     }

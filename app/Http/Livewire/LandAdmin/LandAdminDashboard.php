@@ -27,7 +27,6 @@ class LandAdminDashboard extends Component
                 ->paginate(10)
         ]);
     }
-    // 'informations' => LotInformation::with('user', 'block', 'lot', 'area')->paginate(5),
 
     public function showModal($id)
     {
