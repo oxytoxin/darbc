@@ -30,6 +30,12 @@ class SeedLotDistribution extends Command
      */
     public function handle()
     {
+        // $this->revertLotDistributionInitialChanges();
+        return Command::SUCCESS;
+    }
+
+    private function revertLotDistributionInitialChanges()
+    {
         Schema::dropIfExists('land_documents');
         Schema::dropIfExists('map_images');
         Schema::dropIfExists('lot_information');
@@ -62,6 +68,5 @@ class SeedLotDistribution extends Command
                 unlink($file);
             }
         }
-        return Command::SUCCESS;
     }
 }
