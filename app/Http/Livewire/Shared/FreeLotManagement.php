@@ -3,6 +3,8 @@
 namespace App\Http\Livewire\Shared;
 
 use App\Models\FreeLot;
+use App\View\Components\FreeLotStatusColumn;
+use Closure;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Select;
@@ -16,7 +18,9 @@ use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use stdClass;
 
 class FreeLotManagement extends Component implements HasTable
 {
@@ -27,51 +31,68 @@ class FreeLotManagement extends Component implements HasTable
         return FreeLot::query();
     }
 
-    protected function getDefaultTableSortColumn(): ?string
+    protected function getTableRecordClassesUsing(): ?Closure
     {
-        return 'draw_date';
-    }
-
-    protected function getDefaultTableSortDirection(): ?string
-    {
-        return 'desc';
+        return fn (Model $record) => match ($record->status) {
+            1 => 'bg-green-200 border-b border-gray-700',
+            2 => 'bg-yellow-100 border-b border-gray-700',
+            3 => 'bg-blue-200 border-b border-gray-700',
+            4 => 'bg-purple-200 border-b border-gray-700',
+            default => null,
+        };
     }
 
     protected function getTableColumns(): array
     {
         return [
-            TextColumn::make('user.full_name')
+            // TextColumn::make('index')->getStateUsing(
+            //     static function (stdClass $rowLoop, HasTable $livewire): string {
+            //         return (string) ($rowLoop->iteration +
+            //             ($livewire->tableRecordsPerPage * ($livewire->page - 1
+            //             ))
+            //         );
+            //     }
+            // )->label('#'),
+            TextColumn::make('user.member_information.darbc_id')
+                ->searchable()
+                ->sortable()
+                ->label('DARBC ID'),
+            TextColumn::make('user.alt_full_name')
                 ->searchable()
                 ->sortable(['users.first_name', 'users.surname'])
                 ->label('Member'),
-            TextColumn::make('cluster.name')
-                ->sortable(),
             TextColumn::make('block')
                 ->sortable(),
             TextColumn::make('lot')
                 ->sortable(),
             TextColumn::make('area')
                 ->sortable(),
-            TextColumn::make('draw_date')
-                ->date('M d, Y')
-                ->label('Draw Date')
-                ->sortable(),
-
-            BadgeColumn::make('status')
+            FreeLotStatusColumn::make('status')
                 ->enum([
-                    1 => 'ACTIVE',
+                    1 => '',
                     2 => 'SOLD',
                     3 => 'RELOCATED',
                     4 => 'SWAPPED',
                 ])
                 ->size('sm')
-                ->color('success')
+                ->colors([
+                    'active' => 1,
+                    'sold' => 2,
+                    'relocated' => 3,
+                    'swapped' => 4,
+                ])
                 ->sortable(),
             TextColumn::make('buyer')
                 ->sortable(),
             TextColumn::make('sold_at')
                 ->date('M d, Y')
                 ->label('Date Sold')
+                ->sortable(),
+            TextColumn::make('cluster.name')
+                ->sortable(),
+            TextColumn::make('draw_date')
+                ->date('M d, Y')
+                ->label('Draw Date')
                 ->sortable(),
         ];
     }

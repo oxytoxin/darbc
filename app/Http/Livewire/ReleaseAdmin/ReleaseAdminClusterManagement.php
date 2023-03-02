@@ -44,7 +44,8 @@ class ReleaseAdminClusterManagement extends Component implements HasTable
                     TextInput::make('address')->required(),
                     Select::make('leader_id')
                         ->searchable()
-                        ->options(fn () => MemberInformation::with('user')->get()->pluck('user.full_name', 'user_id'))
+                        ->debounce(2000)
+                        ->options(fn () => User::has('member_information')->pluck('full_name', 'id'))
                         ->label('Leader'),
                 ])
                 ->icon('heroicon-o-plus')
@@ -60,8 +61,9 @@ class ReleaseAdminClusterManagement extends Component implements HasTable
                     TextInput::make('name')->required(),
                     TextInput::make('address')->required(),
                     Select::make('leader_id')
+                        ->debounce(2000)
                         ->searchable()
-                        ->options(fn () => MemberInformation::with('user')->get()->pluck('user.full_name', 'user_id'))
+                        ->options(fn () => User::has('member_information')->pluck('full_name', 'id'))
                         ->label('Leader'),
                 ])
                 ->modalWidth('md')

@@ -208,6 +208,11 @@ i {
 }
 
 /* margin */
-.ml18rem{
+.ml18rem {
     margin-left: 18rem;
+}
+
+#overlay p,
+i {
+    opacity: 100;
 }

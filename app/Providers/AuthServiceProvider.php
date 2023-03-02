@@ -4,6 +4,7 @@ namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Gate;
+use Opcodes\LogViewer\Facades\LogViewer;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -29,5 +30,14 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('viewWebTinker', function ($user = null) {
             return $user->username == 'admin';
         });
+
+        if (app()->environment('production')) {
+            LogViewer::auth(function ($request) {
+                return $request->user()
+                    && in_array($request->user()->username, [
+                        'admin',
+                    ]);
+            });
+        }
     }
 }
