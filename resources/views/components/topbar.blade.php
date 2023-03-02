@@ -1,7 +1,6 @@
 @php
     $roles = auth()->user()->roles;
 @endphp
-
 <section class="flex justify-between">
     @if ($roles->find(4))
         <section class="flex items-start space-x-2">

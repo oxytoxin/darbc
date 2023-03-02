@@ -1,8 +1,8 @@
-<div x-data class="max-w-[60rem]">
+<div class="max-w-[60rem]" x-data>
     @include('livewire.cashier.components.payslip')
     <div class="mt-4">
         <x-filament-support::button @click="printOut($refs.print.outerHTML)">Print</x-filament-support::button>
-        <x-filament-support::button color="success" tag="a" href="{{ route('cashier.releases.dividends', ['release' => $dividend->release]) }}">RELEASE ANOTHER</x-filament-support::button>
+        <x-filament-support::button href="{{ route('cashier.releases.dividends', ['release' => $dividend->release]) }}" color="success" tag="a">RELEASE ANOTHER</x-filament-support::button>
     </div>
     <script>
         function printOut(data) {
@@ -22,7 +22,6 @@
                         setTimeout(checkReadyState, 500); // May need to change interval
                     }
                 }
-
                 checkReadyState();
             }) + ')();</sc' + 'ript>');
             mywindow.document.write('</body></html>');
