@@ -55,7 +55,6 @@ class FreeLotManagement extends Component implements HasTable
             // )->label('#'),
             TextColumn::make('user.member_information.darbc_id')
                 ->searchable()
-                ->sortable()
                 ->label('DARBC ID'),
             TextColumn::make('user.alt_full_name')
                 ->searchable()
