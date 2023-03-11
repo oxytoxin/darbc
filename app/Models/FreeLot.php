@@ -13,6 +13,8 @@ class FreeLot extends Model
         'sold_at' => 'immutable_date',
         'draw_date' => 'immutable_date',
         'status' => 'integer',
+        'relocation_history' => 'array',
+        'swapping_history' => 'array',
     ];
 
     public function user()
