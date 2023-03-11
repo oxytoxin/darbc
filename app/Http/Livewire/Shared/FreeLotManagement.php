@@ -140,8 +140,7 @@ class FreeLotManagement extends Component implements HasTable
                                 ])
                                 ->required(),
                             DatePicker::make('draw_date')
-                                ->label('Draw Date')
-                                ->required(),
+                                ->label('Draw Date'),
 
                         ]),
                         Grid::make(2)->schema([
