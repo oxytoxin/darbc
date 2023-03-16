@@ -40,5 +40,6 @@ Route::middleware(['auth', 'role:' . Role::RELEASE_ADMIN])->prefix('release-admi
         Route::get('/releases-by-cashier/{cashier}', [ReportsDownloadController::class, 'releasesByCashier'])->name('releases-by-cashier');
         Route::get('/voided-releases-by-cashier/{cashier}', [ReportsDownloadController::class, 'voidedReleasesByCashier'])->name('voided-releases-by-cashier');
         Route::get('/claimed-releases-by-type/{release}', [ReportsDownloadController::class, 'claimedReleasesByType'])->name('claimed-releases-by-type');
+        Route::get('/members', [ReportsDownloadController::class, 'members'])->name('members');
     });
 });

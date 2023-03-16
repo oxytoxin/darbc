@@ -4,7 +4,7 @@
             <h1 class="text-xl font-bold text-primary-500">Release Management</h1>
             <x-modal>
                 <x-slot name="button">
-                    <button @click="show = true" class="flex items-center px-3 py-2 space-x-2 text-white rounded bg-primary-500">
+                    <button class="flex items-center px-3 py-2 space-x-2 text-white rounded bg-primary-500" @click="show = true">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                             <path class="text-white fill-current" d="M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z" />
                         </svg>
@@ -25,5 +25,4 @@
             </div>
         </div>
     </div>
-
 </div>

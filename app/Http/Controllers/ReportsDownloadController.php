@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dividend;
+use App\Models\MemberInformation;
 use App\Models\Release;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -10,6 +11,64 @@ use Spatie\SimpleExcel\SimpleExcelWriter;
 
 class ReportsDownloadController extends Controller
 {
+    public function members()
+    {
+        $writer = SimpleExcelWriter::streamDownload(storage_path('app/livewire-tmp/Profiling.xlsx'))->addHeader([
+            'DARBC ID',
+            'Member Name',
+            'Succession',
+            'Status',
+            'Percentage',
+            'Cluster',
+            'Date of Birth',
+            'Place of Birth',
+            'Gender',
+            'Blood Type',
+            'Religion',
+            'Civil Status',
+            'Occupation',
+            'Contact Number',
+            'SSS Number',
+            'TIN Number',
+            'PhilHealth Number',
+            'SPA'
+        ]);
+        $members = MemberInformation::with(['user', 'cluster', 'gender', 'occupation'])->orderBy('darbc_id');
+        $members->each(function ($member) use ($writer) {
+            $writer->addRow([
+                $member->darbc_id,
+                $member->user->alt_full_name,
+                $member->succession_number == 0 ? 'Original' : ordinal($member->succession_number) . ' Successor',
+                match ($member->status) {
+                    MemberInformation::STATUS_ACTIVE => 'Active',
+                    MemberInformation::STATUS_DECEASED => 'Deceased',
+                    MemberInformation::STATUS_INACTIVE => 'Inactive',
+                },
+                $member->percentage,
+                $member->cluster?->name,
+                $member->date_of_birth?->format('m/d/Y'),
+                $member->place_of_birth,
+                $member->gender->name,
+                $member->blood_type,
+                $member->religion,
+                match ($member->civil_status) {
+                    1 => 'SINGLE',
+                    2 => 'MARRIED',
+                    3 => 'WIDOW',
+                    4 => 'LEGALLY_SEPARATED',
+                    5 => 'UNKNOWN',
+                },
+                $member->occupation->name,
+                $member->contact_number,
+                $member->sss_number,
+                $member->tin_number,
+                $member->philhealth_number,
+                implode(', ', $member->spa),
+            ]);
+        });
+        $writer->toBrowser();
+    }
+
     public function releasesByCashier(User $cashier)
     {
         $release = Release::findOrFail(request('release_id'));

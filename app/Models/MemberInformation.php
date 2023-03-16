@@ -50,6 +50,7 @@ class MemberInformation extends Model implements HasMedia
         'percentage' => 'decimal:2',
         'is_darbc_member' => 'boolean',
         'split_claim' => 'boolean',
+        'succession_number' => 'integer',
     ];
 
     public static function getMissingFieldsDBQuery($field_name = ' as missing_details')

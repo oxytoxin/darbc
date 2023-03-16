@@ -23,6 +23,7 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Filters\Layout;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\SimpleExcel\SimpleExcelWriter;
 
 class MemberManagement extends Component implements HasTable
 {
@@ -63,7 +64,7 @@ class MemberManagement extends Component implements HasTable
                     'success'
                 ])
                 ->sortable()
-                ->formatStateUsing(fn ($state) => $state == '0' ? 'Original' : ordinal($state) . ' Successor')
+                ->formatStateUsing(fn ($state) => $state == 0 ? 'Original' : ordinal($state) . ' Successor')
                 ->label('Ownership'),
             BadgeColumn::make('status')
                 ->enum([
