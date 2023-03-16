@@ -56,16 +56,20 @@ class RegisterMember extends Component implements HasForms
                             TextInput::make('data.surname')->required(),
                             TextInput::make('data.middle_name'),
                             TextInput::make('data.suffix'),
-                            DatePicker::make('data.date_of_birth')->withoutTime()->required(),
-                            TextInput::make('data.place_of_birth')->required(),
-                            Select::make('data.gender_id')->label('Gender')->options(Gender::pluck('name', 'id'))->required(),
+                            DatePicker::make('data.date_of_birth')->withoutTime(),
+                            TextInput::make('data.place_of_birth'),
+                            Select::make('data.gender_id')
+                                ->default(Gender::UNKNOWN)
+                                ->label('Gender')
+                                ->required()
+                                ->options(Gender::pluck('name', 'id')),
                             Select::make('data.blood_type')->options([
                                 'A' => 'A',
                                 'B' => 'B',
                                 'AB' => 'AB',
                                 'O' => 'O',
-                            ])->required(),
-                            TextInput::make('data.religion')->required(),
+                            ]),
+                            TextInput::make('data.religion'),
                         ]),
 
                     ]),
@@ -74,7 +78,8 @@ class RegisterMember extends Component implements HasForms
                     ->schema([
                         TextInput::make('data.percentage')
                             ->default(100.00)
-                            ->required()->numeric()
+                            ->required()
+                            ->numeric()
                             ->minValue(0)->maxValue(100),
                         Select::make('data.status')->options([
                             MemberInformation::STATUS_ACTIVE => 'Active',
@@ -92,17 +97,25 @@ class RegisterMember extends Component implements HasForms
                             ->description('Provide details of the member being replaced.')
                             ->schema([
                                 Select::make('data.replacement_member')
-                                    ->options(User::has('member_information')->get()->pluck('full_name', 'id'))
+                                    ->options(User::has('member_information')->pluck('full_name', 'id'))
                                     ->searchable()
+                                    ->reactive()
+                                    ->afterStateUpdated(fn ($set, $state) => $set('data.darbc_id', MemberInformation::firstWhere('user_id', $state)->darbc_id))
+                                    ->required(),
+                                Select::make('data.old_member_status')->options([
+                                    MemberInformation::STATUS_ACTIVE => 'Active',
+                                    MemberInformation::STATUS_DECEASED => 'Deceased',
+                                    MemberInformation::STATUS_INACTIVE => 'Inactive',
+                                ])
+                                    ->default(MemberInformation::STATUS_INACTIVE)
                                     ->required(),
                                 Placeholder::make('data.membership_status_requirements')->view('forms.components.members.membership-status-requirements'),
-                                FileUpload::make('consent_form')->required(),
+                                FileUpload::make('consent_form'),
                                 FileUpload::make('id_documents')
                                     ->label('Identification')
-                                    ->multiple()
-                                    ->required(),
+                                    ->multiple(),
                             ])
-                            ->visible(fn ($get) => $get('data.membership_status') == 2),
+                            ->visible(fn ($get) => $get('data.membership_status') == MembershipStatus::REPLACEMENT),
 
                     ]),
                 Step::make('Address')
@@ -111,26 +124,22 @@ class RegisterMember extends Component implements HasForms
                         Select::make('data.address.region_code')
                             ->label('Region')
                             ->reactive()
-                            ->options(Region::pluck('description', 'code'))
-                            ->required(),
+                            ->options(Region::pluck('description', 'code')),
                         Select::make('data.address.province_code')
                             ->label('Province')
                             ->reactive()
-                            ->options(fn ($get) => Province::where('region_code', $get('data.address.region_code'))->pluck('description', 'code'))
-                            ->required(),
+                            ->options(fn ($get) => Province::where('region_code', $get('data.address.region_code'))->pluck('description', 'code')),
                         Select::make('data.address.city_code')
                             ->label('City/Municipality')
                             ->reactive()
-                            ->options(fn ($get) => City::where('province_code', $get('data.address.province_code'))->pluck('description', 'code'))
-                            ->required(),
+                            ->options(fn ($get) => City::where('province_code', $get('data.address.province_code'))->pluck('description', 'code')),
                         Select::make('data.address.barangay_code')
                             ->label('Barangay')
                             ->reactive()
-                            ->options(fn ($get) => Barangay::where('city_code', $get('data.address.city_code'))->pluck('description', 'code'))
-                            ->required(),
+                            ->options(fn ($get) => Barangay::where('city_code', $get('data.address.city_code'))->pluck('description', 'code')),
                         TextInput::make('data.address.address_line')
                             ->label('Street name, Building, House No.')
-                            ->required()
+
                     ]),
                 Step::make('Occupation')
                     ->description('Identify your occupation.')
@@ -155,7 +164,7 @@ class RegisterMember extends Component implements HasForms
                                 MemberInformation::CS_UNKNOWN => 'Unknown',
                             ])
                             ->required()
-                            ->default(1),
+                            ->default(MemberInformation::CS_SINGLE),
                         SlimRepeater::make('data.children')
                             ->columns(4)
                             ->schema([
@@ -174,7 +183,7 @@ class RegisterMember extends Component implements HasForms
                         TextInput::make('data.darbc_id')
                             ->label('DARBC ID number')
                             ->validationAttribute('DARBC ID')
-                            ->unique('member_information', 'darbc_id')
+                            ->disabled(fn ($get) => $get('data.membership_status') == MembershipStatus::REPLACEMENT)
                             ->required(),
                         TextInput::make('data.sss_number')
                             ->validationAttribute('SSS Number')
@@ -213,7 +222,6 @@ class RegisterMember extends Component implements HasForms
                     ]),
 
             ])
-                ->skippable()
                 ->submitAction(new HtmlString('<button class="p-1 px-2 text-sm font-semibold text-white rounded bg-primary-500" wire:click="register">Finish <span wire:loading class="animate-bounce">...</span></button>'))
         ];
     }
@@ -241,7 +249,7 @@ class RegisterMember extends Component implements HasForms
                 return;
             } else {
                 $toReplace->update([
-                    'status' => 3,
+                    'status' => $this->data['old_member_status'],
                 ]);
                 $lineage_identifier = $toReplace->lineage_identifier;
                 $successor_number = $toReplace->succession_number + 1;
@@ -303,7 +311,7 @@ class RegisterMember extends Component implements HasForms
     {
         $this->form->fill();
 
-        if (app()->environment('local')) {
+        if (!app()->environment('local')) {
             $this->data['first_name'] = 'John';
             $this->data['surname'] = 'Casero';
             $this->data['date_of_birth'] = now()->subYears(20);

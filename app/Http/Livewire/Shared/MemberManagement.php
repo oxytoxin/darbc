@@ -164,9 +164,11 @@ class MemberManagement extends Component implements HasTable
                     ->form([
                         Grid::make(2)->schema([
                             TextInput::make('first_name')
-                                ->label('First Name'),
+                                ->label('First Name')
+                                ->required(),
                             TextInput::make('surname')
-                                ->label('Last Name'),
+                                ->label('Last Name')
+                                ->required(),
                             TextInput::make('middle_name')
                                 ->label('Middle Name'),
                             TextInput::make('suffix')
