@@ -58,7 +58,7 @@ class ReportsDownloadController extends Controller
                     4 => 'LEGALLY_SEPARATED',
                     5 => 'UNKNOWN',
                 },
-                $member->occupation->name,
+                implode(' - ', [$member->occupation?->name, $member->occupation_details]),
                 $member->contact_number,
                 $member->sss_number,
                 $member->tin_number,
