@@ -311,7 +311,7 @@ class RegisterMember extends Component implements HasForms
     {
         $this->form->fill();
 
-        if (!app()->environment('local')) {
+        if (app()->environment('local')) {
             $this->data['first_name'] = 'John';
             $this->data['surname'] = 'Casero';
             $this->data['date_of_birth'] = now()->subYears(20);
