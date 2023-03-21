@@ -37,6 +37,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
     {
         return [
             Toggle::make('restrict_by_default')
+                ->default(true)
                 ->label('Automatically enter member restrictions on dividends'),
             TextInput::make('amount')
                 ->minValue(0)
@@ -120,6 +121,11 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
     protected function getDefaultTableSortDirection(): ?string
     {
         return 'asc';
+    }
+
+    public function mount()
+    {
+        $this->form->fill();
     }
 
     public function render()
