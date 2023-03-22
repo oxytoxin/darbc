@@ -21,6 +21,7 @@ class ReleaseAdminDashboard extends Component
     {
         return view('livewire.release-admin.release-admin-dashboard', [
             'total_members_count' => MemberInformation::darbcMember()->count(),
+            'active_members_count' => MemberInformation::whereStatus(MemberInformation::STATUS_ACTIVE)->count(),
             'deceased_members_count' => MemberInformation::deceased()->count(),
             'original_members_count' => MemberInformation::original()->count(),
             'replacement_members_count' => MemberInformation::replacement()->count(),
