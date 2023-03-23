@@ -47,7 +47,7 @@ class CashierCashMonitoringReport extends Component
             ->reduce(fn ($carry, $denom) => ($carry ?? collect())->merge($denom))
             ?->groupBy('denomination')
             ->map(fn ($denom) => $denom->sum('count'));
-        $daily_cash_ends_total = $daily_cash_ends_denominations->map(fn ($count, $denom) => $count * $denom)->sum();
+        $daily_cash_ends_total = $daily_cash_ends_denominations?->map(fn ($count, $denom) => $count * $denom)->sum() ?? 0;
         return view('livewire.cashier.cashier-cash-monitoring-report', [
             'daily_cash_end_denominations' => $daily_cash_ends_denominations,
             'releases_total_by_date' => $releases_total_by_date,
