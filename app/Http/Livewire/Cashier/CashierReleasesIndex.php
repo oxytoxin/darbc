@@ -52,6 +52,7 @@ class CashierReleasesIndex extends Component implements HasTable
                 ->outlined()
                 ->button()
                 ->icon('heroicon-o-cash')
+                ->visible(fn ($record) => $record->disbursed)
                 ->url(fn ($record) => route('cashier.daily-cash', ['release' => $record]))
         ];
     }
