@@ -11,11 +11,6 @@ class CashierCashMonitoringReport extends Component
     public $from;
     public $to;
 
-    public function mount()
-    {
-        $this->from = '2023-03-22';
-    }
-
     public function render()
     {
         $daily_cash_starts_by_date = $this->release->daily_cash_starts()

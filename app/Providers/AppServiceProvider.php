@@ -32,10 +32,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Model::unguard();
-        if (App::environment('local')) {
-            Carbon::setTestNow(date_create('2023-03-22'));
-            Model::shouldBeStrict(app()->environment('local'));
-        }
 
         Filament::serving(function () {
             Filament::registerViteTheme('resources/css/filament.css');
