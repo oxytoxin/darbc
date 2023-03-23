@@ -40,9 +40,6 @@ class RouteServiceProvider extends ServiceProvider
                 ->group(base_path('routes/custom/release-admin.php'));
 
             Route::middleware('web')
-                ->group(base_path('routes/custom/land-admin.php'));
-
-            Route::middleware('web')
                 ->group(base_path('routes/custom/cashier.php'));
 
             Route::middleware('web')

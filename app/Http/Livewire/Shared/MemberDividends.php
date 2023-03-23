@@ -14,8 +14,8 @@ class MemberDividends extends Component
     {
         return view('livewire.shared.member-dividends', [
             'dividends_amount_to_claim' => Dividend::whereUserId($this->member->user_id)
-                ->whereNot('status', Dividend::PENDING)
-                ->select(['id', 'gross_amount', 'deductions_amount', 'status'])
+                ->where('status', Dividend::FOR_RELEASE)
+                ->select(['id', 'net_amount', 'status'])
                 ->get()
                 ->sum('net_amount'),
             'lineage_members' => MemberInformation::with('user')->whereLineageIdentifier($this->member->lineage_identifier)->orderBy('succession_number')->get(),

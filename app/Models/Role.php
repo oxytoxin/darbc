@@ -12,7 +12,6 @@ class Role extends Model
     const RELEASE_ADMIN = 1;
     const CASHIER = 2;
     const OFFICE_STAFF = 3;
-    const LAND_ADMIN = 4;
 
     public function users()
     {

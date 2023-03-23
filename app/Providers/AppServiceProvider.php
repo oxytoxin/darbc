@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -30,7 +32,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Model::unguard();
-        Model::shouldBeStrict(app()->environment('local'));
+        if (App::environment('local')) {
+            Carbon::setTestNow(date_create('2023-03-22'));
+            Model::shouldBeStrict(app()->environment('local'));
+        }
 
         Filament::serving(function () {
             Filament::registerViteTheme('resources/css/filament.css');

@@ -50,7 +50,7 @@ class OfficeStaffReleaseDetailsManagement extends Component implements HasTable
                 ->label('Deductions')
                 ->money('PHP', true),
             TextColumn::make('net_amount')
-                ->sortable(['gross_amount', 'deductions_amount'])
+                ->sortable()
                 ->label('Net')
                 ->money('PHP', true),
             TagsColumn::make('restriction_entries')
@@ -128,7 +128,7 @@ class OfficeStaffReleaseDetailsManagement extends Component implements HasTable
     public function render()
     {
         return view('livewire.office-staff.office-staff-release-details-management', [
-            'dividends_net_amount' => ($this->release->dividends()->sum('gross_amount') / 100) - $this->release->dividends()->sum('deductions_amount') / 100,
+            'dividends_net_amount' => ($this->release->dividends()->sum('net_amount') ?? 0) / 100,
         ]);
     }
 }

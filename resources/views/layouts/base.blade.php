@@ -5,13 +5,13 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @hasSection('title')
-    <title>@yield('title') - {{ config('app.name') }}</title>
+        <title>@yield('title') - {{ config('app.name') }}</title>
     @else
-    <title>{{ config('app.name') }}</title>
+        <title>{{ config('app.name') }}</title>
     @endif
 
-    <link rel="icon" type="image/png" href="{{ asset('/assets/darbc-logo.svg') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+    <link type="image/png" href="{{ asset('/assets/darbc-logo.svg') }}" rel="icon">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"> --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
@@ -26,8 +26,23 @@
 
     @livewire('notifications')
 
-    {{-- <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script> --}}
-    <script src="https://unpkg.com/create-file-list"></script>
+    <script>
+        function printOut(data, title) {
+            var mywindow = window.open('', title, 'height=1000,width=1000');
+            mywindow.document.write('<html><head>');
+            mywindow.document.write('<title>' + title + '</title>');
+            mywindow.document.write(`<link rel="stylesheet" href="{{ Vite::asset('resources/css/app.css') }}" />`);
+            mywindow.document.write('</head><body >');
+            mywindow.document.write(data);
+            mywindow.document.write('</body></html>');
+            mywindow.document.close();
+            mywindow.focus();
+            setTimeout(() => {
+                mywindow.print();
+            }, 1000);
+            return false;
+        }
+    </script>
     @stack('file-upload')
 </body>
 

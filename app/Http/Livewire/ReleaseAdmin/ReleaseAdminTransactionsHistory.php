@@ -84,7 +84,7 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                 ]),
             TextColumn::make('net_amount')
                 ->label('AMOUNT')
-                ->sortable(['gross_amount'])
+                ->sortable()
                 ->money('PHP', true),
         ];
     }

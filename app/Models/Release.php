@@ -68,4 +68,19 @@ class Release extends Model
     {
         return $this->hasMany(Dividend::class)->where('status', Dividend::ON_HOLD);
     }
+
+    public function daily_cash_starts()
+    {
+        return $this->hasMany(DailyCash::class)->where('type', DailyCash::TYPE_START);
+    }
+
+    public function daily_cash_ends()
+    {
+        return $this->hasMany(DailyCash::class)->where('type', DailyCash::TYPE_END);
+    }
+
+    public function daily_cashes()
+    {
+        return $this->hasMany(DailyCash::class);
+    }
 }

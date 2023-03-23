@@ -19,8 +19,7 @@ class OfficeStaffDashboard extends Component
             'members_on_hold_count' => User::onHold()->count(),
             'latest_release' => Release::whereDisbursed(true)->latest()
                 ->withCount(['dividends', 'released_dividends'])
-                ->withSum('released_dividends as released_dividends_gross', 'gross_amount')
-                ->withSum('released_dividends as released_dividends_deductions', 'deductions_amount')
+                ->withSum('released_dividends as released_dividends_net', 'net_amount')
                 ->first(),
         ]);
     }

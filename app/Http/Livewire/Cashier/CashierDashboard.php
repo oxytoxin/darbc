@@ -33,21 +33,16 @@ class CashierDashboard extends Component
                         ->when($this->from, fn ($query) => $query->whereDate('released_at', '>=', $this->from))
                         ->when($this->to, fn ($query) => $query->whereDate('released_at', '<=', $this->to));
                 }])
-                ->withSum(['released_dividends as released_dividends_gross' => function (Builder $query) {
+                ->withSum(['released_dividends as released_dividends_net_amount' => function (Builder $query) {
                     $query->where('released_by', auth()->id())
                         ->when($this->from, fn ($query) => $query->whereDate('released_at', '>=', $this->from))
                         ->when($this->to, fn ($query) => $query->whereDate('released_at', '<=', $this->to));
-                }], 'gross_amount')
-                ->withSum(['released_dividends as released_dividends_deductions' => function (Builder $query) {
-                    $query->where('released_by', auth()->id())
-                        ->when($this->from, fn ($query) => $query->whereDate('released_at', '>=', $this->from))
-                        ->when($this->to, fn ($query) => $query->whereDate('released_at', '<=', $this->to));
-                }], 'deductions_amount')
+                }], 'net_amount')
                 ->first(),
             'latest_releases' => Release::take(5)
-                ->withSum('released_dividends as gross', 'gross_amount')
-                ->withSum('released_dividends as deductions', 'deductions_amount')
-                ->latest()->get(),
+                ->withSum('released_dividends as net', 'net_amount')
+                ->latest()
+                ->get(),
         ]);
     }
 }

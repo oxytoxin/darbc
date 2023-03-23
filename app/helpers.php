@@ -1,5 +1,7 @@
 <?php
 
+use Filament\Notifications\Notification;
+
 if (!function_exists('ordinal')) {
     function ordinal($number)
     {
@@ -8,6 +10,30 @@ if (!function_exists('ordinal')) {
             return $number . 'th';
         else
             return $number . $ends[$number % 10];
+    }
+}
+
+if (!function_exists('notify')) {
+    function notify($title = 'Success.', $body = null, $type = 'success')
+    {
+        $notification = Notification::make()->title($title);
+        if ($body) {
+            $notification->body($body);
+        }
+        switch ($type) {
+            case 'success':
+                $notification->body($body)->success();
+                break;
+            case 'warning':
+                $notification->body($body)->warning();
+                break;
+            case 'danger':
+                $notification->body($body)->danger();
+                break;
+            default:
+                break;
+        }
+        $notification->send();
     }
 }
 

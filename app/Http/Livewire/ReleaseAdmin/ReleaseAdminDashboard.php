@@ -14,9 +14,6 @@ use Illuminate\Database\Eloquent\Builder;
 class ReleaseAdminDashboard extends Component
 {
 
-
-
-
     public function render()
     {
         return view('livewire.release-admin.release-admin-dashboard', [

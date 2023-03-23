@@ -74,6 +74,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                 ->money('PHP', true),
             TextColumn::make('net_amount')
                 ->label('Net')
+                ->sortable()
                 ->money('PHP', true),
             TagsColumn::make('restriction_entries')
                 ->sortable()
@@ -131,7 +132,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
     public function render()
     {
         return view('livewire.office-staff.office-staff-release-dividends-management', [
-            'dividends_net_amount' => ($this->release->pending_dividends()->sum('gross_amount') / 100) - $this->release->pending_dividends()->sum('deductions_amount') / 100,
+            'dividends_net_amount' => $this->release->pending_dividends()->sum('net_amount'),
         ]);
     }
 

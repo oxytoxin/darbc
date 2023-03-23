@@ -46,15 +46,6 @@ class UserSeeder extends Seeder
             ]);
 
             $office_staff->roles()->attach(Role::OFFICE_STAFF);
-
-            $land_admin = User::create([
-                'first_name' => 'MOGYAHID',
-                'surname' => 'ANSID',
-                'username' => 'land-admin',
-                'password' => Hash::make('password'),
-            ]);
-
-            $land_admin->roles()->attach(Role::LAND_ADMIN);
         }
     }
 }

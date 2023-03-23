@@ -33,38 +33,38 @@ class SeedLotDistribution extends Command
      */
     public function handle()
     {
-        $this->revertLotDistributionInitialChanges();
-        $this->correctDARBCID();
-        $this->output->writeln("Seeding Free Lot Distribution...");
-        $this->output->progressStart(7565);
-        $rows = SimpleExcelReader::create(storage_path('csv/free-lot-masterlist.csv'))->getRows();
-        DB::beginTransaction();
-        $rows->each(function ($data) {
-            try {
-                FreeLot::create([
-                    'user_id' => MemberInformation::firstWhere('darbc_id', trim($data['DARBCID']))->user_id,
-                    'cluster_id' => filled(trim($data['CLUSTER'])) ? trim($data['CLUSTER']) : null,
-                    'reference_name' => filled(trim($data['NAME'])) ? trim($data['NAME']) : null,
-                    'block' => filled(trim($data['BLOCK'])) ? trim($data['BLOCK']) : null,
-                    'lot' => filled(trim($data['LOT'])) ? trim($data['LOT']) : null,
-                    'area' => filled(trim($data['AREA'])) ? strtoupper(trim($data['AREA'])) : null,
-                    'status' => match (strtoupper(trim($data['STATUS']))) {
-                        'SOLD' => 2,
-                        'RELOCATE' => 3,
-                        'SWAP' => 4,
-                        default => 1,
-                    },
-                    'buyer' => filled(trim($data['BUYER'])) ? trim($data['BUYER']) : null,
-                    'sold_at' => filled(trim($data['DATE'])) ? trim($data['DATE']) : null,
-                    'draw_date' => filled(trim($data['DRAW DATE'])) ? trim($data['DRAW DATE']) : null,
-                ]);
-            } catch (\Throwable $th) {
-                dd($data, $th->getMessage());
-            }
-            $this->output->progressAdvance();
-        });
+        // $this->revertLotDistributionInitialChanges();
+        // $this->correctDARBCID();
+        // $this->output->writeln("Seeding Free Lot Distribution...");
+        // $this->output->progressStart(7565);
+        // $rows = SimpleExcelReader::create(storage_path('csv/free-lot-masterlist.csv'))->getRows();
+        // DB::beginTransaction();
+        // $rows->each(function ($data) {
+        //     try {
+        //         FreeLot::create([
+        //             'user_id' => MemberInformation::firstWhere('darbc_id', trim($data['DARBCID']))->user_id,
+        //             'cluster_id' => filled(trim($data['CLUSTER'])) ? trim($data['CLUSTER']) : null,
+        //             'reference_name' => filled(trim($data['NAME'])) ? trim($data['NAME']) : null,
+        //             'block' => filled(trim($data['BLOCK'])) ? trim($data['BLOCK']) : null,
+        //             'lot' => filled(trim($data['LOT'])) ? trim($data['LOT']) : null,
+        //             'area' => filled(trim($data['AREA'])) ? strtoupper(trim($data['AREA'])) : null,
+        //             'status' => match (strtoupper(trim($data['STATUS']))) {
+        //                 'SOLD' => 2,
+        //                 'RELOCATE' => 3,
+        //                 'SWAP' => 4,
+        //                 default => 1,
+        //             },
+        //             'buyer' => filled(trim($data['BUYER'])) ? trim($data['BUYER']) : null,
+        //             'sold_at' => filled(trim($data['DATE'])) ? trim($data['DATE']) : null,
+        //             'draw_date' => filled(trim($data['DRAW DATE'])) ? trim($data['DRAW DATE']) : null,
+        //         ]);
+        //     } catch (\Throwable $th) {
+        //         dd($data, $th->getMessage());
+        //     }
+        //     $this->output->progressAdvance();
+        // });
 
-        DB::commit();
+        // DB::commit();
         return Command::SUCCESS;
     }
 

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Cashier;
 
 use App\Models\Release;
+use Filament\Tables\Actions\Action;
 use Livewire\Component;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
@@ -47,6 +48,11 @@ class CashierReleasesIndex extends Component implements HasTable
                 ->color('success')
                 ->visible(fn ($record) => $record->disbursed)
                 ->url(fn ($record) => route('cashier.releases.dividends', ['release' => $record])),
+            Action::make('daily_cash')
+                ->outlined()
+                ->button()
+                ->icon('heroicon-o-cash')
+                ->url(fn ($record) => route('cashier.daily-cash', ['release' => $record]))
         ];
     }
 

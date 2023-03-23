@@ -38,7 +38,7 @@ class Dividend extends Model implements HasMedia
     public function netAmount(): Attribute
     {
         return new Attribute(
-            get: fn ($value) => $this->gross_amount - $this->deductions_amount,
+            get: fn ($value) => $value / 100,
         );
     }
 

@@ -73,9 +73,10 @@
                         @foreach ($dividends as $dividend)
                             <tr>
                                 @if ($loop->first)
-                                    <td rowspan="{{ count($dividends) }}" class="@if ($loop->parent->odd) bg-[#E3E3E3]
-                            @else
-                            bg-[#EF9A47] @endif py-4">
+                                    <td class="
+                                    @if ($loop->parent->odd) bg-[#E3E3E3]
+                                    @else
+                            bg-[#EF9A47] @endif py-4" rowspan="{{ count($dividends) }}">
                                         <p class="text-center -rotate-90">{{ $year }}</p>
                                     </td>
                                 @endif
@@ -84,25 +85,25 @@
                                 </td>
                                 <td class="px-2 py-2 border-b">{{ $dividend->release->created_at->format('F d, Y') }}</td>
                                 <td class="px-2 py-2 border-b">
-                                    <a href="{{ $dividend->status == App\Models\Dividend::FOR_RELEASE && $isCashier ? route('cashier.dividends.manage', ['dividend' => $dividend]) : ' #' }}"
-                                        class="px-2 py-1 text-xs font-semibold rounded-full {{ match ($dividend->status) {
-                                            App\Models\Dividend::PENDING => 'bg-yellow-200 text-yellow-800',
-                                            App\Models\Dividend::FOR_RELEASE => 'bg-success-200 text-success-800 underline',
-                                            App\Models\Dividend::ON_HOLD => 'bg-red-200 text-red-800',
-                                            App\Models\Dividend::RELEASED => 'bg-gray-200 text-gray-800',
-                                        } }}">{{ match ($dividend->status) {
-                                            App\Models\Dividend::PENDING => 'Pending',
-                                            App\Models\Dividend::FOR_RELEASE => 'For Release',
-                                            App\Models\Dividend::ON_HOLD => 'On Hold',
-                                            App\Models\Dividend::RELEASED => 'Released',
-                                        } }}
+                                    <a class="px-2 py-1 text-xs font-semibold rounded-full {{ match ($dividend->status) {
+                                        App\Models\Dividend::PENDING => 'bg-yellow-200 text-yellow-800',
+                                        App\Models\Dividend::FOR_RELEASE => 'bg-success-200 text-success-800 underline',
+                                        App\Models\Dividend::ON_HOLD => 'bg-red-200 text-red-800',
+                                        App\Models\Dividend::RELEASED => 'bg-gray-200 text-gray-800',
+                                    } }}"
+                                       href="{{ $dividend->status == App\Models\Dividend::FOR_RELEASE && $isCashier ? route('cashier.dividends.manage', ['dividend' => $dividend]) : ' #' }}">{{ match ($dividend->status) {
+                                           App\Models\Dividend::PENDING => 'Pending',
+                                           App\Models\Dividend::FOR_RELEASE => 'For Release',
+                                           App\Models\Dividend::ON_HOLD => 'On Hold',
+                                           App\Models\Dividend::RELEASED => 'Released',
+                                       } }}
                                     </a>
                                 </td>
                             </tr>
                         @endforeach
                     @empty
                         <tr>
-                            <td colspan="5" class="py-4 text-sm text-center">No dividends found for this user.</td>
+                            <td class="py-4 text-sm text-center" colspan="5">No dividends found for this user.</td>
                         </tr>
                     @endforelse
                 </tbody>

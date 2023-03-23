@@ -17,6 +17,11 @@ use Filament\Tables\Concerns\InteractsWithTable;
 
 class CashierReleaseDividends extends ReleaseDividends
 {
+    protected function shouldPersistTableFiltersInSession(): bool
+    {
+        return true;
+    }
+
     protected function getTableActions()
     {
         return [

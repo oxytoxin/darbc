@@ -20,6 +20,7 @@ use Filament\Notifications\Notification;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Validation\Rule;
 use PDO;
+use Str;
 
 class CashierReleaseDividendManagement extends Component implements HasForms
 {
@@ -31,17 +32,18 @@ class CashierReleaseDividendManagement extends Component implements HasForms
 
     public function getFormSchema()
     {
+        $faker = \Faker\Factory::create();
         $fields = collect($this->dividend->particulars)->map(function ($value, $key) {
             return Checkbox::make('data.particulars.' . $key)->default(true)->label($value['name'])->visible(!$value['claimed']);
         });
         return [
-
             Grid::make(2)->schema([
                 Checkbox::make('data.claimed')->default(true)->label('Claim Dividend?')->inline(false),
                 TextInput::make('data.gift_certificate_control_number')
                     ->prefix($this->dividend->release->gift_certificate_prefix)
-                    ->maxLength(4)
+                    ->maxLength(6)
                     ->required()
+                    ->default(strtoupper($faker->bothify('???###')))
                     ->rule(Rule::unique('dividends', 'gift_certificate_control_number')->where('release_id', $this->dividend->release_id))
                     ->visible(!$this->dividend->user->member_information->split_claim && ($this->dividend->release->gift_certificate_amount > 0 || $this->dividend->release->gift_certificate_prefix))
                     ->hidden($this->dividend->gift_certificate_control_number != null),
