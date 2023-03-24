@@ -34,7 +34,7 @@
                 </div>
                 <div class="px-4 py-4 space-y-2 text-sm">
                     <div class="flex justify-between">
-                        <p>Advance Profit Share</p>
+                        <p>{{ $dividend->release->share_description }}</p>
                         <p>&nbsp;{{ $dividend->claimed ? Akaunting\Money\Money::PHP($dividend->net_amount, true) : 'UNCLAIMED' }}</p>
                     </div>
                     @if (!$dividend->user->member_information->split_claim && ($dividend->release->gift_certificate_prefix || $dividend->release->gift_certificate_amount > 0))
@@ -52,7 +52,7 @@
                 </div>
                 <div class="flex border-t-2 border-black divide-x-2 divide-black">
                     <div class="flex flex-col flex-1 h-24 px-4 py-4">
-                        <p class="text-xs italic font-semibold">CASHIER NAME:</p>
+                        <p class="text-xs italic font-semibold">TELLER NAME:</p>
                         <div class="flex-1">&nbsp;</div>
                         <p class="text-xs text-center uppercase whitespace-nowrap">{{ $dividend->cashier->first_name . ' ' . $dividend->cashier->surname }}</p>
                     </div>

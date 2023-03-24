@@ -43,7 +43,7 @@ class CashierReleaseDividendManagement extends Component implements HasForms
                     ->prefix($this->dividend->release->gift_certificate_prefix)
                     ->maxLength(6)
                     ->required()
-                    ->default(strtoupper($faker->bothify('???###')))
+                    ->default(fn () => $this->dividend->release->gift_certificate_prefix ? strtoupper($faker->bothify('???###')) : null)
                     ->rule(Rule::unique('dividends', 'gift_certificate_control_number')->where('release_id', $this->dividend->release_id))
                     ->visible(!$this->dividend->user->member_information->split_claim && ($this->dividend->release->gift_certificate_amount > 0 || $this->dividend->release->gift_certificate_prefix))
                     ->hidden($this->dividend->gift_certificate_control_number != null),

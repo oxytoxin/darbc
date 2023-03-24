@@ -59,6 +59,10 @@ class ReleaseAdminReleaseManagement extends Component implements HasTable
             EditAction::make()->form(fn ($record) => [
                 TextInput::make('name')
                     ->required(),
+                TextInput::make('share_description')
+                    ->hint('share description to be displayed in payslip.')
+                    ->placeholder('Profit Share')
+                    ->required(),
                 TextInput::make('total_amount')
                     ->numeric()
                     ->minValue(1)

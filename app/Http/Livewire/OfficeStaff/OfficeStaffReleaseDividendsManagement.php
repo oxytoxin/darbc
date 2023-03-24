@@ -5,8 +5,10 @@ namespace App\Http\Livewire\OfficeStaff;
 use App\Models\Dividend;
 use App\Models\MemberInformation;
 use App\Models\Release;
+use App\Models\Restriction;
 use App\Models\User;
 use DB;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
@@ -19,6 +21,8 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Support\HtmlString;
 use Livewire\Component;
+use Livewire\TemporaryUploadedFile;
+use Spatie\SimpleExcel\SimpleExcelReader;
 
 class OfficeStaffReleaseDividendsManagement extends Component implements HasTable
 {
@@ -27,6 +31,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
     public $amount = 0;
     public $restrict_by_default = false;
     public Release $release;
+    public $import;
 
     protected function getTableQuery()
     {
@@ -43,8 +48,16 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                 ->minValue(0)
                 ->placeholder('0.00')
                 ->numeric()
-                ->label('Enter initial amount applicable for majority of members.')
-                ->required(),
+                ->helperText('Enter initial amount applicable for majority of members.')
+                ->required(fn ($get) => !$get('import')),
+            FileUpload::make('import')
+                ->label('Import from Excel')
+                ->reactive()
+                ->acceptedFileTypes([
+                    'application/vnd.ms-excel',
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                ])
+                ->helperText('Alternatively, upload an Excel file containing the DARBC ID: "id" and Share Amount: "share"  columns.'),
         ];
     }
 
@@ -136,41 +149,100 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
         ]);
     }
 
-    public function generateDividends()
+    private function processImport(TemporaryUploadedFile $file)
     {
-        $this->form->validate();
+        $rows = SimpleExcelReader::create($file->getRealPath())->getRows();
         DB::beginTransaction();
         $this->release->pending_dividends()->delete();
 
         $data = collect();
-        $users = User::with(['active_restriction', 'member_information'])->whereRelation('member_information', 'status', MemberInformation::STATUS_ACTIVE)->get();
+
+        $users = DB::table('users')
+            ->leftJoin('restrictions', function ($join) {
+                $join->on('users.id', '=', 'restrictions.user_id')
+                    ->where('restrictions.active', true);
+            })
+            ->join('member_information', 'users.id', '=', 'member_information.user_id')
+            ->distinct('users.id')
+            ->where('member_information.status', MemberInformation::STATUS_ACTIVE)
+            ->get(['users.id', 'member_information.darbc_id', 'member_information.split_claim', 'restrictions.entries as restriction_entries']);
+
         $now = now();
+
         $particulars = json_encode(collect($this->release->particulars)->map(fn ($particular, $key) => [
             'name' => $key,
             'claimed' => false,
         ])->values()->toArray());
-        foreach ($users as $user) {
-            if ($this->restrict_by_default) {
-                $restrictions = $user->active_restriction?->entries ?? [];
+
+        foreach ($rows as $key => $row) {
+            $user = $users->firstWhere('darbc_id', $row['id']);
+            if ($user) {
+                if ($this->restrict_by_default) {
+                    $restrictions = $user->restriction_entries ?? json_encode([]);
+                }
+                $data->push([
+                    'release_id' => $this->release->id,
+                    'user_id' => $user->id,
+                    'gross_amount' => $row['share'] * 100,
+                    'status' => Dividend::PENDING,
+                    'particulars' => $user->split_claim ? json_encode([]) : $particulars,
+                    'restriction_entries' => $restrictions,
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
             }
-            $data->push([
-                'release_id' => $this->release->id,
-                'user_id' => $user->id,
-                'gross_amount' => $this->amount * $user->member_information->percentage,
-                'status' => Dividend::PENDING,
-                'particulars' => $user->member_information->split_claim ? json_encode([]) : $particulars,
-                'restriction_entries' => json_encode($restrictions ?? []),
-                'created_at' => $now,
-                'updated_at' => $now,
-            ]);
         }
 
         $data->chunk(1000)->each(function ($chunk) {
             Dividend::insert($chunk->toArray());
         });
-
         DB::commit();
-        Notification::make()->title('Dividends regenerated.')->success()->send();
+        notify('Dividends regenerated.');
+    }
+
+    public function generateDividends()
+    {
+        $this->form->validate();
+        $file = collect($this->import)->first();
+        if ($file) {
+            $this->processImport($file);
+        } else {
+            DB::beginTransaction();
+            $this->release->pending_dividends()->delete();
+
+            $data = collect();
+            $now = now();
+
+            $users = User::with(['active_restriction', 'member_information'])->whereRelation('member_information', 'status', MemberInformation::STATUS_ACTIVE)->get();
+
+            $particulars = json_encode(collect($this->release->particulars)->map(fn ($particular, $key) => [
+                'name' => $key,
+                'claimed' => false,
+            ])->values()->toArray());
+
+            foreach ($users as $user) {
+                if ($this->restrict_by_default) {
+                    $restrictions = $user->active_restriction?->entries ?? [];
+                }
+                $data->push([
+                    'release_id' => $this->release->id,
+                    'user_id' => $user->id,
+                    'gross_amount' => $this->amount * $user->member_information->percentage,
+                    'status' => Dividend::PENDING,
+                    'particulars' => $user->member_information->split_claim ? json_encode([]) : $particulars,
+                    'restriction_entries' => json_encode($restrictions ?? []),
+                    'created_at' => $now,
+                    'updated_at' => $now,
+                ]);
+            }
+
+            $data->chunk(1000)->each(function ($chunk) {
+                Dividend::insert($chunk->toArray());
+            });
+
+            DB::commit();
+            Notification::make()->title('Dividends regenerated.')->success()->send();
+        }
     }
 
     public function clearDividends()
