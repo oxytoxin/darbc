@@ -151,6 +151,11 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
 
     private function processImport(TemporaryUploadedFile $file)
     {
+        $headers = SimpleExcelReader::create($file->getRealPath())->getHeaders();
+        if (!collect($headers)->contains('id') || !collect($headers)->contains('share')) {
+            notify('Invalid Excel file.', ' Please check if columns "id" and "share" are present.', type: 'danger');
+            return;
+        }
         $rows = SimpleExcelReader::create($file->getRealPath())->getRows();
         DB::beginTransaction();
         $this->release->pending_dividends()->delete();
