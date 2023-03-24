@@ -129,6 +129,7 @@ class MemberManagement extends Component implements HasTable
             ActionGroup::make([
                 EditAction::make('edit')
                     ->mountUsing(fn ($form, MemberInformation $record) => $form->fill([
+                        'darbc_id' => $record->darbc_id,
                         'percentage' => $record->percentage,
                         'first_name' => $record->user->first_name,
                         'surname' => $record->user->surname,
@@ -150,6 +151,7 @@ class MemberManagement extends Component implements HasTable
                             'suffix' => $data['suffix'],
                         ]);
                         $record->update([
+                            'darbc_id' => $data['darbc_id'],
                             'percentage' => $data['percentage'],
                             'date_of_birth' => $data['date_of_birth'],
                             'place_of_birth' => $data['place_of_birth'],
@@ -192,6 +194,7 @@ class MemberManagement extends Component implements HasTable
                                 MemberInformation::STATUS_INACTIVE => 'Inactive',
                             ])->required(),
                             TextInput::make('percentage')->required()->numeric()->minValue(0)->maxValue(100),
+                            TextInput::make('darbc_id')->label('DARBC ID')->required(),
                         ])
                     ])
                     ->color('success')

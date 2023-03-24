@@ -20,6 +20,8 @@ use Livewire\Component;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\Layout;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
@@ -58,16 +60,21 @@ class FreeLotManagement extends Component implements HasTable
             // )->label('#'),
             TextColumn::make('user.member_information.darbc_id')
                 ->searchable()
+                ->visible(fn () => $this->tableFilters['darbc_id']['isActive'])
                 ->label('DARBC ID'),
             TextColumn::make('user.alt_full_name')
                 ->searchable()
+                ->visible(fn () => $this->tableFilters['name']['isActive'])
                 ->sortable(['users.first_name', 'users.surname'])
-                ->label('Member'),
+                ->label('Name'),
             TextColumn::make('block')
+                ->visible(fn () => $this->tableFilters['block']['isActive'])
                 ->sortable(),
             TextColumn::make('lot')
+                ->visible(fn () => $this->tableFilters['lot']['isActive'])
                 ->sortable(),
             TextColumn::make('area')
+                ->visible(fn () => $this->tableFilters['area']['isActive'])
                 ->sortable(),
             FreeLotStatusColumn::make('status')
                 ->enum([
@@ -83,18 +90,23 @@ class FreeLotManagement extends Component implements HasTable
                     'relocated' => 3,
                     'swapped' => 4,
                 ])
+                ->visible(fn () => $this->tableFilters['status_id']['isActive'])
                 ->sortable(),
             TextColumn::make('buyer')
+                ->visible(fn () => $this->tableFilters['buyer']['isActive'])
                 ->sortable(),
             TextColumn::make('sold_at')
                 ->date('M d, Y')
                 ->label('Date Sold')
+                ->visible(fn () => $this->tableFilters['date_sold']['isActive'])
                 ->sortable(),
             TextColumn::make('cluster.name')
+                ->visible(fn () => $this->tableFilters['cluster']['isActive'])
                 ->sortable(),
             TextColumn::make('draw_date')
                 ->date('M d, Y')
                 ->label('Draw Date')
+                ->visible(fn () => $this->tableFilters['draw_date']['isActive'])
                 ->sortable(),
         ];
     }
@@ -102,6 +114,16 @@ class FreeLotManagement extends Component implements HasTable
     protected function getTableFilters(): array
     {
         return [
+            Filter::make('darbc_id')->label('DARBC ID')->default(),
+            Filter::make('name')->label('NAME')->default(),
+            Filter::make('block')->label('BLOCK')->default(),
+            Filter::make('lot')->label('LOT')->default(),
+            Filter::make('area')->label('AREA')->default(),
+            Filter::make('status_id')->label('STATUS')->default(),
+            Filter::make('buyer')->label('BUYER')->default(),
+            Filter::make('date_sold')->label('DATE SOLD')->default(),
+            Filter::make('cluster')->label('CLUSTER')->default(),
+            Filter::make('draw_date')->label('DRAW DATE')->default(),
             SelectFilter::make('status')
                 ->options([
                     1 => 'ACTIVE',
@@ -111,6 +133,11 @@ class FreeLotManagement extends Component implements HasTable
                 ])
                 ->placeholder('All'),
         ];
+    }
+
+    protected function getTableFiltersLayout(): ?string
+    {
+        return Layout::AboveContent;
     }
 
     protected function getTableActions(): array
@@ -370,8 +397,10 @@ class FreeLotManagement extends Component implements HasTable
         ];
     }
 
+
     public function render()
     {
+
         return view('livewire.shared.free-lot-management');
     }
 }

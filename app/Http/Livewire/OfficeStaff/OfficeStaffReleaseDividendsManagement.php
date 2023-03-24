@@ -132,7 +132,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
     public function render()
     {
         return view('livewire.office-staff.office-staff-release-dividends-management', [
-            'dividends_net_amount' => $this->release->pending_dividends()->sum('net_amount'),
+            'dividends_net_amount' => $this->release->pending_dividends()->sum('net_amount') / 100,
         ]);
     }
 
