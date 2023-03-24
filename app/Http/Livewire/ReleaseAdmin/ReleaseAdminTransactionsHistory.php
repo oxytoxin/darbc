@@ -118,8 +118,7 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                     TextInput::make('gift_certificate_control_number')
                         ->prefix(fn ($record) => $record->release->gift_certificate_prefix)
                         ->label('Gift Certificate Control Number')
-                        ->maxLength(4)
-                        ->visible(fn ($record) => $record->release->gift_certificate_prefix),
+                        ->maxLength(4),
                     Radio::make('claim_type')->options([
                         1 => 'Member',
                         2 => 'SPA',
