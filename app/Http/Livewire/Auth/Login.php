@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire\Auth;
 
+use App\Models\Role;
+use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\Auth;
@@ -23,11 +25,15 @@ class Login extends Component
     public function authenticate()
     {
         $this->validate();
-        if (!Auth::attempt(['username' => $this->username, 'password' => $this->password, 'active' => true])) {
-            Notification::make()->title('Invalid credentials.')->body('Account may be inactive. Please contact your administrator.')->danger()->send();
+        if (!Auth::attempt(['username' => $this->username, 'password' => $this->password])) {
+            Notification::make()->title('Invalid credentials.')->body('Please check your password/username.')->danger()->send();
             return;
         }
-
+        if (!auth()->user()->active && !auth()->user()->roles()->whereRoleId(Role::RELEASE_ADMIN)->exists()) {
+            Notification::make()->title('Account is not active.')->body('Please contact your administrator.')->danger()->send();
+            Auth::logout();
+            return;
+        }
         return redirect()->intended('/');
     }
 
