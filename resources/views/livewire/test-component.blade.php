@@ -1,1 +1,1 @@
-{{ phpinfo() }}
+<div></div>
