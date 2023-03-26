@@ -35,7 +35,6 @@ class ReleaseDividends extends Component implements HasTable
         return [
             TextColumn::make('user.member_information.darbc_id')
                 ->label('DARBC ID')
-                ->sortable()
                 ->searchable(),
             TextColumn::make('user.surname')
                 ->label('Last Name')
