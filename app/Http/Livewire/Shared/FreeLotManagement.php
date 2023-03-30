@@ -59,11 +59,9 @@ class FreeLotManagement extends Component implements HasTable
             //     }
             // )->label('#'),
             TextColumn::make('user.member_information.darbc_id')
-                ->searchable()
                 ->visible(fn () => $this->tableFilters['darbc_id']['isActive'])
                 ->label('DARBC ID'),
             TextColumn::make('user.alt_full_name')
-                ->searchable()
                 ->visible(fn () => $this->tableFilters['name']['isActive'])
                 ->sortable(['users.first_name', 'users.surname'])
                 ->label('Name'),
@@ -124,6 +122,24 @@ class FreeLotManagement extends Component implements HasTable
             Filter::make('date_sold')->label('DATE SOLD')->default(),
             Filter::make('cluster')->label('CLUSTER')->default(),
             Filter::make('draw_date')->label('DRAW DATE')->default(),
+
+            Filter::make('lot_text')
+                ->columns(4)
+                ->columnSpan(4)->form([
+                    TextInput::make('block')
+                        ->label('Block'),
+                    TextInput::make('lot')
+                        ->label('Lot'),
+                    TextInput::make('area')
+                        ->label('Area'),
+                    TextInput::make('cluster')
+                        ->label('Cluster'),
+                ])->query(function ($query, $data) {
+                    $query->when($data['block'], fn ($q) => $q->where('block', $data['block']));
+                    $query->when($data['lot'], fn ($q) => $q->where('lot', $data['lot']));
+                    $query->when($data['area'], fn ($q) => $q->where('area', $data['area']));
+                    $query->when($data['cluster'], fn ($q) => $q->whereRelation('cluster', 'name', $data['cluster']));
+                }),
             SelectFilter::make('status')
                 ->options([
                     1 => 'ACTIVE',

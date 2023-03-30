@@ -76,7 +76,7 @@ class ReleaseAdminReleaseDividends extends ReleaseDividends
                         ->default(0),
                     Select::make('user_id')
                         ->label('User')
-                        ->options(User::has('member_information')->whereNot('users.id', $record->user_id)->whereRelation('member_information', 'lineage_identifier', $record->user->member_information->lineage_identifier)->pluck('full_name', 'id'))
+                        ->options(User::has('member_information')->pluck('full_name', 'id'))
                         ->searchable()
                         ->required()
                         ->visible(fn ($get) => $get('member_type') == 0)
