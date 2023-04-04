@@ -195,6 +195,10 @@ class MemberManagement extends Component implements HasTable
                             ])->required(),
                             TextInput::make('percentage')->required()->numeric()->minValue(0)->maxValue(100),
                             TextInput::make('darbc_id')->label('DARBC ID')->required(),
+                            Select::make('cluster_id')
+                                ->label('Cluster')
+                                ->relationship('cluster', 'name', fn ($query) => $query->orderByRaw('CAST(name AS UNSIGNED)'))
+                                ->required(),
                         ])
                     ])
                     ->color('success')
