@@ -165,6 +165,8 @@ class RegisterMember extends Component implements HasForms
                             ])
                             ->required()
                             ->default(MemberInformation::CS_SINGLE),
+                        TextInput::make('data.spouse'),
+                        TextInput::make('data.mother_maiden_name')->label("Mother's Maiden Name"),
                         SlimRepeater::make('data.children')
                             ->columns(4)
                             ->schema([
@@ -280,6 +282,8 @@ class RegisterMember extends Component implements HasForms
             'barangay_code' => $this->data['address']['barangay_code'],
             'address_line' => $this->data['address']['address_line'],
             'civil_status' => $this->data['civil_status'],
+            'spouse' => $this->data['spouse'],
+            'mother_maiden_name' => $this->data['mother_maiden_name'],
             'children' => collect($this->data['children'])->values(),
             'sss_number' => $this->data['sss_number'],
             'philhealth_number' => $this->data['philhealth_number'],

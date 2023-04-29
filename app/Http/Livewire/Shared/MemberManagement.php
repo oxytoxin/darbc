@@ -99,7 +99,8 @@ class MemberManagement extends Component implements HasTable
                     MemberInformation::STATUS_ACTIVE => 'Active',
                     MemberInformation::STATUS_DECEASED => 'Deceased',
                     MemberInformation::STATUS_INACTIVE => 'Inactive',
-                ]),
+                ])
+                ->default(MemberInformation::STATUS_ACTIVE),
             SelectFilter::make('membership_status_id')
                 ->label('Membership')
                 ->placeholder('All')
@@ -128,79 +129,7 @@ class MemberManagement extends Component implements HasTable
                 ->url(fn ($record) => $this->getMemberRestrictionsRoute($record)),
             ActionGroup::make([
                 EditAction::make('edit')
-                    ->mountUsing(fn ($form, MemberInformation $record) => $form->fill([
-                        'darbc_id' => $record->darbc_id,
-                        'percentage' => $record->percentage,
-                        'first_name' => $record->user->first_name,
-                        'surname' => $record->user->surname,
-                        'middle_name' => $record->user->middle_name,
-                        'suffix' => $record->user->suffix,
-                        'date_of_birth' => $record->date_of_birth,
-                        'place_of_birth' => $record->place_of_birth,
-                        'gender_id' => $record->gender_id,
-                        'blood_type' => $record->blood_type,
-                        'religion' => $record->religion,
-                        'status' => $record->status,
-                    ]))
-                    ->action(function ($record, $data) {
-                        DB::beginTransaction();
-                        $record->user()->update([
-                            'first_name' => $data['first_name'],
-                            'surname' => $data['surname'],
-                            'middle_name' => $data['middle_name'],
-                            'suffix' => $data['suffix'],
-                        ]);
-                        $record->update([
-                            'darbc_id' => $data['darbc_id'],
-                            'percentage' => $data['percentage'],
-                            'date_of_birth' => $data['date_of_birth'],
-                            'place_of_birth' => $data['place_of_birth'],
-                            'gender_id' => $data['gender_id'],
-                            'blood_type' => $data['blood_type'],
-                            'religion' => $data['religion'],
-                            'status' => $data['status'],
-                        ]);
-                        DB::commit();
-                        Notification::make()->title('Changes saved!')->success()->send();
-                    })
-                    ->form([
-                        Grid::make(2)->schema([
-                            TextInput::make('first_name')
-                                ->label('First Name')
-                                ->required(),
-                            TextInput::make('surname')
-                                ->label('Last Name')
-                                ->required(),
-                            TextInput::make('middle_name')
-                                ->label('Middle Name'),
-                            TextInput::make('suffix')
-                                ->label('Suffix'),
-                            DatePicker::make('date_of_birth')
-                                ->withoutTime(),
-                            TextInput::make('place_of_birth'),
-                            Select::make('gender_id')
-                                ->label('Gender')
-                                ->options(Gender::pluck('name', 'id'))->required(),
-                            Select::make('blood_type')->options([
-                                'A' => 'A',
-                                'B' => 'B',
-                                'AB' => 'AB',
-                                'O' => 'O',
-                            ]),
-                            TextInput::make('religion'),
-                            Select::make('status')->options([
-                                MemberInformation::STATUS_ACTIVE => 'Active',
-                                MemberInformation::STATUS_DECEASED => 'Deceased',
-                                MemberInformation::STATUS_INACTIVE => 'Inactive',
-                            ])->required(),
-                            TextInput::make('percentage')->required()->numeric()->minValue(0)->maxValue(100),
-                            TextInput::make('darbc_id')->label('DARBC ID')->required(),
-                            Select::make('cluster_id')
-                                ->label('Cluster')
-                                ->relationship('cluster', 'name', fn ($query) => $query->orderByRaw('CAST(name AS UNSIGNED)'))
-                                ->required(),
-                        ])
-                    ])
+                    ->url(fn ($record) => route('release-admin.manage-members.edit', ['member' => $record]))
                     ->color('success')
                     ->button(),
                 DeleteAction::make('delete')
