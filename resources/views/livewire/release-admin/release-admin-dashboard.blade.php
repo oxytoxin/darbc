@@ -53,7 +53,9 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                                     <path class="fill-current text-custom-blue" d="M12 14v2a6 6 0 0 0-6 6H4a8 8 0 0 1 8-8zm0-1c-3.315 0-6-2.685-6-6s2.685-6 6-6 6 2.685 6 6-2.685 6-6 6zm0-2c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm6 10.5l-2.939 1.545.561-3.272-2.377-2.318 3.286-.478L18 14l1.47 2.977 3.285.478-2.377 2.318.56 3.272L18 21.5z" />
                                 </svg>
-                                <a class="bg-custom-green/[7%] p-1 rounded-md" href="{{ route('release-admin.download-report.active-members') }}" target="_blank">
+                                <a class="bg-custom-green/[7%] p-1 rounded-md" href="{{ route('release-admin.download-report.members', [
+                                    'status' => 'active',
+                                ]) }}" target="_blank">
                                     <svg class="w-6 h-6 2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                                         <path class="fill-current text-custom-green" d="m2.859 2.877 12.57-1.795a.5.5 0 0 1 .571.495v20.846a.5.5 0 0 1-.57.495L2.858 21.123a1 1 0 0 1-.859-.99V3.867a1 1 0 0 1 .859-.99zM4 4.735v14.53l10 1.429V3.306L4 4.735zM17 19h3V5h-3V3h4a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1h-4v-2zm-6.8-7 2.8 4h-2.4L9 13.714 7.4 16H5l2.8-4L5 8h2.4L9 10.286 10.6 8H13l-2.8 4z" />
                                     </svg>

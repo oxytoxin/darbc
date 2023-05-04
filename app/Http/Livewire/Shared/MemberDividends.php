@@ -10,6 +10,11 @@ class MemberDividends extends Component
 {
     public MemberInformation $member;
 
+    public function getEditRoute($member_id)
+    {
+        return '#';
+    }
+
     public function render()
     {
         return view('livewire.shared.member-dividends', [
@@ -18,7 +23,7 @@ class MemberDividends extends Component
                 ->select(['id', 'net_amount', 'status'])
                 ->get()
                 ->sum('net_amount'),
-            'lineage_members' => MemberInformation::with('user')->whereLineageIdentifier($this->member->lineage_identifier)->orderBy('succession_number')->get(),
+            'lineage_members' => MemberInformation::with('user')->whereLineageIdentifier($this->member->lineage_identifier)->orderByDesc('succession_number')->get(),
             'dividends_by_year' => Dividend::with('release')->whereUserId($this->member->user_id)->get()->groupBy(fn ($value) => $value->release->created_at->format('Y'))->sortKeysDesc(),
         ]);
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Dividend;
 use App\Models\MemberInformation;
+use App\Models\MembershipStatus;
 use App\Models\Release;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -50,7 +51,15 @@ class ReportsDownloadController extends Controller
             'PhilHealth Number',
             'SPA'
         ]);
-        $members = MemberInformation::with(['user', 'cluster', 'gender', 'occupation'])->orderBy('darbc_id');
+        $members = MemberInformation::query()
+            ->with(['user', 'cluster', 'gender', 'occupation'])
+            ->orderBy('darbc_id');
+        if (in_array(request('status'), ['active', 'original', 'replacement'])) {
+            $members
+                ->when(request('status') == 'active', fn ($query) => $query->whereStatus(MemberInformation::STATUS_ACTIVE))
+                ->when(request('status') == 'original', fn ($query) => $query->whereMembershipStatusId(MembershipStatus::ORIGINAL))
+                ->when(request('status') == 'replacement', fn ($query) => $query->whereMembershipStatusId(MembershipStatus::REPLACEMENT));
+        }
         $members->each(function ($member) use ($writer) {
             $writer->addRow([
                 $member->darbc_id,

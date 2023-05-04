@@ -1,5 +1,5 @@
 <div class="simple-card">
-    <div class="grid grid-cols-4">
+    <div class="grid grid-cols-5">
         <div>
             <h4 class="text-lg font-semibold">{{ $member->user->full_name }}</h4>
             <h5 class="text-sm font-semibold text-gray-600">
@@ -9,6 +9,10 @@
         <div>
             <p class="font-semibold text-gray-600">DARBC ID</p>
             <p class="text-lg font-bold">{{ $member->darbc_id }}</p>
+        </div>
+        <div>
+            <p class="font-semibold text-gray-600">Share Percentage</p>
+            <p class="text-lg font-bold">{{ $member->percentage }} %</p>
         </div>
         <div>
             <p class="font-semibold text-gray-600">Amount to Release</p>
@@ -39,7 +43,10 @@
                             </svg>
                         @endif
                         <div>
-                            <a href="{{ route(request()->route()->getName(),['member' => $lineage_member]) }}">{{ $lineage_member->user->full_name }}</a>
+                            <p class="flex items-center gap-2">
+                                <a href="{{ route(request()->route()->getName(),['member' => $lineage_member]) }}">{{ $lineage_member->user->full_name }}</a>
+                                <a class="text-xs font-bold text-green-700 underline" href="{{ $this->getEditRoute($lineage_member->id) }}">EDIT</a>
+                            </p>
                             <h5 class="text-xs font-semibold text-gray-400">
                                 {{ $lineage_member->succession_number == '0' ? 'Original Owner' : ordinal($lineage_member->succession_number) . ' Successor' }}
                                 @if ($lineage_member->id == $member->id)

@@ -2,28 +2,29 @@
 
 namespace App\Http\Livewire\Shared;
 
+use Closure;
 use App\Models\Gender;
 use Livewire\Component;
-use App\Models\MemberInformation;
 use App\Models\MembershipStatus;
+use App\Models\MemberInformation;
 use Illuminate\Support\Facades\DB;
 use Filament\Forms\Components\Grid;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\Layout;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
+use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Concerns\InteractsWithTable;
-use Filament\Tables\Filters\Layout;
 use Filament\Tables\Filters\SelectFilter;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\SimpleExcel\SimpleExcelWriter;
+use Filament\Tables\Concerns\InteractsWithTable;
 
 class MemberManagement extends Component implements HasTable
 {
@@ -51,10 +52,9 @@ class MemberManagement extends Component implements HasTable
                 ->label('DARBC ID')
                 ->sortable()
                 ->searchable(),
-            TextColumn::make('percentage')
-                ->sortable(),
             TextColumn::make('user.surname')
                 ->label('Last Name')
+                ->sortable()
                 ->searchable(isIndividual: true),
             TextColumn::make('user.first_name')
                 ->label('First Name')
@@ -89,22 +89,57 @@ class MemberManagement extends Component implements HasTable
         ];
     }
 
+    // protected function getTableRecordClassesUsing(): ?Closure
+    // {
+    //     return fn (Model $record) => match ($this->tableFilters['membership_status_id']['value']) {
+    //         'active' => 'bg-green-100 border-b border-gray-700',
+    //         'original' => 'bg-blue-100 border-b border-gray-700',
+    //         'replacement' => 'bg-purple-100 border-b border-gray-700',
+    //         default => null,
+    //     };
+    // }
+
     protected function getTableFilters(): array
     {
         return [
-            SelectFilter::make('status')
-                ->label('Status')
-                ->placeholder('All')
-                ->options([
-                    MemberInformation::STATUS_ACTIVE => 'Active',
-                    MemberInformation::STATUS_DECEASED => 'Deceased',
-                    MemberInformation::STATUS_INACTIVE => 'Inactive',
-                ])
-                ->default(MemberInformation::STATUS_ACTIVE),
             SelectFilter::make('membership_status_id')
                 ->label('Membership')
                 ->placeholder('All')
-                ->options(MembershipStatus::pluck('name', 'id')),
+                ->options([
+                    'active' => 'ACTIVE',
+                    'original' => 'ORIGINAL',
+                    'replacement' => 'REPLACEMENT',
+                ])
+                ->default('active')
+                ->query(function ($query, $data) {
+                    switch ($data['value']) {
+                        case 'active':
+                            $query->whereStatus(MemberInformation::STATUS_ACTIVE);
+                            break;
+                        case 'original':
+                            $query->whereMembershipStatusId(MembershipStatus::ORIGINAL);
+                            break;
+                        case 'replacement':
+                            $query->whereMembershipStatusId(MembershipStatus::REPLACEMENT);
+                            break;
+                        default:
+                            break;
+                    }
+                }),
+            Filter::make('application_date')
+                ->form([
+                    DatePicker::make('from')
+                        ->withoutTime(),
+                    DatePicker::make('to')
+                        ->withoutTime(),
+                ])
+                ->query(function ($query, $data) {
+                    $query
+                        ->when($data['from'], fn ($query, $from) => $query->whereDate('application_date', '>=', $from))
+                        ->when($data['to'], fn ($query, $to) => $query->whereDate('application_date', '<=', $to));
+                })
+                ->columns(2)
+                ->columnSpan(2)
         ];
     }
 
@@ -116,11 +151,11 @@ class MemberManagement extends Component implements HasTable
     protected function getTableActions()
     {
         return [
-            Action::make('history')
-                ->label('History')
+            Action::make('profile')
+                ->label('Profile')
                 ->button()
-                ->icon('heroicon-o-clock')
-                ->url(fn ($record) => $this->getHistoryRoute($record)),
+                ->icon('heroicon-o-user')
+                ->url(fn ($record) => $this->getProfileRoute($record)),
             Action::make('restrictions')
                 ->label('Restrictions')
                 ->button()
@@ -153,7 +188,7 @@ class MemberManagement extends Component implements HasTable
         ];
     }
 
-    protected function getHistoryRoute(Model $record)
+    protected function getProfileRoute(Model $record)
     {
         return '#';
     }

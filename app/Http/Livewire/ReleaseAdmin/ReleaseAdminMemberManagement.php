@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ReleaseAdminMemberManagement extends MemberManagement
 {
 
-    protected function getHistoryRoute(Model $record): string
+    protected function getProfileRoute(Model $record): string
     {
         return route('release-admin.member-dividends', ['member' => $record]);
     }
@@ -16,6 +16,13 @@ class ReleaseAdminMemberManagement extends MemberManagement
     protected function getMemberRestrictionsRoute(Model $record)
     {
         return route('release-admin.manage-member-restrictions', ['member' => $record]);
+    }
+
+    public function getExportRoute()
+    {
+        return route('release-admin.download-report.members', [
+            'status' => $this->tableFilters['membership_status_id']['value'] ?? null,
+        ]);
     }
 
     public function render()
