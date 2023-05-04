@@ -33,4 +33,12 @@ class ApiMemberInformationController extends Controller
     {
         return MemberInformationResource::make($memberInformation->load('user'));
     }
+
+    public function darbc_ids()
+    {
+        return MemberInformation::query()
+            ->select(['id', 'darbc_id'])
+            ->when(request()->integer('status'), fn ($query) => $query->whereStatus(request()->integer('status')))
+            ->get();
+    }
 }

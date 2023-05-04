@@ -21,3 +21,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 
 Route::resource('member-information', ApiMemberInformationController::class)->only('index', 'show');
+Route::get('member-darbc-ids', [ApiMemberInformationController::class, 'darbc_ids']);
