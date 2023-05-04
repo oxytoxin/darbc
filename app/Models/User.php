@@ -115,11 +115,6 @@ class User extends Authenticatable implements HasMedia, FilamentUser, HasName
         return $this->hasMany(Dividend::class, 'released_by');
     }
 
-    public function lotInfo()
-    {
-        return $this->hasOne(LotInformation::class);
-    }
-
     public function daily_cash_starts()
     {
         return $this->hasMany(DailyCash::class, 'cashier_id')->where('type', DailyCash::TYPE_START);
