@@ -29,15 +29,14 @@ class UpdateInformationNumbers extends Command
      */
     public function handle()
     {
-
-        $this->output->writeln("Processing SSS...");
-        $this->processSSS();
-        $this->output->writeln("Processing TIN...");
-        $this->processTIN();
-        $this->output->writeln("Processing PhilHealth...");
-        $this->processPH();
-        $this->output->writeln("Processing Contact numbers...");
-        $this->processContact();
+        // $this->output->writeln("Processing SSS...");
+        // $this->processSSS();
+        // $this->output->writeln("Processing TIN...");
+        // $this->processTIN();
+        // $this->output->writeln("Processing PhilHealth...");
+        // $this->processPH();
+        // $this->output->writeln("Processing Contact numbers...");
+        // $this->processContact();
         return Command::SUCCESS;
     }
 
