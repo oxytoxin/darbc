@@ -23,9 +23,7 @@
 
 <body class="relative antialiased">
     @yield('body')
-
     @livewire('notifications')
-
     <script>
         function printOut(data, title) {
             var mywindow = window.open('', title, 'height=1000,width=1000');
@@ -43,7 +41,6 @@
             return false;
         }
     </script>
-    @stack('file-upload')
 </body>
 
 </html>

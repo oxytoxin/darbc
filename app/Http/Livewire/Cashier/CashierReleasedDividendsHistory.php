@@ -20,6 +20,11 @@ class CashierReleasedDividendsHistory extends Component implements HasTable
 {
     use InteractsWithTable;
 
+    protected function getTableRecordsPerPageSelectOptions(): array
+    {
+        return [5, 10, 25, 50];
+    }
+
     protected function getTableQuery()
     {
         return Dividend::with('user.member_information')->whereNotNull('released_by')->latest('released_at');

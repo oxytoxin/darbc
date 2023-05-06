@@ -1,16 +1,14 @@
 <div class="simple-card">
-    <div class="grid grid-cols-4">
-        <div>
-            <h4 class="text-lg font-semibold">{{ $member->user->full_name }}</h4>
-            <h5 class="text-sm font-semibold text-gray-600">
-                {{ $member->succession_number == '0' ? 'Original Owner' : ordinal($member->succession_number) . ' Successor' }}
-            </h5>
+    <x-member-details :member="$member" />
+    <div x-data="{ show: false }">
+        <x-filament::button x-show="!show" @click="show=true" outlined>Edit Share Percentage</x-filament::button>
+        <div class="flex items-center gap-2" x-cloak x-show="show">
+            <input class="border border-black p-1 rounded-lg" type="number" wire:model.defer="percentage">
+            <div class="gap-1">
+                <x-filament::button @click="$wire.save();show=false;" color="success">Save</x-filament::button>
+                <x-filament::button @click="show=false" color="danger">Cancel</x-filament::button>
+            </div>
         </div>
-        <div>
-            <p class="font-semibold text-gray-600">DARBC ID</p>
-            <p class="text-lg font-bold">{{ $member->darbc_id }}</p>
-        </div>
-
     </div>
     <div class="flex mt-4">
         <div class="w-1/3">
@@ -24,7 +22,10 @@
                             </svg>
                         @endif
                         <div>
-                            <a href="{{ route(request()->route()->getName(),['member' => $lineage_member]) }}">{{ $lineage_member->user->full_name }}</a>
+                            <p class="flex items-center gap-2">
+                                <a href="{{ route($route_name, ['member' => $lineage_member]) }}">{{ $lineage_member->user->full_name }}</a>
+                                <a class="text-xs font-bold text-green-700 underline" href="{{ $this->getEditRoute($lineage_member->id) }}">EDIT</a>
+                            </p>
                             <h5 class="text-xs font-semibold text-gray-400">
                                 {{ $lineage_member->succession_number == '0' ? 'Original Owner' : ordinal($lineage_member->succession_number) . ' Successor' }}
                                 @if ($lineage_member->id == $member->id)
@@ -36,5 +37,8 @@
                 @endforeach
             </div>
         </div>
+    </div>
+    <div>
+        @livewire('shared.member-restrictions-management', ['member' => $member], key('member-restrictions-' . $member->id))
     </div>
 </div>

@@ -11,9 +11,4 @@ class OfficeStaffRegisterMember extends RegisterMember
     {
         return route('office-staff.manage-members');
     }
-
-    public function render()
-    {
-        return view('livewire.office-staff.office-staff-register-member');
-    }
 }

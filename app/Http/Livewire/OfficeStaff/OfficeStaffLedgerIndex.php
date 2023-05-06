@@ -19,6 +19,11 @@ class OfficeStaffLedgerIndex extends Component implements HasTable
 {
     use InteractsWithTable;
 
+    protected function getTableRecordsPerPageSelectOptions(): array
+    {
+        return [5, 10, 25, 50];
+    }
+
     protected function shouldPersistTableFiltersInSession(): bool
     {
         return true;

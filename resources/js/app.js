@@ -5,6 +5,7 @@ import NotificationsAlpinePlugin from '../../vendor/filament/notifications/dist/
 import collapse from '@alpinejs/collapse'
 import flatpickr from "flatpickr";
 import ObjectArrayPlugin from './object-array-input'
+import '../../vendor/alperenersoy/filament-export/resources/js/filament-export.js';
 
 Alpine.plugin(collapse)
 Alpine.plugin(Focus)

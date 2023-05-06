@@ -13,12 +13,12 @@ use App\Http\Livewire\ReleaseAdmin\ReleaseAdminUpdateMemberInformation;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminFreeLotHistory;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminFreeLotManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminManageProofOfRelease;
-use App\Http\Livewire\ReleaseAdmin\ReleaseAdminMemberDividends;
+use App\Http\Livewire\ReleaseAdmin\ReleaseAdminMemberProfile;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminReleaseManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminTransactionsHistory;
-use App\Http\Livewire\ReleaseAdmin\ReleaseAdminMemberRestrictionsManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminReleaseDividends;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminReportsIndex;
+use App\Http\Livewire\Shared\MemberClaims;
 
 Route::middleware(['auth', 'role:' . Role::RELEASE_ADMIN])->prefix('release-admin')->name('release-admin.')->group(function () {
     Route::get('/', ReleaseAdminDashboard::class)->name('dashboard');
@@ -27,11 +27,11 @@ Route::middleware(['auth', 'role:' . Role::RELEASE_ADMIN])->prefix('release-admi
     Route::get('/register-members', ReleaseAdminRegisterMember::class)->name('register-members');
     Route::get('/manage-users', ReleaseAdminUserManagement::class)->name('manage-users');
     Route::get('/manage-releases', ReleaseAdminReleaseManagement::class)->name('manage-releases');
-    Route::get('/manage-member-restrictions/{member}', ReleaseAdminMemberRestrictionsManagement::class)->name('manage-member-restrictions');
+    Route::get('/manage-member-claims/{member}', MemberClaims::class)->name('manage-member-claims');
     Route::get('/manage-clusters', ReleaseAdminClusterManagement::class)->name('manage-clusters');
     Route::get('/transactions', ReleaseAdminTransactionsHistory::class)->name('transactions');
     Route::get('/releases/{release}/dividends', ReleaseAdminReleaseDividends::class)->name('releases.dividends');
-    Route::get('/member-dividends/{member}', ReleaseAdminMemberDividends::class)->name('member-dividends');
+    Route::get('/member-profile/{member}', ReleaseAdminMemberProfile::class)->name('member-profile');
     Route::get('/reports', ReleaseAdminReportsIndex::class)->name('reports');
     Route::get('/manage-proof-of-release/{dividend}', ReleaseAdminManageProofOfRelease::class)->name('manage-proof-of-release');
     Route::get('/free-lots', ReleaseAdminFreeLotManagement::class)->name('manage-free-lots');

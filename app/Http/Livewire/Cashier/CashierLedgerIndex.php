@@ -19,6 +19,11 @@ class CashierLedgerIndex extends Component implements HasTable
 {
     use InteractsWithTable;
 
+    protected function getTableRecordsPerPageSelectOptions(): array
+    {
+        return [5, 10, 25, 50];
+    }
+
     protected function getTableQuery()
     {
         return MemberInformation::orderBy('darbc_id');
@@ -90,7 +95,7 @@ class CashierLedgerIndex extends Component implements HasTable
                 ->button()
                 ->visible(fn ($record) => $record->status == MemberInformation::STATUS_ACTIVE)
                 ->color('success')
-                ->url(fn ($record) => route('cashier.member-dividends', ['member' => $record]))
+                ->url(fn ($record) => route('cashier.manage-member-claims', ['member' => $record]))
         ];
     }
 

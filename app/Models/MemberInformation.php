@@ -46,6 +46,7 @@ class MemberInformation extends Model implements HasMedia
         'date_of_birth' => 'immutable_date',
         'children' => 'array',
         'spa' => 'array',
+        'dependents' => 'array',
         'application_date' => 'immutable_date',
         'percentage' => 'decimal:2',
         'is_darbc_member' => 'boolean',
@@ -78,6 +79,11 @@ class MemberInformation extends Model implements HasMedia
             ->useDisk('consent_forms');
         $this->addMediaCollection('identification_documents')
             ->useDisk('identification_documents');
+    }
+
+    public function getProfilePhotoAttribute()
+    {
+        return $this->getFirstMedia('profile_photo')?->getUrl() ?? 'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg';
     }
 
     public function scopeDarbcMember($query)

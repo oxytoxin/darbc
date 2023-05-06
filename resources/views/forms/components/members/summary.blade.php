@@ -50,145 +50,143 @@
 @endphp
 <div class="text-sm">
     <h3 class="text-xl font-bold text-primary-500">Summary</h3>
-    @if ($this->data['cluster_id'])
-        <div class="mt-8 space-y-4">
-            <div class="grid grid-cols-2 gap-2">
-                <p>
-                    <span class="font-semibold">First Name: </span>
-                    <span>{{ $user->first_name }}</span>
-                </p>
-                <p>
-                    <span class="font-semibold">Last Name: </span>
-                    <span>{{ $user->surname }}</span>
-                </p>
-                <p>
-                    <span class="font-semibold">Middle Name: </span>
-                    <span>{{ $user->middle_name }}</span>
-                </p>
-                <p>
-                    <span class="font-semibold">Suffix: </span>
-                    <span>{{ $user->suffix }}</span>
-                </p>
-                <p>
-                    <span class="font-semibold">Username: </span>
-                    <span>{{ $user->username }}</span>
-                </p>
-            </div>
-            <hr>
-            <div class="grid grid-cols-2 gap-2">
-                <p>
-                    <span class="font-semibold">Membership: </span>
-                    <span>{{ $member_information->membership_status->name }}</span>
-                </p>
-                @if ($isReplacement && $this->data['replacement_member'])
-                    <p>
-                        <span class="font-semibold">Member to Replace: </span>
-                        <span>{{ $member_information->original_member->full_name }}</span>
-                    </p>
-                @endif
-                <p>
-                    <span class="font-semibold">Status: </span>
-                    <span>{{ match (strval($member_information->status)) {
-                        default => '',
-                        strval(App\Models\MemberInformation::STATUS_ACTIVE) => 'Active',
-                        strval(App\Models\MemberInformation::STATUS_DECEASED) => 'Deceased',
-                        strval(App\Models\MemberInformation::STATUS_INACTIVE) => 'Inactive',
-                    } }}</span>
-                </p>
-            </div>
-            <hr>
-            <div class="grid grid-cols-2 gap-2">
-                <p>
-                    <span class="font-semibold">Region: </span>
-                    <span>{{ $member_information->region?->description }}</span>
-                </p>
-                <p>
-                    <span class="font-semibold">Province: </span>
-                    <span>{{ $member_information->province?->description }}</span>
-                </p>
-                <p>
-                    <span class="font-semibold">City: </span>
-                    <span>{{ $member_information->city?->description }}</span>
-                </p>
-                <p>
-                    <span class="font-semibold">Barangay: </span>
-                    <span>{{ $member_information->barangay?->description }}</span>
-                </p>
-                <p>
-                    <span class="font-semibold">Address Line: </span>
-                    <span>{{ $member_information->address_line }}</span>
-                </p>
-            </div>
-            <hr>
+    <div class="mt-8 space-y-4">
+        <div class="grid grid-cols-2 gap-2">
             <p>
-                <span class="font-semibold">Occupation: </span>
-                <span>{{ $member_information->occupation->name }}</span>
+                <span class="font-semibold">First Name: </span>
+                <span>{{ $user->first_name }}</span>
             </p>
-            @if ($member_information->occupation_details)
-                <p>
-                    <span class="font-semibold">Occupation: </span>
-                    <span>{{ $member_information->occupation_details }}</span>
-                </p>
-            @endif
             <p>
-                <span class="font-semibold">Civil Status: </span>
-                <span>{{ match (strval($member_information->civil_status)) {
-                    default => '',
-                    '1' => 'Single',
-                    '2' => 'Married',
-                    '3' => 'Widowed',
-                } }}</span>
+                <span class="font-semibold">Last Name: </span>
+                <span>{{ $user->surname }}</span>
             </p>
-            @if (count($member_information->children))
-                <div>
-                    <p class="font-semibold">Children: </p>
-                    <table class="table w-full mt-2 border border-black divide-y divide-black table-auto">
-                        <thead>
-                            <tr class="divide-x divide-black">
-                                <th>Name</th>
-                                <th>Date of Birth</th>
-                                <th>Educational Attainment</th>
-                                <th>Blood Type</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-black">
-                            @foreach ($member_information->children as $child)
-                                <tr class="text-center divide-x divide-black">
-                                    <td>{{ $child['name'] }}</td>
-                                    <td>{{ date_format(date_create($child['date_of_birth']), 'F d, Y') }}</td>
-                                    <td>{{ $child['educational_attainment'] }}</td>
-                                    <td>{{ $child['blood_type'] }}</td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-
-                    </table>
-                </div>
-            @endif
-            <hr>
-            <div class="grid grid-cols-2 gap-2">
-                <p>
-                    <span class="font-semibold">DARBC ID: </span>
-                    <span>{{ $member_information->darbc_id }}</span>
-                </p>
-                <p>
-                    <span class="font-semibold">SSS Number: </span>
-                    <span>{{ $member_information->sss_number }}</span>
-                </p>
-                <p>
-                    <span class="font-semibold">PhilHealth Number: </span>
-                    <span>{{ $member_information->philhealth_number }}</span>
-                </p>
-                <p>
-                    <span class="font-semibold">TIN Number: </span>
-                    <span>{{ $member_information->tin_number }}</span>
-                </p>
-            </div>
-            <hr>
             <p>
-                <span class="font-semibold">Cluster: </span>
-                <span>{{ $member_information->cluster->name }}</span>
+                <span class="font-semibold">Middle Name: </span>
+                <span>{{ $user->middle_name }}</span>
+            </p>
+            <p>
+                <span class="font-semibold">Suffix: </span>
+                <span>{{ $user->suffix }}</span>
+            </p>
+            <p>
+                <span class="font-semibold">Username: </span>
+                <span>{{ $user->username }}</span>
             </p>
         </div>
-    @endif
+        <hr>
+        <div class="grid grid-cols-2 gap-2">
+            <p>
+                <span class="font-semibold">Membership: </span>
+                <span>{{ $member_information->membership_status->name }}</span>
+            </p>
+            @if ($isReplacement && $this->data['replacement_member'])
+                <p>
+                    <span class="font-semibold">Member to Replace: </span>
+                    <span>{{ $member_information->original_member->full_name }}</span>
+                </p>
+            @endif
+            <p>
+                <span class="font-semibold">Status: </span>
+                <span>{{ match (strval($member_information->status)) {
+                    default => '',
+                    strval(App\Models\MemberInformation::STATUS_ACTIVE) => 'Active',
+                    strval(App\Models\MemberInformation::STATUS_DECEASED) => 'Deceased',
+                    strval(App\Models\MemberInformation::STATUS_INACTIVE) => 'Inactive',
+                } }}</span>
+            </p>
+        </div>
+        <hr>
+        <div class="grid grid-cols-2 gap-2">
+            <p>
+                <span class="font-semibold">Region: </span>
+                <span>{{ $member_information->region?->description }}</span>
+            </p>
+            <p>
+                <span class="font-semibold">Province: </span>
+                <span>{{ $member_information->province?->description }}</span>
+            </p>
+            <p>
+                <span class="font-semibold">City: </span>
+                <span>{{ $member_information->city?->description }}</span>
+            </p>
+            <p>
+                <span class="font-semibold">Barangay: </span>
+                <span>{{ $member_information->barangay?->description }}</span>
+            </p>
+            <p>
+                <span class="font-semibold">Address Line: </span>
+                <span>{{ $member_information->address_line }}</span>
+            </p>
+        </div>
+        <hr>
+        <p>
+            <span class="font-semibold">Occupation: </span>
+            <span>{{ $member_information->occupation->name }}</span>
+        </p>
+        @if ($member_information->occupation_details)
+            <p>
+                <span class="font-semibold">Occupation: </span>
+                <span>{{ $member_information->occupation_details }}</span>
+            </p>
+        @endif
+        <p>
+            <span class="font-semibold">Civil Status: </span>
+            <span>{{ match (strval($member_information->civil_status)) {
+                default => '',
+                '1' => 'Single',
+                '2' => 'Married',
+                '3' => 'Widowed',
+            } }}</span>
+        </p>
+        @if (count($member_information->children))
+            <div>
+                <p class="font-semibold">Children: </p>
+                <table class="table w-full mt-2 border border-black divide-y divide-black table-auto">
+                    <thead>
+                        <tr class="divide-x divide-black">
+                            <th>Name</th>
+                            <th>Date of Birth</th>
+                            <th>Educational Attainment</th>
+                            <th>Blood Type</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-black">
+                        @foreach ($member_information->children as $child)
+                            <tr class="text-center divide-x divide-black">
+                                <td>{{ $child['name'] }}</td>
+                                <td>{{ date_format(date_create($child['date_of_birth']), 'F d, Y') }}</td>
+                                <td>{{ $child['educational_attainment'] }}</td>
+                                <td>{{ $child['blood_type'] }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+
+                </table>
+            </div>
+        @endif
+        <hr>
+        <div class="grid grid-cols-2 gap-2">
+            <p>
+                <span class="font-semibold">DARBC ID: </span>
+                <span>{{ $member_information->darbc_id }}</span>
+            </p>
+            <p>
+                <span class="font-semibold">SSS Number: </span>
+                <span>{{ $member_information->sss_number }}</span>
+            </p>
+            <p>
+                <span class="font-semibold">PhilHealth Number: </span>
+                <span>{{ $member_information->philhealth_number }}</span>
+            </p>
+            <p>
+                <span class="font-semibold">TIN Number: </span>
+                <span>{{ $member_information->tin_number }}</span>
+            </p>
+        </div>
+        <hr>
+        <p>
+            <span class="font-semibold">Cluster: </span>
+            <span>{{ $member_information->cluster?->name }}</span>
+        </p>
+    </div>
 </div>

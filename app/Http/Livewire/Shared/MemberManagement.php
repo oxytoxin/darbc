@@ -25,6 +25,8 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Concerns\InteractsWithTable;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportBulkAction;
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 
 class MemberManagement extends Component implements HasTable
 {
@@ -32,7 +34,8 @@ class MemberManagement extends Component implements HasTable
 
     protected function getTableQuery()
     {
-        return MemberInformation::query();
+        return MemberInformation::query()
+            ->where('status', MemberInformation::STATUS_ACTIVE);
     }
 
     protected function getDefaultTableSortDirection(): ?string
@@ -43,6 +46,11 @@ class MemberManagement extends Component implements HasTable
     protected function getDefaultTableSortColumn(): ?string
     {
         return 'darbc_id';
+    }
+
+    protected function getTableRecordsPerPageSelectOptions(): array
+    {
+        return [5, 10, 25, 50];
     }
 
     protected function getTableColumns()
@@ -66,19 +74,6 @@ class MemberManagement extends Component implements HasTable
                 ->sortable()
                 ->formatStateUsing(fn ($state) => $state == 0 ? 'Original' : ordinal($state) . ' Successor')
                 ->label('Ownership'),
-            BadgeColumn::make('status')
-                ->enum([
-                    MemberInformation::STATUS_ACTIVE => 'Active',
-                    MemberInformation::STATUS_DECEASED => 'Deceased',
-                    MemberInformation::STATUS_INACTIVE => 'Inactive',
-                ])
-                ->colors([
-                    'primary',
-                    'success' => MemberInformation::STATUS_ACTIVE,
-                    'danger' => MemberInformation::STATUS_DECEASED,
-                    'warning' => MemberInformation::STATUS_INACTIVE,
-                ])
-                ->label('Status'),
             TextColumn::make('application_date')
                 ->label('Member since')
                 ->date(),
@@ -88,16 +83,6 @@ class MemberManagement extends Component implements HasTable
 
         ];
     }
-
-    // protected function getTableRecordClassesUsing(): ?Closure
-    // {
-    //     return fn (Model $record) => match ($this->tableFilters['membership_status_id']['value']) {
-    //         'active' => 'bg-green-100 border-b border-gray-700',
-    //         'original' => 'bg-blue-100 border-b border-gray-700',
-    //         'replacement' => 'bg-purple-100 border-b border-gray-700',
-    //         default => null,
-    //     };
-    // }
 
     protected function getTableFilters(): array
     {
@@ -152,16 +137,14 @@ class MemberManagement extends Component implements HasTable
     {
         return [
             Action::make('profile')
-                ->label('Profile')
                 ->button()
                 ->icon('heroicon-o-user')
                 ->url(fn ($record) => $this->getProfileRoute($record)),
-            Action::make('restrictions')
-                ->label('Restrictions')
+            Action::make('claims')
                 ->button()
                 ->outlined()
-                ->icon('heroicon-o-lock-closed')
-                ->url(fn ($record) => $this->getMemberRestrictionsRoute($record)),
+                ->icon('heroicon-o-cash')
+                ->url(fn ($record) => $this->getMemberClaimsRoute($record)),
             ActionGroup::make([
                 EditAction::make('edit')
                     ->url(fn ($record) => route('release-admin.manage-members.edit', ['member' => $record]))
@@ -193,7 +176,17 @@ class MemberManagement extends Component implements HasTable
         return '#';
     }
 
-    protected function getMemberRestrictionsRoute(Model $record)
+    protected function getMemberClaimsRoute(Model $record)
+    {
+        return '#';
+    }
+
+    public function getExportRoute()
+    {
+        return '#';
+    }
+
+    public function getAddMemberRoute()
     {
         return '#';
     }

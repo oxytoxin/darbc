@@ -10,12 +10,12 @@ class ReleaseAdminMemberManagement extends MemberManagement
 
     protected function getProfileRoute(Model $record): string
     {
-        return route('release-admin.member-dividends', ['member' => $record]);
+        return route('release-admin.member-profile', ['member' => $record]);
     }
 
-    protected function getMemberRestrictionsRoute(Model $record)
+    protected function getMemberClaimsRoute(Model $record)
     {
-        return route('release-admin.manage-member-restrictions', ['member' => $record]);
+        return route('release-admin.manage-member-claims', ['member' => $record]);
     }
 
     public function getExportRoute()
@@ -25,8 +25,8 @@ class ReleaseAdminMemberManagement extends MemberManagement
         ]);
     }
 
-    public function render()
+    public function getAddMemberRoute()
     {
-        return view('livewire.release-admin.release-admin-member-management');
+        return route('release-admin.register-members');
     }
 }

@@ -9,7 +9,7 @@ class OfficeStaffMemberManagement extends MemberManagement
 {
     protected function getProfileRoute(Model $record): string
     {
-        return route('office-staff.member-dividends', ['member' => $record]);
+        return route('office-staff.member-profile', ['member' => $record]);
     }
 
     public function getExportRoute()
@@ -19,13 +19,13 @@ class OfficeStaffMemberManagement extends MemberManagement
         ]);
     }
 
-    protected function getMemberRestrictionsRoute(Model $record)
+    protected function getMemberClaimsRoute(Model $record)
     {
-        return route('office-staff.manage-member-restrictions', ['member' => $record]);
+        return route('office-staff.manage-member-claims', ['member' => $record]);
     }
 
-    public function render()
+    public function getAddMemberRoute()
     {
-        return view('livewire.office-staff.office-staff-member-management');
+        return route('office-staff.register-members');
     }
 }

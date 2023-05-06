@@ -59,17 +59,17 @@
             @forelse ($records as $user)
                 <tr>
                     <td class="py-3 pl-3 text-sm font-bold bg-gray-100 border whitespace-nowrap">
-                        <a href="{{ route('office-staff.member-dividends', ['member' => $user->member_information]) }}">
+                        <a href="{{ route('office-staff.member-profile', ['member' => $user->member_information]) }}">
                             <p>{{ $user->member_information->darbc_id }}</p>
                         </a>
                     </td>
                     <td class="py-3 pl-3 text-sm font-bold bg-gray-100 border whitespace-nowrap">
-                        <a href="{{ route('office-staff.member-dividends', ['member' => $user->member_information]) }}">
+                        <a href="{{ route('office-staff.member-profile', ['member' => $user->member_information]) }}">
                             <p>{{ $user->surname }}</p>
                         </a>
                     </td>
                     <td class="py-3 pl-3 text-sm font-bold bg-gray-100 border whitespace-nowrap">
-                        <a href="{{ route('office-staff.member-dividends', ['member' => $user->member_information]) }}">
+                        <a href="{{ route('office-staff.member-profile', ['member' => $user->member_information]) }}">
                             <p>{{ $user->first_name }}</p>
                         </a>
                     </td>

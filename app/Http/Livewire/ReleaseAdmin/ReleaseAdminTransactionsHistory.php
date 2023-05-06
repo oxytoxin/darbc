@@ -11,7 +11,6 @@ use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
 use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\Select;
 use Filament\Tables\Actions\Position;
 use Filament\Forms\Components\Textarea;
 use Filament\Tables\Actions\ViewAction;
@@ -22,7 +21,6 @@ use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -30,6 +28,11 @@ use Filament\Tables\Concerns\InteractsWithTable;
 class ReleaseAdminTransactionsHistory extends Component implements HasTable
 {
     use InteractsWithTable;
+
+    protected function getTableRecordsPerPageSelectOptions(): array
+    {
+        return [5, 10, 25, 50];
+    }
 
     protected function getTableQuery()
     {

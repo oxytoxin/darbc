@@ -9,10 +9,13 @@
     "license": "MIT",
     "require": {
         "php": "^8.0.2",
+        "alperenersoy/filament-export": "^0.2.8",
+        "awcodes/filament-table-repeater": "*",
         "barryvdh/laravel-debugbar": "^3.8",
         "filament/filament": "^2.0",
         "filament/spatie-laravel-media-library-plugin": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
+        "hammerstone/fast-paginate": "^1.0",
         "intervention/image": "^2.7",
         "laravel-frontend-presets/tall": "^5.0",
         "laravel/framework": "^9.19",

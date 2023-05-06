@@ -12,7 +12,6 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
-use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\DeleteAction;
@@ -110,8 +109,7 @@ class ReleaseAdminReleaseManagement extends Component implements HasTable
                 ->numeric()->minValue(0),
             KeyValue::make('particulars')
                 ->default([
-                    'Calendar' => '1 set',
-                    'Pineapple Products' => '2 cans'
+                    'Giveaways' => '1 set',
                 ]),
         ];
     }

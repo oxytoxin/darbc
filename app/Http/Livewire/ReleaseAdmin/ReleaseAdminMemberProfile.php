@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Livewire\OfficeStaff;
+namespace App\Http\Livewire\ReleaseAdmin;
 
-use App\Http\Livewire\Shared\MemberDividends;
+use App\Http\Livewire\Shared\MemberProfile;
+use Livewire\Component;
 
-class OfficeStaffMemberDividends extends MemberDividends
+class ReleaseAdminMemberProfile extends MemberProfile
 {
     public function getEditRoute($member_id)
     {

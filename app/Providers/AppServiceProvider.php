@@ -36,6 +36,7 @@ class AppServiceProvider extends ServiceProvider
         Filament::serving(function () {
             Filament::registerViteTheme('resources/css/filament.css');
         });
+
         TextColumn::configureUsing(function (TextColumn $column) {
             $column->extraAttributes(['class' => 'font-semibold text-sm']);
         });

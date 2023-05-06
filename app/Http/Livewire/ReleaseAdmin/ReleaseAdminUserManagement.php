@@ -46,7 +46,6 @@ class ReleaseAdminUserManagement extends Component implements HasTable
     protected function getTableHeaderActions(): array
     {
         return [
-
             Action::make('activate cashiers')
                 ->label('Activate Cashiers')
                 ->action(function () {

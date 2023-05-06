@@ -31,6 +31,11 @@ class FreeLotManagement extends Component implements HasTable
 {
     use InteractsWithTable;
 
+    protected function getTableRecordsPerPageSelectOptions(): array
+    {
+        return [5, 10, 25, 50];
+    }
+
     protected function getTableQuery(): Builder|Relation
     {
         return FreeLot::query();
@@ -50,14 +55,6 @@ class FreeLotManagement extends Component implements HasTable
     protected function getTableColumns(): array
     {
         return [
-            // TextColumn::make('index')->getStateUsing(
-            //     static function (stdClass $rowLoop, HasTable $livewire): string {
-            //         return (string) ($rowLoop->iteration +
-            //             ($livewire->tableRecordsPerPage * ($livewire->page - 1
-            //             ))
-            //         );
-            //     }
-            // )->label('#'),
             TextColumn::make('user.member_information.darbc_id')
                 ->visible(fn () => $this->tableFilters['darbc_id']['isActive'])
                 ->label('DARBC ID'),
@@ -122,7 +119,6 @@ class FreeLotManagement extends Component implements HasTable
             Filter::make('date_sold')->label('DATE SOLD')->default(),
             Filter::make('cluster')->label('CLUSTER')->default(),
             Filter::make('draw_date')->label('DRAW DATE')->default(),
-
             Filter::make('lot_text')
                 ->columns(4)
                 ->columnSpan(4)->form([

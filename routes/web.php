@@ -9,6 +9,7 @@ use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
+use App\Http\Livewire\Shared\MemberInformationQuery;
 use App\Http\Livewire\TestComponent;
 use Illuminate\Support\Facades\Route;
 
@@ -31,8 +32,8 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-    Route::post('logout', LogoutController::class)
-        ->name('logout');
+    Route::post('logout', LogoutController::class)->name('logout');
+    Route::get('member-information-query', MemberInformationQuery::class)->name('member-information-query');
 });
 
 

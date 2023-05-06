@@ -1,6 +1,6 @@
 @import '../../vendor/filament/forms/dist/module.esm.css';
-/* @import 'node_modules/flatpickr/dist/flatpickr.min'; */
 @import 'flatpickr/dist/flatpickr.css';
+@import '../../vendor/alperenersoy/filament-export/resources/css/filament-export.css';
 
 @tailwind base;
 
@@ -191,6 +191,10 @@ i {
 
 .filament-tables-table>thead tr {
     @apply !bg-primary-500;
+}
+
+.filament-table-repeater-header-column {
+    @apply whitespace-nowrap;
 }
 
 

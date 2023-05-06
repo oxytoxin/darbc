@@ -16,15 +16,18 @@ use Illuminate\Support\Facades\DB;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
-use App\Forms\Components\SlimRepeater;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\Fieldset;
 use Illuminate\Database\Eloquent\Model;
+use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\TagsInput;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Concerns\InteractsWithForms;
+use Awcodes\FilamentTableRepeater\Components\TableRepeater;
+use Filament\Forms\Components\Placeholder;
+use Illuminate\Support\HtmlString;
 
 class UpdateMemberInformation extends Component implements HasForms
 {
@@ -37,6 +40,14 @@ class UpdateMemberInformation extends Component implements HasForms
     {
         return [
             Grid::make(2)->schema([
+                Fieldset::make('Profile Photo')
+                    ->schema([
+                        Placeholder::make('photo')
+                            ->disableLabel()
+                            ->content(new HtmlString('<img src="' . $this->member->profile_photo . '" class="rounded-full w-32 h-32">')),
+                        FileUpload::make('profile_photo')->avatar()
+                    ])
+                    ->maxWidth('sm'),
                 Fieldset::make('Personal Information')
                     ->schema([
                         TextInput::make('first_name')
@@ -50,12 +61,15 @@ class UpdateMemberInformation extends Component implements HasForms
                         TextInput::make('suffix')
                             ->label('Suffix'),
                         DatePicker::make('date_of_birth')
+                            ->required()
                             ->withoutTime(),
-                        TextInput::make('place_of_birth'),
+                        TextInput::make('place_of_birth')
+                            ->required(),
                         Select::make('gender_id')
                             ->label('Gender')
                             ->disablePlaceholderSelection()
-                            ->options(Gender::pluck('name', 'id'))->required(),
+                            ->options(Gender::pluck('name', 'id'))
+                            ->default(Gender::UNKNOWN),
                         Select::make('blood_type')->options([
                             'A' => 'A',
                             'B' => 'B',
@@ -74,10 +88,9 @@ class UpdateMemberInformation extends Component implements HasForms
                         ])->required(),
                         Select::make('cluster_id')
                             ->label('Cluster')
-                            ->options(fn () => Cluster::orderByRaw('CAST(name AS UNSIGNED)')->pluck('name', 'id'))
-                            ->required(),
+                            ->options(fn () => Cluster::orderByRaw('CAST(name AS UNSIGNED)')->pluck('name', 'id')),
                         TextInput::make('percentage')->required()->numeric()->minValue(0)->maxValue(100),
-                        TextInput::make('darbc_id')->label('DARBC ID')->required(),
+                        TextInput::make('darbc_id')->label('DARBC ID'),
                         Select::make('membership_status')
                             ->options(MembershipStatus::pluck('name', 'id'))
                             ->required()
@@ -108,7 +121,7 @@ class UpdateMemberInformation extends Component implements HasForms
                     ->schema([
                         Radio::make('occupation')
                             ->options(Occupation::pluck('name', 'id'))
-                            ->default(Occupation::first()->id)
+                            ->default(5)
                             ->required(),
                         TextInput::make('occupation_details')
                             ->label('If others, please specify')
@@ -126,20 +139,34 @@ class UpdateMemberInformation extends Component implements HasForms
                             ])
                             ->required()
                             ->default(MemberInformation::CS_SINGLE),
-                        TextInput::make('spouse'),
+                        TextInput::make('spouse')->label('Name of Spouse'),
                         TextInput::make('mother_maiden_name')
                             ->label("Mother's Maiden Name"),
-                        SlimRepeater::make('children')
-                            ->columns(4)
-                            ->schema([
-                                TextInput::make('name')->required()->disableLabel(),
-                                DatePicker::make('date_of_birth')->required()->disableLabel()->withoutTime(),
-                                TextInput::make('educational_attainment')->required()->disableLabel(),
-                                TextInput::make('blood_type')->required()->disableLabel(),
-                            ])
-                            ->columnSpan(2)
+                        TableRepeater::make('children')
                             ->disableItemMovement()
-                            ->createItemButtonLabel('Add Child'),
+                            ->columnSpan(2)
+                            ->hideLabels()
+                            ->schema([
+                                TextInput::make('name'),
+                                DatePicker::make('date_of_birth')->withoutTime(),
+                                TextInput::make('occupation'),
+                                Select::make('educational_attainment')->options([
+                                    'Elementary' => 'Elementary',
+                                    'Secondary' => 'Secondary',
+                                    'Vocational' => 'Vocational',
+                                    'College' => 'College',
+                                    'Graduate Studies' => 'Graduate Studies',
+                                    'Others' => 'Others',
+                                ])
+                                    ->disablePlaceholderSelection(),
+                                Select::make('blood_type')->options([
+                                    'A' => 'A',
+                                    'B' => 'B',
+                                    'AB' => 'AB',
+                                    'O' => 'O',
+                                ])
+                                    ->disablePlaceholderSelection(),
+                            ]),
                     ]),
                 Fieldset::make('IDs Required')
                     ->schema([
@@ -155,10 +182,13 @@ class UpdateMemberInformation extends Component implements HasForms
                         TextInput::make('contact_number')
                             ->label('Contact No.'),
                     ]),
-                Fieldset::make('SPA/Authorized Representative')
+                Fieldset::make('Other Fields')
                     ->schema([
                         TagsInput::make('spa')
-                            ->disableLabel()
+                            ->label('SPA/Authorized Representative')
+                            ->placeholder('New Entry'),
+                        TagsInput::make('dependents')
+                            ->label('Dependents')
                             ->placeholder('New Entry')
                     ]),
             ])
@@ -197,7 +227,8 @@ class UpdateMemberInformation extends Component implements HasForms
             'philhealth_number' => $this->member->philhealth_number,
             'tin_number' => $this->member->tin_number,
             'contact_number' => $this->member->contact_number,
-            'spa' => $this->member->spa
+            'spa' => $this->member->spa,
+            'dependents' => $this->member->dependents,
         ]);
         $this->data['address']['region_code'] = $this->member->region_code;
         $this->data['address']['province_code'] = $this->member->province_code;
@@ -247,7 +278,11 @@ class UpdateMemberInformation extends Component implements HasForms
             'tin_number' => $this->data['tin_number'],
             'contact_number' => $this->data['contact_number'],
             'spa' => $this->data['spa'],
+            'dependents' => $this->data['dependents'],
         ]);
+        if ($this->data['profile_photo']) {
+            $this->member->addMedia(collect($this->data['profile_photo'])?->first())->toMediaCollection('profile_photo');
+        }
         DB::commit();
         Notification::make()->title('Changes saved!')->success()->send();
     }

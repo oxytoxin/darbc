@@ -21,9 +21,9 @@ use Filament\Forms\Components\Radio;
 use Illuminate\Support\Facades\Hash;
 use Filament\Forms\Components\Select;
 use Intervention\Image\Facades\Image;
-use App\Forms\Components\SlimRepeater;
 use Filament\Forms\Components\Section;
 use App\Forms\Components\VerticalWizard;
+use Awcodes\FilamentTableRepeater\Components\TableRepeater;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ViewField;
 use Filament\Notifications\Notification;
@@ -56,12 +56,13 @@ class RegisterMember extends Component implements HasForms
                             TextInput::make('data.surname')->required(),
                             TextInput::make('data.middle_name'),
                             TextInput::make('data.suffix'),
-                            DatePicker::make('data.date_of_birth')->withoutTime(),
-                            TextInput::make('data.place_of_birth'),
+                            DatePicker::make('data.date_of_birth')->required()->withoutTime(),
+                            TextInput::make('data.place_of_birth')->required(),
                             Select::make('data.gender_id')
                                 ->default(Gender::UNKNOWN)
                                 ->label('Gender')
                                 ->required()
+                                ->disablePlaceholderSelection()
                                 ->options(Gender::pluck('name', 'id')),
                             Select::make('data.blood_type')->options([
                                 'A' => 'A',
@@ -107,7 +108,7 @@ class RegisterMember extends Component implements HasForms
                                     MemberInformation::STATUS_DECEASED => 'Deceased',
                                     MemberInformation::STATUS_INACTIVE => 'Inactive',
                                 ])
-                                    ->default(MemberInformation::STATUS_INACTIVE)
+                                    ->default(MemberInformation::STATUS_DECEASED)
                                     ->required(),
                                 Placeholder::make('data.membership_status_requirements')->view('forms.components.members.membership-status-requirements'),
                                 FileUpload::make('consent_form'),
@@ -146,11 +147,10 @@ class RegisterMember extends Component implements HasForms
                     ->schema([
                         Radio::make('data.occupation')
                             ->options(Occupation::pluck('name', 'id'))
-                            ->default(Occupation::first()->id)
+                            ->default(5)
                             ->required(),
                         TextInput::make('data.occupation_details')
-                            ->label('If others, please specify')
-                            ->required(fn ($get) => $get('data.occupation') == 4),
+                            ->label('If others, please specify'),
                     ]),
                 Step::make('Civil Status')
                     ->description("Check your civil status, spouse's name if married, and children's name if you have any.")
@@ -165,19 +165,33 @@ class RegisterMember extends Component implements HasForms
                             ])
                             ->required()
                             ->default(MemberInformation::CS_SINGLE),
-                        TextInput::make('data.spouse'),
+                        TextInput::make('data.spouse')
+                            ->label('Name of Spouse'),
                         TextInput::make('data.mother_maiden_name')->label("Mother's Maiden Name"),
-                        SlimRepeater::make('data.children')
-                            ->columns(4)
-                            ->schema([
-                                TextInput::make('name')->required()->disableLabel(),
-                                DatePicker::make('date_of_birth')->required()->disableLabel()->withoutTime(),
-                                TextInput::make('educational_attainment')->required()->disableLabel(),
-                                TextInput::make('blood_type')->required()->disableLabel(),
-                            ])
+                        TableRepeater::make('data.children')
                             ->disableItemMovement()
-                            ->default([])
-                            ->createItemButtonLabel('Add Child'),
+                            ->hideLabels()
+                            ->schema([
+                                TextInput::make('name'),
+                                DatePicker::make('date_of_birth')->withoutTime(),
+                                TextInput::make('occupation'),
+                                Select::make('educational_attainment')->options([
+                                    'Elementary' => 'Elementary',
+                                    'Secondary' => 'Secondary',
+                                    'Vocational' => 'Vocational',
+                                    'College' => 'College',
+                                    'Graduate Studies' => 'Graduate Studies',
+                                    'Others' => 'Others',
+                                ])
+                                    ->disablePlaceholderSelection(),
+                                Select::make('blood_type')->options([
+                                    'A' => 'A',
+                                    'B' => 'B',
+                                    'AB' => 'AB',
+                                    'O' => 'O',
+                                ])
+                                    ->disablePlaceholderSelection(),
+                            ]),
                     ]),
                 Step::make('IDs Required')
                     ->description('DARBC, SSS, PhilHealth, TIN, Contact No., and Cluster number.')
@@ -200,10 +214,9 @@ class RegisterMember extends Component implements HasForms
                             ->label('Contact No.'),
                         Select::make('data.cluster_id')
                             ->label('Cluster')
-                            ->options(Cluster::pluck('name', 'id'))
-                            ->required()
+                            ->options(Cluster::pluck('name', 'id')),
                     ]),
-                Step::make('Date and Signature')
+                Step::make('Application Date and Signature')
                     ->description('Date of membership application and signature is required.')
                     ->schema([
                         DatePicker::make('data.application_date')
@@ -320,7 +333,6 @@ class RegisterMember extends Component implements HasForms
             $this->data['surname'] = 'Casero';
             $this->data['date_of_birth'] = now()->subYears(20);
             $this->data['place_of_birth'] = 'Somewhere';
-            $this->data['gender_id'] = 1;
             $this->data['blood_type'] = 'A';
             $this->data['religion'] = 'Roman Catholic';
             $this->data['address']['region_code'] = '01';
@@ -333,7 +345,6 @@ class RegisterMember extends Component implements HasForms
             $this->data['philhealth_number'] = '1234';
             $this->data['tin_number'] = '1234';
             $this->data['contact_number'] = '1234';
-            $this->data['cluster_id'] = 1;
             $this->data['children'] = [
                 [
                     'name' => 'John Doe',
@@ -357,13 +368,13 @@ class RegisterMember extends Component implements HasForms
         }
     }
 
-    public function render()
-    {
-        return view('livewire.shared.register-member');
-    }
-
     protected function getRedirectionRoute()
     {
         return '#';
+    }
+
+    public function render()
+    {
+        return view('livewire.shared.register-member');
     }
 }

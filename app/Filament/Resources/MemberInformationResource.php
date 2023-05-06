@@ -10,10 +10,10 @@ use Filament\Resources\Resource;
 use App\Models\MemberInformation;
 use Filament\Tables\Actions\Position;
 use App\Filament\Resources\MemberInformationResource\Pages;
-use App\Forms\Components\SlimRepeater;
 use App\Models\Gender;
 use App\Models\MembershipStatus;
 use App\Models\Occupation;
+use Awcodes\FilamentTableRepeater\Components\TableRepeater;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
@@ -130,7 +130,7 @@ class MemberInformationResource extends Resource
                     ->maxLength(191),
                 Forms\Components\TextInput::make('spouse')
                     ->maxLength(191),
-                SlimRepeater::make('children')
+                TableRepeater::make('children')
                     ->label('Children')
                     ->schema([
                         Forms\Components\TextInput::make('name')->required()->disableLabel(),
@@ -138,9 +138,7 @@ class MemberInformationResource extends Resource
                         Forms\Components\TextInput::make('educational_attainment')->required()->disableLabel(),
                         Forms\Components\TextInput::make('blood_type')->required()->disableLabel(),
                     ])
-                    ->columnSpan(2)
-                    ->columns(4)
-                    ->default([]),
+                    ->disableItemMovement(),
                 Forms\Components\TextInput::make('sss_number')
                     ->maxLength(191),
                 Forms\Components\TextInput::make('philhealth_number')
