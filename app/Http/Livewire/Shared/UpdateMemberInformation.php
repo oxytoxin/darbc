@@ -143,7 +143,7 @@ class UpdateMemberInformation extends Component implements HasForms
                         TextInput::make('mother_maiden_name')
                             ->label("Mother's Maiden Name"),
                         TableRepeater::make('children')
-                            ->disableItemMovement()
+                            // ->disableItemMovement()
                             ->columnSpan(2)
                             ->hideLabels()
                             ->schema([

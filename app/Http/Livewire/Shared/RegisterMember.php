@@ -111,9 +111,8 @@ class RegisterMember extends Component implements HasForms
                                     ->default(MemberInformation::STATUS_DECEASED)
                                     ->required(),
                                 Placeholder::make('data.membership_status_requirements')->view('forms.components.members.membership-status-requirements'),
-                                FileUpload::make('consent_form'),
-                                FileUpload::make('id_documents')
-                                    ->label('Identification')
+                                FileUpload::make('documents')
+                                    ->label('Required Documents')
                                     ->multiple(),
                             ])
                             ->visible(fn ($get) => $get('data.membership_status') == MembershipStatus::REPLACEMENT),
@@ -304,14 +303,13 @@ class RegisterMember extends Component implements HasForms
             'contact_number' => $this->data['contact_number'],
             'application_date' => $this->data['application_date'],
         ]);
+
         if ($this->profile_photo) {
             $member_information->addMedia(collect($this->profile_photo)?->first())->toMediaCollection('profile_photo');
         }
-        if ($this->consent_form) {
-            $member_information->addMedia(collect($this->consent_form)?->first())->toMediaCollection('consent_form');
-        }
-        foreach ($this->id_documents as $document) {
-            $member_information->addMedia($document)->toMediaCollection('identification_documents');
+
+        foreach ($this->documents as $document) {
+            $member_information->addMedia($document)->toMediaCollection('documents');
         }
 
         if ($this->data['signature']) {

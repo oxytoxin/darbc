@@ -1,12 +1,37 @@
 <div class="simple-card">
     <x-member-details :member="$member" />
-    <div x-data="{ show: false }">
-        <x-filament::button x-show="!show" @click="show=true" outlined>Edit Share Percentage</x-filament::button>
-        <div class="flex items-center gap-2" x-cloak x-show="show">
-            <input class="border border-black p-1 rounded-lg" type="number" wire:model.defer="percentage">
-            <div class="gap-1">
-                <x-filament::button @click="$wire.save();show=false;" color="success">Save</x-filament::button>
-                <x-filament::button @click="show=false" color="danger">Cancel</x-filament::button>
+    <div class="flex gap-4 items-center">
+        <x-filament::button href="{{ $this->getEditRoute($member->id) }}" tag="a" icon="heroicon-o-pencil" color="success" outlined size="sm">Edit this Member</x-filament::button>
+        <div x-data="{ show: false }">
+            <x-filament::button x-show="!show" @click="show=true" outlined>Edit Share Percentage</x-filament::button>
+            <div class="flex items-center gap-2" x-cloak x-show="show">
+                <input class="border border-black p-1 rounded-lg" type="number" wire:model.defer="percentage">
+                <div class="gap-1">
+                    <x-filament::button @click="$wire.save();show=false;" color="success">Save</x-filament::button>
+                    <x-filament::button @click="show=false" color="danger">Cancel</x-filament::button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="my-4 p-4 border-2 rounded-lg">
+        <h3 class="font-semibold">Documents</h3>
+        <div class="flex gap-4">
+            <ul class="p-4 gap-4 flex flex-col flex-1">
+                @forelse ($member->getMedia('documents') as $document)
+                    <li class="flex gap-2 items-center">
+                        <p class="italic">{{ $document->file_name }}</p>
+                        <x-filament::button wire:click="deleteDocument({{ $document->id }})" onclick="confirm('Are you sure?') || event.stopImmediatePropagation()" icon="heroicon-o-trash" color="danger" outlined size="sm">Delete</x-filament::button>
+                        <x-filament::button href="{{ $document->getUrl() }}" tag="a" target="blank" icon="heroicon-o-download" color="success" outlined size="sm">Download</x-filament::button>
+                    </li>
+                @empty
+                    <p>No documents uploaded.</p>
+                @endforelse
+            </ul>
+            <div class="flex-1">
+                {{ $this->form }}
+                <div class="flex justify-end mt-4">
+                    <x-filament::button wire:click="saveDocuments" onclick="confirm('Are you sure?') || event.stopImmediatePropagation()" icon="heroicon-o-upload" color="success" outlined size="sm">Upload</x-filament::button>
+                </div>
             </div>
         </div>
     </div>

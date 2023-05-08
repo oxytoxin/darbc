@@ -69,17 +69,11 @@ return [
             'root'   => public_path('proof_of_release'),
             'url'    => env('APP_URL') . '/proof_of_release',
         ],
-        'consent_forms' => [
+        'documents' => [
             'driver' => 'local',
-            'root'   => public_path('consent_forms'),
-            'url'    => env('APP_URL') . '/consent_forms',
+            'root'   => public_path('documents'),
+            'url'    => env('APP_URL') . '/documents',
         ],
-        'identification_documents' => [
-            'driver' => 'local',
-            'root'   => public_path('identification_documents'),
-            'url'    => env('APP_URL') . '/identification_documents',
-        ],
-
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

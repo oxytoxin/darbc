@@ -74,11 +74,8 @@ class MemberInformation extends Model implements HasMedia
         $this->addMediaCollection('profile_photo')
             ->singleFile()
             ->useDisk('profile_photos');
-        $this->addMediaCollection('consent_form')
-            ->singleFile()
-            ->useDisk('consent_forms');
-        $this->addMediaCollection('identification_documents')
-            ->useDisk('identification_documents');
+        $this->addMediaCollection('documents')
+            ->useDisk('documents');
     }
 
     public function getProfilePhotoAttribute()
