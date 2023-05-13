@@ -34,8 +34,7 @@ class MemberManagement extends Component implements HasTable
 
     protected function getTableQuery()
     {
-        return MemberInformation::query()
-            ->where('status', MemberInformation::STATUS_ACTIVE);
+        return MemberInformation::query();
     }
 
     protected function getDefaultTableSortDirection(): ?string
@@ -94,6 +93,7 @@ class MemberManagement extends Component implements HasTable
                     'active' => 'ACTIVE',
                     'original' => 'ORIGINAL',
                     'replacement' => 'REPLACEMENT',
+                    'deceased' => 'DECEASED',
                 ])
                 ->default('active')
                 ->query(function ($query, $data) {
@@ -106,6 +106,9 @@ class MemberManagement extends Component implements HasTable
                             break;
                         case 'replacement':
                             $query->whereMembershipStatusId(MembershipStatus::REPLACEMENT);
+                            break;
+                        case 'deceased':
+                            $query->whereStatus(MemberInformation::STATUS_DECEASED);
                             break;
                         default:
                             break;

@@ -63,6 +63,7 @@
                 </div>
             </div>
         @endif
+        <h4 class="mt-8 font-bold text-primary-600">Active Cashiers</h4>
         <div class="grid grid-cols-3 gap-2 pb-4" wire:poll.2000ms>
             @foreach ($cashiers as $cashier)
                 <div class="flex flex-col justify-between p-3 bg-white border rounded-md">

@@ -36,7 +36,7 @@ Route::middleware(['auth', 'role:' . Role::RELEASE_ADMIN])->prefix('release-admi
     Route::get('/manage-proof-of-release/{dividend}', ReleaseAdminManageProofOfRelease::class)->name('manage-proof-of-release');
     Route::get('/free-lots', ReleaseAdminFreeLotManagement::class)->name('manage-free-lots');
     Route::get('/free-lots/{free_lot}/history', ReleaseAdminFreeLotHistory::class)->name('free-lot-history');
-    Route::get('/cash-advances', ReleaseAdminCashAdvanceManagement::class)->name('manage-cash-advances');
+    // Route::get('/cash-advances', ReleaseAdminCashAdvanceManagement::class)->name('manage-cash-advances');
 
     Route::prefix('download-report')->name('download-report.')->group(function () {
         Route::get('/released/{release}/status/{status}', [ReportsDownloadController::class, 'releasesByStatus'])->name('releases-by-status');

@@ -9,6 +9,8 @@ use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
+use App\Http\Livewire\Shared\ClusterlessMembers;
+use App\Http\Livewire\Shared\ClusterMembers;
 use App\Http\Livewire\Shared\MemberInformationQuery;
 use App\Http\Livewire\TestComponent;
 use Illuminate\Support\Facades\Route;
@@ -33,7 +35,12 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('logout', LogoutController::class)->name('logout');
+});
+
+Route::middleware(['auth', 'role:shared'])->group(function () {
     Route::get('member-information-query', MemberInformationQuery::class)->name('member-information-query');
+    Route::get('cluster/{cluster}/members', ClusterMembers::class)->name('cluster-members');
+    Route::get('clusterless-members', ClusterlessMembers::class)->name('clusterless-members');
 });
 
 

@@ -54,9 +54,10 @@ class ReportsDownloadController extends Controller
         $members = MemberInformation::query()
             ->with(['user', 'cluster', 'gender', 'occupation'])
             ->orderBy('darbc_id');
-        if (in_array(request('status'), ['active', 'original', 'replacement'])) {
+        if (in_array(request('status'), ['active', 'original', 'replacement', 'deceased'])) {
             $members
                 ->when(request('status') == 'active', fn ($query) => $query->whereStatus(MemberInformation::STATUS_ACTIVE))
+                ->when(request('status') == 'deceased', fn ($query) => $query->whereStatus(MemberInformation::STATUS_DECEASED))
                 ->when(request('status') == 'original', fn ($query) => $query->whereMembershipStatusId(MembershipStatus::ORIGINAL))
                 ->when(request('status') == 'replacement', fn ($query) => $query->whereMembershipStatusId(MembershipStatus::REPLACEMENT));
         }

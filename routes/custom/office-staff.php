@@ -3,6 +3,7 @@
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReportsDownloadController;
+use App\Http\Livewire\OfficeStaff\OfficeStaffClusterManagement;
 use App\Http\Livewire\OfficeStaff\OfficeStaffDashboard;
 use App\Http\Livewire\OfficeStaff\OfficeStaffLedgerIndex;
 use App\Http\Livewire\OfficeStaff\OfficeStaffRegisterMember;
@@ -19,6 +20,7 @@ Route::middleware(['auth', 'role:' . Role::OFFICE_STAFF])->prefix('office-staff'
     Route::get('/', OfficeStaffDashboard::class)->name('dashboard');
     Route::get('/manage-members', OfficeStaffMemberManagement::class)->name('manage-members');
     Route::get('/manage-members/{member}/edit', OfficeStaffUpdateMemberInformation::class)->name('manage-members.edit');
+    Route::get('/manage-clusters', OfficeStaffClusterManagement::class)->name('manage-clusters');
     Route::get('/register-members', OfficeStaffRegisterMember::class)->name('register-members');
     Route::get('/manage-member-claims/{member}', MemberClaims::class)->name('manage-member-claims');
     Route::get('/releases', OfficeStaffReleasesIndex::class)->name('releases.index');

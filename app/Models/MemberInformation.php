@@ -46,7 +46,7 @@ class MemberInformation extends Model implements HasMedia
         'date_of_birth' => 'immutable_date',
         'children' => 'array',
         'spa' => 'array',
-        'dependents' => 'array',
+        'holographic' => 'boolean',
         'application_date' => 'immutable_date',
         'percentage' => 'decimal:2',
         'is_darbc_member' => 'boolean',
@@ -112,7 +112,6 @@ class MemberInformation extends Model implements HasMedia
     {
         return $this->belongsTo(User::class);
     }
-
 
     public function cluster()
     {

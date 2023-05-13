@@ -38,6 +38,7 @@ class ReleaseAdminCashierReleases extends Component
         return view('livewire.release-admin.release-admin-cashier-releases', [
             'selected_release' => $selected_release,
             'cashiers' => User::whereRelation('roles', 'role_id', Role::CASHIER)
+                ->whereActive(true)
                 ->withCount(['cashier_released_dividends' => fn ($query) => $query
                     ->when($this->from, fn ($q) => $q->where('released_at', '>=', $this->from))
                     ->when($this->to, fn ($q) => $q->where('released_at', '<=', $this->to))

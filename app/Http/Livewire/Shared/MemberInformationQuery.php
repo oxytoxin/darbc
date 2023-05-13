@@ -18,6 +18,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
+use App\Models\Cluster;
 use App\Models\Occupation;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Actions\Action;
@@ -95,6 +96,9 @@ class MemberInformationQuery extends Component implements HasTable
             TextColumn::make('user.first_name')
                 ->visible(fn () => $this->tableFilters['user_first_name']['isActive'])
                 ->label('First Name'),
+            TextColumn::make('cluster.name')
+                ->visible(fn () => $this->tableFilters['cluster']['isActive'])
+                ->label('Cluster'),
             BadgeColumn::make('succession_number')
                 ->colors([
                     'success'
@@ -192,6 +196,7 @@ class MemberInformationQuery extends Component implements HasTable
             Filter::make('darbc_id')
                 ->default()
                 ->label('DARBC ID'),
+            Filter::make('cluster'),
             Filter::make('status')
                 ->default()
                 ->label('Status'),
@@ -290,12 +295,18 @@ class MemberInformationQuery extends Component implements HasTable
                         'AB' => 'AB',
                         'O' => 'O',
                     ])->placeholder('ALL'),
+                    Select::make('cluster_id')
+                        ->label('Cluster')
+                        ->columnSpan(2)
+                        ->options(Cluster::orderByName()->selectRaw("id, concat(name, ' - ', address) as name")->pluck('name', 'id'))
+                        ->placeholder('ALL'),
                     DatePicker::make('from')
                         ->withoutTime(),
                     DatePicker::make('to')
                         ->withoutTime(),
 
                 ])->query(function ($query, $data) {
+                    info($data['cluster_id']);
                     $query->when($data['darbc_id'], fn ($q) => $q->where('darbc_id', $data['darbc_id']));
                     $query->when($data['status'], fn ($q) => $q->where('status', $data['status']));
                     $query->when($data['first_name'], fn ($q) => $q->whereRelation('user', 'first_name', 'like', "%{$data['first_name']}%"));
@@ -304,6 +315,7 @@ class MemberInformationQuery extends Component implements HasTable
                     $query->when($data['civil_status'], fn ($q) => $q->where('civil_status', $data['civil_status']));
                     $query->when($data['occupation'], fn ($q) => $q->where('occupation_id', $data['occupation']));
                     $query->when($data['blood_type'], fn ($q) => $q->where('blood_type', $data['blood_type']));
+                    $query->when($data['cluster_id'], fn ($q) => $q->whereClusterId($data['cluster_id']));
                     $query->when($data['from'], fn ($q) => $q->whereDate('application_date', '>=', $data['from']));
                     $query->when($data['to'], fn ($q) => $q->whereDate('application_date', '<=', $data['to']));
                 }),

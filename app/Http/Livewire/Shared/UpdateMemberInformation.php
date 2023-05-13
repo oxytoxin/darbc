@@ -18,7 +18,6 @@ use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\Fieldset;
-use Illuminate\Database\Eloquent\Model;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
@@ -27,6 +26,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Awcodes\FilamentTableRepeater\Components\TableRepeater;
 use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Toggle;
 use Illuminate\Support\HtmlString;
 
 class UpdateMemberInformation extends Component implements HasForms
@@ -88,10 +88,11 @@ class UpdateMemberInformation extends Component implements HasForms
                         ])->required(),
                         Select::make('cluster_id')
                             ->label('Cluster')
-                            ->options(fn () => Cluster::orderByRaw('CAST(name AS UNSIGNED)')->pluck('name', 'id')),
+                            ->options(fn () => Cluster::orderByName()->selectRaw("id, concat(name, ' - ', address) as name")->pluck('name', 'id')),
                         TextInput::make('percentage')->required()->numeric()->minValue(0)->maxValue(100),
                         TextInput::make('darbc_id')->label('DARBC ID'),
-                        Select::make('membership_status')
+                        Select::make('membership_status_id')
+                            ->label('Membership Status')
                             ->options(MembershipStatus::pluck('name', 'id'))
                             ->required()
                             ->disablePlaceholderSelection(),
@@ -117,7 +118,7 @@ class UpdateMemberInformation extends Component implements HasForms
                         TextInput::make('address.address_line')
                             ->label('Street name, Building, House No.')
                     ]),
-                Fieldset::make('Occupation')
+                Fieldset::make('Occupation Details')
                     ->schema([
                         Radio::make('occupation')
                             ->options(Occupation::pluck('name', 'id'))
@@ -185,11 +186,14 @@ class UpdateMemberInformation extends Component implements HasForms
                 Fieldset::make('Other Fields')
                     ->schema([
                         TagsInput::make('spa')
-                            ->label('SPA/Authorized Representative')
+                            ->label('Special Power of Attorney')
                             ->placeholder('New Entry'),
-                        TagsInput::make('dependents')
-                            ->label('Dependents')
-                            ->placeholder('New Entry')
+                        Toggle::make('holographic')
+                            ->onColor('success')
+                            ->offColor('danger')
+                            ->onIcon('heroicon-o-check')
+                            ->offIcon('heroicon-o-x')
+                            ->inline(false),
                     ]),
             ])
         ];
@@ -228,7 +232,7 @@ class UpdateMemberInformation extends Component implements HasForms
             'tin_number' => $this->member->tin_number,
             'contact_number' => $this->member->contact_number,
             'spa' => $this->member->spa,
-            'dependents' => $this->member->dependents,
+            'holographic' => $this->member->holographic,
         ]);
         $this->data['address']['region_code'] = $this->member->region_code;
         $this->data['address']['province_code'] = $this->member->province_code;
@@ -278,12 +282,17 @@ class UpdateMemberInformation extends Component implements HasForms
             'tin_number' => $this->data['tin_number'],
             'contact_number' => $this->data['contact_number'],
             'spa' => $this->data['spa'],
-            'dependents' => $this->data['dependents'],
+            'holographic' => $this->data['holographic'],
         ]);
         if ($this->data['profile_photo']) {
             $this->member->addMedia(collect($this->data['profile_photo'])?->first())->toMediaCollection('profile_photo');
         }
         DB::commit();
         Notification::make()->title('Changes saved!')->success()->send();
+    }
+
+    public function getProfileRoute()
+    {
+        return '#';
     }
 }
