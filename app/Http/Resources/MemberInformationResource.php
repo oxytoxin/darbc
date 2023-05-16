@@ -21,6 +21,7 @@ class MemberInformationResource extends JsonResource
             'date_of_birth' => $this->date_of_birth?->format('Y-m-d'),
             'contact_number' => $this->contact_number,
             'user' => UserResource::make($this->whenLoaded('user')),
+            'holographic' => $this->holographic,
         ];
     }
 }

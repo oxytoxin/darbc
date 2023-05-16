@@ -19,6 +19,7 @@ class ApiMemberInformationController extends Controller
         $members = MemberInformation::query()
             ->with('user')
             ->when(request()->integer('status'), fn ($query) => $query->whereStatus(request()->integer('status')))
+            ->when(request()->boolean('holographic'), fn ($query) => $query->whereHolographic(request()->boolean('holographic')))
             ->paginate(50);
         return MemberInformationResource::collection($members);
     }
@@ -38,6 +39,15 @@ class ApiMemberInformationController extends Controller
     {
         return MemberInformation::query()
             ->select(['id', 'darbc_id'])
+            ->when(request()->integer('status'), fn ($query) => $query->whereStatus(request()->integer('status')))
+            ->get();
+    }
+
+    public function darbc_names()
+    {
+        return MemberInformation::query()
+            ->join('users', 'users.id', '=', 'member_information.user_id')
+            ->select(['member_information.id', 'users.full_name'])
             ->when(request()->integer('status'), fn ($query) => $query->whereStatus(request()->integer('status')))
             ->get();
     }
