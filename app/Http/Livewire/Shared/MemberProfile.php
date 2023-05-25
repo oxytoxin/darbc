@@ -44,8 +44,7 @@ class MemberProfile extends Component implements HasForms
     {
         if (count($this->documents)) {
             foreach ($this->documents as $key => $document) {
-                $this->member->addMedia($document->getRealPath())
-                    ->usingFileName($document->getClientOriginalName())
+                $this->member->addMedia($document)
                     ->toMediaCollection('documents');
             }
             $this->reset('documents');
