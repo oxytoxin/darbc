@@ -29,8 +29,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Barangay whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Barangay whereProvinceCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Barangay whereRegionCode($value)
+ * @mixin \Eloquent
  */
-	class Barangay extends \Eloquent {}
+	class IdeHelperBarangay {}
 }
 
 namespace App\Models{
@@ -71,8 +72,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|CashAdvance whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CashAdvance whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|CashAdvance whereUserId($value)
+ * @mixin \Eloquent
  */
-	class CashAdvance extends \Eloquent {}
+	class IdeHelperCashAdvance {}
 }
 
 namespace App\Models{
@@ -94,8 +96,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|City whereProvinceCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|City wherePsgcCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|City whereRegionCode($value)
+ * @mixin \Eloquent
  */
-	class City extends \Eloquent {}
+	class IdeHelperCity {}
 }
 
 namespace App\Models{
@@ -113,6 +116,7 @@ namespace App\Models{
  * @property-read int|null $members_count
  * @method static \Illuminate\Database\Eloquent\Builder|Cluster newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Cluster newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Cluster orderByName()
  * @method static \Illuminate\Database\Eloquent\Builder|Cluster query()
  * @method static \Illuminate\Database\Eloquent\Builder|Cluster whereAddress($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cluster whereCreatedAt($value)
@@ -120,8 +124,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Cluster whereLeaderId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cluster whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Cluster whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Cluster extends \Eloquent {}
+	class IdeHelperCluster {}
 }
 
 namespace App\Models{
@@ -154,8 +159,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|DailyCash whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DailyCash whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|DailyCash whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class DailyCash extends \Eloquent {}
+	class IdeHelperDailyCash {}
 }
 
 namespace App\Models{
@@ -208,8 +214,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Dividend whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Dividend whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Dividend whereVoided($value)
+ * @mixin \Eloquent
  */
-	class Dividend extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
+	class IdeHelperDividend {}
 }
 
 namespace App\Models{
@@ -255,8 +262,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|FreeLot whereSwappingHistory($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FreeLot whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|FreeLot whereUserId($value)
+ * @mixin \Eloquent
  */
-	class FreeLot extends \Eloquent {}
+	class IdeHelperFreeLot {}
 }
 
 namespace App\Models{
@@ -276,8 +284,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Gender whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Gender whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Gender whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Gender extends \Eloquent {}
+	class IdeHelperGender {}
 }
 
 namespace App\Models{
@@ -293,8 +302,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|LandDocuments whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LandDocuments whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LandDocuments whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class LandDocuments extends \Eloquent {}
+	class IdeHelperLandDocuments {}
 }
 
 namespace App\Models{
@@ -322,8 +332,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|LandRecording whereRegionId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LandRecording whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|LandRecording whereUserId($value)
+ * @mixin \Eloquent
  */
-	class LandRecording extends \Eloquent {}
+	class IdeHelperLandRecording {}
 }
 
 namespace App\Models{
@@ -333,8 +344,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|LotAddress newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LotAddress newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|LotAddress query()
+ * @mixin \Eloquent
  */
-	class LotAddress extends \Eloquent {}
+	class IdeHelperLotAddress {}
 }
 
 namespace App\Models{
@@ -345,7 +357,7 @@ namespace App\Models{
  * @property bool $is_darbc_member
  * @property bool $split_claim
  * @property int $status
- * @property int $darbc_id
+ * @property float $darbc_id
  * @property string|null $reference_number
  * @property string $percentage
  * @property int $user_id
@@ -375,6 +387,7 @@ namespace App\Models{
  * @property string|null $tin_number
  * @property string|null $contact_number
  * @property array $spa
+ * @property bool $holographic
  * @property \Carbon\CarbonImmutable|null $application_date
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
@@ -383,6 +396,7 @@ namespace App\Models{
  * @property-read \App\Models\City|null $city
  * @property-read \App\Models\Cluster|null $cluster
  * @property-read \App\Models\Gender $gender
+ * @property-read mixed $profile_photo
  * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\Spatie\MediaLibrary\MediaCollections\Models\Media[] $media
  * @property-read int|null $media_count
  * @property-read \App\Models\MembershipStatus $membership_status
@@ -413,6 +427,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereDarbcId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereDateOfBirth($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereGenderId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereHolographic($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereIsDarbcMember($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereLineageIdentifier($value)
@@ -438,8 +453,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereTinNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereUserId($value)
+ * @mixin \Eloquent
  */
-	class MemberInformation extends \Eloquent implements \Spatie\MediaLibrary\HasMedia {}
+	class IdeHelperMemberInformation {}
 }
 
 namespace App\Models{
@@ -459,8 +475,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|MembershipStatus whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MembershipStatus whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MembershipStatus whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class MembershipStatus extends \Eloquent {}
+	class IdeHelperMembershipStatus {}
 }
 
 namespace App\Models{
@@ -480,8 +497,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Occupation whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Occupation whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Occupation whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Occupation extends \Eloquent {}
+	class IdeHelperOccupation {}
 }
 
 namespace App\Models{
@@ -501,8 +519,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Province whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Province wherePsgcCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Province whereRegionCode($value)
+ * @mixin \Eloquent
  */
-	class Province extends \Eloquent {}
+	class IdeHelperProvince {}
 }
 
 namespace App\Models{
@@ -520,8 +539,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Region whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Region wherePsgcCode($value)
+ * @mixin \Eloquent
  */
-	class Region extends \Eloquent {}
+	class IdeHelperRegion {}
 }
 
 namespace App\Models{
@@ -530,6 +550,7 @@ namespace App\Models{
  *
  * @property int $id
  * @property string $name
+ * @property string $share_description
  * @property int $total_amount
  * @property string|null $gift_certificate_prefix
  * @property string $gift_certificate_amount
@@ -572,10 +593,12 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Release whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Release whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Release whereParticulars($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Release whereShareDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Release whereTotalAmount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Release whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Release extends \Eloquent {}
+	class IdeHelperRelease {}
 }
 
 namespace App\Models{
@@ -597,8 +620,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Restriction whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Restriction whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Restriction whereUserId($value)
+ * @mixin \Eloquent
  */
-	class Restriction extends \Eloquent {}
+	class IdeHelperRestriction {}
 }
 
 namespace App\Models{
@@ -618,8 +642,9 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Role whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Role whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Role whereUpdatedAt($value)
+ * @mixin \Eloquent
  */
-	class Role extends \Eloquent {}
+	class IdeHelperRole {}
 }
 
 namespace App\Models{
@@ -685,7 +710,8 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|User whereSurname($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUsername($value)
+ * @mixin \Eloquent
  */
-	class User extends \Eloquent implements \Spatie\MediaLibrary\HasMedia, \Filament\Models\Contracts\FilamentUser, \Filament\Models\Contracts\HasName {}
+	class IdeHelperUser {}
 }
 

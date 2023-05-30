@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
+/**
+ * @mixin IdeHelperMemberInformation
+ */
 class MemberInformation extends Model implements HasMedia
 {
     use HasFactory, InteractsWithMedia;

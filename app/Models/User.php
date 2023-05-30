@@ -14,6 +14,9 @@ use Laravel\Sanctum\HasApiTokens;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 
+/**
+ * @mixin IdeHelperUser
+ */
 class User extends Authenticatable implements HasMedia, FilamentUser, HasName
 {
     use HasApiTokens, HasFactory, Notifiable, InteractsWithMedia;
