@@ -2,6 +2,14 @@
     <div class="space-y-8">
         <h1 class="text-xl font-bold text-primary-500">Member Claims</h1>
         <x-member-details :member="$member" />
+        <div class="flex justify-end">
+            <div class="py-2 px-4 border-2 border-slate-700 rounded-lg">
+                <h4 class="text-lg text-gray-600 font-semibold text-right">Amount to be Released</h4>
+                <h5 class="text-2xl font-semibold text-green-600 text-right">
+                    {{ Akaunting\Money\Money::PHP($dividends_amount_to_claim, true) }}
+                </h5>
+            </div>
+        </div>
         <div class="flex-1">
             <table class="table w-full border border-collapse table-auto">
                 <thead class="text-left text-white bg-primary-500">

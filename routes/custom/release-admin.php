@@ -1,12 +1,10 @@
 <?php
 
 use App\Http\Controllers\ReportsDownloadController;
-use App\Http\Livewire\ReleaseAdmin\ReleaseAdminCashAdvanceManagement;
 use App\Models\Role;
 use Illuminate\Support\Facades\Route;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminDashboard;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminRegisterMember;
-use App\Http\Livewire\ReleaseAdmin\ReleaseAdminUserManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminMemberManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminClusterManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminUpdateMemberInformation;
@@ -14,7 +12,6 @@ use App\Http\Livewire\ReleaseAdmin\ReleaseAdminFreeLotHistory;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminFreeLotManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminManageProofOfRelease;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminMemberProfile;
-use App\Http\Livewire\ReleaseAdmin\ReleaseAdminReleaseManagement;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminTransactionsHistory;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminReleaseDividends;
 use App\Http\Livewire\ReleaseAdmin\ReleaseAdminReportsIndex;
@@ -25,8 +22,6 @@ Route::middleware(['auth', 'role:' . Role::RELEASE_ADMIN])->prefix('release-admi
     Route::get('/manage-members', ReleaseAdminMemberManagement::class)->name('manage-members');
     Route::get('/member-information/{member}/edit', ReleaseAdminUpdateMemberInformation::class)->name('manage-members.edit');
     Route::get('/register-members', ReleaseAdminRegisterMember::class)->name('register-members');
-    Route::get('/manage-users', ReleaseAdminUserManagement::class)->name('manage-users');
-    Route::get('/manage-releases', ReleaseAdminReleaseManagement::class)->name('manage-releases');
     Route::get('/manage-member-claims/{member}', MemberClaims::class)->name('manage-member-claims');
     Route::get('/manage-clusters', ReleaseAdminClusterManagement::class)->name('manage-clusters');
     Route::get('/transactions', ReleaseAdminTransactionsHistory::class)->name('transactions');

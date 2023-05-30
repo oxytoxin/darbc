@@ -35,6 +35,15 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::post('logout', LogoutController::class)->name('logout');
+    Route::prefix('download-report')->name('download-report.')->group(function () {
+        Route::get('/released/{release}/status/{status}', [ReportsDownloadController::class, 'releasesByStatus'])->name('releases-by-status');
+        Route::get('/voided-releases/{release}', [ReportsDownloadController::class, 'voidedReleases'])->name('voided-releases');
+        Route::get('/releases-by-cashier/{cashier}', [ReportsDownloadController::class, 'releasesByCashier'])->name('releases-by-cashier');
+        Route::get('/voided-releases-by-cashier/{cashier}', [ReportsDownloadController::class, 'voidedReleasesByCashier'])->name('voided-releases-by-cashier');
+        Route::get('/claimed-releases-by-type/{release}', [ReportsDownloadController::class, 'claimedReleasesByType'])->name('claimed-releases-by-type');
+        Route::get('/members', [ReportsDownloadController::class, 'members'])->name('members');
+        Route::get('/active-members', [ReportsDownloadController::class, 'active_members'])->name('active-members');
+    });
 });
 
 Route::middleware(['auth', 'role:shared'])->group(function () {

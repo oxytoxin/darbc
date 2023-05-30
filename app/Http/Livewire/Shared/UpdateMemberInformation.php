@@ -145,13 +145,15 @@ class UpdateMemberInformation extends Component implements HasForms
                         TextInput::make('mother_maiden_name')
                             ->label("Mother's Maiden Name"),
                         TableRepeater::make('children')
-                            // ->disableItemMovement()
+                            ->columnWidths([
+                                'name' => '300px',
+                                'occupation' => '180px',
+                            ])
                             ->columnSpan(2)
                             ->hideLabels()
                             ->schema([
                                 TextInput::make('name'),
                                 DatePicker::make('date_of_birth')->withoutTime(),
-                                TextInput::make('occupation'),
                                 Select::make('educational_attainment')->options([
                                     'Elementary' => 'Elementary',
                                     'Elementary undergraduate' => 'Elementary undergraduate',
@@ -175,6 +177,8 @@ class UpdateMemberInformation extends Component implements HasForms
                                     'Unknown' => 'Unknown',
                                 ])
                                     ->disablePlaceholderSelection(),
+                                TextInput::make('occupation'),
+
                             ]),
                     ]),
                 Fieldset::make('IDs Required')
@@ -256,6 +260,12 @@ class UpdateMemberInformation extends Component implements HasForms
 
     public function save()
     {
+        try {
+            $this->form->getState();
+        } catch (\Throwable $th) {
+            notify(title: $th->getMessage(), type: 'danger');
+            throw $th;
+        }
         DB::beginTransaction();
         $this->member->user()->update([
             'first_name' => $this->data['first_name'],

@@ -171,10 +171,13 @@ class RegisterMember extends Component implements HasForms
                         TableRepeater::make('data.children')
                             ->disableItemMovement()
                             ->hideLabels()
+                            ->columnWidths([
+                                'name' => '300px',
+                                'occupation' => '180px',
+                            ])
                             ->schema([
                                 TextInput::make('name'),
                                 DatePicker::make('date_of_birth')->withoutTime(),
-                                TextInput::make('occupation'),
                                 Select::make('educational_attainment')->options([
                                     'Elementary' => 'Elementary',
                                     'Elementary undergraduate' => 'Elementary undergraduate',
@@ -198,6 +201,7 @@ class RegisterMember extends Component implements HasForms
                                     'Unknown' => 'Unknown',
                                 ])
                                     ->disablePlaceholderSelection(),
+                                TextInput::make('occupation'),
                             ]),
                     ]),
                 Step::make('IDs Required')

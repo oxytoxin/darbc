@@ -29,7 +29,4 @@ Route::middleware(['auth', 'role:' . Role::OFFICE_STAFF])->prefix('office-staff'
     Route::get('/release-details/{release}', OfficeStaffReleaseDetailsManagement::class)->name('ledger.release-details');
     Route::get('/member-profile/{member}', OfficeStaffMemberProfile::class)->name('member-profile');
     Route::get('/free-lots', OfficeStaffFreeLotManagement::class)->name('manage-free-lots');
-    Route::prefix('download-report')->name('download-report.')->group(function () {
-        Route::get('/members', [ReportsDownloadController::class, 'members'])->name('members');
-    });
 });

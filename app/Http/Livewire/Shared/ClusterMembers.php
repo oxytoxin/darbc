@@ -49,7 +49,7 @@ class ClusterMembers extends Component implements HasTable
         return [
             TextColumn::make('darbc_id')
                 ->label('DARBC ID'),
-            TextColumn::make('user.full_name')
+            TextColumn::make('user.alt_full_name')
                 ->label('Name'),
             BadgeColumn::make('succession_number')
                 ->colors([

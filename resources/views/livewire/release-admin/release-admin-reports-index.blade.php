@@ -6,7 +6,7 @@
         <div>
             <label for="release">
                 <h1 class="font-bold text-primary-600">Release</h1>
-                <select wire:model="release_id" class="text-xs rounded">
+                <select class="text-xs rounded" wire:model="release_id">
                     @forelse ($releases as $release)
                         <option value="{{ $release->id }}">{{ $release->name }}</option>
                     @empty
@@ -21,76 +21,69 @@
                 <h3 class="font-bold text-custom-blue">
                     Total Released Dividends
                 </h3>
-                <a target="_blank" href="{{ route('release-admin.download-report.releases-by-status', [
+                <a class="flex justify-end text-sm font-bold text-green-600 underline" href="{{ route('download-report.releases-by-status', [
                     'release' => $release_id,
                     'status' => 4,
-                ]) }}"
-                    class="flex justify-end text-sm font-bold text-green-600 underline">Download</a>
+                ]) }}" target="_blank">Download</a>
             </div>
             <div class="p-4 border-2 rounded-lg">
                 <h2 class="text-2xl font-bold text-custom-blue">{{ $selected_release->unclaimed_dividends_count }}</h2>
                 <h3 class="font-bold text-custom-blue">
                     Unclaimed Dividends
                 </h3>
-                <a target="_blank" href="{{ route('release-admin.download-report.releases-by-status', [
+                <a class="flex justify-end text-sm font-bold text-green-600 underline" href="{{ route('download-report.releases-by-status', [
                     'release' => $release_id,
                     'status' => 2,
-                ]) }}"
-                    class="flex justify-end text-sm font-bold text-green-600 underline">Download</a>
+                ]) }}" target="_blank">Download</a>
             </div>
             <div class="p-4 border-2 rounded-lg">
                 <h2 class="text-2xl font-bold text-custom-blue">{{ $selected_release->onhold_dividends_count }}</h2>
                 <h3 class="font-bold text-custom-blue">
                     On-Hold Dividends
                 </h3>
-                <a target="_blank" href="{{ route('release-admin.download-report.releases-by-status', [
+                <a class="flex justify-end text-sm font-bold text-green-600 underline" href="{{ route('download-report.releases-by-status', [
                     'release' => $release_id,
                     'status' => 3,
-                ]) }}"
-                    class="flex justify-end text-sm font-bold text-green-600 underline">Download</a>
+                ]) }}" target="_blank">Download</a>
             </div>
             <div class="p-4 border-2 rounded-lg">
                 <h2 class="text-2xl font-bold text-custom-blue">{{ $selected_release->member_claimed_dividends_count }}</h2>
                 <h3 class="font-bold text-custom-blue">
                     Claimed by Members
                 </h3>
-                <a target="_blank" href="{{ route('release-admin.download-report.claimed-releases-by-type', [
+                <a class="flex justify-end text-sm font-bold text-green-600 underline" href="{{ route('download-report.claimed-releases-by-type', [
                     'release' => $release_id,
                     'claim_type' => 1,
-                ]) }}"
-                    class="flex justify-end text-sm font-bold text-green-600 underline">Download</a>
+                ]) }}" target="_blank">Download</a>
             </div>
             <div class="p-4 border-2 rounded-lg">
                 <h2 class="text-2xl font-bold text-custom-blue">{{ $selected_release->spa_claimed_dividends_count }}</h2>
                 <h3 class="font-bold text-custom-blue">
                     Claimed by SPA
                 </h3>
-                <a target="_blank" href="{{ route('release-admin.download-report.claimed-releases-by-type', [
+                <a class="flex justify-end text-sm font-bold text-green-600 underline" href="{{ route('download-report.claimed-releases-by-type', [
                     'release' => $release_id,
                     'claim_type' => 2,
-                ]) }}"
-                    class="flex justify-end text-sm font-bold text-green-600 underline">Download</a>
+                ]) }}" target="_blank">Download</a>
             </div>
             <div class="p-4 border-2 rounded-lg">
                 <h2 class="text-2xl font-bold text-custom-blue">{{ $selected_release->representative_claimed_dividends_count }}</h2>
                 <h3 class="font-bold text-custom-blue">
                     Claimed by Authorized Representative
                 </h3>
-                <a target="_blank" href="{{ route('release-admin.download-report.claimed-releases-by-type', [
+                <a class="flex justify-end text-sm font-bold text-green-600 underline" href="{{ route('download-report.claimed-releases-by-type', [
                     'release' => $release_id,
                     'claim_type' => 3,
-                ]) }}"
-                    class="flex justify-end text-sm font-bold text-green-600 underline">Download</a>
+                ]) }}" target="_blank">Download</a>
             </div>
             <div class="p-4 border-2 rounded-lg">
                 <h2 class="text-2xl font-bold text-custom-blue">{{ $selected_release->voided_dividends_count }}</h2>
                 <h3 class="font-bold text-custom-blue">
                     Total Voided Dividends
                 </h3>
-                <a target="_blank" href="{{ route('release-admin.download-report.voided-releases', [
+                <a class="flex justify-end text-sm font-bold text-green-600 underline" href="{{ route('download-report.voided-releases', [
                     'release' => $release_id,
-                ]) }}"
-                    class="flex justify-end text-sm font-bold text-green-600 underline">Download</a>
+                ]) }}" target="_blank">Download</a>
             </div>
         </div>
         <hr class="my-4">
@@ -111,20 +104,16 @@
                         <td>{{ $cashier->full_name }}</td>
                         <td class="text-center">{{ $cashier->releases_count }}</td>
                         <td>
-                            <a target="_blank"
-                                href="{{ route('release-admin.download-report.releases-by-cashier', [
-                                    'cashier' => $cashier,
-                                    'release_id' => $release_id,
-                                ]) }}"
-                                class="text-xs font-bold text-green-600 underline">Download</a>
+                            <a class="text-xs font-bold text-green-600 underline" href="{{ route('download-report.releases-by-cashier', [
+                                'cashier' => $cashier,
+                                'release_id' => $release_id,
+                            ]) }}" target="_blank">Download</a>
                         </td>
                         <td class="text-center">{{ $cashier->voided_count }}</td>
-                        <td><a target="_blank"
-                                href="{{ route('release-admin.download-report.voided-releases-by-cashier', [
-                                    'cashier' => $cashier,
-                                    'release_id' => $release_id,
-                                ]) }}"
-                                class="text-xs font-bold text-green-600 underline">Download</a></td>
+                        <td><a class="text-xs font-bold text-green-600 underline" href="{{ route('download-report.voided-releases-by-cashier', [
+                            'cashier' => $cashier,
+                            'release_id' => $release_id,
+                        ]) }}" target="_blank">Download</a></td>
                     </tr>
                 @endforeach
             </tbody>

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\ReleaseAdmin;
+namespace App\Http\Livewire\Admin;
 
 use App\Models\Release;
 use Livewire\Component;
@@ -17,7 +17,7 @@ use Filament\Notifications\Notification;
 use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-class ReleaseAdminReleaseManagement extends Component implements HasTable
+class AdminReleaseManagement extends Component implements HasTable
 {
     use InteractsWithTable;
 

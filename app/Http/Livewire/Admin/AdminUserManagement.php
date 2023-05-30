@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Livewire\ReleaseAdmin;
+namespace App\Http\Livewire\Admin;
 
-use App\Models\Role;
 use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\Hash;
@@ -20,7 +19,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 
-class ReleaseAdminUserManagement extends Component implements HasTable
+class AdminUserManagement extends Component implements HasTable
 {
 
     use InteractsWithTable;

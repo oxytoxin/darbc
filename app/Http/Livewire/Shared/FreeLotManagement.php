@@ -122,6 +122,10 @@ class FreeLotManagement extends Component implements HasTable
             Filter::make('lot_text')
                 ->columns(4)
                 ->columnSpan(4)->form([
+                    TextInput::make('first_name')
+                        ->label('First Name'),
+                    TextInput::make('last_name')
+                        ->label('Last Name'),
                     TextInput::make('block')
                         ->label('Block'),
                     TextInput::make('lot')
@@ -131,6 +135,8 @@ class FreeLotManagement extends Component implements HasTable
                     TextInput::make('cluster')
                         ->label('Cluster'),
                 ])->query(function ($query, $data) {
+                    $query->when($data['first_name'], fn ($q) => $q->whereRelation('user', 'first_name', "LIKE", "{$data['first_name']}%"));
+                    $query->when($data['last_name'], fn ($q) =>  $q->whereRelation('user', 'surname', "LIKE", "{$data['last_name']}%"));
                     $query->when($data['block'], fn ($q) => $q->where('block', $data['block']));
                     $query->when($data['lot'], fn ($q) => $q->where('lot', $data['lot']));
                     $query->when($data['area'], fn ($q) => $q->where('area', $data['area']));

@@ -20,7 +20,7 @@ class ReleaseAdminMemberManagement extends MemberManagement
 
     public function getExportRoute()
     {
-        return route('release-admin.download-report.members', [
+        return route('download-report.members', [
             'status' => $this->tableFilters['membership_status_id']['value'] ?? null,
         ]);
     }
