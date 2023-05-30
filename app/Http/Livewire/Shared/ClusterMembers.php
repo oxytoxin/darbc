@@ -24,7 +24,7 @@ class ClusterMembers extends Component implements HasTable
     {
         return [
             FilamentExportHeaderAction::make('Export')
-                ->fileNamePrefix('Cluster ' . $this->cluster->name . ' - ' . $this->cluster->address . ' Members')
+                ->fileNamePrefix('Cluster ' . $this->cluster->name . ' - ' . str($this->cluster->address)->replace('/', '-')->replace('\\', '-') . ' Members')
                 ->directDownload(),
         ];
     }
