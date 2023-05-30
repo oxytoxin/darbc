@@ -69,6 +69,7 @@ class RegisterMember extends Component implements HasForms
                                 'B' => 'B',
                                 'AB' => 'AB',
                                 'O' => 'O',
+                                'Unknown' => 'Unknown',
                             ]),
                             TextInput::make('data.religion'),
                         ]),
@@ -176,9 +177,15 @@ class RegisterMember extends Component implements HasForms
                                 TextInput::make('occupation'),
                                 Select::make('educational_attainment')->options([
                                     'Elementary' => 'Elementary',
+                                    'Elementary undergraduate' => 'Elementary undergraduate',
+                                    'Elementary graduate' => 'Elementary graduate',
                                     'Secondary' => 'Secondary',
+                                    'Secondary undergraduate' => 'Secondary undergraduate',
+                                    'Secondary graduate' => 'Secondary graduate',
                                     'Vocational' => 'Vocational',
                                     'College' => 'College',
+                                    'Tertiary undergraduate' => 'Tertiary undergraduate',
+                                    'Tertiary graduate' => 'Tertiary graduate',
                                     'Graduate Studies' => 'Graduate Studies',
                                     'Others' => 'Others',
                                 ])
@@ -188,6 +195,7 @@ class RegisterMember extends Component implements HasForms
                                     'B' => 'B',
                                     'AB' => 'AB',
                                     'O' => 'O',
+                                    'Unknown' => 'Unknown',
                                 ])
                                     ->disablePlaceholderSelection(),
                             ]),
