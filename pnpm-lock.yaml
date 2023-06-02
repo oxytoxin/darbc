@@ -4,6 +4,9 @@ dependencies:
   '@alpinejs/collapse':
     specifier: ^3.12.1
     version: 3.12.1
+  '@ryangjchandler/alpine-tooltip':
+    specifier: ^1.2.0
+    version: 1.2.0
   flatpickr:
     specifier: ^4.6.13
     version: 4.6.13
@@ -132,6 +135,10 @@ packages:
 
   /@popperjs/core@2.11.7:
     resolution: {integrity: sha512-Cr4OjIkipTtcXKjAsm8agyleBuDHvxzeBoa1v543lbv1YaIwQjESsVcmjiWiPEbC1FIeHOG/Op9kdCmAmiS3Kw==}
+    dev: false
+
+  /@ryangjchandler/alpine-tooltip@1.2.0:
+    resolution: {integrity: sha512-PzShzyYPoDTMvfayQRoNAnoxOkcfVYrrYrtiqX/Dg09Jp2qpNDB8IkcShs3BQwK0D4RnaYFtFXCqtXGhGU0dPA==}
     dev: false
 
   /@tailwindcss/forms@0.5.3(tailwindcss@3.3.2):

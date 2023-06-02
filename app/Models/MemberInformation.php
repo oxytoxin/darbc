@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use DB;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\HasMedia;
@@ -27,9 +28,12 @@ class MemberInformation extends Model implements HasMedia
 
     const FIELDS = [
         'cluster_id',
+        'gender_id',
+        'date_of_birth',
         'place_of_birth',
         'blood_type',
         'religion',
+        'civil_status',
         'membership_status_id',
         'occupation_details',
         'province_code',
@@ -57,21 +61,6 @@ class MemberInformation extends Model implements HasMedia
         'succession_number' => 'integer',
     ];
 
-    public static function getMissingFieldsDBQuery($field_name = ' as missing_details')
-    {
-        $fields = static::FIELDS;
-        $query_string_parts = [];
-        foreach ($fields as $field) {
-            $query_string_parts[] = "isnull(case {$field} when '' then null else 1 end)";
-            $query_string_parts[] = "isnull({$field})";
-        }
-        $query_string = implode('+', $query_string_parts);
-        if ($field_name) {
-            $query_string .= $field_name;
-        }
-        return DB::raw($query_string);
-    }
-
     public function registerMediaCollections(): void
     {
         $this->addMediaCollection('profile_photo')
@@ -84,6 +73,40 @@ class MemberInformation extends Model implements HasMedia
     public function getProfilePhotoAttribute()
     {
         return $this->getFirstMedia('profile_photo')?->getUrl() ?? 'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg';
+    }
+
+    public function missingDetails(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                return collect($this->toArray())
+                    ->filter(function ($v, $k) {
+                        return in_array($k, MemberInformation::FIELDS) && (
+                            ($k == 'gender_id' && $v == Gender::UNKNOWN) ||
+                            ($k == 'civil_status' && $v == MemberInformation::CS_UNKNOWN) ||
+                            ($k == 'blood_type' && $v == 'Unknown') ||
+                            is_null($v)
+                        );
+                    })->keys()->map(fn ($v) => str($v)->replace('_', ' ')->upper());
+            }
+        );
+    }
+
+    public function missingDetailsCount(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                return collect($this->toArray())
+                    ->filter(function ($v, $k) {
+                        return in_array($k, MemberInformation::FIELDS) && (
+                            ($k == 'gender_id' && $v == Gender::UNKNOWN) ||
+                            ($k == 'civil_status' && $v == MemberInformation::CS_UNKNOWN) ||
+                            ($k == 'blood_type' && $v == 'Unknown') ||
+                            is_null($v)
+                        );
+                    })->count();
+            }
+        );
     }
 
     public function scopeDarbcMember($query)

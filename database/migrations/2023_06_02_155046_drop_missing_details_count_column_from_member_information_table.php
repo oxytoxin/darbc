@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\MemberInformation;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('member_information', function (Blueprint $table) {
-            $table->integer('missing_details_count')->nullable();
+            $table->dropColumn('missing_details_count');
         });
     }
 
@@ -26,8 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('member_information', function (Blueprint $table) {
-            $table->dropColumn('missing_details_count');
+        Schema::table('employee_information', function (Blueprint $table) {
+            //
         });
     }
 };

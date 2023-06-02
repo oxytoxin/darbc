@@ -78,7 +78,10 @@ class MemberManagement extends Component implements HasTable
                 ->date(),
             BadgeColumn::make('missing_details_count')
                 ->label('Missing Details')
-                ->color('warning'),
+                ->tooltip(fn ($record) => implode(", ", $record->missing_details->toArray()))
+                ->extraAttributes(['class' => 'cursor-pointer'])
+                ->alignCenter()
+                ->color(fn ($state) => $state > 0 ? 'warning' : 'success'),
 
         ];
     }
