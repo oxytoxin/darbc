@@ -1,14 +1,9 @@
 <?php
 
-use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\MiscellaneousController;
+use App\Http\Controllers\ReportsDownloadController;
 use App\Http\Livewire\Auth\Login;
-use App\Http\Livewire\Auth\Passwords\Confirm;
-use App\Http\Livewire\Auth\Passwords\Email;
-use App\Http\Livewire\Auth\Passwords\Reset;
-use App\Http\Livewire\Auth\Register;
-use App\Http\Livewire\Auth\Verify;
 use App\Http\Livewire\Shared\ClusterlessMembers;
 use App\Http\Livewire\Shared\ClusterMembers;
 use App\Http\Livewire\Shared\MemberInformationQuery;
