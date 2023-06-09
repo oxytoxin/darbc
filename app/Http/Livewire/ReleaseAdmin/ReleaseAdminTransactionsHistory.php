@@ -2,10 +2,12 @@
 
 namespace App\Http\Livewire\ReleaseAdmin;
 
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Models\User;
 use App\Models\Release;
 use Livewire\Component;
 use App\Models\Dividend;
+use Filament\Forms\Components\Actions\Modal\Actions\Action as ModalAction;
 use Illuminate\Support\HtmlString;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
@@ -89,6 +91,15 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                 ->label('AMOUNT')
                 ->sortable()
                 ->money('PHP', true),
+        ];
+    }
+
+    protected function getTableHeaderActions(): array
+    {
+        return [
+            FilamentExportHeaderAction::make('Export')
+                ->fileNamePrefix('Transactions History')
+                ->directDownload(),
         ];
     }
 

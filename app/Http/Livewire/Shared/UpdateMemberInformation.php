@@ -261,7 +261,7 @@ class UpdateMemberInformation extends Component implements HasForms
     public function save()
     {
         try {
-            $this->form->getState();
+            $this->form->validate();
         } catch (\Throwable $th) {
             notify(title: $th->getMessage(), type: 'danger');
             throw $th;
