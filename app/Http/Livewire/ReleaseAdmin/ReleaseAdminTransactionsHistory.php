@@ -23,9 +23,12 @@ use Filament\Notifications\Notification;
 use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Concerns\HasRecords;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Illuminate\Database\Eloquent\Collection;
+use Spatie\SimpleExcel\SimpleExcelWriter;
 
 class ReleaseAdminTransactionsHistory extends Component implements HasTable
 {
@@ -100,6 +103,34 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
             FilamentExportHeaderAction::make('Export')
                 ->fileNamePrefix('Transactions History')
                 ->directDownload(),
+            Action::make('Export')
+                ->icon('heroicon-s-download')
+                ->button()
+                ->outlined()
+                ->action(function () {
+                    $date = now()->format('h:i:s a F d, Y');
+                    $writer = SimpleExcelWriter::create(storage_path("app/livewire-tmp/Transactions History {$date}.xlsx"))
+                        ->addHeader([
+                            'DARBC ID',
+                            'Member Name',
+                            'Shares',
+                            'Amount',
+                            'Released At',
+                        ]);
+                    $this->getFilteredTableQuery()->orderByDesc('released_at')
+                        ->chunk(200, function (Collection $dividends) use ($writer) {
+                            $dividends->each(function ($record) use ($writer) {
+                                $writer->addRow([
+                                    'DARBC ID' => $record->user->member_information->darbc_id,
+                                    'Member Name' => $record->user->alt_full_name,
+                                    'Shares' => $record->release->name,
+                                    'Amount' => $record->net_amount,
+                                    'Released At' => date_create($record->released_at)->format('h:i a m/d/Y'),
+                                ]);
+                            });
+                        });
+                    return response()->download($writer->getPath());
+                })
         ];
     }
 
