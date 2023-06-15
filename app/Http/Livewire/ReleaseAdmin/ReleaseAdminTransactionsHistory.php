@@ -118,8 +118,8 @@ class ReleaseAdminTransactionsHistory extends Component implements HasTable
                             'Released At',
                         ]);
                     $this->getFilteredTableQuery()->orderByDesc('released_at')
-                        ->chunk(200, function (Collection $dividends) use ($writer) {
-                            $dividends->each(function ($record) use ($writer) {
+                        ->chunk(200, function (Collection $records) use ($writer) {
+                            $records->each(function ($record) use ($writer) {
                                 $writer->addRow([
                                     'DARBC ID' => $record->user->member_information->darbc_id,
                                     'Member Name' => $record->user->alt_full_name,
