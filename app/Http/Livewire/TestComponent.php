@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Models\MemberInformation;
 use Livewire\Component;
+use Route;
 use Spatie\SimpleExcel\SimpleExcelWriter;
 
 class TestComponent extends Component

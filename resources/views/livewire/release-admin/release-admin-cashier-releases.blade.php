@@ -1,7 +1,5 @@
 <div>
-    <h1 class="flex items-center justify-between mt-10 mb-2 text-xl font-bold text-custom-blue">
-        <p>Cashier Releases</p>
-    </h1>
+    <x-title>Cashier Releases</x-title>
     <div class="flex gap-2 mb-4 font-bold text-custom-blue" x-cloak x-data>
         <div>
             <p>Release</p>

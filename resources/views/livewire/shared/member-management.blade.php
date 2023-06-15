@@ -1,6 +1,6 @@
 <div>
     <div class="mt-10">
-        <div class="flex items-center justify-between">
+        <div class="flex items-start justify-between">
             <h1 class="text-xl font-bold text-primary-500">Members List</h1>
             <div class="flex items-center justify-end">
                 <section class="flex items-center space-x-2">

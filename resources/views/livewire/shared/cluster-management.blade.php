@@ -1,5 +1,5 @@
 <div>
-    <div class="flex items-center justify-between mt-10">
+    <div class="flex items-start justify-between mt-10">
         <h1 class="text-xl font-bold text-primary-500">Cluster Management</h1>
         <div class="flex items-center justify-end">
             <section class="flex items-center space-x-2">

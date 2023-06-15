@@ -14,17 +14,23 @@
             </section>
 
             <div class="overflow-y-auto h-full sidebar mt-[2.5rem] z-[9999]">
-                <div>
+                <ul class="space-y-4">
                     @if ($roles?->find(1))
-                        <x-sidebars.release-admin />
+                        <li>
+                            <x-sidebars.release-admin />
+                        </li>
                     @endif
                     @if ($roles?->find(2))
-                        <x-sidebars.cashier />
+                        <li>
+                            <x-sidebars.cashier />
+                        </li>
                     @endif
                     @if ($roles?->find(3))
-                        <x-sidebars.office-staff />
+                        <li>
+                            <x-sidebars.office-staff />
+                        </li>
                     @endif
-                </div>
+                </ul>
             </div>
 
             <!-- SVG lines -->

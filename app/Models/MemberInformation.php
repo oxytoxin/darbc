@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Scopes\AgeScope;
 use DB;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -60,6 +62,13 @@ class MemberInformation extends Model implements HasMedia
         'split_claim' => 'boolean',
         'succession_number' => 'integer',
     ];
+
+    public function scopeWithAge(Builder $query)
+    {
+        $query->select('*')->addSelect([
+            'age' => DB::raw('TIMESTAMPDIFF(YEAR, date_of_birth ,CURDATE()) as age')
+        ]);
+    }
 
     public function registerMediaCollections(): void
     {

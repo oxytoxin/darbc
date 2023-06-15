@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReportsDownloadController;
 use App\Http\Livewire\OfficeStaff\OfficeStaffClusterManagement;
 use App\Http\Livewire\OfficeStaff\OfficeStaffDashboard;
+use App\Http\Livewire\OfficeStaff\OfficeStaffElderlyIncentivesDashboard;
+use App\Http\Livewire\OfficeStaff\OfficeStaffElderlyIncentivesManagement;
 use App\Http\Livewire\OfficeStaff\OfficeStaffLedgerIndex;
 use App\Http\Livewire\OfficeStaff\OfficeStaffRegisterMember;
 use App\Http\Livewire\OfficeStaff\OfficeStaffMemberManagement;
@@ -29,4 +31,6 @@ Route::middleware(['auth', 'role:' . Role::OFFICE_STAFF])->prefix('office-staff'
     Route::get('/release-details/{release}', OfficeStaffReleaseDetailsManagement::class)->name('ledger.release-details');
     Route::get('/member-profile/{member}', OfficeStaffMemberProfile::class)->name('member-profile');
     Route::get('/free-lots', OfficeStaffFreeLotManagement::class)->name('manage-free-lots');
+    Route::get('/elderly-incentives-dashboard', OfficeStaffElderlyIncentivesDashboard::class)->name('elderly-incentives-dashboard');
+    Route::get('/elderly-incentives-management', OfficeStaffElderlyIncentivesManagement::class)->name('elderly-incentives-management');
 });

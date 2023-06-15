@@ -2,7 +2,9 @@
 
 namespace App\Http\Livewire\Shared;
 
+use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Models\FreeLot;
+use App\Models\MemberInformation;
 use App\View\Components\FreeLotStatusColumn;
 use Closure;
 use DB;
@@ -134,7 +136,27 @@ class FreeLotManagement extends Component implements HasTable
                         ->label('Area'),
                     TextInput::make('cluster')
                         ->label('Cluster'),
+                    Select::make('member_status')
+                        ->label('Member Status')
+                        ->options([
+                            MemberInformation::STATUS_ACTIVE => 'ACTIVE',
+                            MemberInformation::STATUS_INACTIVE => 'INACTIVE',
+                            MemberInformation::STATUS_DECEASED => 'DECEASED',
+                        ])
+                        ->default(MemberInformation::STATUS_ACTIVE)
+                        ->placeholder('ALL'),
+                    Select::make('status')
+                        ->label('Lot Status')
+                        ->options([
+                            1 => 'ACTIVE',
+                            2 => 'SOLD',
+                            3 => 'RELOCATED',
+                            4 => 'SWAPPED',
+                        ])
+                        ->placeholder('All'),
                 ])->query(function ($query, $data) {
+                    $query->when($data['status'], fn ($q) => $q->where('status', $data['status']));
+                    $query->when($data['member_status'], fn ($q) => $q->whereRelation('user.member_information', 'status', $data['member_status']));
                     $query->when($data['first_name'], fn ($q) => $q->whereRelation('user', 'first_name', "LIKE", "{$data['first_name']}%"));
                     $query->when($data['last_name'], fn ($q) =>  $q->whereRelation('user', 'surname', "LIKE", "{$data['last_name']}%"));
                     $query->when($data['block'], fn ($q) => $q->where('block', $data['block']));
@@ -142,14 +164,7 @@ class FreeLotManagement extends Component implements HasTable
                     $query->when($data['area'], fn ($q) => $q->where('area', $data['area']));
                     $query->when($data['cluster'], fn ($q) => $q->whereRelation('cluster', 'name', $data['cluster']));
                 }),
-            SelectFilter::make('status')
-                ->options([
-                    1 => 'ACTIVE',
-                    2 => 'SOLD',
-                    3 => 'RELOCATED',
-                    4 => 'SWAPPED',
-                ])
-                ->placeholder('All'),
+
         ];
     }
 
@@ -373,6 +388,11 @@ class FreeLotManagement extends Component implements HasTable
     protected function getTableHeaderActions(): array
     {
         return [
+            FilamentExportHeaderAction::make('export')
+                ->button()
+                ->outlined()
+                ->fileNamePrefix('Free Lot Export ')
+                ->directDownload(),
             CreateAction::make()
                 ->form(function () {
                     return [

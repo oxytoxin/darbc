@@ -1,8 +1,6 @@
 <div class="pb-8">
-    <div class="mt-10">
-        <h1 class="text-xl font-bold text-custom-blue">Free Lot History</h1>
-    </div>
-    <div class="p-4 mt-4 bg-white shadow">
+    <x-title>Free Lot History</x-title>
+    <div class="p-4 bg-white shadow">
         <div class="grid grid-cols-2 gap-2 mb-8 font-semibold">
             <p class="text-xl font-semibold text-primary-600">OWNER: {{ $free_lot->user->full_name }}</p>
             <p>Cluster: {{ $free_lot->cluster?->name }}</p>

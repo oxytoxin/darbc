@@ -166,6 +166,9 @@ class MemberManagement extends Component implements HasTable
                                 ->send();
                             return;
                         } else {
+                            if ($record->user->dividends()->count()) {
+                                return notify('Unable to delete member with existing dividends.', type: 'danger');
+                            }
                             DB::beginTransaction();
                             $record->delete();
                             $record->user()->delete();

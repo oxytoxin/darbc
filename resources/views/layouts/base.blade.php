@@ -21,7 +21,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
 
-<body class="relative antialiased">
+<body class="relative antialiased pb-8">
     @yield('body')
     @livewire('notifications')
     <script>

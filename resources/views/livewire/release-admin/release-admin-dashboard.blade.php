@@ -1,7 +1,7 @@
 <div>
     <div>
-        <div class="mt-10">
-            <h1 class="text-xl font-bold text-custom-blue">Overview</h1>
+        <div>
+            <x-title>Overview</x-title>
             <div class="flex items-start justify-between h-full mt-2 space-x-2">
                 <div class="flex flex-col flex-1">
                     <div class='grid flex-1 grid-cols-3 gap-2'>

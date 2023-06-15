@@ -294,7 +294,7 @@ class UpdateMemberInformation extends Component implements HasForms
             'civil_status' => $this->data['civil_status'],
             'spouse' => $this->data['spouse'],
             'mother_maiden_name' => $this->data['mother_maiden_name'],
-            'children' => $this->data['children'],
+            'children' => collect($this->data['children'])->values(),
             'sss_number' => $this->data['sss_number'],
             'philhealth_number' => $this->data['philhealth_number'],
             'tin_number' => $this->data['tin_number'],

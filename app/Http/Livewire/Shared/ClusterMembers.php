@@ -12,6 +12,9 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\Layout;
 use Filament\Tables\Filters\SelectFilter;
 
 class ClusterMembers extends Component implements HasTable
@@ -34,13 +37,40 @@ class ClusterMembers extends Component implements HasTable
         return MemberInformation::query();
     }
 
+    protected function getTableFiltersLayout(): ?string
+    {
+        return Layout::AboveContent;
+    }
+
     protected function getTableFilters(): array
     {
         return [
-            SelectFilter::make('cluster_id')
-                ->default(fn () => $this->cluster->id)
-                ->label('')
-                ->query(fn (Builder $query, $state) => $query->whereClusterId($state['value']))
+            Filter::make('filter')
+                ->form([
+                    Select::make('status')
+                        ->label('Member Status')
+                        ->options([
+                            MemberInformation::STATUS_ACTIVE => 'ACTIVE',
+                            MemberInformation::STATUS_INACTIVE => 'INACTIVE',
+                            MemberInformation::STATUS_DECEASED => 'DECEASED',
+                        ])
+                        ->default(MemberInformation::STATUS_ACTIVE)
+                        ->placeholder('ALL'),
+                    Select::make('cluster_id')
+                        ->label('Cluster')
+                        ->disabled()
+                        ->default($this->cluster->id)
+                        ->disablePlaceholderSelection()
+                        ->options([
+                            $this->cluster->id => 'Cluster ' . $this->cluster->name
+                        ]),
+                ])
+                ->query(function ($query, $data) {
+                    $query->when($data['status'], fn ($q) => $q->where('status', $data['status']));
+                    $query->when($data['cluster_id'], fn ($q) => $q->where('cluster_id', $data['cluster_id']));
+                })
+                ->columnSpan(2)
+                ->columns(2)
         ];
     }
 
