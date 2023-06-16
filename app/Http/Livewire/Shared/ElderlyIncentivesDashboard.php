@@ -16,7 +16,7 @@ class ElderlyIncentivesDashboard extends Component implements HasTable
 
     protected function getTableQuery(): Builder|Relation
     {
-        return MemberInformation::query()->whereIn('age', [79, 89, 99]);
+        return MemberInformation::query()->whereIn('age', [79, 89, 99])->whereStatus(MemberInformation::STATUS_ACTIVE);
     }
 
     protected function getTableColumns(): array

@@ -225,7 +225,7 @@ class RegisterMember extends Component implements HasForms
                             ->label('Contact No.'),
                         Select::make('data.cluster_id')
                             ->label('Cluster')
-                            ->options(Cluster::pluck('name', 'id')),
+                            ->options(fn () => Cluster::orderByName()->selectRaw("id, concat(name, ' - ', address) as name")->pluck('name', 'id')),
                     ]),
                 Step::make('Application Date and Signature')
                     ->description('Date of membership application and signature is required.')
@@ -287,7 +287,7 @@ class RegisterMember extends Component implements HasForms
             'status' => $this->data['status'],
             'darbc_id' => $this->data['darbc_id'],
             'user_id' => $user->id,
-            'cluster_id' => $this->data['cluster_id'],
+            'cluster_id' => $this->data['cluster_id'] == '' ? null : $this->data['cluster_id'],
             'succession_number' => $successor_number,
             'lineage_identifier' => $lineage_identifier,
             'original_member_id' => $original_member_id,
