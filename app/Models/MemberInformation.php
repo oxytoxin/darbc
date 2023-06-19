@@ -135,6 +135,11 @@ class MemberInformation extends Model implements HasMedia
         $query->where('status', self::STATUS_DECEASED);
     }
 
+    public function scopeCelebrant($query)
+    {
+        $query->whereRaw('DAY(date_of_birth) = DAY(CURDATE())')->whereRaw('MONTH(date_of_birth) = MONTH(CURDATE())');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

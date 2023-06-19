@@ -1,3 +1,8 @@
 <div>
-    {{-- Close your eyes. Count to one. That is how long forever feels. --}}
+    <x-title>
+        Elderly Incentives Awarded
+    </x-title>
+    <div class="mt-4">
+        {{ $this->table }}
+    </div>
 </div>

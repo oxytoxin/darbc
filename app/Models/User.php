@@ -148,4 +148,9 @@ class User extends Authenticatable implements HasMedia, FilamentUser, HasName
     {
         return $this->hasMany(DailyCash::class, 'cashier_id');
     }
+
+    public function elderly_incentives()
+    {
+        return $this->hasMany(ElderlyIncentive::class);
+    }
 }
