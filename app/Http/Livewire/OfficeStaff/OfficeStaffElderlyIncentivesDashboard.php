@@ -7,4 +7,8 @@ use Livewire\Component;
 
 class OfficeStaffElderlyIncentivesDashboard extends ElderlyIncentivesDashboard
 {
+    protected function getIncentivesAwardedRoute(): string
+    {
+        return route('office-staff.elderly-incentives-management');
+    }
 }
