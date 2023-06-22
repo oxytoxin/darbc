@@ -1,4 +1,4 @@
-<div :class="orientation == 'vertical' ? 'flex-col max-w-sm' : 'flex-row'" class="flex" x-ref="print">
+<div :class="orientation == 'vertical' ? 'flex-col max-w-sm' : 'flex-row'" class="flex m-4" x-ref="print">
     @foreach (["MEMBER'S", 'DARBC'] as $copy)
         <div class="relative flex flex-col m-1 font-serif border-2 border-black">
             <h3 class="px-12 text-sm font-bold text-center text-lime-600">Dolefil Agrarian Reform Beneficiaries Cooperative (DARBC)</h3>
