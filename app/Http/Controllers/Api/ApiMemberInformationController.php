@@ -32,7 +32,7 @@ class ApiMemberInformationController extends Controller
      */
     public function show(MemberInformation $memberInformation)
     {
-        return MemberInformationResource::make($memberInformation->load('user'));
+        return MemberInformationResource::make($memberInformation->load(['user', 'user.active_restriction']));
     }
 
     public function darbc_ids()
