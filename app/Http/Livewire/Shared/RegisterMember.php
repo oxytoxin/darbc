@@ -191,16 +191,14 @@ class RegisterMember extends Component implements HasForms
                                     'Tertiary graduate' => 'Tertiary graduate',
                                     'Graduate Studies' => 'Graduate Studies',
                                     'Others' => 'Others',
-                                ])
-                                    ->disablePlaceholderSelection(),
+                                ]),
                                 Select::make('blood_type')->options([
                                     'A' => 'A',
                                     'B' => 'B',
                                     'AB' => 'AB',
                                     'O' => 'O',
                                     'Unknown' => 'Unknown',
-                                ])
-                                    ->disablePlaceholderSelection(),
+                                ]),
                                 TextInput::make('occupation'),
                             ]),
                     ]),

@@ -63,8 +63,7 @@ class UpdateMemberInformation extends Component implements HasForms
                         DatePicker::make('date_of_birth')
                             ->required()
                             ->withoutTime(),
-                        TextInput::make('place_of_birth')
-                            ->required(),
+                        TextInput::make('place_of_birth'),
                         Select::make('gender_id')
                             ->label('Gender')
                             ->disablePlaceholderSelection()
@@ -167,16 +166,14 @@ class UpdateMemberInformation extends Component implements HasForms
                                     'Tertiary graduate' => 'Tertiary graduate',
                                     'Graduate Studies' => 'Graduate Studies',
                                     'Others' => 'Others',
-                                ])
-                                    ->disablePlaceholderSelection(),
+                                ]),
                                 Select::make('blood_type')->options([
                                     'A' => 'A',
                                     'B' => 'B',
                                     'AB' => 'AB',
                                     'O' => 'O',
                                     'Unknown' => 'Unknown',
-                                ])
-                                    ->disablePlaceholderSelection(),
+                                ]),
                                 TextInput::make('occupation'),
 
                             ]),
