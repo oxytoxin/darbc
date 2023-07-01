@@ -49,7 +49,8 @@ class ReportsDownloadController extends Controller
             'SSS Number',
             'TIN Number',
             'PhilHealth Number',
-            'SPA'
+            'SPA',
+            'Restrictions'
         ]);
         $members = MemberInformation::query()
             ->with(['user', 'cluster', 'gender', 'occupation'])
@@ -91,6 +92,7 @@ class ReportsDownloadController extends Controller
                 $member->tin_number,
                 $member->philhealth_number,
                 implode(', ', $member->spa),
+                implode(', ', $member->user->active_restriction?->entries ?? [])
             ]);
         });
         $writer->toBrowser();
