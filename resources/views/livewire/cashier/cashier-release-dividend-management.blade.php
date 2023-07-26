@@ -1,4 +1,32 @@
 <div>
+    @if ($restricted_by_election)
+        <div x-transition x-show="open" x-data="{ open: true }" class="fixed inset-0 z-50 bg-gray-700 bg-opacity-50 grid place-items-center">
+            <div class="bg-white p-4 w-96">
+                <h3 class="text-xl font-semibold">MEMBER VOTING STATUS</h3>
+                <div class="mt-2">
+                    <div class="flex justify-between">
+                        <p>Election:</p>
+                        <p class="font-semibold">{{ $voting_status['election_name'] }}</p>
+                    </div>
+                    <div class="flex justify-between mt-2">
+                        <p>User is Registered:</p>
+                        <p class="font-semibold w-1/2 text-center {{ $voting_status['is_registered'] ? 'bg-green-700' : 'bg-red-600' }}">{{ $voting_status['is_registered'] ? 'YES' : 'NO' }}</p>
+                    </div>
+                    <div class="flex justify-between mt-2">
+                        <p>User is Active:</p>
+                        <p class="font-semibold w-1/2 text-center {{ $voting_status['is_active'] ? 'bg-green-700' : 'bg-red-600' }}">{{ $voting_status['is_active'] ? 'YES' : 'NO' }}</p>
+                    </div>
+                    <div class="flex justify-between mt-2">
+                        <p>User has Voted:</p>
+                        <p class="font-semibold w-1/2 text-center {{ $voting_status['has_voted'] ? 'bg-green-700' : 'bg-red-600' }}">{{ $voting_status['has_voted'] ? 'YES' : 'NO' }}</p>
+                    </div>
+                    <div class="mt-2 flex justify-end">
+                        <x-filament::button @click="open = false">DISMISS</x-filament::button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
     <x-title>Release Dividend</x-title>
     <div class="flex gap-2">
         <div class="w-2/3 p-4 space-y-4 bg-white rounded shadow">

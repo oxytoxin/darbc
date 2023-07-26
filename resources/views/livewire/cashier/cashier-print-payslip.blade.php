@@ -1,4 +1,4 @@
-<div class="max-w-[60rem]" x-data="{ orientation: 'horizontal' }">
+<div class="max-w-[60rem]" x-data="{ orientation: 'vertical' }">
     @include('livewire.cashier.components.payslip')
     <div class="mt-4">
         <div class="p-4">

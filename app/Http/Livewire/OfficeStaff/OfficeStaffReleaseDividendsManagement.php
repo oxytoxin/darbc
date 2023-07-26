@@ -55,7 +55,8 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                 ->reactive()
                 ->acceptedFileTypes([
                     'application/vnd.ms-excel',
-                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                    'text/csv'
                 ])
                 ->helperText('Alternatively, upload an Excel file containing the DARBC ID: "id" and Share Amount: "share"  columns.'),
         ];
@@ -185,16 +186,21 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                 if ($this->restrict_by_default) {
                     $restrictions = $user->restriction_entries ?? json_encode([]);
                 }
-                $data->push([
-                    'release_id' => $this->release->id,
-                    'user_id' => $user->id,
-                    'gross_amount' => $row['share'] * 100,
-                    'status' => Dividend::PENDING,
-                    'particulars' => $user->split_claim ? json_encode([]) : $particulars,
-                    'restriction_entries' => $restrictions,
-                    'created_at' => $now,
-                    'updated_at' => $now,
-                ]);
+                try {
+                    $data->push([
+                        'release_id' => $this->release->id,
+                        'user_id' => $user->id,
+                        'gross_amount' => floatval($row['share']) * 100,
+                        'status' => Dividend::PENDING,
+                        'particulars' => $user->split_claim ? json_encode([]) : $particulars,
+                        'restriction_entries' => $restrictions,
+                        'created_at' => $now,
+                        'updated_at' => $now,
+                    ]);
+                } catch (\Throwable $th) {
+                    notify('Invalid import file.', type: 'danger');
+                    return;
+                }
             }
         }
 

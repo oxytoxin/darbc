@@ -17,10 +17,9 @@ use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Intervention\Image\Facades\Image;
 use Filament\Notifications\Notification;
+use Http;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Validation\Rule;
-use PDO;
-use Str;
 
 class CashierReleaseDividendManagement extends Component implements HasForms
 {
@@ -29,6 +28,8 @@ class CashierReleaseDividendManagement extends Component implements HasForms
     public Dividend $dividend;
     public $proof_of_release;
     public $data;
+    public $voting_status;
+    public $restricted_by_election = true;
 
     public function getFormSchema()
     {
@@ -79,6 +80,9 @@ class CashierReleaseDividendManagement extends Component implements HasForms
     {
         $this->form->fill();
         $this->authorize('release', $this->dividend);
+        $member_id = $this->dividend->user->member_information->id;
+        $this->voting_status = Http::get(config('services.election.url') . '/api/member-details/' . $member_id)->json();
+        // $this->restricted_by_election = false;
     }
 
     public function render()
