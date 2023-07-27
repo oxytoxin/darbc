@@ -79,6 +79,7 @@ class CashierReleaseDividendManagement extends Component implements HasForms
     public function mount()
     {
         $this->form->fill();
+        $this->restricted_by_election = $this->dividend->release->voting_restriction;
         $this->authorize('release', $this->dividend);
         $member_id = $this->dividend->user->member_information->id;
         try {

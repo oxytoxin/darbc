@@ -15,6 +15,7 @@ class Release extends Model
 
     protected $casts = [
         'disbursed' => 'boolean',
+        'voting_restriction' => 'boolean',
         'particulars' => 'array',
         'gift_certificate_amount' => 'decimal:2',
     ];

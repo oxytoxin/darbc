@@ -15,6 +15,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 
 class AdminReleaseManagement extends Component implements HasTable
@@ -44,6 +45,8 @@ class AdminReleaseManagement extends Component implements HasTable
                 ->alignCenter()
                 ->extraAttributes(['class' => 'flex justify-center'])
                 ->boolean(),
+            ToggleColumn::make('voting_restriction')
+                ->label('Verify Voting Status')
         ];
     }
 
