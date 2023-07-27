@@ -82,7 +82,7 @@ class CashierReleaseDividendManagement extends Component implements HasForms
         $this->authorize('release', $this->dividend);
         $member_id = $this->dividend->user->member_information->id;
         try {
-            $this->voting_status = Http::get(config('services.election.url') . 'a/api/member-details/' . $member_id)->json();
+            $this->voting_status = Http::get(config('services.election.url') . '/api/member-details/' . $member_id)->json();
         } catch (\Throwable $th) {
         }
         if (!$this->voting_status) {
