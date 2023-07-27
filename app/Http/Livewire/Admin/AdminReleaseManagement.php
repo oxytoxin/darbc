@@ -66,12 +66,17 @@ class AdminReleaseManagement extends Component implements HasTable
                     ->placeholder('Profit Share')
                     ->required(),
                 TextInput::make('total_amount')
+                    ->visible(fn ($record) => $record->disbursed == false)
                     ->numeric()
                     ->minValue(1)
                     ->label('Total Amount'),
-                TextInput::make('gift_certificate_prefix'),
-                TextInput::make('gift_certificate_amount')->numeric()->minValue(0),
-                KeyValue::make('particulars'),
+                TextInput::make('gift_certificate_prefix')
+                    ->visible(fn ($record) => $record->disbursed == false),
+                TextInput::make('gift_certificate_amount')
+                    ->visible(fn ($record) => $record->disbursed == false)
+                    ->numeric()->minValue(0),
+                KeyValue::make('particulars')
+                    ->visible(fn ($record) => $record->disbursed == false),
             ])
                 ->modalHeading('Edit Release')
                 ->modalWidth('md')
@@ -79,7 +84,6 @@ class AdminReleaseManagement extends Component implements HasTable
                     $record->update($data);
                     Notification::make()->title('Saved!')->success()->send();
                 })
-                ->visible(fn ($record) => $record->disbursed == false)
                 ->button(),
             DeleteAction::make()->action(function ($record) {
                 $record->dividends()->delete();
