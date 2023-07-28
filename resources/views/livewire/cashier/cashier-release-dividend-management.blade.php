@@ -9,7 +9,7 @@
                         <p class="font-semibold">{{ $voting_status['election_name'] }}</p>
                     </div>
                     <div class="flex justify-between mt-2">
-                        <p class="font-semibold w-1/2 text-2xl text-center {{ $voting_status['has_voted'] ? 'text-green-700' : 'text-red-600' }}">{{ $voting_status['has_voted'] ? 'USER HAS ALREADY VOTED' : 'USER HAS NOT YET VOTED' }}</p>
+                        <p class="font-semibold text-2xl text-center {{ $voting_status['has_voted'] ? 'text-green-700' : 'text-red-600' }}">{{ $voting_status['has_voted'] ? 'USER HAS ALREADY VOTED' : 'USER HAS NOT YET VOTED' }}</p>
                     </div>
                     <div class="mt-2 flex justify-end">
                         @if ($voting_status['has_voted'])
