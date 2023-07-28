@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Admin;
 
 use App\Models\User;
+use DB;
 use Livewire\Component;
 use Illuminate\Support\Facades\Hash;
 use Filament\Forms\Components\Fieldset;
@@ -104,8 +105,15 @@ class AdminUserManagement extends Component implements HasTable
                 ->form(fn ($record) => $this->getFormFields($record)),
             DeleteAction::make()
                 ->action(function ($record) {
-                    $record->roles()->detach();
-                    $record->delete();
+                    DB::beginTransaction();
+                    try {
+                        $record->roles()->detach();
+                        $record->delete();
+                    } catch (\Throwable $th) {
+                        notify('Delete Failed.', 'User has linked records.', 'danger');
+                        DB::rollBack();
+                        return;
+                    }
                     Notification::make()->title('User deleted.')->success()->send();
                 }),
             Action::make('Active')
