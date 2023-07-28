@@ -15,7 +15,7 @@
                         @if ($voting_status['has_voted'])
                             <x-filament::button @click="open = false">DISMISS</x-filament::button>
                         @else
-                            <x-filament::button @click="window.location.back">DISMISS</x-filament::button>
+                            <x-filament::button @click="history.back()">DISMISS</x-filament::button>
                         @endif
                     </div>
                 </div>
