@@ -81,9 +81,9 @@ class CashierReleaseDividendManagement extends Component implements HasForms
         $this->form->fill();
         $this->restricted_by_election = $this->dividend->release->voting_restriction;
         $this->authorize('release', $this->dividend);
-        $member_id = $this->dividend->user->member_information->id;
+        $darbc_id = $this->dividend->user->member_information->darbc_id;
         try {
-            $this->voting_status = Http::get(config('services.election.url') . '/api/member-details-darbc-id/' . $member_id)->json();
+            $this->voting_status = Http::get(config('services.election.url') . '/api/member-details-darbc-id/' . $darbc_id)->json();
         } catch (\Throwable $th) {
         }
         if (!$this->voting_status) {
