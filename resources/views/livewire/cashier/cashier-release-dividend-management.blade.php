@@ -9,19 +9,14 @@
                         <p class="font-semibold">{{ $voting_status['election_name'] }}</p>
                     </div>
                     <div class="flex justify-between mt-2">
-                        <p>User is Registered:</p>
-                        <p class="font-semibold w-1/2 text-center {{ $voting_status['is_registered'] ? 'bg-green-700' : 'bg-red-600' }}">{{ $voting_status['is_registered'] ? 'YES' : 'NO' }}</p>
-                    </div>
-                    <div class="flex justify-between mt-2">
-                        <p>User is Active:</p>
-                        <p class="font-semibold w-1/2 text-center {{ $voting_status['is_active'] ? 'bg-green-700' : 'bg-red-600' }}">{{ $voting_status['is_active'] ? 'YES' : 'NO' }}</p>
-                    </div>
-                    <div class="flex justify-between mt-2">
-                        <p>User has Voted:</p>
-                        <p class="font-semibold w-1/2 text-center {{ $voting_status['has_voted'] ? 'bg-green-700' : 'bg-red-600' }}">{{ $voting_status['has_voted'] ? 'YES' : 'NO' }}</p>
+                        <p class="font-semibold w-1/2 text-2xl text-center {{ $voting_status['has_voted'] ? 'text-green-700' : 'text-red-600' }}">{{ $voting_status['has_voted'] ? 'USER HAS ALREADY VOTED' : 'USER HAS NOT YET VOTED' }}</p>
                     </div>
                     <div class="mt-2 flex justify-end">
-                        <x-filament::button @click="open = false">DISMISS</x-filament::button>
+                        @if ($voting_status['has_voted'])
+                            <x-filament::button @click="open = false">DISMISS</x-filament::button>
+                        @else
+                            <x-filament::button @click="window.location.back">DISMISS</x-filament::button>
+                        @endif
                     </div>
                 </div>
             </div>
