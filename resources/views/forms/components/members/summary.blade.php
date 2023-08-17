@@ -154,7 +154,7 @@
                         @foreach ($member_information->children as $child)
                             <tr class="text-center divide-x divide-black">
                                 <td>{{ $child['name'] }}</td>
-                                <td>{{ date_format(date_create($child['date_of_birth']), 'F d, Y') }}</td>
+                                <td>{{ isset($child['date_of_birth']) ? date_format(date_create($child['date_of_birth']), 'F d, Y') : '' }}</td>
                                 <td>{{ $child['educational_attainment'] }}</td>
                                 <td>{{ $child['blood_type'] }}</td>
                             </tr>
