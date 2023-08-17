@@ -2,13 +2,16 @@
     <div class="space-y-8">
         <h1 class="text-xl font-bold text-primary-500">Member Claims</h1>
         <x-member-details :member="$member" />
-        <div class="flex justify-end">
+        <div class="flex justify-end gap-2">
             <div class="py-2 px-4 border-2 border-slate-700 rounded-lg">
                 <h4 class="text-lg text-gray-600 font-semibold text-right">Amount to be Released</h4>
                 <h5 class="text-2xl font-semibold text-green-600 text-right">
                     {{ Akaunting\Money\Money::PHP($dividends_amount_to_claim, true) }}
                 </h5>
             </div>
+            <button wire:click="export" class="py-2 px-4 border-2 hover:bg-green-400 bg-green-200 border-slate-700 rounded-lg">
+                <h4 class="text-lg text-gray-900 font-semibold text-right">Export</h4>
+            </button>
         </div>
         <div class="flex-1">
             <table class="table w-full border border-collapse table-auto">
@@ -40,7 +43,7 @@
                                 <td class="px-2 py-2 border-b">{{ $dividend->release->name }}</td>
                                 <td class="px-2 py-2 border-b">{{ Akaunting\Money\Money::PHP($dividend->net_amount, true) }}
                                 </td>
-                                <td class="px-2 py-2 border-b">{{ $dividend->release->created_at->format('F d, Y') }}</td>
+                                <td class="px-2 py-2 border-b">{{ $dividend->released_at?->format('F d, Y') }}</td>
                                 <td class="px-2 py-2 border-b">
                                     <a class="px-2 py-1 text-xs font-semibold rounded-full {{ match ($dividend->status) {
                                         App\Models\Dividend::PENDING => 'bg-yellow-200 text-yellow-800',
