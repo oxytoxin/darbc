@@ -22,6 +22,7 @@ use App\Models\Cluster;
 use App\Models\Occupation;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\ViewAction;
 
 class MemberInformationQuery extends Component implements HasTable
 {
@@ -167,6 +168,11 @@ class MemberInformationQuery extends Component implements HasTable
                 ->formatStateUsing(fn ($record) => implode(', ', collect($record->children)->pluck('name')->toArray()))
                 ->visible(fn () => $this->tableFilters['children_list']['isActive'])
                 ->label('Children'),
+            TextColumn::make('dependents_count')
+                ->visible(fn () => $this->tableFilters['dependents_count']['isActive'])
+                ->label('No. of Dependents')
+                ->sortable()
+                ->alignCenter(),
             TextColumn::make('spa_list')
                 ->formatStateUsing(fn ($record) => implode(', ', $record->spa))
                 ->visible(fn () => $this->tableFilters['spa_list']['isActive'])
@@ -245,6 +251,8 @@ class MemberInformationQuery extends Component implements HasTable
                 ->label('Name of Spouse'),
             Filter::make('children_list')
                 ->label('Children'),
+            Filter::make('dependents_count')
+                ->label('No. of Dependents'),
             Filter::make('spa_list')
                 ->label('SPA/Representatives'),
             Filter::make('sss_number')
@@ -325,6 +333,19 @@ class MemberInformationQuery extends Component implements HasTable
     protected function getTableFiltersLayout(): ?string
     {
         return Layout::AboveContent;
+    }
+
+    protected function getTableActions(): array
+    {
+        return [
+            ViewAction::make()
+                ->url(fn ($record) => route('release-admin.member-profile', ['member' => $record])),
+        ];
+    }
+
+    protected function shouldPersistTableFiltersInSession(): bool
+    {
+        return true;
     }
 
     public function render()
