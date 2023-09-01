@@ -277,9 +277,9 @@ class MemberInformationQuery extends Component implements HasTable
                             MemberInformation::STATUS_DECEASED => 'DECEASED',
                         ])
                         ->placeholder('ALL'),
-                    TextInput::make('last_name')
-                        ->label('First Name'),
                     TextInput::make('first_name')
+                        ->label('First Name'),
+                    TextInput::make('last_name')
                         ->label('Last Name'),
                     Select::make('ownership')
                         ->options(MembershipStatus::pluck('name', 'id'))
@@ -314,7 +314,7 @@ class MemberInformationQuery extends Component implements HasTable
                         ->withoutTime(),
 
                 ])->query(function ($query, $data) {
-                    info($data['cluster_id']);
+                    info($data);
                     $query->when($data['darbc_id'], fn ($q) => $q->where('darbc_id', $data['darbc_id']));
                     $query->when($data['status'], fn ($q) => $q->where('status', $data['status']));
                     $query->when($data['first_name'], fn ($q) => $q->whereRelation('user', 'first_name', 'like', "%{$data['first_name']}%"));
