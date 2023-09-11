@@ -6,6 +6,7 @@
         'sold' => \Illuminate\Support\Arr::toCssClasses(['text-yellow-700 bg-yellow-500/10', 'dark:text-yellow-500' => config('tables.dark_mode')]),
         'relocated' => \Illuminate\Support\Arr::toCssClasses(['text-blue-700 bg-blue-500/10', 'dark:text-blue-500' => config('tables.dark_mode')]),
         'swapped' => \Illuminate\Support\Arr::toCssClasses(['text-purple-700 bg-purple-500/10', 'dark:text-purple-500' => config('tables.dark_mode')]),
+        'donated' => \Illuminate\Support\Arr::toCssClasses(['text-pink-700 bg-pink-500/10', 'dark:text-pink-500' => config('tables.dark_mode')]),
         null, 'secondary' => \Illuminate\Support\Arr::toCssClasses(['text-gray-700 bg-gray-500/10', 'dark:text-gray-300 dark:bg-gray-500/20' => config('tables.dark_mode')]),
         default => $getStateColor(),
     };

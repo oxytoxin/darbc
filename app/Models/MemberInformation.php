@@ -76,6 +76,25 @@ class MemberInformation extends Model implements HasMedia
         return $this->getFirstMedia('profile_photo')?->getUrl() ?? 'https://thumbs.dreamstime.com/b/default-avatar-profile-icon-vector-social-media-user-image-182145777.jpg';
     }
 
+    public function getAddressAttribute()
+    {
+        $this->load(['barangay', 'city', 'province', 'region']);
+        $address = [];
+        if ($this->address_line) {
+            $address[] = $this->address_line;
+        }
+        if ($this->city?->description) {
+            $address[] = $this->city->description;
+        }
+        if ($this->province?->description) {
+            $address[] = $this->province->description;
+        }
+        if ($this->region?->description) {
+            $address[] = $this->region->description;
+        }
+        return implode(", ", $address);
+    }
+
     public function missingDetails(): Attribute
     {
         return new Attribute(

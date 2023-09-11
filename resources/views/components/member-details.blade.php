@@ -26,4 +26,8 @@
             <p class="text-lg font-bold">{{ $member->percentage }} %</p>
         </div>
     </div>
+    <div>
+        <p class="font-semibold text-center text-gray-600">Address</p>
+        <p class="text-lg font-bold text-center">{{ filled($member->address) ? $member->address : 'No address found.' }}</p>
+    </div>
 </div>

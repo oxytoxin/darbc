@@ -24,10 +24,8 @@ use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
-use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\Relation;
-use stdClass;
 
 class FreeLotManagement extends Component implements HasTable
 {
@@ -50,6 +48,7 @@ class FreeLotManagement extends Component implements HasTable
             2 => 'bg-yellow-100 border-b border-gray-700',
             3 => 'bg-blue-200 border-b border-gray-700',
             4 => 'bg-purple-200 border-b border-gray-700',
+            5 => 'bg-pink-200 border-b border-gray-700',
             default => null,
         };
     }
@@ -79,6 +78,7 @@ class FreeLotManagement extends Component implements HasTable
                     2 => 'SOLD',
                     3 => 'RELOCATED',
                     4 => 'SWAPPED',
+                    5 => 'DONATED',
                 ])
                 ->size('sm')
                 ->colors([
@@ -86,6 +86,7 @@ class FreeLotManagement extends Component implements HasTable
                     'sold' => 2,
                     'relocated' => 3,
                     'swapped' => 4,
+                    'donated' => 5,
                 ])
                 ->visible(fn () => $this->tableFilters['status_id']['isActive'])
                 ->sortable(),
@@ -96,9 +97,6 @@ class FreeLotManagement extends Component implements HasTable
                 ->date('M d, Y')
                 ->label('Date Sold')
                 ->visible(fn () => $this->tableFilters['date_sold']['isActive'])
-                ->sortable(),
-            TextColumn::make('cluster.name')
-                ->visible(fn () => $this->tableFilters['cluster']['isActive'])
                 ->sortable(),
             TextColumn::make('draw_date')
                 ->date('M d, Y')
@@ -119,7 +117,6 @@ class FreeLotManagement extends Component implements HasTable
             Filter::make('status_id')->label('STATUS')->default(),
             Filter::make('buyer')->label('BUYER')->default(),
             Filter::make('date_sold')->label('DATE SOLD')->default(),
-            Filter::make('cluster')->label('CLUSTER')->default(),
             Filter::make('draw_date')->label('DRAW DATE')->default(),
             Filter::make('lot_text')
                 ->columns(4)
@@ -134,8 +131,6 @@ class FreeLotManagement extends Component implements HasTable
                         ->label('Lot'),
                     TextInput::make('area')
                         ->label('Area'),
-                    TextInput::make('cluster')
-                        ->label('Cluster'),
                     Select::make('member_status')
                         ->label('Member Status')
                         ->options([
@@ -152,6 +147,7 @@ class FreeLotManagement extends Component implements HasTable
                             2 => 'SOLD',
                             3 => 'RELOCATED',
                             4 => 'SWAPPED',
+                            5 => 'DONATED',
                         ])
                         ->placeholder('All'),
                 ])->query(function ($query, $data) {
@@ -162,7 +158,6 @@ class FreeLotManagement extends Component implements HasTable
                     $query->when($data['block'], fn ($q) => $q->where('block', $data['block']));
                     $query->when($data['lot'], fn ($q) => $q->where('lot', $data['lot']));
                     $query->when($data['area'], fn ($q) => $q->where('area', $data['area']));
-                    $query->when($data['cluster'], fn ($q) => $q->whereRelation('cluster', 'name', $data['cluster']));
                 }),
 
         ];
@@ -180,9 +175,6 @@ class FreeLotManagement extends Component implements HasTable
                 ->form(function ($record) {
                     return [
                         Grid::make(2)->schema([
-                            Select::make('cluster_id')
-                                ->relationship('cluster', 'name')
-                                ->required(),
                             Select::make('user_id')
                                 ->relationship('user', 'full_name')
                                 ->label('Member')
@@ -381,6 +373,19 @@ class FreeLotManagement extends Component implements HasTable
                             'area' => $record->area,
                         ]);
                     }),
+                Action::make('donate')
+                    ->icon('heroicon-o-users')
+                    ->outlined()
+                    ->button()
+                    ->action(function ($data, $record) {
+                        DB::beginTransaction();
+                        $record->update([
+                            'status' => 5,
+                        ]);
+                        DB::commit();
+                        Notification::make()->title('Free Lot donated')->success()->send();
+                    })
+                    ->requiresConfirmation()
             ])
         ];
     }

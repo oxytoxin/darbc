@@ -6,6 +6,7 @@ use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Models\ElderlyIncentive;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -75,7 +76,12 @@ class ElderlyIncentivesManagement extends Component implements HasTable
     protected function getTableActions(): array
     {
         return [
-            DeleteAction::make()
+            DeleteAction::make(),
+            EditAction::make()
+                ->form(fn ($record) => [
+                    DatePicker::make('created_at')
+                        ->label('Date Awarded')
+                ])
         ];
     }
 

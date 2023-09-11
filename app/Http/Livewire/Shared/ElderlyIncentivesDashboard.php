@@ -2,21 +2,24 @@
 
 namespace App\Http\Livewire\Shared;
 
-use App\Models\ElderlyIncentive;
-use App\Models\ElderlyIncentiveType;
-use App\Models\MemberInformation;
-use Closure;
 use DB;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Select;
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Concerns\InteractsWithTable;
-use Filament\Tables\Contracts\HasTable;
-use Illuminate\Contracts\Support\Htmlable;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\Relation;
+use Closure;
 use Livewire\Component;
+use App\Models\ElderlyIncentive;
+use App\Models\MembershipStatus;
+use App\Models\MemberInformation;
+use Filament\Tables\Actions\Action;
+use App\Models\ElderlyIncentiveType;
+use Filament\Forms\Components\Select;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Placeholder;
+use Illuminate\Contracts\Support\Htmlable;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Filters\Layout;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class ElderlyIncentivesDashboard extends Component implements HasTable
 {
@@ -25,7 +28,6 @@ class ElderlyIncentivesDashboard extends Component implements HasTable
     protected function getTableQuery(): Builder|Relation
     {
         return MemberInformation::query()
-            ->whereStatus(MemberInformation::STATUS_ACTIVE)
             ->where('age', '>=', 80)
             // ->orderByRaw('FIELD(age, 80, 90, 100) DESC')
             ->orderByDesc('age');
@@ -41,6 +43,45 @@ class ElderlyIncentivesDashboard extends Component implements HasTable
                 ->color('primary')
                 ->icon('heroicon-o-cash')
         ];
+    }
+
+    protected function getTableFilters(): array
+    {
+        return [
+            SelectFilter::make('membership_status_id')
+                ->label('Membership')
+                ->placeholder('All')
+                ->options([
+                    'active' => 'ACTIVE',
+                    'original' => 'ORIGINAL',
+                    'replacement' => 'REPLACEMENT',
+                    'deceased' => 'DECEASED',
+                ])
+                ->default('active')
+                ->query(function ($query, $data) {
+                    switch ($data['value']) {
+                        case 'active':
+                            $query->whereStatus(MemberInformation::STATUS_ACTIVE);
+                            break;
+                        case 'original':
+                            $query->whereMembershipStatusId(MembershipStatus::ORIGINAL);
+                            break;
+                        case 'replacement':
+                            $query->whereMembershipStatusId(MembershipStatus::REPLACEMENT);
+                            break;
+                        case 'deceased':
+                            $query->whereStatus(MemberInformation::STATUS_DECEASED);
+                            break;
+                        default:
+                            break;
+                    }
+                }),
+        ];
+    }
+
+    protected function getTableFiltersLayout(): ?string
+    {
+        return Layout::AboveContent;
     }
 
     protected function getIncentivesAwardedRoute(): string
