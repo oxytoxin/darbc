@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\ElderlyIncentive;
 use App\Models\MemberInformation;
 use Livewire\Component;
 use Route;

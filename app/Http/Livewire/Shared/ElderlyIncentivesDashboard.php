@@ -10,6 +10,7 @@ use App\Models\MembershipStatus;
 use App\Models\MemberInformation;
 use Filament\Tables\Actions\Action;
 use App\Models\ElderlyIncentiveType;
+use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
@@ -28,9 +29,7 @@ class ElderlyIncentivesDashboard extends Component implements HasTable
     protected function getTableQuery(): Builder|Relation
     {
         return MemberInformation::query()
-            ->where('age', '>=', 80)
-            // ->orderByRaw('FIELD(age, 80, 90, 100) DESC')
-            ->orderByDesc('age');
+            ->where('age', '>=', 80);
     }
 
     protected function getTableHeaderActions(): array
@@ -98,11 +97,15 @@ class ElderlyIncentivesDashboard extends Component implements HasTable
     {
         return [
             TextColumn::make('darbc_id')
+                ->sortable()
+                ->searchable()
                 ->label('DARBC ID'),
             TextColumn::make('user.alt_full_name')
+                ->sortable()
                 ->searchable()
                 ->label('Member'),
-            TextColumn::make('age'),
+            TextColumn::make('age')
+                ->sortable(),
             TextColumn::make('date_of_birth')
                 ->date('F d, Y')
         ];
@@ -132,7 +135,11 @@ class ElderlyIncentivesDashboard extends Component implements HasTable
                                     ->pluck('name', 'id')
                             )
                             ->required()
-                            ->label('Incentive Type')
+                            ->label('Incentive Type'),
+                        DatePicker::make('created_at')
+                            ->default(today())
+                            ->required()
+                            ->label('Date Awarded')
                     ];
                 })
                 ->action(function ($record, $data) {
@@ -150,7 +157,8 @@ class ElderlyIncentivesDashboard extends Component implements HasTable
                         'elderly_incentive_type_id' => $incentive->id,
                     ], [
                         'user_id' => $record->user_id,
-                        'amount' => $incentive->amount
+                        'amount' => $incentive->amount,
+                        'created_at' => $data['created_at']
                     ]);
                     DB::commit();
                     notify('Incentive awarded.');

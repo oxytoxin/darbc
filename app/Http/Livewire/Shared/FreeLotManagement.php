@@ -58,6 +58,13 @@ class FreeLotManagement extends Component implements HasTable
         return [
             TextColumn::make('user.member_information.darbc_id')
                 ->visible(fn () => $this->tableFilters['darbc_id']['isActive'])
+                ->sortable(true, function ($query, $direction) {
+                    $query
+                        ->leftJoin('users', 'free_lots.user_id', '=', 'users.id')
+                        ->leftJoin('member_information', 'users.id', '=', 'member_information.user_id')
+                        ->selectRaw('free_lots.*, member_information.darbc_id as member_darbc_id')
+                        ->orderBy('member_darbc_id', $direction);
+                })
                 ->label('DARBC ID'),
             TextColumn::make('user.alt_full_name')
                 ->visible(fn () => $this->tableFilters['name']['isActive'])
@@ -135,7 +142,6 @@ class FreeLotManagement extends Component implements HasTable
                         ->label('Member Status')
                         ->options([
                             MemberInformation::STATUS_ACTIVE => 'ACTIVE',
-                            MemberInformation::STATUS_INACTIVE => 'INACTIVE',
                             MemberInformation::STATUS_DECEASED => 'DECEASED',
                         ])
                         ->default(MemberInformation::STATUS_ACTIVE)

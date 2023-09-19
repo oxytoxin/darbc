@@ -6,6 +6,7 @@ use App\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use NumberFormatter;
 
 class ElderlyIncentive extends Model
 {
@@ -23,5 +24,10 @@ class ElderlyIncentive extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getAmountInWordsAttribute()
+    {
+        return (new NumberFormatter('en', NumberFormatter::SPELLOUT))->format($this->amount);
     }
 }
