@@ -134,6 +134,7 @@ class ElderlyIncentivesManagement extends Component implements HasTable
                 ->icon('heroicon-o-printer')
                 ->button()
                 ->outlined()
+                ->modalWidth('6xl')
                 ->modalContent(fn ($record) => view('livewire.release-admin.components.request-for-payment', ['incentive' => $record]))
                 ->modalHeading('Request for Payment'),
         ];
