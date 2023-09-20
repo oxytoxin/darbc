@@ -129,7 +129,7 @@ class ElderlyIncentivesManagement extends Component implements HasTable
                         ->label('Date Awarded')
                 ]),
             ViewAction::make('print')
-                ->label('Print')
+                ->label('Template')
                 ->color('success')
                 ->icon('heroicon-o-printer')
                 ->button()

@@ -132,7 +132,7 @@
             </div>
         </div>
     </div>
-    <div>
+    <div class="flex justify-end">
         <x-filament-support::button icon="heroicon-o-printer" @click="printOut($refs.print.outerHTML, 'RELEASE PAYSLIP')">Print</x-filament-support::button>
     </div>
 

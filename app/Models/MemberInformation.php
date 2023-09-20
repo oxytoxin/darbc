@@ -83,6 +83,9 @@ class MemberInformation extends Model implements HasMedia
         if ($this->address_line) {
             $address[] = $this->address_line;
         }
+        if ($this->barangay) {
+            $address[] = $this->barangay->description;
+        }
         if ($this->city?->description) {
             $address[] = $this->city->description;
         }
