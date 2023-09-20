@@ -33,7 +33,7 @@
                 </div>
 
                 <div class="flex text-sm">
-                    <div class="flex-1 py-4">
+                    <div class="w-2/3 py-4">
                         <div class="border-b-2 p-1 border-black">
                             <h3 class="font-bold">Explanation:</h3>
                             <h3 class="pl-16 mt-4">Elderly Incentive Program</h3>
@@ -56,7 +56,7 @@
                             </div>
                         </div>
                     </div>
-                    <table class="border-2 m-1 border-black border-collapse">
+                    <table class="border-2 w-1/3 text-sm m-1 border-black border-collapse">
                         <thead>
                             <tr>
                                 <th class="px-4 border-2 border-black">Account No.</th>
