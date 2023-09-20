@@ -32,7 +32,7 @@
                     <h4>Amount: <strong>{{ strtoupper($incentive->amount_in_words) }} PESOS ONLY</strong></h4>
                 </div>
 
-                <div class="flex">
+                <div class="flex text-sm">
                     <div class="flex-1 py-4">
                         <div class="border-b-2 p-1 border-black">
                             <h3 class="font-bold">Explanation:</h3>
@@ -56,37 +56,37 @@
                             </div>
                         </div>
                     </div>
-                    <table class="border m-1 border-black border-collapse">
+                    <table class="border-2 m-1 border-black border-collapse">
                         <thead>
                             <tr>
-                                <th class="px-4 border border-black">Account No.</th>
-                                <th class="px-8 border border-black">Amount</th>
+                                <th class="px-4 border-2 border-black">Account No.</th>
+                                <th class="px-8 border-2 border-black">Amount</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td class=" border border-black"></td>
-                                <td class="text-center border border-black">{{ Akaunting\Money\Money::PHP($incentive->amount, true) }}</td>
+                                <td class=" border-2 border-black"></td>
+                                <td class="text-center border-2 border-black">{{ Akaunting\Money\Money::PHP($incentive->amount, true) }}</td>
                             </tr>
                             <tr>
-                                <td class=" border border-black"></td>
-                                <td class="text-center border border-black">&nbsp;</td>
+                                <td class=" border-2 border-black"></td>
+                                <td class="text-center border-2 border-black">&nbsp;</td>
                             </tr>
                             <tr>
-                                <td class=" border border-black"></td>
-                                <td class="text-center border border-black">&nbsp;</td>
+                                <td class=" border-2 border-black"></td>
+                                <td class="text-center border-2 border-black">&nbsp;</td>
                             </tr>
                             <tr>
-                                <td class=" border border-black"></td>
-                                <td class="text-center border border-black">&nbsp;</td>
+                                <td class=" border-2 border-black"></td>
+                                <td class="text-center border-2 border-black">&nbsp;</td>
                             </tr>
                             <tr>
-                                <td class=" border border-black"></td>
-                                <td class="text-center border border-black">&nbsp;</td>
+                                <td class=" border-2 border-black"></td>
+                                <td class="text-center border-2 border-black">&nbsp;</td>
                             </tr>
                             <tr class="font-bold">
-                                <td class="text-center border border-black">Total</td>
-                                <td class="text-center border border-black">{{ Akaunting\Money\Money::PHP($incentive->amount, true) }}</td>
+                                <td class="text-center border-2 border-black">Total</td>
+                                <td class="text-center border-2 border-black">{{ Akaunting\Money\Money::PHP($incentive->amount, true) }}</td>
                             </tr>
                         </tbody>
                     </table>
