@@ -122,25 +122,8 @@ class RegisterMember extends Component implements HasForms
                 Step::make('Address')
                     ->description('Add complete address.')
                     ->schema([
-                        Select::make('data.address.region_code')
-                            ->label('Region')
-                            ->reactive()
-                            ->options(Region::pluck('description', 'code')),
-                        Select::make('data.address.province_code')
-                            ->label('Province')
-                            ->reactive()
-                            ->options(fn ($get) => Province::where('region_code', $get('data.address.region_code'))->pluck('description', 'code')),
-                        Select::make('data.address.city_code')
-                            ->label('City/Municipality')
-                            ->reactive()
-                            ->options(fn ($get) => City::where('province_code', $get('data.address.province_code'))->pluck('description', 'code')),
-                        Select::make('data.address.barangay_code')
-                            ->label('Barangay')
-                            ->reactive()
-                            ->options(fn ($get) => Barangay::where('city_code', $get('data.address.city_code'))->pluck('description', 'code')),
                         TextInput::make('data.address.address_line')
-                            ->label('Street name, Building, House No.')
-
+                            ->label('Address')
                     ]),
                 Step::make('Occupation')
                     ->description('Identify your occupation.')
@@ -298,10 +281,6 @@ class RegisterMember extends Component implements HasForms
             'membership_status_id' => $this->data['membership_status'],
             'occupation_id' => $this->data['occupation'],
             'occupation_details' => $this->data['occupation_details'],
-            'region_code' => $this->data['address']['region_code'],
-            'province_code' => $this->data['address']['province_code'],
-            'city_code' => $this->data['address']['city_code'],
-            'barangay_code' => $this->data['address']['barangay_code'],
             'address_line' => $this->data['address']['address_line'],
             'civil_status' => $this->data['civil_status'],
             'spouse' => $this->data['spouse'],
@@ -343,10 +322,6 @@ class RegisterMember extends Component implements HasForms
             $this->data['place_of_birth'] = 'Somewhere';
             $this->data['blood_type'] = 'A';
             $this->data['religion'] = 'Roman Catholic';
-            $this->data['address']['region_code'] = '01';
-            $this->data['address']['province_code'] = '0128';
-            $this->data['address']['city_code'] = '012801';
-            $this->data['address']['barangay_code'] = '012801001';
             $this->data['address']['address_line'] = 'Block 14, Lot 9';
             $this->data['darbc_id'] = '1234';
             $this->data['sss_number'] = '1234';

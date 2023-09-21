@@ -28,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
         Gate::define('viewWebTinker', function ($user = null) {
-            return $user->username == 'admin';
+            return $user?->username == 'admin';
         });
 
         if (app()->environment('production')) {

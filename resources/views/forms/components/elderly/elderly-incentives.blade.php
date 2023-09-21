@@ -18,9 +18,12 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="3" class="p-2 text-sm text-center">No incentives awarded.</td>
+                    <td colspan="4" class="p-2 text-sm text-center">No incentives awarded.</td>
                 </tr>
             @endforelse
         </tbody>
     </table>
+    @isset($incentive)
+        <a class="underline text-green-600 font-semibold text-sm" href="{{ route('elderly-incentives-template', ['user' => $incentive->user]) }}">GO TO TEMPLATE</a>
+    @endisset
 </div>

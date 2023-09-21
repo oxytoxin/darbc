@@ -28,6 +28,6 @@ class ElderlyIncentive extends Model
 
     public function getAmountInWordsAttribute()
     {
-        return (new NumberFormatter('en', NumberFormatter::SPELLOUT))->format($this->amount);
+        return (new NumberFormatter('en', NumberFormatter::SPELLOUT))->format($this->amount) . ' PESOS ONLY';
     }
 }

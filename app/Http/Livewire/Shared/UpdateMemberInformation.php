@@ -96,27 +96,8 @@ class UpdateMemberInformation extends Component implements HasForms
                             ->options(MembershipStatus::pluck('name', 'id'))
                             ->required()
                             ->disablePlaceholderSelection(),
-                    ]),
-                Fieldset::make('Address')
-                    ->schema([
-                        Select::make('address.region_code')
-                            ->label('Region')
-                            ->reactive()
-                            ->options(Region::pluck('description', 'code')),
-                        Select::make('address.province_code')
-                            ->label('Province')
-                            ->reactive()
-                            ->options(fn ($get) => Province::where('region_code', $get('address.region_code'))->pluck('description', 'code')),
-                        Select::make('address.city_code')
-                            ->label('City/Municipality')
-                            ->reactive()
-                            ->options(fn ($get) => City::where('province_code', $get('address.province_code'))->pluck('description', 'code')),
-                        Select::make('address.barangay_code')
-                            ->label('Barangay')
-                            ->reactive()
-                            ->options(fn ($get) => Barangay::where('city_code', $get('address.city_code'))->pluck('description', 'code')),
                         TextInput::make('address.address_line')
-                            ->label('Street name, Building, House No.')
+                            ->label('Address')
                     ]),
                 Fieldset::make('Occupation Details')
                     ->schema([
@@ -243,10 +224,6 @@ class UpdateMemberInformation extends Component implements HasForms
             'spa' => $this->member->spa,
             'holographic' => $this->member->holographic,
         ]);
-        $this->data['address']['region_code'] = $this->member->region_code;
-        $this->data['address']['province_code'] = $this->member->province_code;
-        $this->data['address']['city_code'] = $this->member->city_code;
-        $this->data['address']['barangay_code'] = $this->member->barangay_code;
         $this->data['address']['address_line'] = $this->member->address_line;
     }
 
@@ -281,10 +258,6 @@ class UpdateMemberInformation extends Component implements HasForms
             'status' => $this->data['status'],
             'cluster_id' => $this->data['cluster_id'],
             'membership_status_id' => $this->data['membership_status_id'],
-            'region_code' => $this->data['address']['region_code'],
-            'province_code' => $this->data['address']['province_code'],
-            'city_code' => $this->data['address']['city_code'],
-            'barangay_code' => $this->data['address']['barangay_code'],
             'address_line' => $this->data['address']['address_line'],
             'occupation_id' => $this->data['occupation'],
             'occupation_details' => $this->data['occupation_details'],

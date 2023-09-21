@@ -28,6 +28,6 @@
     </div>
     <div>
         <p class="font-semibold text-center text-gray-600">Address</p>
-        <p class="text-lg font-bold text-center">{{ filled($member->address) ? $member->address : 'No address found.' }}</p>
+        <p class="text-lg font-bold text-center">{{ filled($member->address_line) ? $member->address_line : 'No address found.' }}</p>
     </div>
 </div>

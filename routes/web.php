@@ -6,6 +6,7 @@ use App\Http\Controllers\ReportsDownloadController;
 use App\Http\Livewire\Auth\Login;
 use App\Http\Livewire\Shared\ClusterlessMembers;
 use App\Http\Livewire\Shared\ClusterMembers;
+use App\Http\Livewire\Shared\ElderlyIncentiveTemplate;
 use App\Http\Livewire\Shared\MemberInformationQuery;
 use App\Http\Livewire\TestComponent;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,7 @@ Route::middleware(['auth', 'role:shared'])->group(function () {
     Route::get('member-information-query', MemberInformationQuery::class)->name('member-information-query');
     Route::get('cluster/{cluster}/members', ClusterMembers::class)->name('cluster-members');
     Route::get('clusterless-members', ClusterlessMembers::class)->name('clusterless-members');
+    Route::get('elderly-incentives-template/{user}', ElderlyIncentiveTemplate::class)->name('elderly-incentives-template');
 });
 
 

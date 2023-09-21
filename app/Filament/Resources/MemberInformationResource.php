@@ -106,14 +106,6 @@ class MemberInformationResource extends Resource
                     ->maxLength(65535),
                 Forms\Components\Textarea::make('occupation_details')
                     ->maxLength(65535),
-                Forms\Components\TextInput::make('province_code')
-                    ->maxLength(191),
-                Forms\Components\TextInput::make('region_code')
-                    ->maxLength(191),
-                Forms\Components\TextInput::make('city_code')
-                    ->maxLength(191),
-                Forms\Components\TextInput::make('barangay_code')
-                    ->maxLength(191),
                 Forms\Components\TextInput::make('address_line')
                     ->maxLength(512),
                 Forms\Components\Select::make('civil_status')

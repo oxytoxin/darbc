@@ -17,14 +17,8 @@ class MemberInformationSeeder extends Seeder
      */
     public function run()
     {
-        $barangay = Barangay::inRandomOrder()->first();
         DB::beginTransaction();
-        MemberInformation::factory()->count(20)->create([
-            'region_code' => $barangay->region_code,
-            'province_code' => $barangay->province_code,
-            'city_code' => $barangay->city_code,
-            'barangay_code' => $barangay->code,
-        ]);
+        MemberInformation::factory()->count(20)->create();
         DB::commit();
     }
 }
