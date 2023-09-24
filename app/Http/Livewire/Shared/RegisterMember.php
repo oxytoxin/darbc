@@ -258,6 +258,11 @@ class RegisterMember extends Component implements HasForms
                 $toReplace->update([
                     'status' => $this->data['old_member_status'],
                 ]);
+                foreach ($toReplace->user->free_lots as  $free_lot) {
+                    $free_lot->update([
+                        'user_id' => $user->id
+                    ]);
+                }
                 $lineage_identifier = $toReplace->lineage_identifier;
                 $successor_number = $toReplace->succession_number + 1;
                 $original_member_id = $toReplace->user_id;

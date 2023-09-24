@@ -124,6 +124,11 @@ class User extends Authenticatable implements HasMedia, FilamentUser, HasName
         return $this->hasMany(Dividend::class);
     }
 
+    public function free_lots()
+    {
+        return $this->hasMany(FreeLot::class);
+    }
+
     public function active_restriction()
     {
         return $this->hasOne(Restriction::class)->ofMany('active')->whereActive(true);
