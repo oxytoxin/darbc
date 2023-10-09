@@ -14,21 +14,9 @@ namespace App\Models{
 /**
  * App\Models\Barangay
  *
- * @property int $id
- * @property string|null $code
- * @property string|null $description
- * @property string|null $region_code
- * @property string|null $province_code
- * @property string|null $city_code
  * @method static \Illuminate\Database\Eloquent\Builder|Barangay newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Barangay newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Barangay query()
- * @method static \Illuminate\Database\Eloquent\Builder|Barangay whereCityCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Barangay whereCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Barangay whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Barangay whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Barangay whereProvinceCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Barangay whereRegionCode($value)
  * @mixin \Eloquent
  */
 	class IdeHelperBarangay {}
@@ -81,21 +69,9 @@ namespace App\Models{
 /**
  * App\Models\City
  *
- * @property int $id
- * @property string|null $psgc_code
- * @property string|null $description
- * @property string|null $region_code
- * @property string|null $province_code
- * @property string|null $code
  * @method static \Illuminate\Database\Eloquent\Builder|City newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|City newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|City query()
- * @method static \Illuminate\Database\Eloquent\Builder|City whereCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|City whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|City whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|City whereProvinceCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|City wherePsgcCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|City whereRegionCode($value)
  * @mixin \Eloquent
  */
 	class IdeHelperCity {}
@@ -112,7 +88,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User|null $leader
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\MemberInformation[] $members
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MemberInformation> $members
  * @property-read int|null $members_count
  * @method static \Illuminate\Database\Eloquent\Builder|Cluster newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Cluster newQuery()
@@ -188,7 +164,7 @@ namespace App\Models{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \App\Models\User|null $cashier
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\Spatie\MediaLibrary\MediaCollections\Models\Media[] $media
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
  * @property-read int|null $media_count
  * @property-read \App\Models\Release $release
  * @property-read \App\Models\User $user
@@ -217,6 +193,66 @@ namespace App\Models{
  * @mixin \Eloquent
  */
 	class IdeHelperDividend {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\ElderlyIncentive
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $elderly_incentive_type_id
+ * @property string $lineage_identifier
+ * @property mixed $amount
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\ElderlyIncentiveType $elderly_incentive_type
+ * @property-read mixed $amount_in_words
+ * @property-read \App\Models\User $user
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentive newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentive newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentive onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentive query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentive whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentive whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentive whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentive whereElderlyIncentiveTypeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentive whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentive whereLineageIdentifier($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentive whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentive whereUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentive withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentive withoutTrashed()
+ * @mixin \Eloquent
+ */
+	class IdeHelperElderlyIncentive {}
+}
+
+namespace App\Models{
+/**
+ * App\Models\ElderlyIncentiveType
+ *
+ * @property int $id
+ * @property string $name
+ * @property int $minimum_age
+ * @property mixed $amount
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ElderlyIncentive> $elderly_incentives
+ * @property-read int|null $elderly_incentives_count
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentiveType newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentiveType newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentiveType query()
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentiveType whereAmount($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentiveType whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentiveType whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentiveType whereMinimumAge($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentiveType whereName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|ElderlyIncentiveType whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
+	class IdeHelperElderlyIncentiveType {}
 }
 
 namespace App\Models{
@@ -275,7 +311,7 @@ namespace App\Models{
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\MemberInformation[] $members
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MemberInformation> $members
  * @property-read int|null $members_count
  * @method static \Illuminate\Database\Eloquent\Builder|Gender newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Gender newQuery()
@@ -366,6 +402,7 @@ namespace App\Models{
  * @property string $lineage_identifier
  * @property int|null $original_member_id
  * @property \Carbon\CarbonImmutable|null $date_of_birth
+ * @property int|null $age
  * @property string|null $place_of_birth
  * @property int $gender_id
  * @property string|null $blood_type
@@ -373,15 +410,12 @@ namespace App\Models{
  * @property int $membership_status_id
  * @property int $occupation_id
  * @property string|null $occupation_details
- * @property string|null $province_code
- * @property string|null $region_code
- * @property string|null $city_code
- * @property string|null $barangay_code
  * @property string|null $address_line
  * @property int $civil_status
  * @property string|null $mother_maiden_name
  * @property string|null $spouse
  * @property array $children
+ * @property int|null $dependents_count
  * @property string|null $sss_number
  * @property string|null $philhealth_number
  * @property string|null $tin_number
@@ -391,13 +425,12 @@ namespace App\Models{
  * @property \Carbon\CarbonImmutable|null $application_date
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property int|null $missing_details_count
  * @property-read \App\Models\Barangay|null $barangay
  * @property-read \App\Models\City|null $city
  * @property-read \App\Models\Cluster|null $cluster
  * @property-read \App\Models\Gender $gender
  * @property-read mixed $profile_photo
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\Spatie\MediaLibrary\MediaCollections\Models\Media[] $media
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
  * @property-read int|null $media_count
  * @property-read \App\Models\MembershipStatus $membership_status
  * @property-read \App\Models\Occupation $occupation
@@ -406,33 +439,33 @@ namespace App\Models{
  * @property-read \App\Models\Region|null $region
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation active()
+ * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation celebrant()
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation darbcMember()
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation deceased()
- * @method static \Database\Factories\MemberInformationFactory factory(...$parameters)
+ * @method static \Database\Factories\MemberInformationFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation original()
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation query()
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation replacement()
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereAddressLine($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereAge($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereApplicationDate($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereBarangayCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereBloodType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereChildren($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereCityCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereCivilStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereClusterId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereContactNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereDarbcId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereDateOfBirth($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereDependentsCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereGenderId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereHolographic($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereIsDarbcMember($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereLineageIdentifier($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereMembershipStatusId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereMissingDetailsCount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereMotherMaidenName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereOccupationDetails($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereOccupationId($value)
@@ -440,9 +473,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation wherePercentage($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation wherePhilhealthNumber($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation wherePlaceOfBirth($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereProvinceCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereReferenceNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereRegionCode($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereReligion($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereSpa($value)
  * @method static \Illuminate\Database\Eloquent\Builder|MemberInformation whereSplitClaim($value)
@@ -466,7 +497,7 @@ namespace App\Models{
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\MemberInformation[] $members
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MemberInformation> $members
  * @property-read int|null $members_count
  * @method static \Illuminate\Database\Eloquent\Builder|MembershipStatus newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|MembershipStatus newQuery()
@@ -488,7 +519,7 @@ namespace App\Models{
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\MemberInformation[] $members
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MemberInformation> $members
  * @property-read int|null $members_count
  * @method static \Illuminate\Database\Eloquent\Builder|Occupation newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Occupation newQuery()
@@ -506,19 +537,9 @@ namespace App\Models{
 /**
  * App\Models\Province
  *
- * @property int $id
- * @property string|null $psgc_code
- * @property string|null $description
- * @property string|null $region_code
- * @property string|null $code
  * @method static \Illuminate\Database\Eloquent\Builder|Province newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Province newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Province query()
- * @method static \Illuminate\Database\Eloquent\Builder|Province whereCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Province whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Province whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Province wherePsgcCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Province whereRegionCode($value)
  * @mixin \Eloquent
  */
 	class IdeHelperProvince {}
@@ -528,17 +549,9 @@ namespace App\Models{
 /**
  * App\Models\Region
  *
- * @property int $id
- * @property string|null $psgc_code
- * @property string|null $description
- * @property string|null $code
  * @method static \Illuminate\Database\Eloquent\Builder|Region newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Region newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Region query()
- * @method static \Illuminate\Database\Eloquent\Builder|Region whereCode($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Region whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Region whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Region wherePsgcCode($value)
  * @mixin \Eloquent
  */
 	class IdeHelperRegion {}
@@ -556,33 +569,34 @@ namespace App\Models{
  * @property string $gift_certificate_amount
  * @property array $particulars
  * @property bool $disbursed
+ * @property bool $voting_restriction
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DailyCash[] $daily_cash_ends
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\DailyCash> $daily_cash_ends
  * @property-read int|null $daily_cash_ends_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DailyCash[] $daily_cash_starts
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\DailyCash> $daily_cash_starts
  * @property-read int|null $daily_cash_starts_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DailyCash[] $daily_cashes
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\DailyCash> $daily_cashes
  * @property-read int|null $daily_cashes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Dividend[] $dividends
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dividend> $dividends
  * @property-read int|null $dividends_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Dividend[] $member_claimed_dividends
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dividend> $member_claimed_dividends
  * @property-read int|null $member_claimed_dividends_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Dividend[] $onhold_dividends
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dividend> $onhold_dividends
  * @property-read int|null $onhold_dividends_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Dividend[] $pending_dividends
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dividend> $pending_dividends
  * @property-read int|null $pending_dividends_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Dividend[] $released_dividends
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dividend> $released_dividends
  * @property-read int|null $released_dividends_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Dividend[] $representative_claimed_dividends
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dividend> $representative_claimed_dividends
  * @property-read int|null $representative_claimed_dividends_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Dividend[] $spa_claimed_dividends
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dividend> $spa_claimed_dividends
  * @property-read int|null $spa_claimed_dividends_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Dividend[] $unclaimed_dividends
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dividend> $unclaimed_dividends
  * @property-read int|null $unclaimed_dividends_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Dividend[] $voided_dividends
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dividend> $voided_dividends
  * @property-read int|null $voided_dividends_count
- * @method static \Database\Factories\ReleaseFactory factory(...$parameters)
+ * @method static \Database\Factories\ReleaseFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|Release newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Release newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Release query()
@@ -596,6 +610,7 @@ namespace App\Models{
  * @method static \Illuminate\Database\Eloquent\Builder|Release whereShareDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Release whereTotalAmount($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Release whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Release whereVotingRestriction($value)
  * @mixin \Eloquent
  */
 	class IdeHelperRelease {}
@@ -633,7 +648,7 @@ namespace App\Models{
  * @property string $name
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\User[] $users
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\User> $users
  * @property-read int|null $users_count
  * @method static \Illuminate\Database\Eloquent\Builder|Role newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Role newQuery()
@@ -666,32 +681,36 @@ namespace App\Models{
  * @property string|null $full_name
  * @property string|null $alt_full_name
  * @property-read \App\Models\Restriction|null $active_restriction
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Dividend[] $cashier_released_dividends
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dividend> $cashier_released_dividends
  * @property-read int|null $cashier_released_dividends_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Cluster[] $clusters_lead
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Cluster> $clusters_lead
  * @property-read int|null $clusters_lead_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DailyCash[] $daily_cash_ends
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\DailyCash> $daily_cash_ends
  * @property-read int|null $daily_cash_ends_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DailyCash[] $daily_cash_starts
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\DailyCash> $daily_cash_starts
  * @property-read int|null $daily_cash_starts_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\DailyCash[] $daily_cashes
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\DailyCash> $daily_cashes
  * @property-read int|null $daily_cashes_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Dividend[] $dividends
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Dividend> $dividends
  * @property-read int|null $dividends_count
- * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection|\Spatie\MediaLibrary\MediaCollections\Models\Media[] $media
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\ElderlyIncentive> $elderly_incentives
+ * @property-read int|null $elderly_incentives_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\FreeLot> $free_lots
+ * @property-read int|null $free_lots_count
+ * @property-read \Spatie\MediaLibrary\MediaCollections\Models\Collections\MediaCollection<int, \Spatie\MediaLibrary\MediaCollections\Models\Media> $media
  * @property-read int|null $media_count
  * @property-read \App\Models\MemberInformation|null $member_information
- * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
+ * @property-read \Illuminate\Notifications\DatabaseNotificationCollection<int, \Illuminate\Notifications\DatabaseNotification> $notifications
  * @property-read int|null $notifications_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Restriction[] $restrictions
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Restriction> $restrictions
  * @property-read int|null $restrictions_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Role[] $roles
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Role> $roles
  * @property-read int|null $roles_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\MemberInformation[] $successors
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\MemberInformation> $successors
  * @property-read int|null $successors_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
  * @property-read int|null $tokens_count
- * @method static \Database\Factories\UserFactory factory(...$parameters)
+ * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder|User newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|User onHold()

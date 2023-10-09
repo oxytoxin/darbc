@@ -6,6 +6,9 @@ use App\Casts\MoneyCast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @mixin IdeHelperElderlyIncentiveType
+ */
 class ElderlyIncentiveType extends Model
 {
     use HasFactory;

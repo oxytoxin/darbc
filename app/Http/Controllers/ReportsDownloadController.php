@@ -59,7 +59,7 @@ class ReportsDownloadController extends Controller
             $members
                 ->when(request('status') == 'active', fn ($query) => $query->whereStatus(MemberInformation::STATUS_ACTIVE))
                 ->when(request('status') == 'deceased', fn ($query) => $query->whereStatus(MemberInformation::STATUS_DECEASED))
-                ->when(request('status') == 'original', fn ($query) => $query->whereMembershipStatusId(MembershipStatus::ORIGINAL))
+                ->when(request('status') == 'original', fn ($query) => $query->original())
                 ->when(request('status') == 'replacement', fn ($query) => $query->whereMembershipStatusId(MembershipStatus::REPLACEMENT));
         }
         $members->each(function ($member) use ($writer) {

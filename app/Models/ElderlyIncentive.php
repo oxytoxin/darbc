@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use NumberFormatter;
 
+/**
+ * @mixin IdeHelperElderlyIncentive
+ */
 class ElderlyIncentive extends Model
 {
     use HasFactory, SoftDeletes;

@@ -105,7 +105,7 @@ class MemberManagement extends Component implements HasTable
                             $query->whereStatus(MemberInformation::STATUS_ACTIVE);
                             break;
                         case 'original':
-                            $query->whereMembershipStatusId(MembershipStatus::ORIGINAL);
+                            $query->original();
                             break;
                         case 'replacement':
                             $query->whereMembershipStatusId(MembershipStatus::REPLACEMENT);
