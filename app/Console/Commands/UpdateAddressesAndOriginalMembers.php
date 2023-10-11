@@ -7,6 +7,7 @@ use Illuminate\Console\Command;
 use App\Models\MembershipStatus;
 use App\Models\MemberInformation;
 use Spatie\SimpleExcel\SimpleExcelReader;
+use Spatie\SimpleExcel\SimpleExcelWriter;
 
 class UpdateAddressesAndOriginalMembers extends Command
 {
@@ -32,10 +33,16 @@ class UpdateAddressesAndOriginalMembers extends Command
     public function handle()
     {
         DB::beginTransaction();
+        $rows = SimpleExcelReader::create(storage_path('csv/existing_addresses.xlsx'))->getRows();
+        $rows->each(function ($data) {
+            MemberInformation::find($data['member_id'])?->update([
+                'address_line' => $data['address_line']
+            ]);
+        });
         MemberInformation::whereIsDarbcMember(true)->update(['membership_status_id' => MembershipStatus::ORIGINAL]);
         $rows = SimpleExcelReader::create(storage_path('csv/addresses.xlsx'))->getRows();
         $rows->each(function ($row) {
-            MemberInformation::whereDarbcId($row['darbc_id'])->update([
+            MemberInformation::whereDarbcId($row['darbc_id'])->whereNull('address_line')->update([
                 'address_line' => $row['address']
             ]);
         });
