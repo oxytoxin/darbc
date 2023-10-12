@@ -9,7 +9,7 @@
             ->append('-' . now()->timestamp)
             ->toString(),
     ]);
-    
+
     $isReplacement = $this->data['membership_status'] == 2;
     $succession_number = 0;
     $original_member_id = null;
@@ -18,7 +18,7 @@
         $succession_number = $toReplace->succession_number + 1;
         $original_member_id = $toReplace->user_id;
     }
-    
+
     $member_information = App\Models\MemberInformation::make([
         'status' => $this->data['status'],
         'darbc_id' => $this->data['darbc_id'],
@@ -94,23 +94,7 @@
         <hr>
         <div class="grid grid-cols-2 gap-2">
             <p>
-                <span class="font-semibold">Region: </span>
-                <span>{{ $member_information->region?->description }}</span>
-            </p>
-            <p>
-                <span class="font-semibold">Province: </span>
-                <span>{{ $member_information->province?->description }}</span>
-            </p>
-            <p>
-                <span class="font-semibold">City: </span>
-                <span>{{ $member_information->city?->description }}</span>
-            </p>
-            <p>
-                <span class="font-semibold">Barangay: </span>
-                <span>{{ $member_information->barangay?->description }}</span>
-            </p>
-            <p>
-                <span class="font-semibold">Address Line: </span>
+                <span class="font-semibold">Address: </span>
                 <span>{{ $member_information->address_line }}</span>
             </p>
         </div>

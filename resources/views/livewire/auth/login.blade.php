@@ -11,7 +11,7 @@
 
             @env('local')
             <div class="space-y-2 mx-auto text-center mt-4">
-                <x-login-link :user-attributes="['username' => 'admin']" label="Login as admin" />
+                <x-login-link :user-attributes="['username' => 'DARBCMEMBERSHIP']" label="Login as admin" />
                 <x-login-link :user-attributes="['username' => 'cashier1']" label="Login as cashier1" />
                 <x-login-link :user-attributes="['username' => 'cashier2']" label="Login as cashier2" />
                 <x-login-link :user-attributes="['username' => 'cashier19']" label="Login as cashier19" />

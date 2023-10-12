@@ -133,21 +133,9 @@ class MemberInformationQuery extends Component implements HasTable
             TextColumn::make('occupation_details')
                 ->visible(fn () => $this->tableFilters['occupation_details']['isActive'])
                 ->label('Occupation Details'),
-            TextColumn::make('region.description')
-                ->visible(fn () => $this->tableFilters['region_description']['isActive'])
-                ->label('Region'),
-            TextColumn::make('province.description')
-                ->visible(fn () => $this->tableFilters['province_description']['isActive'])
-                ->label('Province'),
-            TextColumn::make('city.description')
-                ->visible(fn () => $this->tableFilters['city_description']['isActive'])
-                ->label('City'),
-            TextColumn::make('barangay.description')
-                ->visible(fn () => $this->tableFilters['barangay_description']['isActive'])
-                ->label('Barangay'),
             TextColumn::make('address_line')
                 ->visible(fn () => $this->tableFilters['address_line']['isActive'])
-                ->label('Address Line'),
+                ->label('Address'),
             BadgeColumn::make('civil_status')
                 ->enum([
                     MemberInformation::CS_SINGLE => 'Single',
@@ -235,14 +223,8 @@ class MemberInformationQuery extends Component implements HasTable
                 ->label('Occupation Details'),
             Filter::make('region_description')
                 ->label('Region'),
-            Filter::make('province_description')
-                ->label('Province'),
-            Filter::make('city_description')
-                ->label('City'),
-            Filter::make('barangay_description')
-                ->label('Barangay'),
             Filter::make('address_line')
-                ->label('Address Line'),
+                ->label('Address'),
             Filter::make('civil_status')
                 ->label('Civil Status'),
             Filter::make('mother_maiden_name')
