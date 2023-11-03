@@ -122,8 +122,20 @@ class RegisterMember extends Component implements HasForms
                 Step::make('Address')
                     ->description('Add complete address.')
                     ->schema([
+                        Select::make('data.address.region')
+                            ->reactive()
+                            ->options(Region::pluck('description', 'code')),
+                        Select::make('data.address.province')
+                            ->reactive()
+                            ->options(fn ($get) => Province::when($get('data.address.region'), fn ($q) => $q->whereRegionCode($get('data.address.region')))->pluck('description', 'code')),
+                        Select::make('data.address.city')
+                            ->reactive()
+                            ->options(fn ($get) => City::when($get('data.address.province'), fn ($q) => $q->whereProvinceCode($get('data.address.province')))->pluck('description', 'code')),
+                        Select::make('data.address.barangay')
+                            ->reactive()
+                            ->options(fn ($get) => Barangay::when($get('data.address.city'), fn ($q) => $q->whereCityCode($get('data.address.city')))->pluck('description', 'code')),
                         TextInput::make('data.address.address_line')
-                            ->label('Address')
+                            ->label('Address Line'),
                     ]),
                 Step::make('Occupation')
                     ->description('Identify your occupation.')
@@ -268,6 +280,21 @@ class RegisterMember extends Component implements HasForms
                 $original_member_id = $toReplace->user_id;
             }
         }
+
+        $region = Region::firstWhere('code', $this->data['address']['region'])?->description;
+        $province = Province::firstWhere('code', $this->data['address']['province'])?->description;
+        $city = City::firstWhere('code', $this->data['address']['city'])?->description;
+        $barangay = Barangay::firstWhere('code', $this->data['address']['barangay'])?->description;
+        $addresses = [];
+        if (filled($this->data['address']['address_line'])) {
+            $addresses[] = $this->data['address']['address_line'];
+        }
+        $addresses[] = $barangay;
+        $addresses[] = $city;
+        $addresses[] = $province;
+        $addresses[] = $region;
+        $address = implode(', ', $addresses);
+
         $member_information = MemberInformation::create([
             'percentage' => $this->data['percentage'],
             'status' => $this->data['status'],
@@ -286,7 +313,7 @@ class RegisterMember extends Component implements HasForms
             'membership_status_id' => $this->data['membership_status'],
             'occupation_id' => $this->data['occupation'],
             'occupation_details' => $this->data['occupation_details'],
-            'address_line' => $this->data['address']['address_line'],
+            'address_line' => $address,
             'civil_status' => $this->data['civil_status'],
             'spouse' => $this->data['spouse'],
             'mother_maiden_name' => $this->data['mother_maiden_name'],

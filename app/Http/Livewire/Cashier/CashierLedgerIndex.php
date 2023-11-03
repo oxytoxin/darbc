@@ -70,6 +70,7 @@ class CashierLedgerIndex extends Component implements HasTable
             SelectFilter::make('status')
                 ->label('Status')
                 ->placeholder('All')
+                ->default(MemberInformation::STATUS_ACTIVE)
                 ->options([
                     MemberInformation::STATUS_ACTIVE => 'Active',
                     MemberInformation::STATUS_DECEASED => 'Deceased',

@@ -96,8 +96,24 @@ class UpdateMemberInformation extends Component implements HasForms
                             ->options(MembershipStatus::pluck('name', 'id'))
                             ->required()
                             ->disablePlaceholderSelection(),
+                        Placeholder::make('address')->content(fn () => $this->data['full_address']),
+                    ]),
+                Fieldset::make('Address')
+                    ->schema([
+                        Select::make('address.region')
+                            ->reactive()
+                            ->options(Region::pluck('description', 'code')),
+                        Select::make('address.province')
+                            ->reactive()
+                            ->options(fn ($get) => Province::when($get('address.region'), fn ($q) => $q->whereRegionCode($get('address.region')))->pluck('description', 'code')),
+                        Select::make('address.city')
+                            ->reactive()
+                            ->options(fn ($get) => City::when($get('address.province'), fn ($q) => $q->whereProvinceCode($get('address.province')))->pluck('description', 'code')),
+                        Select::make('address.barangay')
+                            ->reactive()
+                            ->options(fn ($get) => Barangay::when($get('address.city'), fn ($q) => $q->whereCityCode($get('address.city')))->pluck('description', 'code')),
                         TextInput::make('address.address_line')
-                            ->label('Address')
+                            ->label('Address Line')
                     ]),
                 Fieldset::make('Occupation Details')
                     ->schema([
@@ -223,8 +239,8 @@ class UpdateMemberInformation extends Component implements HasForms
             'contact_number' => $this->member->contact_number,
             'spa' => $this->member->spa,
             'holographic' => $this->member->holographic,
+            'full_address' => $this->member->address_line,
         ]);
-        $this->data['address']['address_line'] = $this->member->address_line;
     }
 
     public function render()
@@ -241,6 +257,19 @@ class UpdateMemberInformation extends Component implements HasForms
             throw $th;
         }
         DB::beginTransaction();
+        $region = Region::firstWhere('code', $this->data['address']['region'])?->description;
+        $province = Province::firstWhere('code', $this->data['address']['province'])?->description;
+        $city = City::firstWhere('code', $this->data['address']['city'])?->description;
+        $barangay = Barangay::firstWhere('code', $this->data['address']['barangay'])?->description;
+        $addresses = [];
+        if (filled($this->data['address']['address_line'])) {
+            $addresses[] = $this->data['address']['address_line'];
+        }
+        $addresses[] = $barangay;
+        $addresses[] = $city;
+        $addresses[] = $province;
+        $addresses[] = $region;
+        $address = implode(', ', $addresses);
         $this->member->user()->update([
             'first_name' => $this->data['first_name'],
             'surname' => $this->data['surname'],
@@ -258,7 +287,7 @@ class UpdateMemberInformation extends Component implements HasForms
             'status' => $this->data['status'],
             'cluster_id' => $this->data['cluster_id'],
             'membership_status_id' => $this->data['membership_status_id'],
-            'address_line' => $this->data['address']['address_line'],
+            'address_line' => $address,
             'occupation_id' => $this->data['occupation'],
             'occupation_details' => $this->data['occupation_details'],
             'civil_status' => $this->data['civil_status'],
@@ -275,6 +304,7 @@ class UpdateMemberInformation extends Component implements HasForms
         if ($this->data['profile_photo']) {
             $this->member->addMedia(collect($this->data['profile_photo'])?->first())->toMediaCollection('profile_photo');
         }
+        $this->data['full_address'] = $this->member->address_line;
         DB::commit();
         Notification::make()->title('Changes saved!')->success()->send();
     }

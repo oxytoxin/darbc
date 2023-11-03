@@ -12,6 +12,7 @@
                 </div>
             </div>
         </div>
+        <x-filament::button tag="a" href="{{ route('member-form-print', ['member' => $member]) }}" icon="heroicon-o-printer">Print Member Form</x-filament::button>
     </div>
     <div class="my-4 p-4 border-2 rounded-lg">
         <h3 class="font-semibold">Documents</h3>

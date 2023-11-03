@@ -19,6 +19,20 @@
         $original_member_id = $toReplace->user_id;
     }
 
+    $region = App\Models\Region::firstWhere('code', $this->data['address']['region'])?->description;
+    $province = App\Models\Province::firstWhere('code', $this->data['address']['province'])?->description;
+    $city = App\Models\City::firstWhere('code', $this->data['address']['city'])?->description;
+    $barangay = App\Models\Barangay::firstWhere('code', $this->data['address']['barangay'])?->description;
+    $addresses = [];
+    if (filled($this->data['address']['address_line'])) {
+        $addresses[] = $this->data['address']['address_line'];
+    }
+    $addresses[] = $barangay;
+    $addresses[] = $city;
+    $addresses[] = $province;
+    $addresses[] = $region;
+    $address = implode(', ', $addresses);
+
     $member_information = App\Models\MemberInformation::make([
         'status' => $this->data['status'],
         'darbc_id' => $this->data['darbc_id'],
@@ -34,7 +48,7 @@
         'membership_status_id' => $this->data['membership_status'],
         'occupation_id' => $this->data['occupation'],
         'occupation_details' => $this->data['occupation_details'],
-        'address_line' => $this->data['address']['address_line'],
+        'address_line' => $address,
         'civil_status' => $this->data['civil_status'],
         'children' => collect($this->data['children'])->values(),
         'sss_number' => $this->data['sss_number'],
