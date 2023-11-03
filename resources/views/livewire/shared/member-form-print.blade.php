@@ -2,7 +2,7 @@
     <div class="space-y-8">
         <h1 class="text-xl font-bold text-primary-500">Print Member Form</h1>
     </div>
-    <div x-ref="print" class="mx-auto max-w-4xl space-y-4">
+    <div x-ref="print" class="mx-auto max-w-4xl space-y-4 bg-white p-4">
         <div class="flex">
             <div class="flex items-center gap-8 flex-1">
                 <img class="w-[5rem] h-[5rem]" src="/assets/darbc-logo.svg" alt="darbc logo">
