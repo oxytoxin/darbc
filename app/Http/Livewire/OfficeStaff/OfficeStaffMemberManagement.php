@@ -28,4 +28,9 @@ class OfficeStaffMemberManagement extends MemberManagement
     {
         return route('office-staff.register-members');
     }
+
+    public function getEditMemberRoute(Model $record)
+    {
+        return route('office-staff.manage-members.edit', ['member' => $record]);
+    }
 }

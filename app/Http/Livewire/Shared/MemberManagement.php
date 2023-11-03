@@ -153,7 +153,7 @@ class MemberManagement extends Component implements HasTable
                 ->url(fn ($record) => $this->getMemberClaimsRoute($record)),
             ActionGroup::make([
                 EditAction::make('edit')
-                    ->url(fn ($record) => route('release-admin.manage-members.edit', ['member' => $record]))
+                    ->url(fn ($record) => $this->getEditMemberRoute($record))
                     ->color('success')
                     ->button(),
                 DeleteAction::make('delete')
@@ -196,6 +196,11 @@ class MemberManagement extends Component implements HasTable
     }
 
     public function getAddMemberRoute()
+    {
+        return '#';
+    }
+
+    public function getEditMemberRoute(Model $record)
     {
         return '#';
     }

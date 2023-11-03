@@ -29,4 +29,9 @@ class ReleaseAdminMemberManagement extends MemberManagement
     {
         return route('release-admin.register-members');
     }
+
+    public function getEditMemberRoute(Model $record)
+    {
+        return route('office-staff.manage-members.edit', ['member' => $record]);
+    }
 }
