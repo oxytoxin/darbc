@@ -90,7 +90,7 @@
 
         @if (filled($member->spouse))
             <div class="flex gap-2">
-                <h4>Name of Spouse</h4>
+                <h4 class="font-bold">Name of Spouse:</h4>
                 <h4>{{ $member->spouse }}</h4>
             </div>
         @endif
@@ -110,16 +110,13 @@
                     @forelse ($member->children as $child)
                         <tr>
                             <td class="border border-black">{{ $child['name'] }}</td>
-                            <td class="border border-black">{{ $child['name'] }}</td>
-                            <td class="border border-black">{{ $child['name'] }}</td>
-                            <td class="border border-black">{{ $child['name'] }}</td>
+                            <td class="border border-black">{{ $child['date_of_birth'] }}</td>
+                            <td class="border border-black">{{ $child['educational_attainment'] }}</td>
+                            <td class="border border-black">{{ $child['blood_type'] }}</td>
                         </tr>
                     @empty
                         <tr>
-                            <td class="border border-black">&nbsp;</td>
-                            <td class="border border-black">&nbsp;</td>
-                            <td class="border border-black">&nbsp;</td>
-                            <td class="border border-black">&nbsp;</td>
+                            <td class="border border-black text-center font-bold" colspan="4">No children</td>
                         </tr>
                     @endforelse
                 </tbody>
@@ -156,7 +153,7 @@
                 <h4>{{ $member->application_date?->format('F d, Y') }}</h4>
             </div>
             <div class="flex gap-2">
-                <h4>Signature of Member</h4>
+                <h4 class="font-bold">Signature of Member:</h4>
                 <h4>&nbsp;</h4>
             </div>
         </div>

@@ -13,9 +13,11 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Illuminate\Database\Eloquent\Relations\Relation;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use Filament\Forms\Components\Select;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
 use Filament\Tables\Filters\SelectFilter;
+use Spatie\SimpleExcel\SimpleExcelWriter;
 
 class ClusterMembers extends Component implements HasTable
 {
@@ -26,9 +28,26 @@ class ClusterMembers extends Component implements HasTable
     protected function getTableHeaderActions(): array
     {
         return [
-            FilamentExportHeaderAction::make('Export')
-                ->fileNamePrefix('Cluster ' . $this->cluster->name . ' - ' . str($this->cluster->address)->replace('/', '-')->replace('\\', '-') . ' Members')
-                ->directDownload(),
+            Action::make('export')
+                ->action(function () {
+                    $file_name = 'Cluster ' . $this->cluster->name . ' - ' . str($this->cluster->address)->replace('/', '-')->replace('\\', '-') . ' Members.xlsx';
+                    $file_name = preg_replace('/[^a-zA-Z0-9.]+/', '-', $file_name);
+                    $writer = SimpleExcelWriter::create(storage_path("app/livewire-tmp/" . $file_name));
+                    $writer->addHeader([
+                        'DARBC ID',
+                        'Member Name',
+                        'Succession Number',
+                    ]);
+                    $this->getFilteredTableQuery()->with('user')->orderBy('darbc_id')->each(function ($member) use ($writer) {
+                        $writer->addRow([
+                            $member->darbc_id,
+                            $member->user->alt_full_name,
+                            $member->succession_number == 0 ? 'Original' : ordinal($member->succession_number) . ' Successor'
+                        ]);
+                    });
+                    $writer->close();
+                    return response()->download($writer->getPath());
+                }),
         ];
     }
 
