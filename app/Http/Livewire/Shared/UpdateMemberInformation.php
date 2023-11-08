@@ -290,7 +290,7 @@ class UpdateMemberInformation extends Component implements HasForms
             'status' => $this->data['status'],
             'cluster_id' => $this->data['cluster_id'],
             'membership_status_id' => $this->data['membership_status_id'],
-            'address_line' => $address,
+            'address_line' => ($region && $city && $province && $barangay) ? $address : $this->member->address_line,
             'occupation_id' => $this->data['occupation'],
             'occupation_details' => $this->data['occupation_details'],
             'civil_status' => $this->data['civil_status'],
