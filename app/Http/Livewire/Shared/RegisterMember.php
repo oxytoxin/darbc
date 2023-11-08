@@ -127,12 +127,15 @@ class RegisterMember extends Component implements HasForms
                             ->options(Region::pluck('description', 'code')),
                         Select::make('data.address.province')
                             ->reactive()
+                            ->visible(fn ($get) => $get(('data.address.region')))
                             ->options(fn ($get) => Province::when($get('data.address.region'), fn ($q) => $q->whereRegionCode($get('data.address.region')))->pluck('description', 'code')),
                         Select::make('data.address.city')
                             ->reactive()
+                            ->visible(fn ($get) => $get(('data.address.province')))
                             ->options(fn ($get) => City::when($get('data.address.province'), fn ($q) => $q->whereProvinceCode($get('data.address.province')))->pluck('description', 'code')),
                         Select::make('data.address.barangay')
                             ->reactive()
+                            ->visible(fn ($get) => $get(('data.address.city')))
                             ->options(fn ($get) => Barangay::when($get('data.address.city'), fn ($q) => $q->whereCityCode($get('data.address.city')))->pluck('description', 'code')),
                         TextInput::make('data.address.address_line')
                             ->label('Address Line'),

@@ -105,12 +105,15 @@ class UpdateMemberInformation extends Component implements HasForms
                             ->options(Region::pluck('description', 'code')),
                         Select::make('address.province')
                             ->reactive()
+                            ->visible(fn ($get) => $get(('address.region')))
                             ->options(fn ($get) => Province::when($get('address.region'), fn ($q) => $q->whereRegionCode($get('address.region')))->pluck('description', 'code')),
                         Select::make('address.city')
                             ->reactive()
+                            ->visible(fn ($get) => $get(('address.province')))
                             ->options(fn ($get) => City::when($get('address.province'), fn ($q) => $q->whereProvinceCode($get('address.province')))->pluck('description', 'code')),
                         Select::make('address.barangay')
                             ->reactive()
+                            ->visible(fn ($get) => $get(('address.city')))
                             ->options(fn ($get) => Barangay::when($get('address.city'), fn ($q) => $q->whereCityCode($get('address.city')))->pluck('description', 'code')),
                         TextInput::make('address.address_line')
                             ->label('Address Line')
