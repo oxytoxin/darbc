@@ -20,7 +20,7 @@
         <div class="flex justify-between gap-2">
             <div class="flex gap-2">
                 <h4 class="font-bold">Date of Birth:</h4>
-                <h4>{{ $member->date_of_birth->format('F d, Y') }}</h4>
+                <h4>{{ $member->date_of_birth?->format('F d, Y') }}</h4>
             </div>
             <div class="flex gap-2">
                 <h4 class="font-bold">Age:</h4>
