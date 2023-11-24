@@ -158,7 +158,12 @@ class FreeLotManagement extends Component implements HasTable
                         ->placeholder('All'),
                 ])->query(function ($query, $data) {
                     $query->when($data['status'], fn ($q) => $q->where('status', $data['status']));
-                    $query->when($data['member_status'], fn ($q) => $q->whereRelation('user.member_information', 'status', $data['member_status']));
+                    $query->when(
+                        $data['member_status'],
+                        fn ($q) => $data['member_status'] == MemberInformation::STATUS_ACTIVE ?
+                            $q :
+                            $q->whereRelation('user.member_information', 'status', $data['member_status'])
+                    );
                     $query->when($data['first_name'], fn ($q) => $q->whereRelation('user', 'first_name', "LIKE", "{$data['first_name']}%"));
                     $query->when($data['last_name'], fn ($q) =>  $q->whereRelation('user', 'surname', "LIKE", "{$data['last_name']}%"));
                     $query->when($data['block'], fn ($q) => $q->where('block', $data['block']));

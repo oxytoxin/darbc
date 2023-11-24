@@ -110,7 +110,7 @@
                     @forelse ($member->children as $child)
                         <tr>
                             <td class="border border-black">{{ $child['name'] }}</td>
-                            <td class="border border-black">{{ date_create($child['date_of_birth'])->format('F d, Y') }}</td>
+                            <td class="border border-black">{{ $child['date_of_birth'] ? date_create($child['date_of_birth'])->format('F d, Y') : '' }}</td>
                             <td class="border border-black">{{ $child['educational_attainment'] }}</td>
                             <td class="border border-black">{{ $child['blood_type'] }}</td>
                         </tr>
