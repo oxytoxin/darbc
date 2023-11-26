@@ -112,6 +112,10 @@ class MemberInformationQuery extends Component implements HasTable
                 ->visible(fn () => $this->tableFilters['date_of_birth']['isActive'])
                 ->label('Date of Birth')
                 ->date('F d, Y'),
+            TextColumn::make('deceased_at')
+                ->visible(fn () => $this->tableFilters['deceased_at']['isActive'])
+                ->label('Date of Death')
+                ->date('F d, Y'),
             TextColumn::make('place_of_birth')
                 ->visible(fn () => $this->tableFilters['place_of_birth']['isActive'])
                 ->label('Place of Birth'),
@@ -207,6 +211,8 @@ class MemberInformationQuery extends Component implements HasTable
                 ->label('Ownership'),
             Filter::make('date_of_birth')
                 ->label('Date of Birth'),
+            Filter::make('deceased_at')
+                ->label('Date of Death'),
             Filter::make('place_of_birth')
                 ->label('Place of Birth'),
             Filter::make('gender_name')

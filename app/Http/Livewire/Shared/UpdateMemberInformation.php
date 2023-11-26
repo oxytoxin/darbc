@@ -61,7 +61,11 @@ class UpdateMemberInformation extends Component implements HasForms
                         TextInput::make('suffix')
                             ->label('Suffix'),
                         DatePicker::make('date_of_birth')
+                            ->label('Date of Birth')
                             ->required()
+                            ->withoutTime(),
+                        DatePicker::make('deceased_at')
+                            ->label('Date of Death')
                             ->withoutTime(),
                         TextInput::make('place_of_birth'),
                         Select::make('gender_id')
@@ -204,6 +208,7 @@ class UpdateMemberInformation extends Component implements HasForms
             'darbc_id' => $this->member->darbc_id,
             'percentage' => $this->member->percentage,
             'date_of_birth' => $this->member->date_of_birth,
+            'deceased_at' => $this->member->deceased_at,
             'place_of_birth' => $this->member->place_of_birth,
             'gender_id' => $this->member->gender_id,
             'blood_type' => $this->member->blood_type,
@@ -251,6 +256,7 @@ class UpdateMemberInformation extends Component implements HasForms
             'darbc_id' => $this->data['darbc_id'],
             'percentage' => $this->data['percentage'],
             'date_of_birth' => $this->data['date_of_birth'],
+            'deceased_at' => $this->data['deceased_at'],
             'place_of_birth' => $this->data['place_of_birth'],
             'gender_id' => $this->data['gender_id'],
             'blood_type' => $this->data['blood_type'],
