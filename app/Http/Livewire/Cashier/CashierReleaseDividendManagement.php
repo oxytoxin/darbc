@@ -166,7 +166,7 @@ class CashierReleaseDividendManagement extends Component implements HasForms
                 $printer -> feed(1);
                 if($value['claimed'])
                 {
-                    // $printer -> text($dividend->release->particulars[$value['name']]);
+                    $printer -> text($dividend->release->particulars[$value['name']] ?? "");
                 }else{
                     $printer -> text('UNCLAIMED');
                 }
@@ -215,7 +215,7 @@ class CashierReleaseDividendManagement extends Component implements HasForms
         try {
             $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer -> setEmphasis(true);
-            $printer -> text("Dolefil Agrarian Reform Beneficiaries Cooperative\n");
+            $printer -> text("Dolefil Agrarian Reform\n");
             $printer -> text("Beneficiaries Cooperative\n");
             $printer -> text("(DARBC)\n");
             $printer -> feed(2);
@@ -252,7 +252,7 @@ class CashierReleaseDividendManagement extends Component implements HasForms
                 $printer -> feed(1);
                 if($value['claimed'])
                 {
-                    // $printer -> text($dividend->release->particulars[$value['name']]);
+                    $printer -> text($dividend->release->particulars[$value['name']] ?? "");
                 }else{
                     $printer -> text('UNCLAIMED');
                 }
