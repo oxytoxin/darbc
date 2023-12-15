@@ -2,24 +2,27 @@
 
 namespace App\Http\Livewire\Cashier;
 
+use DB;
+use Http;
 use Livewire\Component;
 use App\Models\Dividend;
-use DB;
+use Akaunting\Money\Money;
+use Mike42\Escpos\Printer;
+use Illuminate\Validation\Rule;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Radio;
+use Intervention\Image\Facades\Image;
+use Filament\Forms\Components\Section;
+use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\Fieldset;
-use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\Placeholder;
-use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
-use Intervention\Image\Facades\Image;
 use Filament\Notifications\Notification;
-use Http;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Concerns\InteractsWithForms;
+use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Validation\Rule;
 
 class CashierReleaseDividendManagement extends Component implements HasForms
 {
@@ -104,6 +107,178 @@ class CashierReleaseDividendManagement extends Component implements HasForms
         $this->emitSelf('closeModal');
     }
 
+    public function printPayslipMember($dividend)
+    {
+        if($dividend->claimed)
+        {
+            $net_amount = 'Php'. number_format($dividend->net_amount, 2);
+        }else{
+            $net_amount = 'UNCLAIMED';
+        }
+
+        $claim_type_name = match ($dividend->claim_type) {
+            1 => 'MEMBER',
+            2 => 'SPA',
+            3 => 'REPRESENTATIVE',
+            default => 'MEMBER',
+        };
+        $printerIp = '1.0.0.73';
+        $printerPort = 9100;
+        $connector = new NetworkPrintConnector($printerIp, $printerPort);
+        $printer = new Printer($connector);
+        try {
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer -> setEmphasis(true);
+            $printer -> text("Dolefil Agrarian Reform\n");
+            $printer -> text("Beneficiaries Cooperative\n");
+            $printer -> text("(DARBC)\n");
+            $printer -> feed(2);
+            $printer -> text("MEMBERS COPY\n");
+            $printer -> feed(2);
+            $printer->setJustification(Printer::JUSTIFY_LEFT);
+            $printer -> text("Name: ". $dividend->user->full_name);
+            $printer -> feed(1);
+            $printer -> text("Member No. : ". $dividend->user->member_information->darbc_id);
+            $printer -> feed(1);
+            $printer -> setEmphasis(false);
+            $printer -> text("Date : ".  $dividend->released_at->format('m/d/Y'));
+            $printer -> feed(1);
+            $printer -> text("Time : ".  $dividend->released_at->format('h:i A'));
+            $printer -> feed(2);
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer -> setEmphasis(true);
+            $printer -> text($dividend->release->name."\n");
+            $printer -> setEmphasis(false);
+            $printer -> feed(1);
+            $printer->setJustification(Printer::JUSTIFY_LEFT);
+            $printer -> text($dividend->release->share_description.":  ".$net_amount);
+            $printer -> feed(1);
+            if (!$dividend->user->member_information->split_claim && ($dividend->release->gift_certificate_prefix || $dividend->release->gift_certificate_amount > 0))
+            {
+                $gift_certificate_number = $dividend->gift_certificate_control_number ? $dividend->release->gift_certificate_prefix . $dividend->gift_certificate_control_number : 'UNCLAIMED';
+                $printer -> text("Gift Certificate (worth ".'Php'. number_format($dividend->release->gift_certificate_amount, 2).") :\n");
+                $printer -> text($gift_certificate_number);
+                $printer -> feed(2);
+            }
+            foreach ($dividend->particulars as $key => $value)
+            {
+                $printer -> text($value['name']);
+                $printer -> feed(1);
+                if($value['claimed'])
+                {
+                    // $printer -> text($dividend->release->particulars[$value['name']]);
+                }else{
+                    $printer -> text('UNCLAIMED');
+                }
+            }
+            $printer -> feed(2);
+            $printer -> text("TELLER NAME:  ".$dividend->cashier->first_name . ' ' . $dividend->cashier->surname."\n");
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer -> feed(4);
+            $printer -> text( $claim_type_name."'S SIGNATURE:   ");
+            $printer -> setEmphasis(true);
+            // $printer -> text($member_name."\n");
+            if($dividend->claimed_by)
+            {
+                $printer -> text(strtoupper($dividend->claimed_by));
+            }else{
+                $printer -> text(strtoupper($dividend->user->full_name));
+            }
+            $printer -> setEmphasis(false);
+            $printer -> feed(2);
+            $printer -> cut();
+            $printer -> close();
+        } finally {
+            $printer -> close();
+        }
+    }
+
+    public function printPayslipDARBC($dividend)
+    {
+        if($dividend->claimed)
+        {
+            $net_amount = 'Php'. number_format($dividend->net_amount, 2);
+        }else{
+            $net_amount = 'UNCLAIMED';
+        }
+
+        $claim_type_name = match ($dividend->claim_type) {
+            1 => 'MEMBER',
+            2 => 'SPA',
+            3 => 'REPRESENTATIVE',
+            default => 'MEMBER',
+        };
+        $printerIp = '1.0.0.73';
+        $printerPort = 9100;
+        $connector = new NetworkPrintConnector($printerIp, $printerPort);
+        $printer = new Printer($connector);
+        try {
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer -> setEmphasis(true);
+            $printer -> text("Dolefil Agrarian Reform Beneficiaries Cooperative\n");
+            $printer -> text("Beneficiaries Cooperative\n");
+            $printer -> text("(DARBC)\n");
+            $printer -> feed(2);
+            $printer -> text("DARBC COPY\n");
+            $printer -> feed(2);
+            $printer->setJustification(Printer::JUSTIFY_LEFT);
+            $printer -> text("Name: ". $dividend->user->full_name);
+            $printer -> feed(1);
+            $printer -> text("Member No. : ". $dividend->user->member_information->darbc_id);
+            $printer -> feed(1);
+            $printer -> setEmphasis(false);
+            $printer -> text("Date : ".  $dividend->released_at->format('m/d/Y'));
+            $printer -> feed(1);
+            $printer -> text("Time : ".  $dividend->released_at->format('h:i A'));
+            $printer -> feed(2);
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer -> setEmphasis(true);
+            $printer -> text($dividend->release->name."\n");
+            $printer -> setEmphasis(false);
+            $printer -> feed(1);
+            $printer->setJustification(Printer::JUSTIFY_LEFT);
+            $printer -> text($dividend->release->share_description.":  ".$net_amount);
+            $printer -> feed(1);
+            if (!$dividend->user->member_information->split_claim && ($dividend->release->gift_certificate_prefix || $dividend->release->gift_certificate_amount > 0))
+            {
+                $gift_certificate_number = $dividend->gift_certificate_control_number ? $dividend->release->gift_certificate_prefix . $dividend->gift_certificate_control_number : 'UNCLAIMED';
+                $printer -> text("Gift Certificate (worth ".'Php'. number_format($dividend->release->gift_certificate_amount, 2).") :\n");
+                $printer -> text($gift_certificate_number);
+                $printer -> feed(2);
+            }
+            foreach ($dividend->particulars as $key => $value)
+            {
+                $printer -> text($value['name']);
+                $printer -> feed(1);
+                if($value['claimed'])
+                {
+                    // $printer -> text($dividend->release->particulars[$value['name']]);
+                }else{
+                    $printer -> text('UNCLAIMED');
+                }
+            }
+            $printer -> feed(2);
+            $printer -> text("TELLER NAME:  ".$dividend->cashier->first_name . ' ' . $dividend->cashier->surname."\n");
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer -> feed(4);
+            $printer -> text( $claim_type_name."'S SIGNATURE:   ");
+            $printer -> setEmphasis(true);
+            // $printer -> text($member_name."\n");
+            if($dividend->claimed_by)
+            {
+                $printer -> text(strtoupper($dividend->claimed_by));
+            }else{
+                $printer -> text(strtoupper($dividend->user->full_name));
+            }
+            $printer -> setEmphasis(false);
+            $printer -> feed(2);
+            $printer -> cut();
+            $printer -> close();
+        } finally {
+            $printer -> close();
+        }
+    }
+
     public function release()
     {
         $this->form->validate();
@@ -130,9 +305,11 @@ class CashierReleaseDividendManagement extends Component implements HasForms
             'claim_type' => $this->data['claim_type'],
             'claimed_by' => $this->data['claim_type'] != 1 && $this->data['claimed'] ? $this->data['claimed_by'] : null,
         ]);
-
         DB::commit();
+        $this->printPayslipMember($this->dividend);
+        sleep(1);
+        $this->printPayslipDARBC($this->dividend);
         Notification::make()->title('Dividend released successfully.')->success()->send();
-        return redirect()->route('cashier.dividends.payslip', ['dividend' => $this->dividend]);
+        return redirect()->route('cashier.releases.dividends', ['release' => $this->dividend->release]);
     }
 }
