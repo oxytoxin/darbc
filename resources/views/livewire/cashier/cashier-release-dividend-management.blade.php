@@ -161,6 +161,11 @@
                     </x-filament-support::button>
                 </div>
             @endif
+            <div class="mt-4 flex flex-col">
+                <label for="printer_ip">Printer IP</label>
+                <input type="text" wire:model.defer="printer_ip" class="rounded">
+            </div>
+
         </div>
     </div>
 </div>
