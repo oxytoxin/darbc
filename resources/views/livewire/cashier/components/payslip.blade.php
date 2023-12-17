@@ -45,9 +45,10 @@
                     @endif
                     @foreach ($dividend->particulars as $key => $value)
                         <div class="flex justify-between">
-                            <p>{{ $value['name'] }}</p>
-                            <p>&nbsp;{{ $value['claimed'] ? $dividend->release->particulars[$value['name']] : 'UNCLAIMED' }}</p>
-                        </div>
+                            <p>{{ $value['name'] }}</p> 
+                            <p>&nbsp;{{$dividend->release->particulars[$value['name']] ?? ""}}</p>
+                            {{-- <p>&nbsp;{{ $value['claimed'] ? $dividend->release->particulars[$value['name']] : 'UNCLAIMED' }}</p> --}}
+                            </div>
                     @endforeach
                 </div>
                 <div class="flex border-t-2 border-black divide-x-2 divide-black">
