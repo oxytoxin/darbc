@@ -146,6 +146,8 @@ class AdminUserManagement extends Component implements HasTable
                         ->label('Username')
                         ->unique('users', 'username', $record)
                         ->required(),
+                    TextInput::make('ip_address')
+                        ->label('IP Address'),
                     TextInput::make('password')
                         ->label('Password')
                         ->password(),

@@ -11,6 +11,8 @@ use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Concerns\InteractsWithTable;
+use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
+use Mike42\Escpos\Printer;
 
 class CashierReleasesIndex extends Component implements HasTable
 {
@@ -38,6 +40,41 @@ class CashierReleasesIndex extends Component implements HasTable
                 ->extraAttributes(['class' => 'flex justify-center'])
                 ->boolean(),
         ];
+    }
+
+    protected function getTableHeaderActions()
+    {
+        return[
+            Action::make('test_printer')
+            ->label('Test Printer')
+            ->button()
+            ->color('primary')
+            ->action(function () {
+               $this->testPrinter();
+
+            })
+        ];
+        
+
+    }
+
+    public function testPrinter()
+    {
+        $printerIp = auth()->user()->ip_address;
+        $printerPort = 9100;
+        $connector = new NetworkPrintConnector($printerIp);
+        $printer = new Printer($connector);
+        try {
+            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->text(auth()->user()->name);
+            $printer->feed(4);
+            $printer->text("Printer is good to go!");
+            $printer->feed(4);
+            $printer->cut();
+            $printer->close();
+        } finally {
+            $printer -> close();
+        }
     }
 
     protected function getTableActions()
