@@ -297,15 +297,19 @@ class CashierReleaseDividendManagement extends Component implements HasForms
             'claim_type' => $this->data['claim_type'],
             'claimed_by' => $this->data['claim_type'] != 1 && $this->data['claimed'] ? $this->data['claimed_by'] : null,
         ]);
-        try {
-            $this->printPayslipMember($this->dividend);
-            sleep(1);
-            $this->printPayslipDARBC($this->dividend);
-        } catch (\Throwable $e) {
-            Notification::make()->title('Failed to connect to printer. Check if IP is correct.')->danger()->send();
-            DB::rollBack();
-            return;
-        }
+
+        $this->printPayslipMember($this->dividend);
+        sleep(1);
+        $this->printPayslipDARBC($this->dividend);
+        // try {
+        //     $this->printPayslipMember($this->dividend);
+        //     sleep(1);
+        //     $this->printPayslipDARBC($this->dividend);
+        // } catch (\Throwable $e) {
+        //     Notification::make()->title('Failed to connect to printer. Check if IP is correct.')->danger()->send();
+        //     DB::rollBack();
+        //     return;
+        // }
         DB::commit();
 
         Notification::make()->title('Dividend released successfully.')->success()->send();
