@@ -97,6 +97,9 @@ class MemberInformationQuery extends Component implements HasTable
             TextColumn::make('user.first_name')
                 ->visible(fn () => $this->tableFilters['user_first_name']['isActive'])
                 ->label('First Name'),
+            TextColumn::make('user.middle_name')
+                ->visible(fn () => $this->tableFilters['user_middle_name']['isActive'])
+                ->label('Middle Name'),
             TextColumn::make('cluster.name')
                 ->visible(fn () => $this->tableFilters['cluster']['isActive'])
                 ->label('Cluster'),
@@ -206,6 +209,9 @@ class MemberInformationQuery extends Component implements HasTable
             Filter::make('user_first_name')
                 ->default()
                 ->label('First Name'),
+            Filter::make('user_middle_name')
+                ->default()
+                ->label('Middle Name'),
             Filter::make('succession_number')
                 ->default()
                 ->label('Ownership'),
@@ -267,6 +273,8 @@ class MemberInformationQuery extends Component implements HasTable
                         ->placeholder('ALL'),
                     TextInput::make('first_name')
                         ->label('First Name'),
+                    TextInput::make('middle_name')
+                        ->label('Middle Name'),
                     TextInput::make('last_name')
                         ->label('Last Name'),
                     Select::make('ownership')
@@ -307,6 +315,7 @@ class MemberInformationQuery extends Component implements HasTable
                     $query->when($data['status'], fn ($q) => $q->where('status', $data['status']));
                     $query->when($data['first_name'], fn ($q) => $q->whereRelation('user', 'first_name', 'like', "%{$data['first_name']}%"));
                     $query->when($data['last_name'], fn ($q) => $q->whereRelation('user', 'surname', 'like', "%{$data['last_name']}%"));
+                    $query->when($data['middle_name'], fn ($q) => $q->whereRelation('user', 'middle_name', 'like', "%{$data['middle_name']}%"));
                     $query->when($data['ownership'], fn ($q) => $q->where('membership_status_id', $data['ownership']));
                     $query->when($data['civil_status'], fn ($q) => $q->where('civil_status', $data['civil_status']));
                     $query->when($data['occupation'], fn ($q) => $q->where('occupation_id', $data['occupation']));
