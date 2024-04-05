@@ -28,6 +28,11 @@ class Release extends Model
         );
     }
 
+    public function payslip()
+    {
+        return $this->hasOne(Payslip::class);
+    }
+
     public function dividends()
     {
         return $this->hasMany(Dividend::class);

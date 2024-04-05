@@ -10,12 +10,16 @@ use App\Http\Livewire\Cashier\CashierReleasesIndex;
 use App\Http\Livewire\Cashier\CashierReleaseDividends;
 use App\Http\Livewire\Cashier\CashierDailyCashManagement;
 use App\Http\Livewire\Cashier\CashierCashMonitoringReport;
+use App\Http\Livewire\Cashier\CashierPayslipEntries;
+use App\Http\Livewire\Cashier\CashierPayslipsIndex;
 use App\Http\Livewire\Cashier\CashierReleasedDividendsHistory;
 use App\Http\Livewire\Cashier\CashierReleaseDividendManagement;
 
 Route::middleware(['auth', 'role:' . Role::CASHIER])->prefix('cashier')->name('cashier.')->group(function () {
     Route::get('/', CashierDashboard::class)->name('dashboard');
     Route::get('/releases', CashierReleasesIndex::class)->name('releases.index');
+    Route::get('/payslips', CashierPayslipsIndex::class)->name('payslips.index');
+    Route::get('/payslips/{payslip}', CashierPayslipEntries::class)->name('payslips.entries');
     Route::get('/releases/{release}/dividends', CashierReleaseDividends::class)->name('releases.dividends');
     Route::get('/dividends/{dividend}/manage', CashierReleaseDividendManagement::class)->name('dividends.manage');
     Route::get('/dividends/{dividend}/payslip', CashierPrintPayslip::class)->name('dividends.payslip');

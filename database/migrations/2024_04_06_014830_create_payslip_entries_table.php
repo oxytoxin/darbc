@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Payslip;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,8 +14,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('ip_address')->nullable();
+        Schema::create('payslip_entries', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(Payslip::class)->constrained()->cascadeOnDelete();
+            $table->string('member_name');
+            $table->json('content')->default(DB::raw("'(JSON_ARRAY())'"));
+            $table->timestamps();
         });
     }
 
@@ -25,8 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            Schema::dropIfExists('ip_address');
-        });
+        Schema::dropIfExists('payslip_entries');
     }
 };

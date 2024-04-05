@@ -86,7 +86,7 @@ class CashierReleaseDividendManagement extends Component implements HasForms
         $this->restricted_by_election = $this->dividend->release->voting_restriction;
         $this->authorize('release', $this->dividend);
         $this->printer_ip = auth()->user()->ip_address;
-        
+
         $darbc_id = $this->dividend->user->member_information->darbc_id;
         try {
             $this->voting_status = Http::get(config('services.election.url') . '/api/member-details-darbc-id/' . $darbc_id)->json();
@@ -299,18 +299,12 @@ class CashierReleaseDividendManagement extends Component implements HasForms
             'claimed_by' => $this->data['claim_type'] != 1 && $this->data['claimed'] ? $this->data['claimed_by'] : null,
         ]);
 
-        $this->printPayslipMember($this->dividend);
-        sleep(1);
-        $this->printPayslipDARBC($this->dividend);
-        // try {
-        //     $this->printPayslipMember($this->dividend);
-        //     sleep(1);
-        //     $this->printPayslipDARBC($this->dividend);
-        // } catch (\Throwable $e) {
-        //     Notification::make()->title('Failed to connect to printer. Check if IP is correct.')->danger()->send();
-        //     DB::rollBack();
-        //     return;
-        // }
+        if (!$this->dividend->release->payslip) {
+            $this->printPayslipMember($this->dividend);
+            sleep(1);
+            $this->printPayslipDARBC($this->dividend);
+        }
+
         DB::commit();
 
         Notification::make()->title('Dividend released successfully.')->success()->send();

@@ -44,18 +44,15 @@ class CashierReleasesIndex extends Component implements HasTable
 
     protected function getTableHeaderActions()
     {
-        return[
+        return [
             Action::make('test_printer')
-            ->label('Test Printer')
-            ->button()
-            ->color('primary')
-            ->action(function () {
-               $this->testPrinter();
-
-            })
+                ->label('Test Printer')
+                ->button()
+                ->color('primary')
+                ->action(function () {
+                    $this->testPrinter();
+                })
         ];
-        
-
     }
 
     public function testPrinter()
@@ -73,7 +70,7 @@ class CashierReleasesIndex extends Component implements HasTable
             $printer->cut();
             $printer->close();
         } finally {
-            $printer -> close();
+            $printer->close();
         }
     }
 

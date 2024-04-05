@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Release;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,8 +14,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->string('ip_address')->nullable();
+        Schema::create('payslips', function (Blueprint $table) {
+            $table->id();
+            $table->foreignIdFor(Release::class)->constrained()->cascadeOnDelete();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            Schema::dropIfExists('ip_address');
-        });
+        Schema::dropIfExists('payslips');
     }
 };
