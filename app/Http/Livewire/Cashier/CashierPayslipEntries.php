@@ -123,6 +123,8 @@ class CashierPayslipEntries extends Component implements HasTable
             $printer->text("$title\n");
             $printer->feed(1);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
+            $printer->text("MEMBER ID: " . $payslip_entry->darbc_id);
+            $printer->feed(1);
             $printer->text("Name: " . $payslip_entry->member_name);
             $printer->feed(1);
             $printer->setEmphasis(false);
@@ -132,40 +134,38 @@ class CashierPayslipEntries extends Component implements HasTable
             $printer->feed(1);
             $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->setEmphasis(true);
-            $printer->text($payslip_entry->payslip->release->name . "\n");
+            $printer->text($payslip_entry->payslip->release->name);
             $printer->setEmphasis(false);
             $printer->feed(1);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
             foreach ($payslip_entry->content['items'] as $key => $data) {
-                $printer->text($data['title'] . "\n");
+                $printer->text($data['title']);
                 $printer->feed(1);
                 foreach ($data['entries'] as $key => $entry) {
-                    $printer->text($entry['title'] . ":  " . ($entry['amount'] ?? 'none') . "\n");
+                    $printer->text($entry['title'] . ":  " . ($entry['amount'] ?? 'none'));
                     $printer->feed(1);
                 }
                 $printer->text("------------\n");
                 $printer->feed(1);
-                $printer->text($data['total']['title'] . ":  " . ($data['total']['amount'] ?? 'none') . "\n");
-                $printer->feed(1);
+                $printer->text($data['total']['title'] . ":  " . ($data['total']['amount'] ?? 'none'));
                 $printer->feed(1);
             }
             $printer->feed(1);
             $printer->text("------------\n");
-            $printer->text("Grand Total:  " . (collect($payslip_entry->content['items'])->sum('total.amount')) . "\n");
+            $printer->text("Grand Total:  " . (collect($payslip_entry->content['items'])->sum('total.amount')));
             $printer->feed(1);
             $printer->text("------------\n");
-            $printer->feed(1);
             foreach ($payslip_entry->content['extra'] as $key => $data) {
-                $printer->text($data['title'] . ":  " . ($data['amount'] ?? 'none') . "\n");
+                $printer->text($data['title'] . ":  " . ($data['amount'] ?? 'none'));
                 $printer->feed(1);
                 if ($data['title'] == 'Gift Certificate') {
-                    $printer->text("GC #:  " . $payslip_entry->full_gc_number . "\n");
+                    $printer->text("GC #:  " . $payslip_entry->full_gc_number);
                     $printer->feed(1);
                 }
             }
             $printer->feed(1);
             $printer->setEmphasis(true);
-            $printer->text("TELLER NAME:  " . auth()->user()->first_name . " " . auth()->user()->surname . "\n");
+            $printer->text("TELLER NAME:  " . auth()->user()->first_name . " " . auth()->user()->surname);
             $printer->feed(2);
             $printer->text("MEMBER'S SIGNATURE:   ");
             $printer->feed(2);
