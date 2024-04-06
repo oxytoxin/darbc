@@ -146,6 +146,8 @@ class CashierPayslipEntries extends Component implements HasTable
                 $printer->text("------------\n");
                 $printer->feed(1);
                 $printer->text($data['total']['title'] . ":  " . ($data['total']['amount'] ?? 'none') . "\n");
+                $printer->feed(1);
+                $printer->feed(1);
             }
             $printer->feed(1);
             $printer->text("------------\n");
