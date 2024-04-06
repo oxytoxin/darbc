@@ -162,11 +162,11 @@ class CashierPayslipEntries extends Component implements HasTable
             $printer->feed(2);
             $printer->setEmphasis(true);
             $printer->text("TELLER NAME:  " . auth()->user()->first_name . " " . auth()->user()->surname . "\n");
-            $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->feed(4);
-            $printer->text("SIGNATURE:   ");
-            $printer->setEmphasis(false);
-            $printer->feed(2);
+            $printer->text("MEMBER'S SIGNATURE:   ");
+            $printer->feed(4);
+            $printer->text("------------\n");
+            $printer->feed(1);
             $printer->cut();
             $printer->close();
         } finally {
