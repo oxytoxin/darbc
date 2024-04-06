@@ -12,6 +12,7 @@
 <br>
 <p>Release: {{ $payslip_entry->payslip->release->name }}</p>
 @foreach ($payslip_entry->content['items'] as $data)
+    <br>
     <strong>{{ $data['title'] }}</strong>
     @foreach ($data['entries'] as $item)
         <p>{{ $item['title'] . ': ' . ($item['amount'] ?? 'none') }}</p>
