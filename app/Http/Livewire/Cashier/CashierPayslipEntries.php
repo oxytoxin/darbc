@@ -6,8 +6,10 @@ use App\Models\Payslip;
 use Livewire\Component;
 use Mike42\Escpos\Printer;
 use App\Models\PayslipEntry;
+use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
@@ -32,14 +34,21 @@ class CashierPayslipEntries extends Component implements HasTable
     protected function getTableColumns(): array
     {
         return [
+            TextColumn::make('darbc_id')->label('DARBC ID')->searchable(),
             TextColumn::make('member_name')->searchable(),
-            TextColumn::make('payslip.release.name')
+            TextColumn::make('payslip.release.name'),
+            TextColumn::make('full_gc_number')->label('GC #'),
         ];
     }
 
     protected function getTableActions(): array
     {
         return [
+            EditAction::make()
+                ->label('Gift Certificate Number')
+                ->form([
+                    TextInput::make('gc_number')->label('GC #')
+                ]),
             ViewAction::make('view')
                 ->requiresConfirmation()
                 ->icon('heroicon-o-document')
@@ -140,17 +149,20 @@ class CashierPayslipEntries extends Component implements HasTable
             }
             $printer->feed(1);
             $printer->text("------------\n");
+            $printer->text("Grand Total:  " . (collect($payslip_entry->content['items'])->sum('total.amount')) . "\n");
+            $printer->feed(1);
+            $printer->text("------------\n");
             $printer->feed(1);
             foreach ($payslip_entry->content['extra'] as $key => $data) {
                 $printer->text($data['title'] . ":  " . ($data['amount'] ?? 'none') . "\n");
                 $printer->feed(1);
             }
             $printer->feed(2);
+            $printer->setEmphasis(true);
             $printer->text("TELLER NAME:  " . auth()->user()->first_name . " " . auth()->user()->surname . "\n");
             $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->feed(4);
             $printer->text("SIGNATURE:   ");
-            $printer->setEmphasis(true);
             $printer->setEmphasis(false);
             $printer->feed(2);
             $printer->cut();

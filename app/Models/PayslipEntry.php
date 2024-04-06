@@ -12,6 +12,14 @@ class PayslipEntry extends Model
         'content' => 'array'
     ];
 
+    public function getFullGcNumberAttribute()
+    {
+        return implode('-', [
+            $this->payslip->release->gift_certificate_prefix,
+            $this->gc_number
+        ]);
+    }
+
     public function payslip()
     {
         return $this->belongsTo(Payslip::class);
