@@ -18,7 +18,7 @@
         <p>{{ $item['title'] . ': ' . ($item['amount'] ?? 'none') }}</p>
     @endforeach
     <p>-----------</p>
-    <p>{{ $data['total']['title'] . ': ' . ($data['total']['amount'] ?? 'none') }}</p>
+    <p><strong>{{ $data['total']['title'] }}</strong>: {{ $data['total']['amount'] ?? 'none' }}</p>
 @endforeach
 <p>-----------</p>
 @foreach ($payslip_entry->content['extra'] as $data)
