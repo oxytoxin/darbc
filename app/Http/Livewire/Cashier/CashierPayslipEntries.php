@@ -118,10 +118,10 @@ class CashierPayslipEntries extends Component implements HasTable
             $printer->text("Dolefil Agrarian Reform\n");
             $printer->text("Beneficiaries Cooperative\n");
             $printer->text("(DARBC)\n");
-            $printer->feed(2);
+            $printer->feed(1);
             $printer->text("Payslip\n");
             $printer->text("$title\n");
-            $printer->feed(2);
+            $printer->feed(1);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
             $printer->text("Name: " . $payslip_entry->member_name);
             $printer->feed(1);
@@ -129,7 +129,7 @@ class CashierPayslipEntries extends Component implements HasTable
             $printer->text("Date : " .  now()->format('m/d/Y'));
             $printer->feed(1);
             $printer->text("Time : " .  now()->format('h:i A'));
-            $printer->feed(2);
+            $printer->feed(1);
             $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->setEmphasis(true);
             $printer->text($payslip_entry->payslip->release->name . "\n");
@@ -163,14 +163,13 @@ class CashierPayslipEntries extends Component implements HasTable
                     $printer->feed(1);
                 }
             }
-            $printer->feed(2);
+            $printer->feed(1);
             $printer->setEmphasis(true);
             $printer->text("TELLER NAME:  " . auth()->user()->first_name . " " . auth()->user()->surname . "\n");
-            $printer->feed(4);
+            $printer->feed(2);
             $printer->text("MEMBER'S SIGNATURE:   ");
-            $printer->feed(4);
+            $printer->feed(2);
             $printer->text("------------\n");
-            $printer->feed(1);
             $printer->cut();
             $printer->close();
         } finally {
