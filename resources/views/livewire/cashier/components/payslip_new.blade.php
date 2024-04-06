@@ -2,6 +2,8 @@
     <p>Dolefil Agrarian Reform</p>
     <p>Beneficiaries Cooperative</p>
     <p>(DARBC)</p>
+    <br>
+    <strong>PAYSLIP</strong>
 </div>
 <br><br>
 <p>Name: {{ $payslip_entry->member_name }}</p>
@@ -10,10 +12,15 @@
 <br>
 <p>Release: {{ $payslip_entry->payslip->release->name }}</p>
 @foreach ($payslip_entry->content['items'] as $data)
-    <p>{{ $data['title'] . ': ' . ($data['amount'] ?? 'none') }}</p>
+    <strong>{{ $data['title'] }}</strong>
+    @foreach ($data['entries'] as $item)
+        <p>{{ $item['title'] . ': ' . ($item['amount'] ?? 'none') }}</p>
+    @endforeach
+    <p>-----------</p>
+    <p>{{ $data['total']['title'] . ': ' . ($data['total']['amount'] ?? 'none') }}</p>
+    <br>
+    <br>
 @endforeach
-<p>-----------</p>
-<p>{{ $payslip_entry->content['total']['title'] . ': ' . ($payslip_entry->content['total']['amount'] ?? 'none') }}</p>
 <p>-----------</p>
 @foreach ($payslip_entry->content['extra'] as $data)
     <p>{{ $data['title'] . ': ' . ($data['amount'] ?? 'none') }}</p>

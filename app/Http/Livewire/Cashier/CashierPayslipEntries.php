@@ -48,7 +48,7 @@ class CashierPayslipEntries extends Component implements HasTable
                     return view('livewire.cashier.components.payslip_new', ['payslip_entry' => $record]);
                 })
                 ->modalWidth('2xl')
-                ->modalHeading('Payslip')
+                ->modalHeading(false)
                 ->modalSubheading(false),
             Action::make('print')
                 ->requiresConfirmation()
@@ -110,6 +110,7 @@ class CashierPayslipEntries extends Component implements HasTable
             $printer->text("Beneficiaries Cooperative\n");
             $printer->text("(DARBC)\n");
             $printer->feed(2);
+            $printer->text("Payslip\n");
             $printer->text("$title\n");
             $printer->feed(2);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
@@ -127,12 +128,16 @@ class CashierPayslipEntries extends Component implements HasTable
             $printer->feed(1);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
             foreach ($payslip_entry->content['items'] as $key => $data) {
-                $printer->text($data['title'] . ":  " . ($data['amount'] ?? 'none') . "\n");
+                $printer->text($data['title'] . "\n");
                 $printer->feed(1);
+                foreach ($data['entries'] as $key => $entry) {
+                    $printer->text($entry['title'] . ":  " . ($entry['amount'] ?? 'none') . "\n");
+                    $printer->feed(1);
+                }
+                $printer->text("------------\n");
+                $printer->feed(1);
+                $printer->text($data['total']['title'] . ":  " . ($data['total']['amount'] ?? 'none') . "\n");
             }
-            $printer->text("------------\n");
-            $printer->feed(1);
-            $printer->text($payslip_entry->content['total']['title'] . ":  " . ($payslip_entry->content['total']['amount'] ?? 'none') . "\n");
             $printer->feed(1);
             $printer->text("------------\n");
             $printer->feed(1);
