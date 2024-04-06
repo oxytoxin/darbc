@@ -58,7 +58,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                     'text/csv'
                 ])
-                ->helperText('Alternatively, upload an Excel file containing the DARBC ID: "id" and Share Amount: "share"  columns.'),
+                ->helperText('Alternatively, upload an Excel file containing the DARBC ID: "darbc_id" and Share Amount: "share"  columns.'),
         ];
     }
 
@@ -153,7 +153,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
     private function processImport(TemporaryUploadedFile $file)
     {
         $headers = SimpleExcelReader::create($file->getRealPath())->getHeaders();
-        if (!collect($headers)->contains('id') || !collect($headers)->contains('share')) {
+        if (!collect($headers)->contains('darbc_id') || !collect($headers)->contains('share')) {
             notify('Invalid Excel file.', ' Please check if columns "id" and "share" are present.', type: 'danger');
             return;
         }
@@ -172,16 +172,14 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
             ->distinct('users.id')
             ->where('member_information.status', MemberInformation::STATUS_ACTIVE)
             ->get(['users.id', 'member_information.darbc_id', 'member_information.split_claim', 'restrictions.entries as restriction_entries']);
-
         $now = now();
-
+        $users = $users->mapWithKeys(fn ($u) => [str($u->darbc_id)->toString() => $u]);
         $particulars = json_encode(collect($this->release->particulars)->map(fn ($particular, $key) => [
             'name' => $key,
             'claimed' => false,
         ])->values()->toArray());
-
         foreach ($rows as $key => $row) {
-            $user = $users->firstWhere('darbc_id', $row['id']);
+            $user = $users[$row['darbc_id']] ?? null;
             if ($user) {
                 if ($this->restrict_by_default) {
                     $restrictions = $user->restriction_entries ?? json_encode([]);
@@ -198,9 +196,12 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                         'updated_at' => $now,
                     ]);
                 } catch (\Throwable $th) {
+                    dd($th);
                     notify('Invalid import file.', type: 'danger');
                     return;
                 }
+            } else {
+                dd($user, $row);
             }
         }
 

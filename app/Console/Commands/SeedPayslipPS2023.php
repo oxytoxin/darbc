@@ -40,7 +40,7 @@ class SeedPayslipPS2023 extends Command
                 $items = [
                     ['title' => 'Interest on Share Capital', 'amount' => filled($data['Interest on Share Capital']) ? $data['Interest on Share Capital'] : 0],
                     ['title' => 'Patronage Refund', 'amount' => filled($data['Patronage Refund']) ? $data['Patronage Refund'] : 0],
-                    ['title' => "Member's Benefit", 'amount' => filled($data["Member's Benefit"]) ? $data["Member's Benefit"] : 0],
+                    ['title' => "Calamity Assistance", 'amount' => filled($data["Calamity Assistance"]) ? $data["Calamity Assistance"] : 0],
                     ['title' => 'Meal Allowance', 'amount' => filled($data['Meal Allowance']) ? $data['Meal Allowance'] : 0],
                 ];
                 $entry = $payslip->payslip_entries()->create([
