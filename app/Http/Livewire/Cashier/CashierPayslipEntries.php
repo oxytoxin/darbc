@@ -47,6 +47,7 @@ class CashierPayslipEntries extends Component implements HasTable
                 ->modalContent(function ($record) {
                     return view('livewire.cashier.components.payslip_new', ['payslip_entry' => $record]);
                 })
+                ->modalWidth('2xl')
                 ->modalHeading('Payslip')
                 ->modalSubheading(false),
             Action::make('print')
