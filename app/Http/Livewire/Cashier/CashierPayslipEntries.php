@@ -158,6 +158,10 @@ class CashierPayslipEntries extends Component implements HasTable
             foreach ($payslip_entry->content['extra'] as $key => $data) {
                 $printer->text($data['title'] . ":  " . ($data['amount'] ?? 'none') . "\n");
                 $printer->feed(1);
+                if ($data['title'] == 'Gift Certificate') {
+                    $printer->text("GC #:  " . $payslip_entry->full_gc_number . "\n");
+                    $printer->feed(1);
+                }
             }
             $printer->feed(2);
             $printer->setEmphasis(true);
