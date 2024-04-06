@@ -176,14 +176,14 @@
                 </div>
             @endif
 
-            @if ($dividend->release->payslip)
+            {{-- @if ($dividend->release->payslip)
                 <div class="mt-2">
                     <x-filament-support::button class="w-full" tag="a" target="blank"
                         href="{{ route('cashier.payslips.entries', ['payslip' => $dividend->release->payslip]) }}">
                         Search Release Payslips
                     </x-filament-support::button>
                 </div>
-            @endif
+            @endif --}}
             {{-- <div class="mt-4 flex flex-col">
                 <label for="printer_ip">Printer IP</label>
                 <input type="text" disbled wire:model.defer="printer_ip" class="rounded">
