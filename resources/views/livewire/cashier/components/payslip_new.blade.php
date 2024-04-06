@@ -3,9 +3,9 @@
     <p>Beneficiaries Cooperative</p>
     <p>(DARBC)</p>
     <br>
-    <strong>PAYSLIP</strong>
+    <strong>DIVIDEND PAYSLIP</strong>
 </div>
-<br><br>
+<br>
 <p>Name: {{ $payslip_entry->member_name }}</p>
 <p>Date : {{ now()->format('m/d/Y') }}</p>
 <p>Time : {{ now()->format('h:i A') }}</p>
