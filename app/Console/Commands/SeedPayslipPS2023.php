@@ -61,6 +61,7 @@ class SeedPayslipPS2023 extends Command
                     ]
                 ];
                 $entry = $payslip->payslip_entries()->create([
+                    'darbc_id' => $data["No."],
                     'member_name' => $data["MEMBERS' NAME"],
                     'content' => [
                         'items' => $items,
@@ -72,7 +73,7 @@ class SeedPayslipPS2023 extends Command
                     ]
                 ]);
             } catch (\Throwable $th) {
-                dd($data);
+                dd($data, $th);
             }
         });
         DB::commit();
