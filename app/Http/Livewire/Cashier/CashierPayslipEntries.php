@@ -8,11 +8,13 @@ use Mike42\Escpos\Printer;
 use App\Models\PayslipEntry;
 use Filament\Notifications\Notification;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Contracts\HasTable;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\HtmlString;
 use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
 use Throwable;
 
@@ -38,6 +40,15 @@ class CashierPayslipEntries extends Component implements HasTable
     protected function getTableActions(): array
     {
         return [
+            ViewAction::make('view')
+                ->requiresConfirmation()
+                ->icon('heroicon-o-document')
+                ->button()
+                ->modalContent(function ($record) {
+                    return view('livewire.cashier.components.payslip_new', ['payslip_entry' => $record]);
+                })
+                ->modalHeading('Payslip')
+                ->modalSubheading(false),
             Action::make('print')
                 ->requiresConfirmation()
                 ->icon('heroicon-o-printer')
@@ -82,7 +93,7 @@ class CashierPayslipEntries extends Component implements HasTable
         }
     }
 
-    public function printPayslip($payslip, $title = "MEMBER'S COPY")
+    public function printPayslip($payslip_entry, $title = "MEMBER'S COPY")
     {
         $printerIp =  auth()->user()->ip_address;
         if (!$printerIp) {
@@ -101,7 +112,7 @@ class CashierPayslipEntries extends Component implements HasTable
             $printer->text("$title\n");
             $printer->feed(2);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
-            $printer->text("Name: " . $payslip->member_name);
+            $printer->text("Name: " . $payslip_entry->member_name);
             $printer->feed(1);
             $printer->setEmphasis(false);
             $printer->text("Date : " .  now()->format('m/d/Y'));
@@ -110,21 +121,21 @@ class CashierPayslipEntries extends Component implements HasTable
             $printer->feed(2);
             $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->setEmphasis(true);
-            $printer->text($payslip->release->name . "\n");
+            $printer->text($payslip_entry->payslip->release->name . "\n");
             $printer->setEmphasis(false);
             $printer->feed(1);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
-            foreach ($payslip->content['items'] as $key => $data) {
+            foreach ($payslip_entry->content['items'] as $key => $data) {
                 $printer->text($data['title'] . ":  " . ($data['amount'] ?? 'none') . "\n");
                 $printer->feed(1);
             }
             $printer->text("------------\n");
             $printer->feed(1);
-            $printer->text($payslip->content['total']['title'] . ":  " . ($payslip->content['total']['amount'] ?? 'none') . "\n");
+            $printer->text($payslip_entry->content['total']['title'] . ":  " . ($payslip_entry->content['total']['amount'] ?? 'none') . "\n");
             $printer->feed(1);
             $printer->text("------------\n");
             $printer->feed(1);
-            foreach ($payslip->content['extra'] as $key => $data) {
+            foreach ($payslip_entry->content['extra'] as $key => $data) {
                 $printer->text($data['title'] . ":  " . ($data['amount'] ?? 'none') . "\n");
                 $printer->feed(1);
             }
