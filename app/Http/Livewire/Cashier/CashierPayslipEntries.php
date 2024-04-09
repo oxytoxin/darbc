@@ -177,6 +177,11 @@ class CashierPayslipEntries extends Component implements HasTable
         }
     }
 
+    protected function getTableRecordsPerPageSelectOptions(): array
+    {
+        return [10, 25, 50];
+    }
+
     public function render()
     {
         return view('livewire.cashier.cashier-payslip-entries');
