@@ -48,7 +48,7 @@ class CashierReleaseDividendManagement extends Component implements HasForms
                     ->prefix($this->dividend->release->gift_certificate_prefix)
                     ->maxLength(6)
                     ->required()
-                    ->default(fn () => $this->dividend->release->gift_certificate_prefix ? strtoupper($faker->bothify('???###')) : null)
+                    ->default(fn() => $this->dividend->release->gift_certificate_prefix ? strtoupper($faker->bothify('???###')) : null)
                     ->rule(Rule::unique('dividends', 'gift_certificate_control_number')->where('release_id', $this->dividend->release_id))
                     ->visible(!$this->dividend->user->member_information->split_claim && ($this->dividend->release->gift_certificate_amount > 0 || $this->dividend->release->gift_certificate_prefix))
                     ->hidden($this->dividend->gift_certificate_control_number != null),
@@ -71,11 +71,11 @@ class CashierReleaseDividendManagement extends Component implements HasForms
                         }
                     })
                     ->reactive(),
-                TextInput::make('data.claimed_by')->label(fn ($get) => match (intval($get('data.claim_type'))) {
+                TextInput::make('data.claimed_by')->label(fn($get) => match (intval($get('data.claim_type'))) {
                     2 => 'SPA Name',
                     3 => 'Representative Name',
                     default => 'Member Name',
-                })->validationAttribute('name')->required()->visible(fn ($get) => $get('data.claim_type') != 1),
+                })->validationAttribute('name')->required()->visible(fn($get) => $get('data.claim_type') != 1),
             ]),
         ];
     }
@@ -143,9 +143,9 @@ class CashierReleaseDividendManagement extends Component implements HasForms
             $printer->text("Member No. : " . $dividend->user->member_information->darbc_id);
             $printer->feed(1);
             $printer->setEmphasis(false);
-            $printer->text("Date : " .  $dividend->released_at->format('m/d/Y'));
+            $printer->text("Date : " . $dividend->released_at->format('m/d/Y'));
             $printer->feed(1);
-            $printer->text("Time : " .  $dividend->released_at->format('h:i A'));
+            $printer->text("Time : " . $dividend->released_at->format('h:i A'));
             $printer->feed(2);
             $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->setEmphasis(true);
@@ -224,9 +224,9 @@ class CashierReleaseDividendManagement extends Component implements HasForms
             $printer->text("Member No. : " . $dividend->user->member_information->darbc_id);
             $printer->feed(1);
             $printer->setEmphasis(false);
-            $printer->text("Date : " .  $dividend->released_at->format('m/d/Y'));
+            $printer->text("Date : " . $dividend->released_at->format('m/d/Y'));
             $printer->feed(1);
-            $printer->text("Time : " .  $dividend->released_at->format('h:i A'));
+            $printer->text("Time : " . $dividend->released_at->format('h:i A'));
             $printer->feed(2);
             $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->setEmphasis(true);
@@ -299,11 +299,9 @@ class CashierReleaseDividendManagement extends Component implements HasForms
             'claimed_by' => $this->data['claim_type'] != 1 && $this->data['claimed'] ? $this->data['claimed_by'] : null,
         ]);
 
-        if (!$this->dividend->release->payslip) {
-            $this->printPayslipMember($this->dividend);
-            sleep(1);
-            $this->printPayslipDARBC($this->dividend);
-        }
+        $this->printPayslipMember($this->dividend);
+        sleep(1);
+        $this->printPayslipDARBC($this->dividend);
 
         DB::commit();
 
