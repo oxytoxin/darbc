@@ -172,7 +172,6 @@ class CashierReleaseDividendManagement extends Component implements HasForms
             }
             $printer->feed(2);
             $printer->text("TELLER NAME:  " . $dividend->cashier->first_name . ' ' . $dividend->cashier->surname . "\n");
-            $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->feed(4);
             $printer->text($claim_type_name . "'S SIGNATURE:   ");
             $printer->setEmphasis(true);
