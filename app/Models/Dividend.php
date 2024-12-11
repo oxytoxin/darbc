@@ -18,6 +18,7 @@ class Dividend extends Model implements HasMedia
     protected $casts = [
         'restriction_entries' => 'array',
         'particulars' => 'array',
+        'breakdown' => 'array',
         'released_at' => 'immutable_datetime',
         'voided' => 'boolean',
     ];
@@ -41,23 +42,23 @@ class Dividend extends Model implements HasMedia
     public function netAmount(): Attribute
     {
         return new Attribute(
-            get: fn ($value) => $value / 100,
+            get: fn($value) => $value / 100,
         );
     }
 
     public function grossAmount(): Attribute
     {
         return new Attribute(
-            get: fn ($value) => $value / 100,
-            set: fn ($value) => $value * 100,
+            get: fn($value) => $value / 100,
+            set: fn($value) => $value * 100,
         );
     }
 
     public function deductionsAmount(): Attribute
     {
         return new Attribute(
-            get: fn ($value) => $value / 100,
-            set: fn ($value) => $value * 100,
+            get: fn($value) => $value / 100,
+            set: fn($value) => $value * 100,
         );
     }
 

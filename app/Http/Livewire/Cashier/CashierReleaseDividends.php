@@ -13,6 +13,8 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Filters\SelectFilter;
 use App\Http\Livewire\Shared\ReleaseDividends;
+use Exception;
+use Filament\Notifications\Notification;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
 use Mike42\Escpos\Printer;
@@ -42,9 +44,10 @@ class CashierReleaseDividends extends ReleaseDividends
         };
         $printerIp = $this->printer_ip;
         $printerPort = 9100;
-        $connector = new NetworkPrintConnector($printerIp, $printerPort, 10);
-        $printer = new Printer($connector);
+
         try {
+            $connector = new NetworkPrintConnector($printerIp, $printerPort, 10);
+            $printer = new Printer($connector);
             $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->setEmphasis(true);
             $printer->text("Dolefil Agrarian Reform\n");
@@ -54,22 +57,37 @@ class CashierReleaseDividends extends ReleaseDividends
             $printer->text("MEMBERS COPY\n");
             $printer->feed(2);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
-            $printer->text("Name: " . $dividend->user->full_name);
+            $printer->text("Member ID : " . $dividend->user->member_information->darbc_id);
             $printer->feed(1);
-            $printer->text("Member No. : " . $dividend->user->member_information->darbc_id);
+            $printer->text("Member's Name: " . $dividend->user->full_name);
             $printer->feed(1);
             $printer->setEmphasis(false);
-            $printer->text("Date : " .  $dividend->released_at->format('m/d/Y'));
-            $printer->feed(1);
-            $printer->text("Time : " .  $dividend->released_at->format('h:i A'));
             $printer->feed(2);
             $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->setEmphasis(true);
             $printer->text($dividend->release->name . "\n");
             $printer->setEmphasis(false);
             $printer->feed(1);
+            $printer->setJustification(Printer::JUSTIFY_RIGHT);
+            $printer->text('AMOUNT');
+            $printer->feed(1);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
-            $printer->text($dividend->release->share_description . ":  " . $net_amount);
+            if (filled($dividend->breakdown)) {
+                foreach ($dividend->breakdown['add'] as $key => $item) {
+                    $printer->text($item['name'] . ":  " . number_format($item['value'], 2) . "\n");
+                }
+                $printer->feed(1);
+                $printer->text("LESS: \n");
+                foreach ($dividend->breakdown['less'] as $key => $item) {
+                    $printer->text($item['name'] . ":  " . number_format($item['value'], 2) . "\n");
+                }
+                $printer->feed(1);
+                $printer->text("NET PAY:  " . $net_amount);
+            } else {
+                $printer->text("GROSS AMOUNT:  " . number_format($dividend->gross_amount, 2) . "\n");
+                $printer->text("TOTAL DEDUCTIONS:  " . number_format($dividend->deductions_amount, 2) . "\n");
+                $printer->text($dividend->release->share_description . ":  " . $net_amount . "\n");
+            }
             $printer->feed(1);
             if (!$dividend->user->member_information->split_claim && ($dividend->release->gift_certificate_prefix || $dividend->release->gift_certificate_amount > 0)) {
                 $gift_certificate_number = $dividend->gift_certificate_control_number ? $dividend->release->gift_certificate_prefix . $dividend->gift_certificate_control_number : 'UNCLAIMED';
@@ -88,7 +106,10 @@ class CashierReleaseDividends extends ReleaseDividends
             }
             $printer->feed(2);
             $printer->text("TELLER NAME:  " . $dividend->cashier->first_name . ' ' . $dividend->cashier->surname . "\n");
-            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->feed(1);
+            $printer->text("Date : " . $dividend->released_at->format('m/d/Y'));
+            $printer->feed(1);
+            $printer->text("Time : " . $dividend->released_at->format('h:i A'));
             $printer->feed(4);
             $printer->text($claim_type_name . "'S SIGNATURE:   ");
             $printer->setEmphasis(true);
@@ -102,8 +123,8 @@ class CashierReleaseDividends extends ReleaseDividends
             $printer->feed(2);
             $printer->cut();
             $printer->close();
-        } finally {
-            $printer->close();
+        } catch (Exception $e) {
+            Notification::make()->title($e->getMessage())->danger()->send();
         }
     }
 
@@ -123,9 +144,10 @@ class CashierReleaseDividends extends ReleaseDividends
         };
         $printerIp = $this->printer_ip;
         $printerPort = 9100;
-        $connector = new NetworkPrintConnector($printerIp, $printerPort, 10);
-        $printer = new Printer($connector);
+
         try {
+            $connector = new NetworkPrintConnector($printerIp, $printerPort, 10);
+            $printer = new Printer($connector);
             $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->setEmphasis(true);
             $printer->text("Dolefil Agrarian Reform\n");
@@ -135,22 +157,37 @@ class CashierReleaseDividends extends ReleaseDividends
             $printer->text("DARBC COPY\n");
             $printer->feed(2);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
-            $printer->text("Name: " . $dividend->user->full_name);
+            $printer->text("Member ID : " . $dividend->user->member_information->darbc_id);
             $printer->feed(1);
-            $printer->text("Member No. : " . $dividend->user->member_information->darbc_id);
+            $printer->text("Member's Name: " . $dividend->user->full_name);
             $printer->feed(1);
             $printer->setEmphasis(false);
-            $printer->text("Date : " .  $dividend->released_at->format('m/d/Y'));
-            $printer->feed(1);
-            $printer->text("Time : " .  $dividend->released_at->format('h:i A'));
             $printer->feed(2);
             $printer->setJustification(Printer::JUSTIFY_CENTER);
             $printer->setEmphasis(true);
             $printer->text($dividend->release->name . "\n");
             $printer->setEmphasis(false);
             $printer->feed(1);
+            $printer->setJustification(Printer::JUSTIFY_RIGHT);
+            $printer->text('AMOUNT');
+            $printer->feed(1);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
-            $printer->text($dividend->release->share_description . ":  " . $net_amount);
+            if (filled($dividend->breakdown)) {
+                foreach ($dividend->breakdown['add'] as $key => $item) {
+                    $printer->text($item['name'] . ":  " . number_format($item['value'], 2) . "\n");
+                }
+                $printer->feed(1);
+                $printer->text("LESS: \n");
+                foreach ($dividend->breakdown['less'] as $key => $item) {
+                    $printer->text($item['name'] . ":  " . number_format($item['value'], 2) . "\n");
+                }
+                $printer->feed(1);
+                $printer->text("NET PAY:  " . $net_amount);
+            } else {
+                $printer->text("GROSS AMOUNT:  " . number_format($dividend->gross_amount, 2) . "\n");
+                $printer->text("TOTAL DEDUCTIONS:  " . number_format($dividend->deductions_amount, 2) . "\n");
+                $printer->text($dividend->release->share_description . ":  " . $net_amount);
+            }
             $printer->feed(1);
             if (!$dividend->user->member_information->split_claim && ($dividend->release->gift_certificate_prefix || $dividend->release->gift_certificate_amount > 0)) {
                 $gift_certificate_number = $dividend->gift_certificate_control_number ? $dividend->release->gift_certificate_prefix . $dividend->gift_certificate_control_number : 'UNCLAIMED';
@@ -169,7 +206,10 @@ class CashierReleaseDividends extends ReleaseDividends
             }
             $printer->feed(2);
             $printer->text("TELLER NAME:  " . $dividend->cashier->first_name . ' ' . $dividend->cashier->surname . "\n");
-            $printer->setJustification(Printer::JUSTIFY_CENTER);
+            $printer->feed(1);
+            $printer->text("Date : " . $dividend->released_at->format('m/d/Y'));
+            $printer->feed(1);
+            $printer->text("Time : " . $dividend->released_at->format('h:i A'));
             $printer->feed(4);
             $printer->text($claim_type_name . "'S SIGNATURE:   ");
             $printer->setEmphasis(true);
@@ -183,8 +223,8 @@ class CashierReleaseDividends extends ReleaseDividends
             $printer->feed(2);
             $printer->cut();
             $printer->close();
-        } finally {
-            $printer->close();
+        } catch (Exception $e) {
+            Notification::make()->title($e->getMessage())->danger()->send();
         }
     }
 
@@ -196,14 +236,14 @@ class CashierReleaseDividends extends ReleaseDividends
                 ->button()
                 ->label('Release Now')
                 ->color('success')
-                ->visible(fn ($record) => $record->status === Dividend::FOR_RELEASE && !$record->claimed)
-                ->url(fn ($record) => route('cashier.dividends.manage', ['dividend' => $record])),
+                ->visible(fn($record) => $record->status === Dividend::FOR_RELEASE && !$record->claimed)
+                ->url(fn($record) => route('cashier.dividends.manage', ['dividend' => $record])),
             Action::make('reprint_payslip')
                 ->button()
                 ->label('Reprint Payslip')
                 ->color('warning')
                 ->icon('heroicon-o-printer')
-                ->visible(fn ($record) => $record->status === Dividend::RELEASED && $record->claimed)
+                ->visible(fn($record) => $record->status === Dividend::RELEASED && $record->claimed)
                 ->action(function ($record) {
                     $this->printPayslipMember($record);
                     sleep(1);

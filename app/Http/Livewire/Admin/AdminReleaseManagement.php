@@ -40,7 +40,7 @@ class AdminReleaseManagement extends Component implements HasTable
                 ->label('Total Amount')
                 ->money('PHP', true),
             TagsColumn::make('particulars')
-                ->getStateUsing(fn ($record) => collect($record->particulars)->map(fn ($value, $key) => $key)->toArray()),
+                ->getStateUsing(fn($record) => collect($record->particulars)->map(fn($value, $key) => $key)->toArray()),
             IconColumn::make('disbursed')
                 ->alignCenter()
                 ->extraAttributes(['class' => 'flex justify-center'])
@@ -58,7 +58,7 @@ class AdminReleaseManagement extends Component implements HasTable
     protected function getTableActions()
     {
         return [
-            EditAction::make()->form(fn ($record) => [
+            EditAction::make()->form(fn($record) => [
                 TextInput::make('name')
                     ->required(),
                 TextInput::make('share_description')
@@ -66,17 +66,17 @@ class AdminReleaseManagement extends Component implements HasTable
                     ->placeholder('Profit Share')
                     ->required(),
                 TextInput::make('total_amount')
-                    ->visible(fn ($record) => $record->disbursed == false)
+                    ->visible(fn($record) => $record->disbursed == false)
                     ->numeric()
                     ->minValue(1)
                     ->label('Total Amount'),
                 TextInput::make('gift_certificate_prefix')
-                    ->visible(fn ($record) => $record->disbursed == false),
+                    ->visible(fn($record) => $record->disbursed == false),
                 TextInput::make('gift_certificate_amount')
-                    ->visible(fn ($record) => $record->disbursed == false)
+                    ->visible(fn($record) => $record->disbursed == false)
                     ->numeric()->minValue(0),
                 KeyValue::make('particulars')
-                    ->visible(fn ($record) => $record->disbursed == false),
+                    ->visible(fn($record) => $record->disbursed == false),
             ])
                 ->modalHeading('Edit Release')
                 ->modalWidth('md')
@@ -89,12 +89,12 @@ class AdminReleaseManagement extends Component implements HasTable
                 $record->dividends()->delete();
                 $record->delete();
                 Notification::make()->title('Deleted!')->success()->send();
-            })->visible(fn ($record) => $record->disbursed == false)->button(),
+            })->visible(fn($record) => $record->disbursed == false)->button(),
             ViewAction::make('view')
                 ->button()
                 ->color('success')
-                ->visible(fn ($record) => $record->disbursed)
-                ->url(fn ($record) => route('release-admin.releases.dividends', ['release' => $record])),
+                ->visible(fn($record) => $record->disbursed)
+                ->url(fn($record) => route('release-admin.releases.dividends', ['release' => $record])),
         ];
     }
 
@@ -141,6 +141,7 @@ class AdminReleaseManagement extends Component implements HasTable
         DB::beginTransaction();
         Release::create([
             'name' => $this->data['name'],
+            'share_description' => $this->data['share_description'],
             'gift_certificate_prefix' => $this->data['gift_certificate_prefix'],
             'gift_certificate_amount' => $this->data['gift_certificate_amount'],
             'total_amount' => $this->data['total_amount'],

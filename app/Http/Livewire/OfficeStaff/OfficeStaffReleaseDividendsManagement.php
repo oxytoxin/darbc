@@ -8,7 +8,9 @@ use App\Models\Release;
 use App\Models\Restriction;
 use App\Models\User;
 use DB;
+use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\KeyValue;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
@@ -32,6 +34,9 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
     public $restrict_by_default = false;
     public Release $release;
     public $import;
+    public $share_columns = [];
+    public $add_columns = [];
+    public $less_columns = [];
 
     protected function getTableQuery()
     {
@@ -49,16 +54,48 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                 ->placeholder('0.00')
                 ->numeric()
                 ->helperText('Enter initial amount applicable for majority of members.')
-                ->required(fn ($get) => !$get('import')),
-            FileUpload::make('import')
-                ->label('Import from Excel')
-                ->reactive()
-                ->acceptedFileTypes([
-                    'application/vnd.ms-excel',
-                    'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                    'text/csv'
+                ->required(fn($get) => !$get('import')),
+            Toggle::make('import_from_file')
+                ->reactive(),
+            Fieldset::make('From File')
+                ->visible(fn($get) => $get('import_from_file'))
+                ->schema([
+                    KeyValue::make('share_columns')
+                        ->keyLabel('Name')
+                        ->valueLabel('Column')
+                        ->disableAddingRows()
+                        ->disableDeletingRows()
+                        ->disableEditingKeys()
+                        ->default([
+                            'DARBC ID' => 'darbc_id',
+                            'GROSS PAY' => 'gross_pay',
+                            'TOTAL DEDUCTIONS' => 'total_deductions',
+                            'NET PAY' => 'net_pay',
+                        ]),
+                    KeyValue::make('add_columns')
+                        ->keyLabel('Name')
+                        ->valueLabel('Column')
+                        ->default([
+                            $this->release->share_description => 'gross_pay'
+                        ]),
+                    KeyValue::make('less_columns')
+                        ->keyLabel('Name')
+                        ->valueLabel('Column')
+                        ->default(null)
+                        ->default([
+                            'Members Advances' => 'advance',
+                            'Mortuary (2020-2022)' => 'mortuary',
+                        ]),
+                    FileUpload::make('import')
+                        ->label('Import from Excel')
+                        ->reactive()
+                        ->acceptedFileTypes([
+                            'application/vnd.ms-excel',
+                            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                            'text/csv'
+                        ]),
                 ])
-                ->helperText('Alternatively, upload an Excel file containing the DARBC ID: "darbc_id" and Share Amount: "share"  columns.'),
+                ->columns(1)
         ];
     }
 
@@ -140,6 +177,8 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
 
     public function mount()
     {
+        if ($this->release->disbursed)
+            abort(403, 'This released has been disbursed.');
         $this->form->fill();
     }
 
@@ -153,9 +192,23 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
     private function processImport(TemporaryUploadedFile $file)
     {
         $headers = SimpleExcelReader::create($file->getRealPath())->getHeaders();
-        if (!collect($headers)->contains('darbc_id') || !collect($headers)->contains('share')) {
-            notify('Invalid Excel file.', ' Please check if columns "id" and "share" are present.', type: 'danger');
-            return;
+        foreach ($this->share_columns as $key => $value) {
+            if (!collect($headers)->contains($value)) {
+                notify('Invalid Excel file.', ' Please check if column is present: ' . $value, type: 'danger');
+                return;
+            }
+        }
+        foreach ($this->add_columns as $key => $value) {
+            if (!collect($headers)->contains($value)) {
+                notify('Invalid Excel file.', ' Please check if column is present: ' . $value, type: 'danger');
+                return;
+            }
+        }
+        foreach ($this->less_columns as $key => $value) {
+            if (!collect($headers)->contains($value)) {
+                notify('Invalid Excel file.', ' Please check if column is present: ' . $value, type: 'danger');
+                return;
+            }
         }
         $rows = SimpleExcelReader::create($file->getRealPath())->getRows();
         DB::beginTransaction();
@@ -173,13 +226,31 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
             ->where('member_information.status', MemberInformation::STATUS_ACTIVE)
             ->get(['users.id', 'member_information.darbc_id', 'member_information.split_claim', 'restrictions.entries as restriction_entries']);
         $now = now();
-        $users = $users->mapWithKeys(fn ($u) => [str($u->darbc_id)->toString() => $u]);
-        $particulars = json_encode(collect($this->release->particulars)->map(fn ($particular, $key) => [
+        $users = $users->mapWithKeys(fn($u) => [str($u->darbc_id)->toString() => $u]);
+        $particulars = json_encode(collect($this->release->particulars)->map(fn($particular, $key) => [
             'name' => $key,
             'claimed' => false,
         ])->values()->toArray());
         foreach ($rows as $key => $row) {
-            $user = $users[$row['darbc_id']] ?? null;
+            $user = $users[$row[$this->share_columns['DARBC ID']]] ?? null;
+            $add = [];
+            foreach ($this->add_columns as $key => $value) {
+                $add[] = [
+                    'name' => $key,
+                    'value' => floatval($row[$value])
+                ];
+            }
+            $less = [];
+            foreach ($this->less_columns as $key => $value) {
+                $less[] = [
+                    'name' => $key,
+                    'value' => floatval($row[$value])
+                ];
+            }
+            $breakdown = [
+                'add' => $add,
+                'less' => $less,
+            ];
             if ($user) {
                 if ($this->restrict_by_default) {
                     $restrictions = $user->restriction_entries ?? json_encode([]);
@@ -188,8 +259,10 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                     $data->push([
                         'release_id' => $this->release->id,
                         'user_id' => $user->id,
-                        'gross_amount' => floatval($row['share']) * 100,
+                        'gross_amount' => floatval($row[$this->share_columns['GROSS PAY']]) * 100,
+                        'deductions_amount' => floatval($row[$this->share_columns['TOTAL DEDUCTIONS']]) * 100,
                         'status' => Dividend::PENDING,
+                        'breakdown' => json_encode($breakdown),
                         'particulars' => $user->split_claim ? json_encode([]) : $particulars,
                         'restriction_entries' => $restrictions,
                         'created_at' => $now,
@@ -227,7 +300,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
 
             $users = User::with(['active_restriction', 'member_information'])->whereRelation('member_information', 'status', MemberInformation::STATUS_ACTIVE)->get();
 
-            $particulars = json_encode(collect($this->release->particulars)->map(fn ($particular, $key) => [
+            $particulars = json_encode(collect($this->release->particulars)->map(fn($particular, $key) => [
                 'name' => $key,
                 'claimed' => false,
             ])->values()->toArray());
