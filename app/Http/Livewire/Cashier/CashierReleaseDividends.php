@@ -68,9 +68,6 @@ class CashierReleaseDividends extends ReleaseDividends
             $printer->text($dividend->release->name . "\n");
             $printer->setEmphasis(false);
             $printer->feed(1);
-            $printer->setJustification(Printer::JUSTIFY_RIGHT);
-            $printer->text('AMOUNT');
-            $printer->feed(1);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
             if (filled($dividend->breakdown)) {
                 foreach ($dividend->breakdown['add'] as $key => $item) {
@@ -110,6 +107,10 @@ class CashierReleaseDividends extends ReleaseDividends
             $printer->text("Date : " . $dividend->released_at->format('m/d/Y'));
             $printer->feed(1);
             $printer->text("Time : " . $dividend->released_at->format('h:i A'));
+            $printer->feed(1);
+            $printer->text("Bank : ");
+            $printer->feed(1);
+            $printer->text("Check no. : ");
             $printer->feed(4);
             $printer->text($claim_type_name . "'S SIGNATURE:   ");
             $printer->setEmphasis(true);
@@ -168,9 +169,6 @@ class CashierReleaseDividends extends ReleaseDividends
             $printer->text($dividend->release->name . "\n");
             $printer->setEmphasis(false);
             $printer->feed(1);
-            $printer->setJustification(Printer::JUSTIFY_RIGHT);
-            $printer->text('AMOUNT');
-            $printer->feed(1);
             $printer->setJustification(Printer::JUSTIFY_LEFT);
             if (filled($dividend->breakdown)) {
                 foreach ($dividend->breakdown['add'] as $key => $item) {
@@ -210,6 +208,10 @@ class CashierReleaseDividends extends ReleaseDividends
             $printer->text("Date : " . $dividend->released_at->format('m/d/Y'));
             $printer->feed(1);
             $printer->text("Time : " . $dividend->released_at->format('h:i A'));
+            $printer->feed(1);
+            $printer->text("Bank : ");
+            $printer->feed(1);
+            $printer->text("Check no. : ");
             $printer->feed(4);
             $printer->text($claim_type_name . "'S SIGNATURE:   ");
             $printer->setEmphasis(true);
