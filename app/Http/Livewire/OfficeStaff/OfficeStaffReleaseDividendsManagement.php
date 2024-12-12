@@ -71,6 +71,8 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                             'GROSS PAY' => 'gross_pay',
                             'TOTAL DEDUCTIONS' => 'total_deductions',
                             'NET PAY' => 'net_pay',
+                            'BANK' => 'bank',
+                            'CHEQUE NUMBER' => 'cheque_number',
                         ]),
                     KeyValue::make('add_columns')
                         ->keyLabel('Name')
@@ -261,6 +263,8 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                         'user_id' => $user->id,
                         'gross_amount' => floatval($row[$this->share_columns['GROSS PAY']]) * 100,
                         'deductions_amount' => floatval($row[$this->share_columns['TOTAL DEDUCTIONS']]) * 100,
+                        'bank' => $row[$this->share_columns['BANK']],
+                        'cheque_number' => $row[$this->share_columns['CHEQUE NUMBER']],
                         'status' => Dividend::PENDING,
                         'breakdown' => json_encode($breakdown),
                         'particulars' => $user->split_claim ? json_encode([]) : $particulars,

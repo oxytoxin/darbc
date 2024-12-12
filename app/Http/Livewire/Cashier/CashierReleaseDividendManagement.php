@@ -191,9 +191,9 @@ class CashierReleaseDividendManagement extends Component implements HasForms
             $printer->feed(1);
             $printer->text("Time : " . $dividend->released_at->format('h:i A'));
             $printer->feed(1);
-            $printer->text("Bank : ");
+            $printer->text("Bank : " . $dividend->bank);
             $printer->feed(1);
-            $printer->text("Check no. : ");
+            $printer->text("Cheque No. : " . $dividend->cheque_number);
             $printer->feed(4);
             $printer->text($claim_type_name . "'S SIGNATURE:   ");
             $printer->setEmphasis(true);
@@ -292,9 +292,9 @@ class CashierReleaseDividendManagement extends Component implements HasForms
             $printer->feed(1);
             $printer->text("Time : " . $dividend->released_at->format('h:i A'));
             $printer->feed(1);
-            $printer->text("Bank : ");
+            $printer->text("Bank : " . $dividend->bank);
             $printer->feed(1);
-            $printer->text("Check no. : ");
+            $printer->text("Cheque No. : " . $dividend->cheque_number);
             $printer->feed(4);
             $printer->text($claim_type_name . "'S SIGNATURE:   ");
             $printer->setEmphasis(true);
