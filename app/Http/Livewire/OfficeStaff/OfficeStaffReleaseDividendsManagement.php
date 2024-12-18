@@ -234,7 +234,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
             'claimed' => false,
         ])->values()->toArray());
         foreach ($rows as $key => $row) {
-            $user = $users[$row[$this->share_columns['DARBC ID']]] ?? null;
+            $user = $users[strval($row[$this->share_columns['DARBC ID']])] ?? null;
             $add = [];
             foreach ($this->add_columns as $key => $value) {
                 $add[] = [

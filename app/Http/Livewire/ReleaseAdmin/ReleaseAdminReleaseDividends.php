@@ -65,7 +65,7 @@ class ReleaseAdminReleaseDividends extends ReleaseDividends
 
                     Notification::make()->title('Dividend transferred')->success()->send();
                 })
-                ->form(fn ($record) => [
+                ->form(fn($record) => [
                     Radio::make('member_type')
                         ->label('New/Existing Member')
                         ->options([
@@ -76,10 +76,15 @@ class ReleaseAdminReleaseDividends extends ReleaseDividends
                         ->default(0),
                     Select::make('user_id')
                         ->label('User')
-                        ->options(User::has('member_information')->pluck('full_name', 'id'))
+                        ->options(
+                            User::has('member_information')
+                                ->join('member_information', 'users.id', 'member_information.user_id')
+                                ->selectRaw("users.id, CONCAT(member_information.darbc_id, ' - ', users.full_name) as member_name")
+                                ->pluck('member_name', 'id')
+                        )
                         ->searchable()
                         ->required()
-                        ->visible(fn ($get) => $get('member_type') == 0)
+                        ->visible(fn($get) => $get('member_type') == 0)
                         ->preload(),
                     Fieldset::make('Member Information')
                         ->schema([
@@ -93,7 +98,7 @@ class ReleaseAdminReleaseDividends extends ReleaseDividends
                                 ->maxLength(191),
                             TextInput::make('suffix')
                                 ->maxLength(191),
-                        ])->visible(fn ($get) => $get('member_type') == 1)
+                        ])->visible(fn($get) => $get('member_type') == 1)
                 ]),
         ];
     }
