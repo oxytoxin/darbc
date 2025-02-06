@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('rsbsa_records', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('darbc_id');
+            $table->foreignId('member_information_id')->constrained();
             $table->foreignId('user_id')->constrained();
 
             //PERSONAL INFORMATION
