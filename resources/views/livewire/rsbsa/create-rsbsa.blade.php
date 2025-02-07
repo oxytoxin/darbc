@@ -1,5 +1,5 @@
 <div>
-    <x-title>Register Member RSBSA</x-title>
+    <x-title>(RSBSA) Member Resgistration</x-title>
     <div x-data x-cloak>
         {{ $this->form }}
     </div>

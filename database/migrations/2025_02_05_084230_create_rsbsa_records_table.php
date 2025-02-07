@@ -19,6 +19,12 @@ return new class extends Migration
             $table->foreignId('member_information_id')->constrained();
             $table->foreignId('user_id')->constrained();
 
+            $table->enum('enrollment_type', ['New', 'Updating']);
+            $table->string('reference_number')->nullable();
+            $table->string('region_code')->nullable();
+            $table->string('province_code')->nullable();
+            $table->string('city_municipality_code')->nullable();
+            $table->string('barangay_code')->nullable();
             //PERSONAL INFORMATION
 
             $table->string('surname');
@@ -32,7 +38,7 @@ return new class extends Migration
             $table->string('city_municipality')->nullable(); 
             $table->string('province')->nullable(); 
             $table->string('region')->nullable(); 
-            $table->string('mobile_number')->nullable();
+            $table->string('contact_number')->nullable();
             $table->string('landline_number')->nullable();
             $table->date('date_of_birth')->nullable();
             $table->string('place_of_birth_municipality')->nullable();
@@ -66,8 +72,11 @@ return new class extends Migration
             $table->enum('main_livelihood', ['Farmer', 'Farmworker/Laborer', 'Fisherfolk', 'Agri Youth']);
             $table->boolean('farming_rice')->default(false);
             $table->boolean('farming_corn')->default(false);
+            $table->boolean('other_crops')->default(false);
             $table->string('farming_other_crops')->nullable(); 
+            $table->boolean('livestock')->default(false);
             $table->string('farming_livestock')->nullable();  
+            $table->boolean('poultry')->default(false);
             $table->string('farming_poultry')->nullable();    
 
             // For Farmworkers
@@ -75,7 +84,8 @@ return new class extends Migration
             $table->boolean('work_planting_transplanting')->default(false);
             $table->boolean('work_cultivation')->default(false);
             $table->boolean('work_harvesting')->default(false);
-            $table->string('work_others')->nullable(); 
+            $table->boolean('work_others')->default(false);
+            $table->string('work_others_specify')->nullable(); 
 
             // For Fisherfolk
             $table->boolean('fishing_fish_capture')->default(false);
@@ -83,14 +93,17 @@ return new class extends Migration
             $table->boolean('fishing_gleaning')->default(false);
             $table->boolean('fishing_fish_processing')->default(false);
             $table->boolean('fishing_fish_vending')->default(false);
+            $table->boolean('work_others')->default(false);
             $table->string('fishing_others')->nullable(); 
+            $table->string('fishing_others_specify')->nullable();
 
             // For Agri Youth
             $table->boolean('youth_farming_household')->default(false);
             $table->boolean('youth_agri_course')->default(false);
             $table->boolean('youth_nonformal_agri_course')->default(false);
             $table->boolean('youth_agri_program')->default(false);
-            $table->string('youth_others')->nullable(); 
+            $table->boolean('youth_others')->default(false);
+            $table->string('work_others_specify')->nullable(); 
 
             // Gross Annual Income
             $table->decimal('gross_annual_income_farming', 10, 2)->nullable(); 

@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use DB;
+use App\Models\RsbsaRecord;
+use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * @mixin IdeHelperMemberInformation
@@ -184,5 +185,9 @@ class MemberInformation extends Model implements HasMedia
     public function barangay()
     {
         return $this->belongsTo(Barangay::class, 'barangay_code', 'code');
+    }
+
+    public function rsbsa(){
+        return $this->hasOne(RsbsaRecord::class);
     }
 }
