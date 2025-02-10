@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('barangay_code')->nullable();
             //PERSONAL INFORMATION
 
+            $table->string('two_by_two');
             $table->string('surname');
             $table->string('middle_name')->nullable();
             $table->string('first_name');
@@ -69,7 +70,9 @@ return new class extends Migration
             
             
             // Farm Profile
-            $table->enum('main_livelihood', ['Farmer', 'Farmworker/Laborer', 'Fisherfolk', 'Agri Youth']);
+            $table->json('main_livelihood')->default(json_encode([]));
+
+            // $table->enum('main_livelihood', ['Farmer', 'Farmworker/Laborer', 'Fisherfolk', 'Agri Youth']);
             $table->boolean('farming_rice')->default(false);
             $table->boolean('farming_corn')->default(false);
             $table->boolean('other_crops')->default(false);
@@ -93,8 +96,7 @@ return new class extends Migration
             $table->boolean('fishing_gleaning')->default(false);
             $table->boolean('fishing_fish_processing')->default(false);
             $table->boolean('fishing_fish_vending')->default(false);
-            $table->boolean('work_others')->default(false);
-            $table->string('fishing_others')->nullable(); 
+            $table->string('fishing_others')->default(false); 
             $table->string('fishing_others_specify')->nullable();
 
             // For Agri Youth
@@ -103,13 +105,13 @@ return new class extends Migration
             $table->boolean('youth_nonformal_agri_course')->default(false);
             $table->boolean('youth_agri_program')->default(false);
             $table->boolean('youth_others')->default(false);
-            $table->string('work_others_specify')->nullable(); 
+            $table->string('youth_others_specify')->nullable(); 
 
             // Gross Annual Income
             $table->decimal('gross_annual_income_farming', 10, 2)->nullable(); 
             $table->decimal('gross_annual_income_nonfarming', 10, 2)->nullable(); 
 
-            $table->timestamps();
+         
 
 
 
