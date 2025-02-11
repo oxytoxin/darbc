@@ -113,8 +113,8 @@ return new class extends Migration
             $table->string('youth_others_specify')->nullable(); 
 
             // Gross Annual Income
-            $table->decimal('gross_annual_income_farming', 10, 2)->nullable(); 
-            $table->decimal('gross_annual_income_nonfarming', 10, 2)->nullable(); 
+            $table->decimal('gross_annual_income_farming', 15, 2)->nullable(); 
+            $table->decimal('gross_annual_income_nonfarming', 15, 2)->nullable(); 
 
          
 

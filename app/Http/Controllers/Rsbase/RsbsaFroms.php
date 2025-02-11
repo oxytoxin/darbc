@@ -366,8 +366,10 @@ class RsbsaFroms extends Controller
 
 
                     Fieldset::make('Annual Income')->columns(2)->schema([
-                        TextInput::make('gross_annual_income_farming')->numeric()->prefix('₱'),
-                        TextInput::make('gross_annual_income_nonfarming')->numeric()->prefix('₱'),
+                        TextInput::make('gross_annual_income_farming')->numeric()->prefix('₱')->maxValue(9999999999999),
+                        TextInput::make('gross_annual_income_nonfarming')->numeric()->prefix('₱')->maxValue(9999999999999)
+                        
+                        ,
                     ]),
 
                 ]),

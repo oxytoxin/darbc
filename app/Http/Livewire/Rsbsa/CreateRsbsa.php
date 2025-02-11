@@ -135,11 +135,10 @@ class CreateRsbsa extends Component implements HasForms
         unset($validatedData['two_by_two']); 
 
         $rsbsaRecord = RsbsaRecord::create($rsbsaData);
-
-        if ($twoByTwo['two_by_two']) {
-            $this->rsbsa->addMedia(collect( $twoByTwo['two_by_two'])?->first())->toMediaCollection('two_by_two');
-        }
         
+        if ($twoByTwo['two_by_two']) {
+            $rsbsaRecord->addMedia(collect($twoByTwo['two_by_two'])->first())->toMediaCollection('two_by_two');
+        }
 
 
         DB::commit();
