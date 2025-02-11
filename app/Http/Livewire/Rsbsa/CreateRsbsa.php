@@ -135,10 +135,17 @@ class CreateRsbsa extends Component implements HasForms
         $rsbsaRecord = RsbsaRecord::create($rsbsaData);
 
         // Attach media (two_by_two photo)
-        if (isset($two_by_two) && $two_by_two) {
-            $rsbsaRecord
-                ->addMedia($two_by_two)
-                ->toMediaCollection('two_by_two');
+        if (!empty($twoByTwo)) {
+            // Ensure it's an actual file and not an array
+            if (is_array($twoByTwo)) {
+                $twoByTwo = $twoByTwo[0] ?? null; // Get the first file if it's an array
+            }
+
+            if ($twoByTwo) {
+                $rsbsaRecord
+                    ->addMedia($twoByTwo->getRealPath()) // Convert to file path
+                    ->toMediaCollection('two_by_two');
+            }
         }
 
         DB::commit();

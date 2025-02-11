@@ -53,6 +53,11 @@ class EditRsbsa extends Component implements HasForms
             'mother_maiden_name' => $this->rsbsa->memberInformation?->mother_maiden_name ?? null,
         ]); 
 
+        $twoByTwoMedia = $this->rsbsa->getFirstMediaUrl('two_by_two');
+
+        // Ensure it handles null properly
+        $data['two_by_two'] = !empty($twoByTwoMedia) ? $twoByTwoMedia : null;
+
         $this->form->fill($data);
     }
 
@@ -88,10 +93,17 @@ class EditRsbsa extends Component implements HasForms
     
             // Handle file upload (if updated)
             if (!empty($twoByTwo)) {
-                $this->rsbsa
-                    ->clearMediaCollection('two_by_two') // Remove old image
-                    ->addMedia($twoByTwo)
-                    ->toMediaCollection('two_by_two');
+                // Ensure it's an actual file and not an array
+                if (is_array($twoByTwo)) {
+                    $twoByTwo = $twoByTwo[0] ?? null; // Get the first file if it's an array
+                }
+    
+                if ($twoByTwo) {
+                    $this->rsbsa
+                        ->clearMediaCollection('two_by_two') // Remove old image
+                        ->addMedia($twoByTwo->getRealPath()) // Convert to file path
+                        ->toMediaCollection('two_by_two');
+                }
             }
     
             DB::commit();
