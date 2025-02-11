@@ -55,7 +55,7 @@ class CreateRsbsa extends Component implements HasForms
         // Validate the form data using Filament's form validation
         $validatedData = $this->form->validate()['data'];
         // dd($validatedData);
-        $two_by_two = $validatedData['two_by_two'];
+    
       
         $rsbsaData = [
             'darbc_id' => $this->member->darbc_id,
@@ -131,22 +131,16 @@ class CreateRsbsa extends Component implements HasForms
         // dd($rsbsaData);
 
         // Create an RsbsaRecord with validated data
-        unset($rsbsaData['two_by_two']);
+        $twoByTwo['two_by_two'] = $validatedData['two_by_two'];
+        unset($validatedData['two_by_two']); 
+
         $rsbsaRecord = RsbsaRecord::create($rsbsaData);
 
-        // Attach media (two_by_two photo)
-        if (!empty($twoByTwo)) {
-            // Ensure it's an actual file and not an array
-            if (is_array($twoByTwo)) {
-                $twoByTwo = $twoByTwo[0] ?? null; // Get the first file if it's an array
-            }
-
-            if ($twoByTwo) {
-                $rsbsaRecord
-                    ->addMedia($twoByTwo->getRealPath()) // Convert to file path
-                    ->toMediaCollection('two_by_two');
-            }
+        if ($twoByTwo['two_by_two']) {
+            $this->rsbsa->addMedia(collect( $twoByTwo['two_by_two'])?->first())->toMediaCollection('two_by_two');
         }
+        
+
 
         DB::commit();
 

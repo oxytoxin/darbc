@@ -17,6 +17,7 @@ class RsbsaRecord extends Model implements HasMedia
         $this->addMediaCollection('two_by_two')
             ->singleFile()
             ->useDisk('rsbsa_two_by_two');
+      
     }
 
     const HIGHEST_FORMAL_EDUCATION=[
@@ -40,6 +41,10 @@ class RsbsaRecord extends Model implements HasMedia
 
     public function memberInformation(){
         return $this->belongsTo(MemberInformation::class,'member_information_id');
+    }
+
+    public function getImage(){
+        return self::getFirstMediaUrl('two_by_two') ?: asset('assets/placeholder.jpg');
     }
 
 

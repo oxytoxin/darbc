@@ -30,7 +30,7 @@ class EditRsbsa extends Component implements HasForms
 
     protected function getFormSchema(): array
     {
-        return RsbsaFroms::editForm();
+        return RsbsaFroms::editForm($this->rsbsa);
     }
 
     public function mount(RsbsaRecord $rsbsa)
@@ -53,79 +53,66 @@ class EditRsbsa extends Component implements HasForms
             'mother_maiden_name' => $this->rsbsa->memberInformation?->mother_maiden_name ?? null,
         ]); 
 
-        $twoByTwoMedia = $this->rsbsa->getFirstMediaUrl('two_by_two');
+        $twoByTwoMediaPath = $this->rsbsa->getFirstMediaPath('two_by_two');
 
-        // Ensure it handles null properly
-        $data['two_by_two'] = !empty($twoByTwoMedia) ? $twoByTwoMedia : null;
+    // Set FileUpload field correctly (must be a file path, not URL)
+    $data['two_by_two'] = !empty($twoByTwoMediaPath) ? $twoByTwoMediaPath : null;
+
 
         $this->form->fill($data);
     }
 
     public function update()
     {
-        DB::beginTransaction();
-    
+       
         try {
-            $validatedData = $this->form->validate();
-            // dd($validatedData);
-    
-            // Extract 'two_by_two' and unset it before updating
-            $twoByTwo = $validatedData['two_by_two'] ?? null;
-            
-
-            unset(
-                $validatedData['darbc_id'],
-                $validatedData['memberInformation_information_id'],
-                $validatedData['user_id'],
-                $validatedData['surname'],
-                $validatedData['first_name'],
-                $validatedData['middle_name'],
-                $validatedData['gender'],
-                $validatedData['date_of_birth'],
-                $validatedData['contact_number'],
-                $validatedData['religion'],
-                $validatedData['civil_status'],
-                $validatedData['name_of_spouse'],
-                $validatedData['mother_maiden_name'],
-                $validatedData['two_by_two'] // Remove media from validation, handled separately
-            );
-            $this->rsbsa->update($validatedData);
-    
-            // Handle file upload (if updated)
-            if (!empty($twoByTwo)) {
-                // Ensure it's an actual file and not an array
-                if (is_array($twoByTwo)) {
-                    $twoByTwo = $twoByTwo[0] ?? null; // Get the first file if it's an array
-                }
-    
-                if ($twoByTwo) {
-                    $this->rsbsa
-                        ->clearMediaCollection('two_by_two') // Remove old image
-                        ->addMedia($twoByTwo->getRealPath()) // Convert to file path
-                        ->toMediaCollection('two_by_two');
-                }
-            }
-    
-            DB::commit();
-    
-            Notification::make()
-                ->title('Success!')
-                ->body('The RSBSA record has been successfully updated.')
-                ->success()
-                ->send();
-    
-            return redirect()->route('rsbsa.manage-members');
-        } catch (\Throwable $e) {
-            DB::rollBack();
-    
-            Notification::make()
-                ->title('Error!')
-                ->body('There was an error updating the RSBSA record: ' . $e->getMessage())
-                ->danger()
-                ->send();
-    
-            throw $e;
+            $this->form->validate();
+        } catch (\Throwable $th) {
+            notify(title: $th->getMessage(), type: 'danger');
+            throw $th;
         }
+    
+        DB::beginTransaction();
+
+        $validatedData = $this->form->validate();
+      
+        $twoByTwo['two_by_two'] = $validatedData['two_by_two'];
+        unset($validatedData['two_by_two']); 
+        
+
+        unset(
+            $validatedData['darbc_id'],
+            $validatedData['memberInformation_information_id'],
+            $validatedData['user_id'],
+            $validatedData['surname'],
+            $validatedData['first_name'],
+            $validatedData['middle_name'],
+            $validatedData['gender'],
+            $validatedData['date_of_birth'],
+            $validatedData['contact_number'],
+            $validatedData['religion'],
+            $validatedData['civil_status'],
+            $validatedData['name_of_spouse'],
+            $validatedData['mother_maiden_name'],
+
+        );
+        $this->rsbsa->update($validatedData);
+        if ($twoByTwo['two_by_two']) {
+            $this->rsbsa->addMedia(collect( $twoByTwo['two_by_two'])?->first())->toMediaCollection('two_by_two');
+        }
+        
+
+
+        DB::commit();
+
+        Notification::make()
+            ->title('Success!')
+            ->body('The RSBSA record has been successfully updated.')
+            ->success()
+            ->send();
+
+        return redirect()->route('rsbsa.manage-members');
+        
     }
     
 
