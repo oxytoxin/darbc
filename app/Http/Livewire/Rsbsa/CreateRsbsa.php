@@ -43,26 +43,25 @@ class CreateRsbsa extends Component implements HasForms
     {
         return [
             Wizard::make([
-                // Step 1: Personal Information
-                // Step::make('Header Section')
-                //     ->schema([
+                Step::make('Header Section')
+                    ->schema([
 
-                //         Fieldset::make('Reference Number')->columns(4)->schema([
-                //             // TextInput::make('reference_number')->required(),
-                //             TextInput::make('region_code')->required()->mask(fn (TextInput\Mask $mask) => $mask->pattern('00'))
-                //             ->label('Region')->placeholder('00'),
-                //             TextInput::make('province_code')->required()->mask(fn (TextInput\Mask $mask) => $mask->pattern('00'))
-                //             ->label('Province')->placeholder('00')
-                //             ,
-                //             TextInput::make('city_municipality_code')->required()->mask(fn (TextInput\Mask $mask) => $mask->pattern('00'))
-                //             ->label('City/Muni')->placeholder('00')
-                //             ,
-                //             TextInput::make('barangay_code')->required()->mask(fn (TextInput\Mask $mask) => $mask->pattern('000000'))
-                //             ->label('Barangay')->placeholder('000000')
-                //             ,
+                        Fieldset::make('Reference Number')->columns(4)->schema([
+                            // TextInput::make('reference_number')->required(),
+                            TextInput::make('region_code')->required()->mask(fn (TextInput\Mask $mask) => $mask->pattern('00'))
+                            ->label('Region')->placeholder('00'),
+                            TextInput::make('province_code')->required()->mask(fn (TextInput\Mask $mask) => $mask->pattern('00'))
+                            ->label('Province')->placeholder('00')
+                            ,
+                            TextInput::make('city_municipality_code')->required()->mask(fn (TextInput\Mask $mask) => $mask->pattern('00'))
+                            ->label('City/Muni')->placeholder('00')
+                            ,
+                            TextInput::make('barangay_code')->required()->mask(fn (TextInput\Mask $mask) => $mask->pattern('000000'))
+                            ->label('Barangay')->placeholder('000000')
+                            ,
                            
-                //         ]),
-                //     ]),
+                        ]),
+                    ]),
                 Step::make('Part I: Personal Information')
                     ->description('Provide your personal details.')
                     ->schema([
@@ -145,7 +144,7 @@ class CreateRsbsa extends Component implements HasForms
                             
                             
                             ,
-                            TextInput::make('name_of_household_head')->label('Household Head Name')->hidden(fn (Closure $get) => $get('household_head'))->columnSpanFull(),
+                            TextInput::make('name_of_household_head')->label('Household Head Name')->hidden(fn (Closure $get) => $get('household_head'))->columnSpanFull()->required(),
                             
                             TextInput::make('relationship_with_household_head')->hidden(fn (Closure $get) => $get('household_head'))->columnSpanFull(),
                             TextInput::make('no_of_living_household_members')->mask(fn (TextInput\Mask $mask) => $mask->pattern('00'))->label('No. of living household members'),
@@ -166,15 +165,24 @@ class CreateRsbsa extends Component implements HasForms
                             // ->helperText('Check this if you are a member of an indigenous group.')
                             ->columnSpanFull(),
                         
-                            TextInput::make('indigenous_group_name')->label('Indigenous Group Name')->columnSpanFull()->hidden(fn (Closure $get) => !$get('is_indigenous_group_member')),
+                            TextInput::make('indigenous_group_name')
+                            ->required()
+                            ->label('Indigenous Group Name')->columnSpanFull()->hidden(fn (Closure $get) => !$get('is_indigenous_group_member')),
                         ]),
 
                         Fieldset::make('Identification & Emergency')->columns(2)->columnSpanFull()->schema([
                             Checkbox::make('has_government_id')->label('With Government ID?')->reactive()->columnSpanFull(),
-                            TextInput::make('id_type')->label('ID Type')->hidden(fn (Closure $get) => !$get('has_government_id')),
-                            TextInput::make('id_number')->label('ID Number')->hidden(fn (Closure $get) => !$get('has_government_id')),
+                            TextInput::make('id_type')->label('ID Type')
+                            ->required()
+                            ->hidden(fn (Closure $get) => !$get('has_government_id')),
+                            TextInput::make('id_number')->label('ID Number')
+                            ->required()
+
+                            ->hidden(fn (Closure $get) => !$get('has_government_id')),
                             Checkbox::make('is_farmers_association_member')->label('Are you a Farmers Association Member?')->reactive()->columnSpanFull(),
-                            TextInput::make('farmers_association_name')->label('Farmers Association Name')->columnSpanFull()->hidden(fn (Closure $get) => !$get('is_farmers_association_member')),
+                            TextInput::make('farmers_association_name')
+                            ->required()
+                            ->label('Farmers Association Name')->columnSpanFull()->hidden(fn (Closure $get) => !$get('is_farmers_association_member')),
                             TextInput::make('emergency_contact_name')->required()->label('Emergency Contact Name'),
                             TextInput::make('emergency_contact_number')->required()->label('Emergency Contact Number'),
                         ]),
@@ -222,7 +230,7 @@ class CreateRsbsa extends Component implements HasForms
                         
                         TextInput::make('farming_other_crops')
                             ->label('Specify Other Crops')
-                            ->hidden(fn (Closure $get) => !$get('other_crops')),
+                            ->hidden(fn (Closure $get) => !$get('other_crops'))->required(),
                         
                         Checkbox::make('livestock')
                             ->label('Livestock ')
@@ -231,15 +239,17 @@ class CreateRsbsa extends Component implements HasForms
                         
                         TextInput::make('farming_livestock')
                             ->label('Specify Livestock')
-                            ->hidden(fn (Closure $get) => !$get('livestock')),
+                            ->hidden(fn (Closure $get) => !$get('livestock'))->required(),
                         
                         Checkbox::make('poultry')
                             ->label('Poultry ')
                             ->columnSpanFull()
+
                             ->reactive(),
                         
                         TextInput::make('farming_poultry')
                             ->label('Specify Poultry')
+                            ->required()
                             ->hidden(fn (Closure $get) => !$get('poultry')),
                         
                             
@@ -254,7 +264,9 @@ class CreateRsbsa extends Component implements HasForms
                             Checkbox::make('work_cultivation') ->columnSpanFull()->label('Cultivation'),
                             Checkbox::make('work_harvesting') ->columnSpanFull()->label('Harvesting'),
                             Checkbox::make('work_others') ->columnSpanFull()->reactive()->label('Other'),
-                            TextInput::make('work_others_specify')->columnSpanFull()->hidden(fn (Closure $get) => !$get('work_others'))->label('Please Specify other work'),
+                            TextInput::make('work_others_specify')
+                            ->required()
+                            ->columnSpanFull()->hidden(fn (Closure $get) => !$get('work_others'))->label('Please Specify other work'),
                         ])
                         // ->hidden(fn (Closure $get) => $get('main_livelihood') != 'Farmworker/Laborer')
                         ->hidden(fn (Closure $get) => !in_array('Farmworker/Laborer', $get('main_livelihood') ?? [])), 
@@ -287,10 +299,12 @@ class CreateRsbsa extends Component implements HasForms
         Checkbox::make('fishing_others')
         ->reactive()
             ->columnSpanFull()
+
             ->label('Other'),
 
         TextInput::make('fishing_others_specify')
             ->columnSpanFull()
+            ->required()
             ->hidden(fn (Closure $get) => !$get('fishing_others'))
             ->label('Specify Other Fishing Activity'),
     ])
@@ -322,11 +336,13 @@ class CreateRsbsa extends Component implements HasForms
         Checkbox::make('youth_others')
             ->label('Other Involvement')
             ->reactive()
+            
             ->columnSpanFull(), // Dynamically controls text input visibility
 
-        TextInput::make('work_others_specify')
+        TextInput::make('youth_others_specify')
             ->label('Specify Other Involvement')
             ->columnSpanFull()
+            ->required()
             ->hidden(fn (Closure $get) => !$get('youth_others')), // Only shows if 'Others' is checked
     ])  ->hidden(fn (Closure $get) => !in_array('Agri Youth', $get('main_livelihood') ?? [])), 
 
@@ -347,6 +363,7 @@ class CreateRsbsa extends Component implements HasForms
                
             ])
             // ->startOnStep(2)
+            ->skippable()
             ->submitAction(new HtmlString('<button class="p-1 px-2 text-sm font-semibold text-white rounded bg-primary-500" wire:click="register">Finish <span wire:loading class="animate-bounce">...</span></button>'))
         ];
     }
@@ -359,94 +376,91 @@ class CreateRsbsa extends Component implements HasForms
 
     try {
         // Validate the form data using Filament's form validation
-        $validatedData = $this->form->validate();
-
-        // Create an RsbsaRecord with validated data
-        $rsbsaRecord = RsbsaRecord::create([
-            'darbc_id' => $validatedData['darbc_id'],
-            'member_information_id' => $validatedData['member_information_id'],
-            'user_id' => $validatedData['user_id'],
-            'enrollment_type' => $validatedData['enrollment_type'],
-            'reference_number' => $validatedData['reference_number'] ?? null,
-            'region_code' => $validatedData['region_code'],
-            'province_code' => $validatedData['province_code'],
-            'city_municipality_code' => $validatedData['city_municipality_code'],
-            'barangay_code' => $validatedData['barangay_code'],
-            'surname' => $validatedData['surname'],
-            'middle_name' => $validatedData['middle_name'],
-            'first_name' => $validatedData['first_name'],
-            'extension_name' => $validatedData['extension_name'],
-            'sex' => $validatedData['gender'],
-            'house_lot_bldg_purok' => $validatedData['house_lot_bldg_purok'],
-            'street_sitio_subdv' => $validatedData['street_sitio_subdv'],
-            'barangay' => $validatedData['barangay'],
-            'city_municipality' => $validatedData['city_municipality'],
-            'province' => $validatedData['province'],
-            'region' => $validatedData['region'],
-            'contact_number' => $validatedData['contact_number'],
-            'landline_number' => $validatedData['landline_number'],
-            'date_of_birth' => $validatedData['date_of_birth'],
-            'place_of_birth_municipality' => $validatedData['place_of_birth_municipality'],
-            'place_of_birth_province' => $validatedData['place_of_birth_province'],
-            'place_of_birth_country' => $validatedData['place_of_birth_country'],
-            'religion' => $validatedData['religion'],
-            'civil_status' => $validatedData['civil_status'],
-            'name_of_spouse' => $validatedData['name_of_spouse'],
-            'mother_maiden_name' => $validatedData['mother_maiden_name'],
+        $validatedData = $this->form->validate()['data'];
+        // dd($validatedData);
+        $two_by_two = $validatedData['two_by_two'];
+      
+        $rsbsaData = [
+            'darbc_id' => $this->member->darbc_id,
+            'member_information_id' => $this->member->id,
+            'user_id' => $this->member->user_id,
+            'enrollment_type' => 'New',
+            'region_code' => $validatedData['region_code'] ?? null,
+            'province_code' => $validatedData['province_code'] ?? null,
+            'city_municipality_code' => $validatedData['city_municipality_code'] ?? null,
+            'barangay_code' => $validatedData['barangay_code'] ?? null,
+            'extension_name' => $validatedData['extension_name'] ?? null,
+            'house_lot_bldg_purok' => $validatedData['house_lot_bldg_purok'] ?? null,
+            'street_sitio_subdv' => $validatedData['street_sitio_subdv'] ?? null,
+            'barangay' => $validatedData['barangay'] ?? null,
+            'city_municipality' => $validatedData['city_municipality'] ?? null,
+            'province' => $validatedData['province'] ?? null,
+            'region' => $validatedData['region'] ?? null,
+            'landline_number' => $validatedData['landline_number'] ?? null,
+            'place_of_birth_municipality' => $validatedData['place_of_birth_municipality'] ?? null,
+            'place_of_birth_province' => $validatedData['place_of_birth_province'] ?? null,
+            'place_of_birth_country' => $validatedData['place_of_birth_country'] ?? null,
+            'name_of_spouse' => $validatedData['name_of_spouse'] ?? null,
             'household_head' => $validatedData['household_head'] ?? false,
-            'name_of_household_head' => $validatedData['name_of_household_head'],
-            'relationship_with_household_head' => $validatedData['relationship_with_household_head'],
-            'no_of_living_household_members' => $validatedData['no_of_living_household_members'],
-            'no_of_male' => $validatedData['no_of_male'],
-            'no_of_female' => $validatedData['no_of_female'],
-            'highest_formal_education' => $validatedData['highest_formal_education'],
+            'name_of_household_head' => $validatedData['name_of_household_head'] ?? null,
+            'relationship_with_household_head' => $validatedData['relationship_with_household_head'] ?? null,
+            'no_of_living_household_members' => $validatedData['no_of_living_household_members'] ?? 0,
+            'no_of_male' => $validatedData['no_of_male'] ?? 0,
+            'no_of_female' => $validatedData['no_of_female'] ?? 0,
+            'highest_formal_education' => $validatedData['highest_formal_education'] ?? null,
             'is_pwd' => $validatedData['is_pwd'] ?? false,
             'is_4ps_beneficiary' => $validatedData['is_4ps_beneficiary'] ?? false,
             'is_indigenous_group_member' => $validatedData['is_indigenous_group_member'] ?? false,
-            'indigenous_group_name' => $validatedData['indigenous_group_name'],
+            'indigenous_group_name' => $validatedData['indigenous_group_name'] ?? null,
             'has_government_id' => $validatedData['has_government_id'] ?? false,
-            'id_type' => $validatedData['id_type'],
-            'id_number' => $validatedData['id_number'],
+            'id_type' => $validatedData['id_type'] ?? null,
+            'id_number' => $validatedData['id_number'] ?? null,
             'is_farmers_association_member' => $validatedData['is_farmers_association_member'] ?? false,
-            'farmers_association_name' => $validatedData['farmers_association_name'],
-            'emergency_contact_name' => $validatedData['emergency_contact_name'],
-            'emergency_contact_number' => $validatedData['emergency_contact_number'],
-            'main_livelihood' => $validatedData['main_livelihood'],
+            'farmers_association_name' => $validatedData['farmers_association_name'] ?? null,
+            'emergency_contact_name' => $validatedData['emergency_contact_name'] ?? null,
+            'emergency_contact_number' => $validatedData['emergency_contact_number'] ?? null,
+            'main_livelihood' => $validatedData['main_livelihood'] ?? [],
             'farming_rice' => $validatedData['farming_rice'] ?? false,
             'farming_corn' => $validatedData['farming_corn'] ?? false,
             'other_crops' => $validatedData['other_crops'] ?? false,
-            'farming_other_crops' => $validatedData['farming_other_crops'],
+            'farming_other_crops' => $validatedData['farming_other_crops'] ?? null,
             'livestock' => $validatedData['livestock'] ?? false,
-            'farming_livestock' => $validatedData['farming_livestock'],
+            'farming_livestock' => $validatedData['farming_livestock'] ?? null,
             'poultry' => $validatedData['poultry'] ?? false,
-            'farming_poultry' => $validatedData['farming_poultry'],
+            'farming_poultry' => $validatedData['farming_poultry'] ?? null,
             'work_land_preparation' => $validatedData['work_land_preparation'] ?? false,
             'work_planting_transplanting' => $validatedData['work_planting_transplanting'] ?? false,
             'work_cultivation' => $validatedData['work_cultivation'] ?? false,
             'work_harvesting' => $validatedData['work_harvesting'] ?? false,
             'work_others' => $validatedData['work_others'] ?? false,
-            'work_others_specify' => $validatedData['work_others_specify'],
+            'work_others_specify' => $validatedData['work_others_specify'] ?? null,
             'fishing_fish_capture' => $validatedData['fishing_fish_capture'] ?? false,
             'fishing_aquaculture' => $validatedData['fishing_aquaculture'] ?? false,
             'fishing_gleaning' => $validatedData['fishing_gleaning'] ?? false,
             'fishing_fish_processing' => $validatedData['fishing_fish_processing'] ?? false,
             'fishing_fish_vending' => $validatedData['fishing_fish_vending'] ?? false,
             'fishing_others' => $validatedData['fishing_others'] ?? false,
-            'fishing_others_specify' => $validatedData['fishing_others_specify'],
+            'fishing_others_specify' => $validatedData['fishing_others_specify'] ?? null,
             'youth_farming_household' => $validatedData['youth_farming_household'] ?? false,
             'youth_agri_course' => $validatedData['youth_agri_course'] ?? false,
             'youth_nonformal_agri_course' => $validatedData['youth_nonformal_agri_course'] ?? false,
             'youth_agri_program' => $validatedData['youth_agri_program'] ?? false,
             'youth_others' => $validatedData['youth_others'] ?? false,
-            'youth_others_specify' => $validatedData['youth_others_specify'],
-            'gross_annual_income_farming' => $validatedData['gross_annual_income_farming'],
-            'gross_annual_income_nonfarming' => $validatedData['gross_annual_income_nonfarming'],
-        ]);
+            'youth_others_specify' => $validatedData['youth_others_specify'] ?? null,
+            'gross_annual_income_farming' => $validatedData['gross_annual_income_farming'] ?? null,
+            'gross_annual_income_nonfarming' => $validatedData['gross_annual_income_nonfarming'] ?? null,
+        ];
+
+        // dd($rsbsaData);
+
+        // Create an RsbsaRecord with validated data
+        unset($rsbsaData['two_by_two']);
+        $rsbsaRecord = RsbsaRecord::create($rsbsaData);
 
         // Attach media (two_by_two photo)
-        if (isset($validatedData['two_by_two']) && $validatedData['two_by_two']) {
+        if (isset($two_by_two) && $two_by_two) {
             $rsbsaRecord
-                ->addMedia($validatedData['two_by_two'])
+                ->addMedia($two_by_two)
                 ->toMediaCollection('two_by_two');
         }
 
@@ -460,7 +474,8 @@ class CreateRsbsa extends Component implements HasForms
             ->send();
 
         // Redirect or reset form
-        return redirect()->route('your.redirect.route'); // Replace with your actual route
+        // dd($rsbsaRecord);
+        return redirect()->route('rsbsa.manage-members'); // Replace with your actual route
     } catch (\Throwable $e) {
         DB::rollBack();
 

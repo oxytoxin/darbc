@@ -190,4 +190,25 @@ class MemberInformation extends Model implements HasMedia
     public function rsbsa(){
         return $this->hasOne(RsbsaRecord::class);
     }
+
+
+
+    public function hasRsbsaRecord()
+{
+    return $this->rsbsa()->exists();
 }
+
+
+public static function countWithRsbsa()
+{
+    return self::whereHas('rsbsa')->count();
+}
+
+public static function countWithoutRsbsa()
+{
+    return self::whereDoesntHave('rsbsa')->count();
+}
+
+}
+
+

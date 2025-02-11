@@ -119,7 +119,21 @@ class RsbsaMemberManagement extends Component implements HasTable
                         ->when($data['to'], fn ($query, $to) => $query->whereDate('application_date', '<=', $to));
                 })
                 ->columns(2)
-                ->columnSpan(2)
+                ->columnSpan(2),
+                SelectFilter::make('rsbsa_status')
+            ->label('RSBSA Status')
+            ->placeholder('All')
+            ->options([
+                'with_rsbsa' => 'With RSBSA',
+                'without_rsbsa' => 'Without RSBSA',
+            ])
+            ->query(function ($query, $data) {
+                if ($data['value'] === 'with_rsbsa') {
+                    $query->whereHas('rsbsa'); // Members who have an RSBSA record
+                } elseif ($data['value'] === 'without_rsbsa') {
+                    $query->whereDoesntHave('rsbsa'); // Members who don't have an RSBSA record
+                }
+            }),
         ];
     }
 
@@ -132,9 +146,10 @@ class RsbsaMemberManagement extends Component implements HasTable
                 ->button()
                 ->icon('heroicon-o-user')
                 ->url(fn ($record): string => route('rsbsa.register', ['member' => $record]))
+                ->hidden(fn($record)=> $record->hasRsbsaRecord())
                 ,
-            Action::make('claims')
-            ->label('Create')
+            Action::make('View')
+            ->label('View')
                 ->button()
                 ->outlined()
                 ->icon('heroicon-o-cash')

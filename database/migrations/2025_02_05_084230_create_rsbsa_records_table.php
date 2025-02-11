@@ -16,8 +16,14 @@ return new class extends Migration
         Schema::create('rsbsa_records', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('darbc_id');
-            $table->foreignId('member_information_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->unsignedBigInteger('member_information_id');
+    $table->foreign('member_information_id')->references('id')->on('member_information')->onDelete('cascade');
+
+            
+            
+
+    $table->unsignedBigInteger('user_id');
+    $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->enum('enrollment_type', ['New', 'Updating']);
             $table->string('reference_number')->nullable();
@@ -27,10 +33,9 @@ return new class extends Migration
             $table->string('barangay_code')->nullable();
             //PERSONAL INFORMATION
 
-            $table->string('two_by_two');
-            $table->string('surname');
+            $table->string('surname')->nullable();
             $table->string('middle_name')->nullable();
-            $table->string('first_name');
+            $table->string('first_name')->nullable();
             $table->string('extension_name')->nullable();
             $table->string('sex')->nullable();
             $table->text('house_lot_bldg_purok')->nullable(); 
