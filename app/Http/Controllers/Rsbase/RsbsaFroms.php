@@ -366,8 +366,39 @@ class RsbsaFroms extends Controller
 
 
                     Fieldset::make('Annual Income')->columns(2)->schema([
-                        TextInput::make('gross_annual_income_farming')->numeric()->prefix('₱')->maxValue(9999999999999),
-                        TextInput::make('gross_annual_income_nonfarming')->numeric()->prefix('₱')->maxValue(9999999999999)
+                        TextInput::make('gross_annual_income_farming')
+                        
+                        ->numeric()
+                        ->mask(fn (TextInput\Mask $mask) => $mask
+                        ->numeric()
+                        ->decimalPlaces(2) // Set the number of digits after the decimal point.
+                        ->decimalSeparator(',') // Add a separator for decimal numbers.
+                        ->integer() // Disallow decimal numbers.
+                        ->mapToDecimalSeparator([',']) // Map additional characters to the decimal separator.
+                        ->minValue(1) // Set the minimum value that the number can be.
+                        ->maxValue(9999999999999) // Set the maximum value that the number can be.
+                        ->normalizeZeros() // Append or remove zeros at the end of the number.
+                        ->padFractionalZeros() // Pad zeros at the end of the number to always maintain the maximum number of decimal places.
+                        ->thousandsSeparator(','), // Add a separator for thousands.
+                    )
+                        ->prefix('₱')
+                        // ->maxValue(9999999999999)
+                        
+                        ,
+                        TextInput::make('gross_annual_income_nonfarming')->prefix('₱')
+                        ->numeric()
+                        ->mask(fn (TextInput\Mask $mask) => $mask
+                        ->numeric()
+                        ->decimalPlaces(2) // Set the number of digits after the decimal point.
+                        ->decimalSeparator(',') // Add a separator for decimal numbers.
+                        ->integer() // Disallow decimal numbers.
+                        ->mapToDecimalSeparator([',']) // Map additional characters to the decimal separator.
+                        ->minValue(1) // Set the minimum value that the number can be.
+                        ->maxValue(9999999999999) // Set the maximum value that the number can be.
+                        ->normalizeZeros() // Append or remove zeros at the end of the number.
+                        ->padFractionalZeros() // Pad zeros at the end of the number to always maintain the maximum number of decimal places.
+                        ->thousandsSeparator(','), // Add a separator for thousands.
+                    )
                         
                         ,
                     ]),
