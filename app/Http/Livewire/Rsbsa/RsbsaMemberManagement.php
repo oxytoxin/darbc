@@ -148,12 +148,19 @@ class RsbsaMemberManagement extends Component implements HasTable
                 ->url(fn ($record): string => route('rsbsa.register', ['member' => $record]))
                 ->hidden(fn($record)=> $record->hasRsbsaRecord())
                 ,
-            Action::make('View')
-            ->label('View')
-                ->button()
-                ->outlined()
-                ->icon('heroicon-o-cash')
-                ->url(fn ($record) => '#'),
+
+                Action::make('Edit RSBSA')
+    ->label('Edit RSBSA')
+    ->button()
+    ->icon('heroicon-o-pencil')
+    ->url(fn ($record): string => route('rsbsa.edit', ['rsbsa' => $record->rsbsa])) 
+    ->hidden(fn($record) => !$record->hasRsbsaRecord()),
+            // Action::make('View')
+            // ->label('View')
+            //     ->button()
+            //     ->outlined()
+            //     ->icon('heroicon-o-cash')
+            //     ->url(fn ($record) => '#'),
             ActionGroup::make([
                 
             ])
