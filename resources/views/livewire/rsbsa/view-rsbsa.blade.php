@@ -94,7 +94,6 @@
                     </div>
                     <div class="flex flex-col ">
                         <div class="flex border border-black">
-                            <div class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold border-r border-black">1</div>
                             <div class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold border-r border-black">2</div>
                             <div class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold border-r border-black">3</div>
                             <div class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold border-r border-black">4</div>
