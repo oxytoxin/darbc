@@ -119,7 +119,7 @@
         </div>
     </div>
 
-    <div class="border-2 border-black">
+    <div class="border border-black">
         <!-- Section Header -->
         <div class="bg-black text-white text-xs font-bold p-1">
             PART I: PERSONAL INFORMATION
@@ -174,46 +174,42 @@
         </div>
     </div>
 
-    <div class="border-2 border-black">
+    <div class="border border-black mt-4 flex p-4">
         <!-- Address Header (without full border) -->
         <div class="flex">
-            <div class="text-xs font-bold uppercase p-1 w-32 border-r-2 border-black">Address</div>
+            <div class="text-xs font-bold uppercase p-1 w-32 ">Address</div>
             <div class="flex-1"></div>
         </div>
     
         <!-- First Row (House Lot, Street, Barangay) -->
-        <div class="grid grid-cols-3 border-t border-black">
-            <div class="border-r border-black flex flex-col">
-                <div class="h-8"></div>
-                <span class="text-[10px] uppercase font-bold text-center border-t border-black">House/Lot/Bldg. No./Purok</span>
+        <div class="grid grid-cols-3 gap-4 w-full">
+            <div class=" flex flex-col">
+                <div class="h-8 border border-black  text-center text-xs italic py-2">Purok Tagumap 1</div>
+                <span class="text-[10px] uppercase font-bold text-center ">House/Lot/Bldg. No./Purok</span>
             </div>
-            <div class="border-r border-black flex flex-col">
-                <div class="h-8"></div>
-                <span class="text-[10px] uppercase font-bold text-center border-t border-black">Street/Sitio/Subdv.</span>
+            <div class=" flex flex-col">
+                <div class="h-8 border border-black  text-center text-xs italic py-2">78 Salem</div>
+                <span class="text-[10px] uppercase font-bold text-center ">Street/Sitio/Subdv.</span>
             </div>
             <div class="flex flex-col">
-                <div class="h-8"></div>
-                <span class="text-[10px] uppercase font-bold text-center border-t border-black">Barangay</span>
+                <div class="h-8 border border-black  text-center text-xs italic py-2">Kalawahg 2</div>
+                <span class="text-[10px] uppercase font-bold text-center ">Barangay</span>
+            </div>
+            <div class=" flex flex-col">
+                <div class="h-8 border border-black  text-center text-xs italic py-2">Isulab</div>
+                <span class="text-[10px] uppercase font-bold text-center ">Municipality/City</span>
+            </div>
+            <div class=" flex flex-col">
+                <div class="h-8 border border-black  text-center text-xs italic py-2">Sultan Kudarat</div>
+                <span class="text-[10px] uppercase font-bold text-center ">Province</span>
+            </div>
+            <div class="flex flex-col">
+                <div class="h-8 border border-black  text-center text-xs italic py-2">Region 12</div>
+                <span class="text-[10px] uppercase font-bold text-center ">Region</span>
             </div>
         </div>
     
-        <!-- Second Row (Municipality, Province) -->
-        <div class="grid grid-cols-2 border-t border-black">
-            <div class="border-r border-black flex flex-col">
-                <div class="h-8"></div>
-                <span class="text-[10px] uppercase font-bold text-center border-t border-black">Municipality/City</span>
-            </div>
-            <div class="flex flex-col">
-                <div class="h-8"></div>
-                <span class="text-[10px] uppercase font-bold text-center border-t border-black">Province</span>
-            </div>
-        </div>
-    
-        <!-- Third Row (Region - Full Width) -->
-        <div class="flex flex-col border-t border-black">
-            <div class="h-8"></div>
-            <span class="text-[10px] uppercase font-bold text-center border-t border-black">Region</span>
-        </div>
+        
     </div>
     
     
