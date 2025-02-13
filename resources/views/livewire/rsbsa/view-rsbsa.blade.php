@@ -31,14 +31,14 @@
                 <!-- Date Boxes -->
                 <div class="ml-6">
                     <div class="flex space-x-1">
-                        <div class="border border-black w-6 h-6 flex items-center justify-center text-gray-800 font-semibold "></div>
-                        <div class="border border-black w-6 h-6 flex items-center justify-center text-gray-800 font-semibold "></div>
-                        <div class="border border-black w-6 h-6 flex items-center justify-center text-gray-800 font-semibold "></div>
-                        <div class="border border-black w-6 h-6 flex items-center justify-center text-gray-800 font-semibold "></div>
-                        <div class="border border-black w-6 h-6 flex items-center justify-center text-gray-800 font-semibold "></div>
-                        <div class="border border-black w-6 h-6 flex items-center justify-center text-gray-800 font-semibold "></div>
-                        <div class="border border-black w-6 h-6 flex items-center justify-center text-gray-800 font-semibold "></div>
-                        <div class="border border-black w-6 h-6 flex items-center justify-center text-gray-800 font-semibold "></div>
+                        <div class="border border-black w-6 h-6 flex items-center justify-center text-gray-800 font-semibold ">0</div>
+                        <div class="border border-black w-6 h-6 flex items-center justify-center text-gray-800 font-semibold ">1</div>
+                        <div class="border border-black w-6 h-6 flex items-center justify-center text-gray-800 font-semibold ">2</div>
+                        <div class="border border-black w-6 h-6 flex items-center justify-center text-gray-800 font-semibold ">1</div>
+                        <div class="border border-black w-6 h-6 flex items-center justify-center text-gray-800 font-semibold ">1</div>
+                        <div class="border border-black w-6 h-6 flex items-center justify-center text-gray-800 font-semibold ">1</div>
+                        <div class="border border-black w-6 h-6 flex items-center justify-center text-gray-800 font-semibold ">1</div>
+                        <div class="border border-black w-6 h-6 flex items-center justify-center text-gray-800 font-semibold ">1</div>
                     </div>
                     <!-- Labels for MM/DD/YYYY -->
                     <div class="flex space-x-1 text-[10px] uppercase text-center">
@@ -118,4 +118,106 @@
             </div>
         </div>
     </div>
+
+    <div class="border-2 border-black">
+        <!-- Section Header -->
+        <div class="bg-black text-white text-xs font-bold p-1">
+            PART I: PERSONAL INFORMATION
+        </div>
+    
+        <!-- Personal Information Fields -->
+        <div class="grid grid-cols-2  gap-x-4">
+            <!-- Surname -->
+            <div class="relative">
+                <p class="text-center text-xs italic py-2">Dela Cruz</p>
+                <div class="text-center text-xs font-bold uppercase border-t border-black py-1">Surname</div>
+            </div>
+    
+            <!-- First Name -->
+            <div class="relative">
+                <p class="text-center text-xs italic py-2">Juan</p>
+                <div class="text-center text-xs font-bold uppercase border-t border-black py-1">First Name</div>
+            </div>
+        </div>
+    
+        <div class="grid grid-cols-2  gap-x-4">
+            <!-- Middle Name -->
+            <div class="relative">
+                <p class="text-center text-xs italic py-2">Santos</p>
+                <div class="text-center text-xs font-bold uppercase border-t border-black py-1">Middle Name</div>
+            </div>
+    
+            <!-- Extension Name & Sex -->
+            <div class="grid grid-cols-2">
+                <!-- Extension Name -->
+                <div class="relative border-r border-black">
+                    <p class="text-center text-xs italic py-2">Jr.</p>
+                    <div class="text-center text-xs font-bold uppercase border-t border-black py-1">Extension Name</div>
+                </div>
+    
+                <!-- Sex (Male/Female) -->
+                <div class="flex items-center justify-center px-2 space-x-2 border-t border-black">
+                    <div class="text-xs font-bold uppercase">Sex:</div>
+                    <div class="flex items-center space-x-1">
+                        <div class="border border-black w-4 h-4 flex items-center justify-center">
+                            <!-- Checkmark for Male -->
+                            &#10003;
+                        </div>
+                        <span class="text-xs">Male</span>
+                    </div>
+                    <div class="flex items-center space-x-1">
+                        <div class="border border-black w-4 h-4"></div>
+                        <span class="text-xs">Female</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="border-2 border-black">
+        <!-- Address Header (without full border) -->
+        <div class="flex">
+            <div class="text-xs font-bold uppercase p-1 w-32 border-r-2 border-black">Address</div>
+            <div class="flex-1"></div>
+        </div>
+    
+        <!-- First Row (House Lot, Street, Barangay) -->
+        <div class="grid grid-cols-3 border-t border-black">
+            <div class="border-r border-black flex flex-col">
+                <div class="h-8"></div>
+                <span class="text-[10px] uppercase font-bold text-center border-t border-black">House/Lot/Bldg. No./Purok</span>
+            </div>
+            <div class="border-r border-black flex flex-col">
+                <div class="h-8"></div>
+                <span class="text-[10px] uppercase font-bold text-center border-t border-black">Street/Sitio/Subdv.</span>
+            </div>
+            <div class="flex flex-col">
+                <div class="h-8"></div>
+                <span class="text-[10px] uppercase font-bold text-center border-t border-black">Barangay</span>
+            </div>
+        </div>
+    
+        <!-- Second Row (Municipality, Province) -->
+        <div class="grid grid-cols-2 border-t border-black">
+            <div class="border-r border-black flex flex-col">
+                <div class="h-8"></div>
+                <span class="text-[10px] uppercase font-bold text-center border-t border-black">Municipality/City</span>
+            </div>
+            <div class="flex flex-col">
+                <div class="h-8"></div>
+                <span class="text-[10px] uppercase font-bold text-center border-t border-black">Province</span>
+            </div>
+        </div>
+    
+        <!-- Third Row (Region - Full Width) -->
+        <div class="flex flex-col border-t border-black">
+            <div class="h-8"></div>
+            <span class="text-[10px] uppercase font-bold text-center border-t border-black">Region</span>
+        </div>
+    </div>
+    
+    
+    
+    
+    
 </div>
