@@ -679,15 +679,19 @@
 
 
 
-        <div class="border-2 border-black">
+        <div class=" border-black">
             <!-- Section Header -->
-            <div class="bg-black text-white font-bold p-1">
+            <div class="bg-black text-white font-bold p-1 uppercase">
                 Part II: Farm Profile
             </div>
 
             <!-- Main Livelihood -->
             <div class="grid grid-cols-4 text-xs font-bold border-b border-black p-2">
+
                 <div class="flex items-center space-x-2 uppercase">
+                    <div class="col-span-4">
+                    <span class="text-center text-xs font-bold uppercase ">Main livelihood</span>
+                </div>
                     <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
                     <span>Farmer</span>
                 </div>
@@ -842,348 +846,484 @@
                 </div>
             </div>
 
-            <!-- Gross Annual Income -->
-            <div class="border-t-2 border-black p-2 flex justify-between text-xs font-bold">
-                <span>Gross Annual Income Last Year:</span>
-                <span>Farming: ₱25,000</span>
-                <span>Non-farming: ₱10,000</span>
+            <div class=" p-2 flex justify-between items-center">
+                <span class="text-xs font-bold uppercase">Gross Annual Income Last Year:</span>
+                <div class="flex items-center space-x-4">
+                    <span class="text-xs">Farming:</span>
+                    <div class="border-b border-black w-40 h-5 text-xs italic text-center">₱50,000</div>
+                    <span class="text-xs">Non-farming:</span>
+                    <div class="border-b border-black w-40 h-5 text-xs italic text-center">₱30,000</div>
+                </div>
             </div>
+
         </div>
 
 
-        <div class="relative  border-black mt-4">
-            <div
-                class="absolute left-0 right-0 top-1/2 transform -translate-y-1/2 border-t border-dashed border-black w-full ">
-            </div>
-            <i
-                class="fas fa-cut absolute right-0 top-1/2 transform -translate-y-1/2 rotate-180 text-gray-600 text-xl bg-white"></i>
+    </div>
+    <div class="relative  border-black h-8">
+        <div class="absolute left-0 right-0 top-1/2 transform -translate-y-1/2 border-t border-dashed border-black w-full border-spacing-[7px] "></div>
+        <i class="fas fa-cut absolute right-0 top-1/2 transform -translate-y-1/2 rotate-180  text-xl bg-white"></i>
+    </div>
+
+    <div class="border border-black">
+        <div class="">
+
+
+        <div class="text-center p-2 ">
+            <h1 class="text-lg font-bold ">Registry System for Basic Sectors in Agriculture (RSBSA)</h1>
+            <h2 class="text-lg font-bold uppercase">Enrollment Client’s Copy</h2>
         </div>
 
-        <div class="border-2 border-black mt-8 p-4 ">
-            <!-- Header -->
-            <div class="text-center">
-                <h1 class="text-xl font-bold uppercase">Registry System for Basic Sectors in Agriculture (RSBSA)</h1>
-                <p class="text-lg font-bold uppercase">Enrollment Client’s Copy</p>
-            </div>
-
-            <!-- Reference Number Section -->
-            <div class="mt-4">
-                <p class="text-xs font-semibold italic mb-1">Reference Number:</p>
-                <div class="flex items-end space-x-2">
-                    <!-- Region -->
-                    <div class="flex flex-col">
-                        <div class="flex border border-black">
-                            <div
-                                class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold border-r border-black">
-                                1</div>
-                            <div class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold">9</div>
-                        </div>
-                        <span class=" uppercase text-center mt-1">Region</span>
+        <div class="flex mt-4 p-2">
+            <p class="font-semibold italic text-xs mr-4 min-w-[160px]">Reference Number:</p>
+            <div class="flex space-x-2">
+                <!-- Region -->
+                <div class="flex flex-col">
+                    <div class="flex border border-black">
+                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                            1</div>
+                        <div class="w-6 h-6 flex items-center justify-center text-xs">9</div>
                     </div>
-                    <!-- Province -->
-                    <div class="flex flex-col">
-                        <div class="flex border border-black">
-                            <div
-                                class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold border-r border-black">
-                                3</div>
-                            <div class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold">1</div>
-                        </div>
-                        <span class=" uppercase text-center mt-1">Province</span>
+                    <span class="uppercase text-xs text-center mt-1">Region</span>
+                </div>
+                <!-- Province -->
+                <div class="flex flex-col">
+                    <div class="flex border border-black">
+                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                            3</div>
+                        <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
                     </div>
-                    <!-- City/Municipality -->
-                    <div class="flex flex-col">
-                        <div class="flex border border-black">
-                            <div
-                                class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold border-r border-black">
-                                3</div>
-                            <div class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold">1</div>
-                        </div>
-                        <span class=" uppercase text-center mt-1">City/Muni</span>
+                    <span class="uppercase text-xs text-center mt-1">Province</span>
+                </div>
+                <!-- City/Municipality -->
+                <div class="flex flex-col">
+                    <div class="flex border border-black">
+                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                            3</div>
+                        <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
                     </div>
-                    <!-- Barangay -->
-                    <div class="flex flex-col">
-                        <div class="flex border border-black">
-                            <div
-                                class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold border-r border-black">
-                                1</div>
-                            <div
-                                class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold border-r border-black">
-                                3</div>
-
-                            <div class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold">1</div>
-                        </div>
-                        <span class=" uppercase text-center mt-1">Barangay</span>
+                    <span class="uppercase text-xs text-center mt-1">City/Muni</span>
+                </div>
+                <!-- Barangay -->
+                <div class="flex flex-col">
+                    <div class="flex border border-black">
+                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                            1</div>
+                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                            3</div>
+                        <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
                     </div>
-                    <div class="flex flex-col ">
-                        <div class="flex border border-black">
-                            <div
-                                class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold border-r border-black">
-                                2</div>
-                            <div
-                                class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold border-r border-black">
-                                3</div>
-                            <div
-                                class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold border-r border-black">
-                                4</div>
-                            <div
-                                class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold border-r border-black">
-                                2</div>
-                            <div class="w-6 h-6 flex items-center justify-center text-gray-800 font-semibold">1</div>
-                        </div>
-                        <span class=" uppercase text-center mt-1 invisible">""</span>
-
+                    <span class="uppercase text-xs text-center mt-1">Barangay</span>
+                </div>
+                <!-- Additional Numbers -->
+                <div class="flex flex-col">
+                    <div class="flex border border-black">
+                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                            2</div>
+                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                            3</div>
+                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                            4</div>
+                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                            2</div>
+                        <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
                     </div>
+                    <span class="uppercase text-xs text-center mt-1 invisible">""</span>
                 </div>
             </div>
+        </div>
 
-            <!-- Name Section -->
-            <div class="grid grid-cols-2 border-b border-black">
-                <div class="border-r border-black p-2">
-                    <p class="text-center text-xs italic">Dela Cruz</p>
-                    <div class="text-center text-xs font-bold uppercase border-t border-black py-1">Surname</div>
-                </div>
-                <div class="p-2">
-                    <p class="text-center text-xs italic">Juan</p>
-                    <div class="text-center text-xs font-bold uppercase border-t border-black py-1">First Name</div>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-2 border-b border-black">
-                <div class="border-r border-black p-2">
-                    <p class="text-center text-xs italic">Santos</p>
-                    <div class="text-center text-xs font-bold uppercase border-t border-black py-1">Middle Name</div>
-                </div>
+        <!-- Personal Information Section -->
+        <div class="grid grid-cols-12">
+            <div class="col-span-12">
                 <div class="grid grid-cols-2">
                     <div class="p-2">
-                        <p class="text-center text-xs italic">Jr.</p>
-                        <div class="text-center text-xs font-bold uppercase border-t border-black py-1">Extension Name
+                        <p class="text-center text-xs italic">Dela Cruz</p>
+                        <div class="text-center text-xs font-bold uppercase border-t border-black">Surname</div>
+                    </div>
+                    <div class="p-2">
+                        <p class="text-center text-xs italic">Juan</p>
+                        <div class="text-center text-xs font-bold uppercase border-t border-black">First Name</div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 border-b border-black">
+                    <div class="p-2">
+                        <p class="text-center text-xs italic">Santos</p>
+                        <div class="text-center text-xs font-bold uppercase border-t border-black">Middle Name</div>
+                    </div>
+                    <div class="grid grid-cols-2">
+                        <div class="p-2">
+                            <p class="text-center text-xs italic">Jr.</p>
+                            <div class="text-center text-xs font-bold uppercase border-t border-black">Extension Name</div>
+                        </div>
+                        <div class="inline-flex items-center justify-center border-l border-t border-black p-2">
+                            <div class="text-xs font-bold uppercase">Sex:</div>
+                            <div class="flex items-center space-x-2 ml-2">
+                                <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                <span class="text-xs">Male</span>
+                            </div>
+                            <div class="flex items-center space-x-2 ml-4">
+                                <div class="border border-black w-4 h-4"></div>
+                                <span class="text-xs">Female</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Footer Text -->
+        <div class="text-center p-2 text-xs font-bold uppercase ">
+            This form is not for sale
+        </div>
+    </div>
+
+
+{{--
+
+    <div class="max-w-7xl mx-auto mt-4 ">
+
+        <div class="border-2 border-black">
+            <div class="">
+                <div class="grid grid-cols-4">
+                    <!-- Left Side: Logo & Title -->
+                    <div class="col-span-3   p-4 ">
+                        <div class="border-b-2 border-black p-2 flex items-center justify-center">
+                            <!-- Left Side: Logo -->
+                            <div class="flex items-center space-x-2">
+                                <img src="{{ asset('assets/darbc-logo.svg') }}" alt="DA Logo" class="h-8 w-8">
+                            </div>
+
+                            <!-- Center: Title -->
+                            <div class="flex flex-col text-center">
+                                <span class="text-sm font-bold uppercase">Registry System for Basic Sectors in Agriculture (RSBSA)</span>
+                                <span class="text-sm font-bold uppercase">Enrollment Client’s Copy</span>
+                            </div>
+
+                            <!-- Right Side: Empty Space for Alignment -->
+                            <div class="w-8"></div>
+                        </div>
+
+                        <div class="col-span-12">
+
+                            <div class="grid grid-cols-2">
+                                <div class="p-2">
+                                    <p class="text-center text-xs italic">Dela Cruz</p>
+                                    <div class="text-center text-xs font-bold uppercase border-t border-black ">Surname</div>
+                                </div>
+                                <div class="p-2">
+                                    <p class="text-center text-xs italic">Juan</p>
+                                    <div class="text-center text-xs font-bold uppercase border-t border-black ">First Name</div>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-2 border-b-2 border-black">
+                                <div class="p-2">
+                                    <p class="text-center text-xs italic">Santos</p>
+                                    <div class="text-center text-xs font-bold uppercase border-t border-black ">Middle Name
+                                    </div>
+                                </div>
+                                <div class="grid grid-cols-2">
+                                    <div class="p-2">
+                                        <p class="text-center text-xs italic">Jr.</p>
+                                        <div class="text-center text-xs font-bold uppercase border-t border-black ">Extension
+                                            Name
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="inline-flex items-center justify-center border-l-2 border-t-2  border-black p-2">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!-- Reference Number -->
+                        <div class="flex  mt-4">
+                            <p class="font-semibold italic text-xs mr-4 min-w-[160px]">Reference Number:</p>
+                            <div class="flex space-x-2">
+                                <!-- Region -->
+                                <div class="flex flex-col">
+                                    <div class="flex border border-black">
+                                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                            1</div>
+                                        <div class="w-6 h-6 flex items-center justify-center text-xs">9</div>
+                                    </div>
+                                    <span class="uppercase text-xs text-center mt-1">Region</span>
+                                </div>
+                                <!-- Province -->
+                                <div class="flex flex-col">
+                                    <div class="flex border border-black">
+                                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                            3</div>
+                                        <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
+                                    </div>
+                                    <span class="uppercase text-xs text-center mt-1">Province</span>
+                                </div>
+                                <!-- City/Municipality -->
+                                <div class="flex flex-col">
+                                    <div class="flex border border-black">
+                                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                            3</div>
+                                        <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
+                                    </div>
+                                    <span class="uppercase text-xs text-center mt-1">City/Muni</span>
+                                </div>
+                                <!-- Barangay -->
+                                <div class="flex flex-col">
+                                    <div class="flex border border-black">
+                                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                            1</div>
+                                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                            3</div>
+                                        <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
+                                    </div>
+                                    <span class="uppercase text-xs text-center mt-1">Barangay</span>
+                                </div>
+                                <!-- Additional Numbers -->
+                                <div class="flex flex-col">
+                                    <div class="flex border border-black">
+                                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                            2</div>
+                                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                            3</div>
+                                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                            4</div>
+                                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                            2</div>
+                                        <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
+                                    </div>
+                                    <span class="uppercase text-xs text-center mt-1 invisible">""</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
                 </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="border-2 border-black p-2 text-xs">
+        <!-- Header Row -->
+        <div class="grid grid-cols-2 border-b border-black p-1 font-bold uppercase">
+            <div>No. of Farm Parcels: <span class="italic font-normal">3</span></div>
+            <div>Name of Farmer’s in Rotation: (P1) <span class="italic font-normal">Juan Dela Cruz</span></div>
+        </div>
+
+        <!-- Table Headers -->
+        <div class="grid grid-cols-10 border-b border-black font-bold text-center uppercase">
+            <div class="col-span-1 p-2 border-r border-black">Farm Parcel No.</div>
+            <div class="col-span-3 p-2 border-r border-black">Farm Land Description</div>
+            <div class="col-span-1 p-2 border-r border-black">Crop/Commodity</div>
+            <div class="col-span-1 p-2 border-r border-black">Size (ha)</div>
+            <div class="col-span-1 p-2 border-r border-black">No. of Head</div>
+            <div class="col-span-1 p-2 border-r border-black">Farm Type **</div>
+            <div class="col-span-1 p-2 border-r border-black">Organic Practitioner (Y/N)</div>
+            <div class="col-span-1 p-2">Remarks</div>
+        </div>
+
+        <!-- Farm Parcel 1 -->
+        <div class="grid grid-cols-10 border-b border-black text-xs">
+            <div class="col-span-1 p-2 border-r border-black text-center">1</div>
+            <div class="col-span-3 p-2 border-r border-black">
+                <p class="uppercase font-bold">Farm Location:</p>
+                <p class="italic">Barangay Tagumpay, Municipality Isulan</p>
+                <p>Total Farm Area: <span class="italic">3.5 ha</span></p>
+                <p>Within Ancestral Domain: No</p>
+                <p>Ownership Document No: <span class="italic">12345</span></p>
+                <p>Ownership Type:</p>
+                <div class="flex items-center space-x-1">
+                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                    <span>Registered Owner</span>
+                </div>
+            </div>
+            <div class="col-span-1 p-2 border-r border-black text-center">Rice</div>
+            <div class="col-span-1 p-2 border-r border-black text-center">3.5</div>
+            <div class="col-span-1 p-2 border-r border-black text-center">-</div>
+            <div class="col-span-1 p-2 border-r border-black text-center">1</div>
+            <div class="col-span-1 p-2 border-r border-black text-center">No</div>
+            <div class="col-span-1 p-2 text-center">Good condition</div>
+        </div>
+
+        <!-- Farm Parcel 2 -->
+        <div class="grid grid-cols-10 border-b border-black text-xs">
+            <div class="col-span-1 p-2 border-r border-black text-center">2</div>
+            <div class="col-span-3 p-2 border-r border-black">
+                <p class="uppercase font-bold">Farm Location:</p>
+                <p class="italic">Barangay Kalayaan, Municipality Isulan</p>
+                <p>Total Farm Area: <span class="italic">5.0 ha</span></p>
+                <p>Within Ancestral Domain: Yes</p>
+                <p>Ownership Document No: <span class="italic">67890</span></p>
+                <p>Ownership Type:</p>
+                <div class="flex items-center space-x-1">
+                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                    <span>Tenant (Name of Land Owner: Santos)</span>
+                </div>
+            </div>
+            <div class="col-span-1 p-2 border-r border-black text-center">Corn</div>
+            <div class="col-span-1 p-2 border-r border-black text-center">5.0</div>
+            <div class="col-span-1 p-2 border-r border-black text-center">-</div>
+            <div class="col-span-1 p-2 border-r border-black text-center">2</div>
+            <div class="col-span-1 p-2 border-r border-black text-center">Yes</div>
+            <div class="col-span-1 p-2 text-center">Needs irrigation</div>
+        </div>
+
+        <!-- Farm Parcel 3 -->
+        <div class="grid grid-cols-10 border-b border-black text-xs">
+            <div class="col-span-1 p-2 border-r border-black text-center">3</div>
+            <div class="col-span-3 p-2 border-r border-black">
+                <p class="uppercase font-bold">Farm Location:</p>
+                <p class="italic">Barangay Sampaguita, Municipality Isulan</p>
+                <p>Total Farm Area: <span class="italic">2.8 ha</span></p>
+                <p>Within Ancestral Domain: No</p>
+                <p>Ownership Document No: <span class="italic">34567</span></p>
+                <p>Ownership Type:</p>
+                <div class="flex items-center space-x-1">
+                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                    <span>Lessee (Name of Land Owner: Cruz)</span>
+                </div>
+            </div>
+            <div class="col-span-1 p-2 border-r border-black text-center">Vegetables</div>
+            <div class="col-span-1 p-2 border-r border-black text-center">2.8</div>
+            <div class="col-span-1 p-2 border-r border-black text-center">-</div>
+            <div class="col-span-1 p-2 border-r border-black text-center">3</div>
+            <div class="col-span-1 p-2 border-r border-black text-center">No</div>
+            <div class="col-span-1 p-2 text-center">Flood-prone</div>
+        </div>
+
+
+        <!-- Ownership Document and Farm Type -->
+        <div class="border-t-2 border-black grid grid-cols-2 text-xs p-2">
+            <!-- Ownership Document -->
+            <div>
+                <p class="font-bold uppercase">Ownership Document *</p>
+                <div class="grid grid-cols-2">
+                    <div>
+                        <p>1. Certificate of Land Transfer</p>
+                        <p>2. Emancipation Patent</p>
+                        <p>3. Individual Certificate of Land Ownership Award (CLOA)</p>
+                        <p>4. Collective CLOA</p>
+                        <p>5. Co-ownership CLOA</p>
+                    </div>
+                    <div>
+                        <p>6. Agricultural Sales Patent</p>
+                        <p>7. Homestead Patent</p>
+                        <p>8. Free Patent</p>
+                        <p>9. Certificate of Title or Regular Title</p>
+                        <p>10. Certificate of Ancestral Domain Title</p>
+                        <p>11. Certificate of Ancestral Land Title</p>
+                        <p>12. Tax Declaration</p>
+                        <p>13. Others (e.g., Barangay Certification)</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Farm Type -->
+            <div class="pl-4">
+                <p class="font-bold uppercase">Farm Type **</p>
+                <p>1 - Irrigated</p>
+                <p>2 - Rainfed Upland</p>
+                <p>3 - Rainfed Lowland</p>
+                <p class="italic text-sm >(NOTE: no to agri-fishery)</p>
+        </div>
+    </div>
+    <!-- Footer Section -->
+    <div class="border-t-2
+                    border-black p-2 text-xs font-bold uppercase">
+                <p>Verified True and Correct By:</p>
+                <div class="grid grid-cols-3 text-center">
+                    <div class="p-2">
+                        <p class="font-bold">Barangay Chairman</p>
+                        <p class="italic">Signature, Printed Name & Date</p>
+                    </div>
+                    <div class="p-2">
+                        <p class="font-bold">City/Municipal Agriculture Office</p>
+                        <p class="italic">Signature, Printed Name & Date</p>
+                    </div>
+                    <div class="p-2">
+                        <p class="font-bold">CAFC/MAFC Chairman</p>
+                        <p class="italic">Signature, Printed Name & Date</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Privacy Policy -->
+            <div class="border-t-2 border-black p-2 text-xs">
+                <p class="font-bold uppercase">Data Privacy Policy</p>
+                <p class="italic">The collection of personal information is for documentation, planning, reporting,
+                    and
+                    processing purposes in availing agricultural-related interventions...</p>
+            </div>
+
+            <!-- Declaration -->
+            <div class="border-t-2 border-black p-2 text-xs italic">
+                I hereby declare that all information indicated above are true and correct, and that they may be
+                used by the
+                Department of Agriculture for the purposes of registration to the Registry System for Basic Sectors
+                in
+                Agriculture (RSBSA) and other legitimate interests of the Department pursuant to its mandates.
+            </div>
+
+            <!-- Signature Section -->
+            <div class="border-t-2 bg-black text-white grid grid-cols-4 text-xs font-bold text-center">
+                <div class="border-r border-white p-2">Date</div>
+                <div class="border-r border-white p-2">Printed Name of Applicant</div>
+                <div class="border-r border-white p-2">Signature of Applicant</div>
+                <div class="p-2">Thumbmark</div>
+            </div>
+
+            <!-- Verified True and Correct -->
+            <div class="border-t-2 border-black p-2 text-xs">
+                <p class="font-bold uppercase">Verified True and Correct By:</p>
+                <div class="grid grid-cols-3 text-center">
+                    <div class="p-2">
+                        <p class="font-bold uppercase">Barangay Chairman</p>
+                        <p class="italic text-sm ">Signature Name & Date</p>
+                    </div>
+                    <div class="p-2">
+                        <p class="font-bold uppercase">City/Municipal Agriculture Office</p>
+                        <p class="italic text-sm">Signature Name & Date</p>
+                    </div>
+                    <div class="p-2">
+                        <p class="font-bold uppercase">CAFC/MAFC Chairman</p>
+                        <p class="italic text-sm">Signature Name & Date</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="border-t-2
+                            border-black p-2 text-xs">
+                <p class="font-bold uppercase">Data Privacy Policy</p>
+                <p class="italic">The collection of personal information is for documentation, planning,
+                    reporting, and
+                    processing purposes in availing agricultural-related interventions. Processed data shall
+                    only be shared
+                    to partner agencies for planning, reporting, and other use in accordance with the
+                    mandate of the agency.
+                    This is in compliance with the Data Sharing Policy of the department.</p>
+                <p class="italic">You have the right to ask for a copy of your personal data that we hold
+                    about you as well
+                    as to ask for it to be corrected if you think it is wrong. To do so, please contact
+                    <span class="font-bold">Contact Person and Contact Details.</span>
+                </p>
             </div>
 
             <!-- Footer -->
-            <div class="text-center font-bold uppercase text-sm mt-2">
-                THIS FORM IS NOT FOR SALE
-            </div>
-        </div>
-
-        <div class="border-2 border-black p-2 text-xs">
-            <!-- Header Row -->
-            <div class="grid grid-cols-2 border-b border-black p-1 font-bold uppercase">
-                <div>No. of Farm Parcels: <span class="italic font-normal">3</span></div>
-                <div>Name of Farmer’s in Rotation: (P1) <span class="italic font-normal">Juan Dela Cruz</span></div>
-            </div>
-
-            <!-- Table Headers -->
-            <div class="grid grid-cols-10 border-b border-black font-bold text-center uppercase">
-                <div class="col-span-1 p-2 border-r border-black">Farm Parcel No.</div>
-                <div class="col-span-3 p-2 border-r border-black">Farm Land Description</div>
-                <div class="col-span-1 p-2 border-r border-black">Crop/Commodity</div>
-                <div class="col-span-1 p-2 border-r border-black">Size (ha)</div>
-                <div class="col-span-1 p-2 border-r border-black">No. of Head</div>
-                <div class="col-span-1 p-2 border-r border-black">Farm Type **</div>
-                <div class="col-span-1 p-2 border-r border-black">Organic Practitioner (Y/N)</div>
-                <div class="col-span-1 p-2">Remarks</div>
-            </div>
-
-            <!-- Farm Parcel 1 -->
-            <div class="grid grid-cols-10 border-b border-black text-xs">
-                <div class="col-span-1 p-2 border-r border-black text-center">1</div>
-                <div class="col-span-3 p-2 border-r border-black">
-                    <p class="uppercase font-bold">Farm Location:</p>
-                    <p class="italic">Barangay Tagumpay, Municipality Isulan</p>
-                    <p>Total Farm Area: <span class="italic">3.5 ha</span></p>
-                    <p>Within Ancestral Domain: No</p>
-                    <p>Ownership Document No: <span class="italic">12345</span></p>
-                    <p>Ownership Type:</p>
-                    <div class="flex items-center space-x-1">
-                        <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
-                        <span>Registered Owner</span>
-                    </div>
-                </div>
-                <div class="col-span-1 p-2 border-r border-black text-center">Rice</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">3.5</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">-</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">1</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">No</div>
-                <div class="col-span-1 p-2 text-center">Good condition</div>
-            </div>
-
-            <!-- Farm Parcel 2 -->
-            <div class="grid grid-cols-10 border-b border-black text-xs">
-                <div class="col-span-1 p-2 border-r border-black text-center">2</div>
-                <div class="col-span-3 p-2 border-r border-black">
-                    <p class="uppercase font-bold">Farm Location:</p>
-                    <p class="italic">Barangay Kalayaan, Municipality Isulan</p>
-                    <p>Total Farm Area: <span class="italic">5.0 ha</span></p>
-                    <p>Within Ancestral Domain: Yes</p>
-                    <p>Ownership Document No: <span class="italic">67890</span></p>
-                    <p>Ownership Type:</p>
-                    <div class="flex items-center space-x-1">
-                        <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
-                        <span>Tenant (Name of Land Owner: Santos)</span>
-                    </div>
-                </div>
-                <div class="col-span-1 p-2 border-r border-black text-center">Corn</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">5.0</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">-</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">2</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">Yes</div>
-                <div class="col-span-1 p-2 text-center">Needs irrigation</div>
-            </div>
-
-            <!-- Farm Parcel 3 -->
-            <div class="grid grid-cols-10 border-b border-black text-xs">
-                <div class="col-span-1 p-2 border-r border-black text-center">3</div>
-                <div class="col-span-3 p-2 border-r border-black">
-                    <p class="uppercase font-bold">Farm Location:</p>
-                    <p class="italic">Barangay Sampaguita, Municipality Isulan</p>
-                    <p>Total Farm Area: <span class="italic">2.8 ha</span></p>
-                    <p>Within Ancestral Domain: No</p>
-                    <p>Ownership Document No: <span class="italic">34567</span></p>
-                    <p>Ownership Type:</p>
-                    <div class="flex items-center space-x-1">
-                        <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
-                        <span>Lessee (Name of Land Owner: Cruz)</span>
-                    </div>
-                </div>
-                <div class="col-span-1 p-2 border-r border-black text-center">Vegetables</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">2.8</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">-</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">3</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">No</div>
-                <div class="col-span-1 p-2 text-center">Flood-prone</div>
+            <div class="border-t-2 border-black p-2 text-center text-sm font-bold uppercase">
+                This Form is Not for Sale
             </div>
 
 
-            <!-- Ownership Document and Farm Type -->
-            <div class="border-t-2 border-black grid grid-cols-2 text-xs p-2">
-                <!-- Ownership Document -->
-                <div>
-                    <p class="font-bold uppercase">Ownership Document *</p>
-                    <div class="grid grid-cols-2">
-                        <div>
-                            <p>1. Certificate of Land Transfer</p>
-                            <p>2. Emancipation Patent</p>
-                            <p>3. Individual Certificate of Land Ownership Award (CLOA)</p>
-                            <p>4. Collective CLOA</p>
-                            <p>5. Co-ownership CLOA</p>
-                        </div>
-                        <div>
-                            <p>6. Agricultural Sales Patent</p>
-                            <p>7. Homestead Patent</p>
-                            <p>8. Free Patent</p>
-                            <p>9. Certificate of Title or Regular Title</p>
-                            <p>10. Certificate of Ancestral Domain Title</p>
-                            <p>11. Certificate of Ancestral Land Title</p>
-                            <p>12. Tax Declaration</p>
-                            <p>13. Others (e.g., Barangay Certification)</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Farm Type -->
-                <div class="pl-4">
-                    <p class="font-bold uppercase">Farm Type **</p>
-                    <p>1 - Irrigated</p>
-                    <p>2 - Rainfed Upland</p>
-                    <p>3 - Rainfed Lowland</p>
-                    <p class="italic text-sm >(NOTE: no to agri-fishery)</p>
-            </div>
-        </div>
-        <!-- Footer Section -->
-        <div class="border-t-2
-                        border-black p-2 text-xs font-bold uppercase">
-                    <p>Verified True and Correct By:</p>
-                    <div class="grid grid-cols-3 text-center">
-                        <div class="p-2">
-                            <p class="font-bold">Barangay Chairman</p>
-                            <p class="italic">Signature, Printed Name & Date</p>
-                        </div>
-                        <div class="p-2">
-                            <p class="font-bold">City/Municipal Agriculture Office</p>
-                            <p class="italic">Signature, Printed Name & Date</p>
-                        </div>
-                        <div class="p-2">
-                            <p class="font-bold">CAFC/MAFC Chairman</p>
-                            <p class="italic">Signature, Printed Name & Date</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Data Privacy Policy -->
-                <div class="border-t-2 border-black p-2 text-xs">
-                    <p class="font-bold uppercase">Data Privacy Policy</p>
-                    <p class="italic">The collection of personal information is for documentation, planning, reporting,
-                        and
-                        processing purposes in availing agricultural-related interventions...</p>
-                </div>
-
-                <!-- Declaration -->
-                <div class="border-t-2 border-black p-2 text-xs italic">
-                    I hereby declare that all information indicated above are true and correct, and that they may be
-                    used by the
-                    Department of Agriculture for the purposes of registration to the Registry System for Basic Sectors
-                    in
-                    Agriculture (RSBSA) and other legitimate interests of the Department pursuant to its mandates.
-                </div>
-
-                <!-- Signature Section -->
-                <div class="border-t-2 bg-black text-white grid grid-cols-4 text-xs font-bold text-center">
-                    <div class="border-r border-white p-2">Date</div>
-                    <div class="border-r border-white p-2">Printed Name of Applicant</div>
-                    <div class="border-r border-white p-2">Signature of Applicant</div>
-                    <div class="p-2">Thumbmark</div>
-                </div>
-
-                <!-- Verified True and Correct -->
-                <div class="border-t-2 border-black p-2 text-xs">
-                    <p class="font-bold uppercase">Verified True and Correct By:</p>
-                    <div class="grid grid-cols-3 text-center">
-                        <div class="p-2">
-                            <p class="font-bold uppercase">Barangay Chairman</p>
-                            <p class="italic text-sm ">Signature Name & Date</p>
-                        </div>
-                        <div class="p-2">
-                            <p class="font-bold uppercase">City/Municipal Agriculture Office</p>
-                            <p class="italic text-sm">Signature Name & Date</p>
-                        </div>
-                        <div class="p-2">
-                            <p class="font-bold uppercase">CAFC/MAFC Chairman</p>
-                            <p class="italic text-sm">Signature Name & Date</p>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="border-t-2
-                                border-black p-2 text-xs">
-                    <p class="font-bold uppercase">Data Privacy Policy</p>
-                    <p class="italic">The collection of personal information is for documentation, planning,
-                        reporting, and
-                        processing purposes in availing agricultural-related interventions. Processed data shall
-                        only be shared
-                        to partner agencies for planning, reporting, and other use in accordance with the
-                        mandate of the agency.
-                        This is in compliance with the Data Sharing Policy of the department.</p>
-                    <p class="italic">You have the right to ask for a copy of your personal data that we hold
-                        about you as well
-                        as to ask for it to be corrected if you think it is wrong. To do so, please contact
-                        <span class="font-bold">Contact Person and Contact Details.</span>
-                    </p>
-                </div>
-
-                <!-- Footer -->
-                <div class="border-t-2 border-black p-2 text-center text-sm font-bold uppercase">
-                    This Form is Not for Sale
-                </div>
-
-
-            </div>
+        </div> --}}
 
 
 
-        </div>
     </div>
