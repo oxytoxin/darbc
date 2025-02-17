@@ -123,7 +123,7 @@
                 PART I: PERSONAL INFORMATION
             </div>
    <div class="grid grid-cols-12 ">
-    <div class=" bg-pink-600 text-white col-span-12">
+    <div class="col-span-12">
 
   <div class="grid grid-cols-2">
                 <div class="p-2">
@@ -161,7 +161,7 @@
                 </div>
             </div>
     </div>
-    <div class="bg-pink-600 text-white col-span-12">
+    <div class="  col-span-12">
         <div class="border-b border-black flex py-4 px-2">
             <div class="flex">
                 <div class=" font-bold uppercase p-2 w-32 ">Address</div>
@@ -196,12 +196,12 @@
         </div>
     </div>
 
-    <div class=" bg-pink-600 col-span-12 grid grid-cols-12 ">
+    <div class="  col-span-12 grid grid-cols-12 ">
 
-        <div class=" text-white col-span-6">
-            <div class="col-span-6 grid grid-cols-6 p-2  ">
+        <div class="col-span-6">
+            <div class="col-span-6 grid grid-cols-6 p-2 border-b-2  border-black ">
                 <div class="col-span-3 ">
-                    <p class="text-xs font-bold uppercase ">Mobile Number:</p>
+                    <p class="text-xs font-bold uppercase  ">Mobile Number:</p>
                     <div class="flex space-x-0.5">
                         <div
                             class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
@@ -239,7 +239,7 @@
                     </div>
                 </div>
                 <div class="col-span-3 ">
-                    <p class="text-xs font-bold uppercase">Landline Number:</p>
+                    <p class="text-xs font-bold uppercase ">Landline Number:</p>
                     <div class="flex space-x-0.5">
                         <div
                             class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
@@ -274,11 +274,10 @@
                     </div>
                 </div>
             </div>
-            <div class="col-span-6 grid grid-cols-6 p-2  bg-blue-400 gap-2">
-                <div class=" bg-orange-300 col-span-3">
+            <div class="col-span-6 grid grid-cols-6  border-b-2 border-black ">
+                <div class=" col-span-3 p-2">
 
-                    <div class="">
-                        <p class="text-xs font-bold uppercase">Date of Birth:</p>
+                    <p class="text-xs font-bold uppercase">Date of Birth:</p>
                         <div class="">
                             <div class="flex space-x-1">
                                 <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">0</div>
@@ -301,22 +300,21 @@
                                 <span class="w-6">Y</span>
                             </div>
                         </div>
-                    </div>
                 </div>
-                <div class=" bg-orange-300 col-span-3">
+                <div class="col-span-3 border-l-2 p-2 border-black">
                     <div class="grid grid-cols-2 ">
-                        <p class="text-xs font-bold uppercase col-span-2">Date of Birth:</p>
+                        <p class="text-xs font-bold uppercase col-span-2">Place Of Birth:</p>
                         <div class="flex flex-col col-span-2">
-                            <div class="  h-8 text-center text-xs italic p-1">Quezon City</div>
-                            <span class="text-center text-xs font-bold uppercase border-t border-black">Municipality</span>
+                            <div class="   text-center text-xs italic p-1">Quezon City</div>
+                            <span class="text-center text-[8px] font-bold uppercase border-t border-black">Municipality</span>
                         </div>
                         <div class="flex flex-col">
-                            <div class="  h-8 text-center text-xs italic p-1">Metro Manila</div>
-                            <span class="text-center text-xs font-bold uppercase border-t border-black">Province/State</span>
+                            <div class="   text-center text-xs italic p-1">Metro Manila</div>
+                            <span class="text-center text-[8px] font-bold uppercase border-t border-black">Province/State</span>
                         </div>
                         <div class="flex flex-col">
-                            <div class="  h-8 text-center text-xs italic p-1">Philippines</div>
-                            <span class="text-center text-xs font-bold uppercase border-t border-black">Country</span>
+                            <div class="   text-center text-xs italic p-1">Philippines</div>
+                            <span class="text-center text-[8px] font-bold uppercase border-t border-black">Country</span>
                         </div>
 
                     </div>
@@ -324,7 +322,7 @@
                 </div>
             </div>
         </div>
-        <div class="p-4 bg-blue-400 text-white col-span-6">1</div>
+        <div class="p-4 bg-blue-400  col-span-6">1</div>
 
     </div>
 
