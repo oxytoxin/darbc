@@ -679,9 +679,9 @@
 
 
 
-        <div class="border-2 border-black mt-4">
+        <div class="border-2 border-black">
             <!-- Section Header -->
-            <div class="bg-black text-white text-xs font-bold p-1 uppercase">
+            <div class="bg-black text-white font-bold p-1">
                 Part II: Farm Profile
             </div>
 
