@@ -33,31 +33,15 @@
 
                         <!-- Date Boxes -->
                         <div class="ml-6">
+                            @php
+                                $dateDigits = $rsbsa->getFormattedUpdatedAt();
+                            @endphp
                             <div class="flex space-x-1">
-                                <div
-                                    class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
-                                    0</div>
-                                <div
-                                    class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
-                                    7</div>
-                                <div
-                                    class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
-                                    2</div>
-                                <div
-                                    class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
-                                    1</div>
-                                <div
-                                    class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
-                                    1</div>
-                                <div
-                                    class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
-                                    1</div>
-                                <div
-                                    class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
-                                    2</div>
-                                <div
-                                    class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
-                                    4</div>
+                                @foreach($dateDigits as $digit)
+                                    <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                        {{ $digit }}
+                                    </div>
+                                @endforeach
                             </div>
                             <div class="flex space-x-1 uppercase text-center text-xs mt-1">
                                 <span class="w-6">M</span>
@@ -70,76 +54,88 @@
                                 <span class="w-6">Y</span>
                             </div>
                         </div>
+
                     </div>
 
                     <!-- Reference Number -->
-                    <div class="flex  mt-4">
-                        <p class="font-semibold italic text-xs mr-4 min-w-[160px]">Reference Number:</p>
-                        <div class="flex space-x-2">
-                            <!-- Region -->
-                            <div class="flex flex-col">
-                                <div class="flex border border-black">
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                        1</div>
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs">9</div>
-                                </div>
-                                <span class="uppercase text-xs text-center mt-1">Region</span>
-                            </div>
-                            <!-- Province -->
-                            <div class="flex flex-col">
-                                <div class="flex border border-black">
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                        3</div>
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
-                                </div>
-                                <span class="uppercase text-xs text-center mt-1">Province</span>
-                            </div>
-                            <!-- City/Municipality -->
-                            <div class="flex flex-col">
-                                <div class="flex border border-black">
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                        3</div>
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
-                                </div>
-                                <span class="uppercase text-xs text-center mt-1">City/Muni</span>
-                            </div>
-                            <!-- Barangay -->
-                            <div class="flex flex-col">
-                                <div class="flex border border-black">
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                        1</div>
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                        3</div>
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
-                                </div>
-                                <span class="uppercase text-xs text-center mt-1">Barangay</span>
-                            </div>
-                            <!-- Additional Numbers -->
-                            <div class="flex flex-col">
-                                <div class="flex border border-black">
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                        2</div>
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                        3</div>
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                        4</div>
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                        2</div>
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
-                                </div>
-                                <span class="uppercase text-xs text-center mt-1 invisible">""</span>
-                            </div>
-                        </div>
+                    @php
+    $codes = $rsbsa->getFormattedLocationCodes();
+@endphp
+
+<div class="flex mt-4">
+    <p class="font-semibold italic text-xs mr-4 min-w-[160px]">Reference Number:</p>
+    <div class="flex space-x-2">
+        <!-- Region -->
+        <div class="flex flex-col">
+            <div class="flex border border-black">
+                @foreach ($codes['region'] as $index => $digit)
+                    <div class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
+                        {{ $digit }}
                     </div>
+                @endforeach
+            </div>
+            <span class="uppercase text-xs text-center mt-1">Region</span>
+        </div>
+
+        <!-- Province -->
+        <div class="flex flex-col">
+            <div class="flex border border-black">
+                @foreach ($codes['province'] as $index => $digit)
+                    <div class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
+                        {{ $digit }}
+                    </div>
+                @endforeach
+            </div>
+            <span class="uppercase text-xs text-center mt-1">Province</span>
+        </div>
+
+        <!-- City/Municipality -->
+        <div class="flex flex-col">
+            <div class="flex border border-black">
+                @foreach ($codes['city_municipality'] as $index => $digit)
+                    <div class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
+                        {{ $digit }}
+                    </div>
+                @endforeach
+            </div>
+            <span class="uppercase text-xs text-center mt-1">City/Muni</span>
+        </div>
+
+        <!-- Barangay -->
+        <div class="flex flex-col">
+            <div class="flex border border-black">
+                @foreach ($codes['barangay'] as $index => $digit)
+                    <div class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
+                        {{ $digit }}
+                    </div>
+                @endforeach
+            </div>
+            <span class="uppercase text-xs text-center mt-1">Barangay</span>
+        </div>
+
+        <!-- Last 6 Digits (Always Exists) -->
+        <div class="flex flex-col">
+            <div class="flex border border-black">
+                @foreach ($codes['last_six'] as $index => $digit)
+                    <div class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
+                        {{ $digit }}
+                    </div>
+                @endforeach
+            </div>
+            <span class="uppercase text-xs text-center mt-1 invisible">""</span>
+        </div>
+    </div>
+</div>
+
                 </div>
 
                 <!-- Right Side: 2x2 Picture Box -->
-                <div class="flex items-center justify-center  min-w-[200px]">
-                    <div class="w-[140px] h-[140px]  flex flex-col items-center justify-center">
-                        <p class="text-lg font-bold uppercase text-center leading-tight">2x2<BR> PICTURE</p>
-                        <p class="text-sm text-center mt-1 leading-tight">Photo Taken<br>Within 6 Months</p>
-                    </div>
+                <div class="flex items-center justify-center min-w-[200px]">
+                    <a href="{{ $rsbsa->getImage() }}" target="_blank">
+                        <img src="{{ $rsbsa->getImage() }}" alt="2x2 Picture" class="w-[140px] h-[140px] object-cover border border-black">
+                    </a>
                 </div>
+
             </div>
         </div>
 
@@ -156,24 +152,27 @@
 
                     <div class="grid grid-cols-2">
                         <div class="p-2">
-                            <p class="text-center text-xs italic">Dela Cruz</p>
+                            <x-display-text value="{{ $rsbsa->memberinformation?->user?->surname ?? 'N/A' }}" class="text-center" />
+
                             <div class="text-center text-xs font-bold uppercase border-t border-black ">Surname</div>
                         </div>
                         <div class="p-2">
-                            <p class="text-center text-xs italic">Juan</p>
+                            <x-display-text value="{{ $rsbsa->memberinformation?->user?->surname ?? 'N/A' }}" class="text-center" />
                             <div class="text-center text-xs font-bold uppercase border-t border-black ">First Name</div>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-2 border-b-2 border-black">
                         <div class="p-2">
-                            <p class="text-center text-xs italic">Santos</p>
-                            <div class="text-center text-xs font-bold uppercase border-t border-black ">Middle Name
+                            <x-display-text value="{{ $rsbsa->memberinformation?->user?->middle_name ?? 'N/A' }}" class="text-center" />
+                                <div class="text-center text-xs font-bold uppercase border-t border-black ">Middle Name
+                                </div>
                             </div>
-                        </div>
-                        <div class="grid grid-cols-2">
-                            <div class="p-2">
-                                <p class="text-center text-xs italic">Jr.</p>
+                            <div class="grid grid-cols-2">
+                                <div class="p-2">
+
+                                <x-display-text value="{{ $rsbsa->extension_name }}" class="text-center" />
+
                                 <div class="text-center text-xs font-bold uppercase border-t border-black ">Extension
                                     Name
                                 </div>
@@ -182,12 +181,12 @@
                                 class="inline-flex items-center justify-center border-l-2 border-t-2  border-black p-2">
                                 <div class="text-xs font-bold uppercase">Sex:</div>
                                 <div class="flex items-center space-x-2 ml-2">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
-                                    </div>
+                                    <x-checkbox-display checked="{{ $rsbsa->memberinformation?->gender?->name === 'Male' }}" />
+
                                     <span class="text-xs">Male</span>
                                 </div>
                                 <div class="flex items-center space-x-2 ml-4">
-                                    <div class="border border-black w-4 h-4"></div>
+                                    <x-checkbox-display checked="{{ $rsbsa->memberinformation?->gender?->name === 'Female' }}" />
                                     <span class="text-xs">Female</span>
                                 </div>
                             </div>

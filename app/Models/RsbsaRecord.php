@@ -46,7 +46,7 @@ class RsbsaRecord extends Model implements HasMedia
     public function getImage(){
         return self::getFirstMediaUrl('two_by_two') ?: asset('assets/placeholder.jpg');
     }
-    
+
     public function isNew(): bool
 {
     return $this->enrollment_type === 'New';
@@ -56,6 +56,24 @@ public function isUpdating(): bool
 {
     return $this->enrollment_type === 'Updating';
 }
+
+public function getFormattedUpdatedAt()
+{
+    return $this->updated_at ? str_split($this->updated_at->format('mdY')) : [];
+}
+
+public function getFormattedLocationCodes()
+{
+    return [
+        'region' => str_split(str_pad($this->region_code, 2, '0', STR_PAD_LEFT)),
+        'province' => str_split(str_pad($this->province_code, 2, '0', STR_PAD_LEFT)),
+        'city_municipality' => str_split(str_pad($this->city_municipality_code, 2, '0', STR_PAD_LEFT)),
+        'barangay' => str_split(str_pad($this->barangay_code, 3, '0', STR_PAD_LEFT)),
+        'last_six' => str_split(str_pad($this->reference_last_six ?? '', 6, '0', STR_PAD_RIGHT)), // Ensuring 6 digits always exist
+    ];
+}
+
+
 
 
 }
