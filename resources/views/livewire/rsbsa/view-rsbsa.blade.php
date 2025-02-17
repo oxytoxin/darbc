@@ -535,9 +535,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="flex justify-between border-b border-black p-2">
+                        <div class="flex  border-b border-black p-2">
                             <span class="text-xs font-bold uppercase">Person With Disability (PWD)</span>
-                            <div class="flex items-center space-x-4">
+                            <div class="flex items-center space-x-4 ml-6">
                                 <div class="flex items-center space-x-2">
                                     <div class="border border-black w-4 h-4"></div>
                                     <span class="text-xs">Yes</span>
@@ -549,9 +549,9 @@
                             </div>
                         </div>
                         <div class="border-b border-black p-2">
-                            <div class="flex justify-between">
-                                <span class="text-xs font-bold uppercase">4P’s Beneficiary?</span>
-                                <div class="flex items-center space-x-4">
+                            <div class="grid grid-cols-6 ">
+                                <span class="text-xs font-bold uppercase col-span-3">4P’s Beneficiary?</span>
+                                <div class="flex items-center space-x-4 col-span-3">
                                     <div class="flex items-center space-x-2">
                                         <div class="border border-black w-4 h-4"></div>
                                         <span class="text-xs">Yes</span>
@@ -563,9 +563,9 @@
                                 </div>
                             </div>
 
-                            <div class="flex justify-between mt-2">
-                                <span class="text-xs font-bold uppercase">Member of an <span class="font-bold italic">Indigenous Group</span>?</span>
-                                <div class="flex items-center space-x-4">
+                            <div class="grid grid-cols-6 mt-2">
+                                <span class="text-xs font-bold uppercase col-span-3">Member of an <span class="font-bold italic">Indigenous Group</span>?</span>
+                                <div class="flex items-center space-x-4 col-span-3">
                                     <div class="flex items-center space-x-2">
                                         <div class="border border-black w-4 h-4"></div>
                                         <span class="text-xs">Yes</span>
@@ -585,9 +585,9 @@
 
                         <!-- Government ID Section -->
                         <div class="border-b border-black p-2">
-                            <div class="flex justify-between">
-                                <span class="text-xs font-bold uppercase">With <span class="font-bold">Government ID?</span></span>
-                                <div class="flex items-center space-x-4">
+                            <div class="grid grid-cols-6">
+                                <span class="text-xs font-bold uppercase col-span-3">With <span class="font-bold">Government ID?</span></span>
+                                <div class="flex items-center space-x-4 col-span-3">
                                     <div class="flex items-center space-x-2">
                                         <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
                                         <span class="text-xs">Yes</span>
@@ -600,10 +600,13 @@
                             </div>
 
                             <div class="mt-2">
-                                <p class="text-xs">If yes, specify <span class="font-bold">ID Type:</span></p>
-                                <div class="border-b border-black w-full h-6 text-xs italic text-center">PhilHealth</div>
+                                <p class="text-xs">If yes, specify</p>
                             </div>
 
+                            <div class="mt-2">
+                                <p class="text-xs font-bold uppercase">ID Type:</p>
+                                <div class="border-b border-black w-full h-6 text-xs italic text-center">PhilHealth</div>
+                            </div>
                             <div class="mt-2">
                                 <p class="text-xs font-bold uppercase">ID Number:</p>
                                 <div class="border-b border-black w-full h-6 text-xs italic text-center">1234-5678-9012</div>
@@ -611,9 +614,9 @@
                         </div>
 
                         <div class="border-b border-black p-2">
-                            <div class="flex justify-between">
-                                <span class="text-xs font-bold uppercase">Member of any <span class="font-bold">Farmers Association/Cooperative?</span></span>
-                                <div class="flex items-center space-x-4">
+                            <div class="grid grid-cols-6">
+                                <span class="text-xs font-bold uppercase col-span-4">Member of any <span class="font-bold">Farmers Association/Cooperative?</span></span>
+                                <div class="flex items-center space-x-4 col-span-2">
                                     <div class="flex items-center space-x-2">
                                         <div class="border border-black w-4 h-4"></div>
                                         <span class="text-xs">Yes</span>
