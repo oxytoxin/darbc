@@ -21,16 +21,15 @@
                         </p>
                         <div class="flex items-center space-x-4">
                             <div class="flex items-center space-x-1">
-                                <div
-                                    class="border border-black h-4 w-4 flex items-center justify-center relative before:content-['✓'] before:text-black before:absolute before:text-xs">
-                                </div>
+                                <x-checkbox-display :checked="$rsbsa->isNew()" />
                                 <span class="text-sm">New</span>
                             </div>
                             <div class="flex items-center space-x-1">
-                                <div class="border border-black h-4 w-4"></div>
+                                <x-checkbox-display :checked="$rsbsa->isUpdating()" />
                                 <span class="text-sm">Updating</span>
                             </div>
                         </div>
+
 
                         <!-- Date Boxes -->
                         <div class="ml-6">
