@@ -127,23 +127,23 @@
             <div class="grid grid-cols-2">
                 <div class="p-2">
                     <p class="text-center text-xs italic">Dela Cruz</p>
-                    <div class="text-center text-xs font-bold uppercase border-t border-black py-1">Surname</div>
+                    <div class="text-center text-xs font-bold uppercase border-t border-black ">Surname</div>
                 </div>
                 <div class="p-2">
                     <p class="text-center text-xs italic">Juan</p>
-                    <div class="text-center text-xs font-bold uppercase border-t border-black py-1">First Name</div>
+                    <div class="text-center text-xs font-bold uppercase border-t border-black ">First Name</div>
                 </div>
             </div>
 
             <div class="grid grid-cols-2 border-b-2 border-black">
                 <div class="p-2">
                     <p class="text-center text-xs italic">Santos</p>
-                    <div class="text-center text-xs font-bold uppercase border-t border-black py-1">Middle Name</div>
+                    <div class="text-center text-xs font-bold uppercase border-t border-black ">Middle Name</div>
                 </div>
                 <div class="grid grid-cols-2">
                     <div class="p-2">
                         <p class="text-center text-xs italic">Jr.</p>
-                        <div class="text-center text-xs font-bold uppercase border-t border-black py-1">Extension Name
+                        <div class="text-center text-xs font-bold uppercase border-t border-black ">Extension Name
                         </div>
                     </div>
                     <div class="inline-flex items-center justify-center border-l-2 border-t-2  border-black p-2">
@@ -161,35 +161,35 @@
             </div>
 
             <!-- Address -->
-            <div class="border-b border-black flex p-4">
+            <div class="border-b border-black flex py-4 px-2">
                 <div class="flex">
                     <div class=" font-bold uppercase p-2 w-32 ">Address</div>
                     <div class="flex-1"></div>
                 </div>
-                <div class="grid grid-cols-3 gap-4 px-2 pb-2 flex-1">
+                <div class="grid grid-cols-3 gap-4 p-2 pb-2 flex-1">
                     <div class="flex flex-col">
                         <div class="border border-black h-8 text-center text-xs italic p-1">Purok Tagumpay 1</div>
-                        <span class="text-center text-xs font-bold uppercase py-1 ">House/Lot/Bldg. No./Purok</span>
+                        <span class="text-center text-xs font-bold uppercase ">House/Lot/Bldg. No./Purok</span>
                     </div>
                     <div class="flex flex-col">
                         <div class="border border-black h-8 text-center  text-xs italic p-1">78 Salem</div>
-                        <span class="text-center text-xs font-bold uppercase py-1 ">Street/Sitio/Subdv.</span>
+                        <span class="text-center text-xs font-bold uppercase ">Street/Sitio/Subdv.</span>
                     </div>
                     <div class="flex flex-col">
                         <div class="border border-black h-8 text-center  text-xs italic p-1">Kalawahg 2</div>
-                        <span class="text-center text-xs font-bold uppercase py-1 ">Barangay</span>
+                        <span class="text-center text-xs font-bold uppercase ">Barangay</span>
                     </div>
                     <div class="flex flex-col">
                         <div class="border border-black h-8 text-center  text-xs italic p-1">Isulan</div>
-                        <span class="text-center text-xs font-bold uppercase py-1 ">Municipality/City</span>
+                        <span class="text-center text-xs font-bold uppercase ">Municipality/City</span>
                     </div>
                     <div class="flex flex-col">
                         <div class="border border-black h-8 text-center  text-xs italic p-1">Sultan Kudarat</div>
-                        <span class="text-center text-xs font-bold uppercase py-1 ">Province</span>
+                        <span class="text-center text-xs font-bold uppercase ">Province</span>
                     </div>
                     <div class="flex flex-col">
                         <div class="border border-black h-8 text-center  text-xs italic p-1">Region 12</div>
-                        <span class="text-center text-xs font-bold uppercase py-1 ">Region</span>
+                        <span class="text-center text-xs font-bold uppercase ">Region</span>
                     </div>
                 </div>
             </div>
@@ -197,8 +197,17 @@
             <!-- Mobile & Landline -->
             <div class="grid grid-cols-2 border-b border-black">
                 <div class="border-r border-black p-2">
-                    <p class="text-xs font-bold">Mobile Number:</p>
-                    <div class="flex space-x-1">
+                    <p class="text-xs font-bold uppercase ">Mobile Number:</p>
+                    <div class="flex space-x-0.5">
+                        <div
+                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                        </div>
+                        <div
+                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                        </div>
+                        <div
+                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                        </div>
                         <div
                             class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
                         </div>
@@ -226,8 +235,14 @@
                     </div>
                 </div>
                 <div class="p-2">
-                    <p class="text-xs font-bold">Landline Number:</p>
-                    <div class="flex space-x-1">
+                    <p class="text-xs font-bold uppercase">Landline Number:</p>
+                    <div class="flex space-x-0.5">
+                        <div
+                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                        </div>
+                        <div
+                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                        </div>
                         <div
                             class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
                         </div>
@@ -259,8 +274,8 @@
             <!-- Date of Birth & Place of Birth -->
             <div class="grid grid-cols-2 border-b border-black">
                 <div class="border-r border-black p-2">
-                    <p class="text-xs font-bold">Date of Birth:</p>
-                    <div class="flex space-x-1">
+                    <p class="text-xs font-bold uppercase">Date of Birth:</p>
+                    <div class="flex space-x-0.5">
                         <div
                             class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
                         </div>
@@ -288,7 +303,7 @@
                     </div>
                 </div>
                 <div class="p-2">
-                    <p class="text-xs font-bold">Place of Birth:</p>
+                    <p class="text-xs font-bold uppercase">Place of Birth:</p>
                     <div class="border border-black h-8 text-center text-xs italic p-1">Isulan</div>
                 </div>
             </div>
