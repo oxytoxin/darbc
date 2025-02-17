@@ -8,17 +8,22 @@
                     <div class="flex items-center space-x-4">
                         <img src="{{ asset('assets/darbc-logo.svg') }}" alt="DA Logo" class="h-16 w-16">
                         <div>
-                            <h1 class="text-3xl font-extrabold uppercase leading-none">ANI AT KITA <br> RSBSA Enrollment Form</h1>
-                            <p class="text-sm font-semibold uppercase text-gray-700 mt-1">Registry System for Basic Sectors in Agriculture (RSBSA)</p>
+                            <h1 class="text-3xl font-extrabold uppercase leading-none">ANI AT KITA <br> RSBSA Enrollment
+                                Form</h1>
+                            <p class="text-sm font-semibold uppercase text-gray-700 mt-1">Registry System for Basic
+                                Sectors in Agriculture (RSBSA)</p>
                         </div>
                     </div>
 
                     <!-- Enrollment Type & Date -->
                     <div class="flex items-center mt-4">
-                        <p class="text-xs font-bold uppercase min-w-[160px]">Enrollment Type & <br> Date Administered:</p>
+                        <p class="text-xs font-bold uppercase min-w-[160px]">Enrollment Type & <br> Date Administered:
+                        </p>
                         <div class="flex items-center space-x-4">
                             <div class="flex items-center space-x-1">
-                                <div class="border border-black h-4 w-4 flex items-center justify-center relative before:content-['✓'] before:text-black before:absolute before:text-xs"></div>
+                                <div
+                                    class="border border-black h-4 w-4 flex items-center justify-center relative before:content-['✓'] before:text-black before:absolute before:text-xs">
+                                </div>
                                 <span class="text-sm">New</span>
                             </div>
                             <div class="flex items-center space-x-1">
@@ -30,14 +35,30 @@
                         <!-- Date Boxes -->
                         <div class="ml-6">
                             <div class="flex space-x-1">
-                                <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">0</div>
-                                <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">7</div>
-                                <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">2</div>
-                                <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">1</div>
-                                <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">1</div>
-                                <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">1</div>
-                                <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">2</div>
-                                <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">4</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                    0</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                    7</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                    2</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                    1</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                    1</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                    1</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                    2</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                    4</div>
                             </div>
                             <div class="flex space-x-1 uppercase text-center text-xs mt-1">
                                 <span class="w-6">M</span>
@@ -59,7 +80,8 @@
                             <!-- Region -->
                             <div class="flex flex-col">
                                 <div class="flex border border-black">
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">1</div>
+                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                        1</div>
                                     <div class="w-6 h-6 flex items-center justify-center text-xs">9</div>
                                 </div>
                                 <span class="uppercase text-xs text-center mt-1">Region</span>
@@ -67,7 +89,8 @@
                             <!-- Province -->
                             <div class="flex flex-col">
                                 <div class="flex border border-black">
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">3</div>
+                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                        3</div>
                                     <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
                                 </div>
                                 <span class="uppercase text-xs text-center mt-1">Province</span>
@@ -75,7 +98,8 @@
                             <!-- City/Municipality -->
                             <div class="flex flex-col">
                                 <div class="flex border border-black">
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">3</div>
+                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                        3</div>
                                     <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
                                 </div>
                                 <span class="uppercase text-xs text-center mt-1">City/Muni</span>
@@ -83,8 +107,10 @@
                             <!-- Barangay -->
                             <div class="flex flex-col">
                                 <div class="flex border border-black">
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">1</div>
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">3</div>
+                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                        1</div>
+                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                        3</div>
                                     <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
                                 </div>
                                 <span class="uppercase text-xs text-center mt-1">Barangay</span>
@@ -92,10 +118,14 @@
                             <!-- Additional Numbers -->
                             <div class="flex flex-col">
                                 <div class="flex border border-black">
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">2</div>
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">3</div>
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">4</div>
-                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">2</div>
+                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                        2</div>
+                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                        3</div>
+                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                        4</div>
+                                    <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                        2</div>
                                     <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
                                 </div>
                                 <span class="uppercase text-xs text-center mt-1 invisible">""</span>
@@ -122,212 +152,347 @@
             <div class="bg-black text-white font-bold p-1">
                 PART I: PERSONAL INFORMATION
             </div>
-   <div class="grid grid-cols-12 ">
-    <div class="col-span-12">
+            <div class="grid grid-cols-12 ">
+                <div class="col-span-12">
 
-  <div class="grid grid-cols-2">
-                <div class="p-2">
-                    <p class="text-center text-xs italic">Dela Cruz</p>
-                    <div class="text-center text-xs font-bold uppercase border-t border-black ">Surname</div>
-                </div>
-                <div class="p-2">
-                    <p class="text-center text-xs italic">Juan</p>
-                    <div class="text-center text-xs font-bold uppercase border-t border-black ">First Name</div>
-                </div>
-                 </div>
-
-            <div class="grid grid-cols-2 border-b-2 border-black">
-                <div class="p-2">
-                    <p class="text-center text-xs italic">Santos</p>
-                    <div class="text-center text-xs font-bold uppercase border-t border-black ">Middle Name</div>
-                </div>
-                <div class="grid grid-cols-2">
-                    <div class="p-2">
-                        <p class="text-center text-xs italic">Jr.</p>
-                        <div class="text-center text-xs font-bold uppercase border-t border-black ">Extension Name
+                    <div class="grid grid-cols-2">
+                        <div class="p-2">
+                            <p class="text-center text-xs italic">Dela Cruz</p>
+                            <div class="text-center text-xs font-bold uppercase border-t border-black ">Surname</div>
+                        </div>
+                        <div class="p-2">
+                            <p class="text-center text-xs italic">Juan</p>
+                            <div class="text-center text-xs font-bold uppercase border-t border-black ">First Name</div>
                         </div>
                     </div>
-                    <div class="inline-flex items-center justify-center border-l-2 border-t-2  border-black p-2">
-                        <div class="text-xs font-bold uppercase">Sex:</div>
-                        <div class="flex items-center space-x-2 ml-2">
-                            <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
-                            <span class="text-xs">Male</span>
+
+                    <div class="grid grid-cols-2 border-b-2 border-black">
+                        <div class="p-2">
+                            <p class="text-center text-xs italic">Santos</p>
+                            <div class="text-center text-xs font-bold uppercase border-t border-black ">Middle Name
+                            </div>
                         </div>
-                        <div class="flex items-center space-x-2 ml-4">
-                            <div class="border border-black w-4 h-4"></div>
-                            <span class="text-xs">Female</span>
+                        <div class="grid grid-cols-2">
+                            <div class="p-2">
+                                <p class="text-center text-xs italic">Jr.</p>
+                                <div class="text-center text-xs font-bold uppercase border-t border-black ">Extension
+                                    Name
+                                </div>
+                            </div>
+                            <div
+                                class="inline-flex items-center justify-center border-l-2 border-t-2  border-black p-2">
+                                <div class="text-xs font-bold uppercase">Sex:</div>
+                                <div class="flex items-center space-x-2 ml-2">
+                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
+                                    </div>
+                                    <span class="text-xs">Male</span>
+                                </div>
+                                <div class="flex items-center space-x-2 ml-4">
+                                    <div class="border border-black w-4 h-4"></div>
+                                    <span class="text-xs">Female</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-    </div>
-    <div class="  col-span-12">
-        <div class="border-b border-black flex py-4 px-2">
-            <div class="flex">
-                <div class=" font-bold uppercase p-2 w-32 ">Address</div>
-                <div class="flex-1"></div>
-            </div>
-            <div class="grid grid-cols-3 gap-4 p-2 pb-2 flex-1">
-                <div class="flex flex-col">
-                    <div class="border border-black h-8 text-center text-xs italic p-1">Purok Tagumpay 1</div>
-                    <span class="text-center text-xs font-bold uppercase ">House/Lot/Bldg. No./Purok</span>
+                <div class="  col-span-12">
+                    <div class="border-b border-black flex py-4 px-2">
+                        <div class="flex">
+                            <div class=" font-bold uppercase p-2 w-32 ">Address</div>
+                            <div class="flex-1"></div>
+                        </div>
+                        <div class="grid grid-cols-3 gap-4 p-2 pb-2 flex-1">
+                            <div class="flex flex-col">
+                                <div class="border border-black h-8 text-center text-xs italic p-1">Purok Tagumpay 1
+                                </div>
+                                <span class="text-center text-xs font-bold uppercase ">House/Lot/Bldg. No./Purok</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <div class="border border-black h-8 text-center  text-xs italic p-1">78 Salem</div>
+                                <span class="text-center text-xs font-bold uppercase ">Street/Sitio/Subdv.</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <div class="border border-black h-8 text-center  text-xs italic p-1">Kalawahg 2</div>
+                                <span class="text-center text-xs font-bold uppercase ">Barangay</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <div class="border border-black h-8 text-center  text-xs italic p-1">Isulan</div>
+                                <span class="text-center text-xs font-bold uppercase ">Municipality/City</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <div class="border border-black h-8 text-center  text-xs italic p-1">Sultan Kudarat
+                                </div>
+                                <span class="text-center text-xs font-bold uppercase ">Province</span>
+                            </div>
+                            <div class="flex flex-col">
+                                <div class="border border-black h-8 text-center  text-xs italic p-1">Region 12</div>
+                                <span class="text-center text-xs font-bold uppercase ">Region</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="flex flex-col">
-                    <div class="border border-black h-8 text-center  text-xs italic p-1">78 Salem</div>
-                    <span class="text-center text-xs font-bold uppercase ">Street/Sitio/Subdv.</span>
-                </div>
-                <div class="flex flex-col">
-                    <div class="border border-black h-8 text-center  text-xs italic p-1">Kalawahg 2</div>
-                    <span class="text-center text-xs font-bold uppercase ">Barangay</span>
-                </div>
-                <div class="flex flex-col">
-                    <div class="border border-black h-8 text-center  text-xs italic p-1">Isulan</div>
-                    <span class="text-center text-xs font-bold uppercase ">Municipality/City</span>
-                </div>
-                <div class="flex flex-col">
-                    <div class="border border-black h-8 text-center  text-xs italic p-1">Sultan Kudarat</div>
-                    <span class="text-center text-xs font-bold uppercase ">Province</span>
-                </div>
-                <div class="flex flex-col">
-                    <div class="border border-black h-8 text-center  text-xs italic p-1">Region 12</div>
-                    <span class="text-center text-xs font-bold uppercase ">Region</span>
-                </div>
-            </div>
+
+                <div class="  col-span-12 grid grid-cols-12 ">
+
+                    <div class="col-span-6">
+                        <div class="col-span-6 grid grid-cols-6 p-2 border-b-2  border-black ">
+                            <div class="col-span-3 ">
+                                <p class="text-xs font-bold uppercase  ">Mobile Number:</p>
+                                <div class="flex space-x-0.5">
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-3 ">
+                                <p class="text-xs font-bold uppercase ">Landline Number:</p>
+                                <div class="flex space-x-0.5">
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-6 grid grid-cols-6  border-b-2 border-black ">
+                            <div class=" col-span-3 p-2">
+
+                                <p class="text-xs font-bold uppercase">Date of Birth:</p>
+                                <div class="">
+                                    <div class="flex space-x-1">
+                                        <div
+                                            class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                            0</div>
+                                        <div
+                                            class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                            7</div>
+                                        <div
+                                            class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                            2</div>
+                                        <div
+                                            class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                            1</div>
+                                        <div
+                                            class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                            1</div>
+                                        <div
+                                            class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                            1</div>
+                                        <div
+                                            class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                            2</div>
+                                        <div
+                                            class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                            4</div>
+                                    </div>
+                                    <div class="flex space-x-1 uppercase text-center  ">
+                                        <span class="w-6">M</span>
+                                        <span class="w-6">M</span>
+                                        <span class="w-6">D</span>
+                                        <span class="w-6">D</span>
+                                        <span class="w-6">Y</span>
+                                        <span class="w-6">Y</span>
+                                        <span class="w-6">Y</span>
+                                        <span class="w-6">Y</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-span-3 border-l-2 p-2 border-black">
+                                <div class="grid grid-cols-2 ">
+                                    <p class="text-xs font-bold uppercase col-span-2">Place Of Birth:</p>
+                                    <div class="flex flex-col col-span-2">
+                                        <div class="   text-center text-xs italic p-1">Quezon City</div>
+                                        <span
+                                            class="text-center text-[8px] font-bold uppercase border-t border-black">Municipality</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <div class="   text-center text-xs italic p-1">Metro Manila</div>
+                                        <span
+                                            class="text-center text-[8px] font-bold uppercase border-t border-black">Province/State</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <div class="   text-center text-xs italic p-1">Philippines</div>
+                                        <span
+                                            class="text-center text-[8px] font-bold uppercase border-t border-black">Country</span>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-span-6">
+                            <!-- Religion & Civil Status Section -->
+                            <div class="border-b border-black p-2">
+                                <!-- Religion -->
+                                <div class="flex items-center">
+                                    <span class="text-xs font-bold uppercase mr-2">Religion:</span>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="border border-black w-4 h-4 flex items-center justify-center">
+                                            &#10003;</div>
+                                        <span class="text-xs">Christianity</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 ml-4">
+                                        <div class="border border-black w-4 h-4"></div>
+                                        <span class="text-xs">Islam</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 ml-4">
+                                        <div class="border border-black w-4 h-4"></div>
+                                        <span class="text-xs">Others, specify</span>
+                                        <div class="border-b border-black w-32 h-4 text-xs italic text-center">Hinduism
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Civil Status -->
+                                <div class="flex items-center mt-2">
+                                    <span class="text-xs font-bold uppercase mr-2">Civil Status:</span>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="border border-black w-4 h-4"></div>
+                                        <span class="text-xs">Single</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 ml-4">
+                                        <div class="border border-black w-4 h-4 flex items-center justify-center">
+                                            &#10003;</div>
+                                        <span class="text-xs">Married</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 ml-4">
+                                        <div class="border border-black w-4 h-4"></div>
+                                        <span class="text-xs">Widowed</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 ml-4">
+                                        <div class="border border-black w-4 h-4"></div>
+                                        <span class="text-xs">Separated</span>
+                                    </div>
+                                </div>
+
+                                <div class="mt-2 ">
+                                    <p class="text-xs font-bold uppercase">Name of Spouse if Married:</p>
+                                    <div class="border-b border-black w-full h-6 text-xs italic ">Maria Dela
+                                        Cruz</div>
+                                </div>
+
+                            </div>
+                            <div class="col-span-6">
+
+                            </div>
+
+                        </div>
+                        <div class="col-span-6 p-2 border-b border-black">
+                            <div class=" ">
+                            <p class="text-xs font-bold uppercase">Mother's Maiden Name:</p>
+                            <div class=" border-black w-full h-6 text-xs italic ">Maria Dela Cruz</div>
+                        </div>
+
+                        </div>
+
+                        <div class="col-span-6">
+                            <!-- Household Head Section -->
+<div class="border-b border-black p-2">
+    <!-- Household Head Question -->
+    <div class="flex items-center">
+        <span class="text-xs font-bold uppercase mr-2">Household Head?</span>
+        <div class="flex items-center space-x-2">
+            <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+            <span class="text-xs">Yes</span>
+        </div>
+        <div class="flex items-center space-x-2 ml-4">
+            <div class="border border-black w-4 h-4"></div>
+            <span class="text-xs">No</span>
         </div>
     </div>
 
-    <div class="  col-span-12 grid grid-cols-12 ">
+    <!-- If No, Additional Information -->
+    <div class="mt-2">
+        <p class="text-xs">If no, name of household head:</p>
+        <div class="border-b border-black w-full h-6 text-xs italic ">Pedro Dela Cruz</div>
+    </div>
 
-        <div class="col-span-6">
-            <div class="col-span-6 grid grid-cols-6 p-2 border-b-2  border-black ">
-                <div class="col-span-3 ">
-                    <p class="text-xs font-bold uppercase  ">Mobile Number:</p>
-                    <div class="flex space-x-0.5">
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-span-3 ">
-                    <p class="text-xs font-bold uppercase ">Landline Number:</p>
-                    <div class="flex space-x-0.5">
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                        <div
-                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-span-6 grid grid-cols-6  border-b-2 border-black ">
-                <div class=" col-span-3 p-2">
+    <div class="mt-2">
+        <p class="text-xs">Relationship:</p>
+        <div class="border-b border-black w-full h-6 text-xs italic ">Father</div>
+    </div>
 
-                    <p class="text-xs font-bold uppercase">Date of Birth:</p>
-                        <div class="">
-                            <div class="flex space-x-1">
-                                <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">0</div>
-                                <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">7</div>
-                                <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">2</div>
-                                <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">1</div>
-                                <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">1</div>
-                                <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">1</div>
-                                <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">2</div>
-                                <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">4</div>
-                            </div>
-                            <div class="flex space-x-1 uppercase text-center  ">
-                                <span class="w-6">M</span>
-                                <span class="w-6">M</span>
-                                <span class="w-6">D</span>
-                                <span class="w-6">D</span>
-                                <span class="w-6">Y</span>
-                                <span class="w-6">Y</span>
-                                <span class="w-6">Y</span>
-                                <span class="w-6">Y</span>
-                            </div>
-                        </div>
-                </div>
-                <div class="col-span-3 border-l-2 p-2 border-black">
-                    <div class="grid grid-cols-2 ">
-                        <p class="text-xs font-bold uppercase col-span-2">Place Of Birth:</p>
-                        <div class="flex flex-col col-span-2">
-                            <div class="   text-center text-xs italic p-1">Quezon City</div>
-                            <span class="text-center text-[8px] font-bold uppercase border-t border-black">Municipality</span>
-                        </div>
-                        <div class="flex flex-col">
-                            <div class="   text-center text-xs italic p-1">Metro Manila</div>
-                            <span class="text-center text-[8px] font-bold uppercase border-t border-black">Province/State</span>
-                        </div>
-                        <div class="flex flex-col">
-                            <div class="   text-center text-xs italic p-1">Philippines</div>
-                            <span class="text-center text-[8px] font-bold uppercase border-t border-black">Country</span>
-                        </div>
+    <div class="mt-2">
+        <p class="text-xs">No. of living household members:</p>
+        <div class="border-b border-black w-full h-6 text-xs italic text-center">5</div>
+    </div>
 
-                    </div>
-
-                </div>
-            </div>
+    <div class="mt-2 flex space-x-8">
+        <div>
+            <p class="text-xs">No. of male:</p>
+            <div class="border-b border-black w-20 h-6 text-xs italic  text-center">2</div>
         </div>
-        <div class="p-4 bg-blue-400  col-span-6">1</div>
-
+        <div>
+            <p class="text-xs">No. of female:</p>
+            <div class="border-b border-black w-20 h-6 text-xs italic text-center ">3</div>
+        </div>
     </div>
+</div>
+
+                        </div>
+                    </div>
+                    <div class="p-4 bg-blue-400  col-span-6">1</div>
+
+                </div>
 
 
-    </div>
+            </div>
 
 
 
