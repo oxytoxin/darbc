@@ -232,7 +232,7 @@
                     </div>
                 </div>
 
-                <div class="  col-span-12 grid grid-cols-12 ">
+                <div class=" col-span-12 grid grid-cols-12 ">
 
                     <div class="col-span-6">
                         <div class="col-span-6 grid grid-cols-6 p-2 border-b-2  border-black ">
@@ -435,59 +435,212 @@
                         </div>
                         <div class="col-span-6 p-2 border-b border-black">
                             <div class=" ">
-                            <p class="text-xs font-bold uppercase">Mother's Maiden Name:</p>
-                            <div class=" border-black w-full h-6 text-xs italic ">Maria Dela Cruz</div>
-                        </div>
+                                <p class="text-xs font-bold uppercase">Mother's Maiden Name:</p>
+                                <div class=" border-black w-full h-6 text-xs italic ">Maria Dela Cruz</div>
+                            </div>
 
                         </div>
 
                         <div class="col-span-6">
                             <!-- Household Head Section -->
-<div class="border-b border-black p-2">
-    <!-- Household Head Question -->
-    <div class="flex items-center">
-        <span class="text-xs font-bold uppercase mr-2">Household Head?</span>
-        <div class="flex items-center space-x-2">
-            <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
-            <span class="text-xs">Yes</span>
-        </div>
-        <div class="flex items-center space-x-2 ml-4">
-            <div class="border border-black w-4 h-4"></div>
-            <span class="text-xs">No</span>
-        </div>
-    </div>
+                            <div class="border-b border-black p-2">
+                                <!-- Household Head Question -->
+                                <div class="flex items-center">
+                                    <span class="text-xs font-bold uppercase mr-2">Household Head?</span>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="border border-black w-4 h-4 flex items-center justify-center">
+                                            &#10003;</div>
+                                        <span class="text-xs">Yes</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2 ml-4">
+                                        <div class="border border-black w-4 h-4"></div>
+                                        <span class="text-xs">No</span>
+                                    </div>
+                                </div>
 
-    <!-- If No, Additional Information -->
-    <div class="mt-2">
-        <p class="text-xs">If no, name of household head:</p>
-        <div class="border-b border-black w-full h-6 text-xs italic ">Pedro Dela Cruz</div>
-    </div>
+                                <!-- If No, Additional Information -->
+                                <div class="mt-2">
+                                    <p class="text-xs">If no, name of household head:</p>
+                                    <div class="border-b border-black w-full h-6 text-xs italic ">Pedro Dela Cruz</div>
+                                </div>
 
-    <div class="mt-2">
-        <p class="text-xs">Relationship:</p>
-        <div class="border-b border-black w-full h-6 text-xs italic ">Father</div>
-    </div>
+                                <div class="mt-2">
+                                    <p class="text-xs">Relationship:</p>
+                                    <div class="border-b border-black w-full h-6 text-xs italic ">Father</div>
+                                </div>
 
-    <div class="mt-2">
-        <p class="text-xs">No. of living household members:</p>
-        <div class="border-b border-black w-full h-6 text-xs italic text-center">5</div>
-    </div>
+                                <div class="mt-2">
+                                    <p class="text-xs">No. of living household members:</p>
+                                    <div class="border-b border-black w-full h-6 text-xs italic text-center">5</div>
+                                </div>
 
-    <div class="mt-2 flex space-x-8">
-        <div>
-            <p class="text-xs">No. of male:</p>
-            <div class="border-b border-black w-20 h-6 text-xs italic  text-center">2</div>
-        </div>
-        <div>
-            <p class="text-xs">No. of female:</p>
-            <div class="border-b border-black w-20 h-6 text-xs italic text-center ">3</div>
-        </div>
-    </div>
-</div>
+                                <div class="mt-2 flex space-x-8">
+                                    <div>
+                                        <p class="text-xs">No. of male:</p>
+                                        <div class="border-b border-black w-20 h-6 text-xs italic  text-center">2</div>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs">No. of female:</p>
+                                        <div class="border-b border-black w-20 h-6 text-xs italic text-center ">3</div>
+                                    </div>
+                                </div>
+                            </div>
 
                         </div>
                     </div>
-                    <div class="p-4 bg-blue-400  col-span-6">1</div>
+                    <div class=" bg-blue-400  col-span-6 border-l border-black border-b ">
+                        <!-- Highest Formal Education Section -->
+                        <div class="border-b border-black p-2">
+                            <span class="text-xs font-bold uppercase ">Highest Formal Education:</span>
+
+                            <div class="grid grid-cols-3 gap-x-6 gap-y-2 mt-2 text-xs">
+                                <div class="flex items-center space-x-2">
+                                    <div class="border border-black w-4 h-4"></div>
+                                    <span>Pre-school</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="border border-black w-4 h-4"></div>
+                                    <span>Junior High School (K-12)</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="border border-black w-4 h-4"></div>
+                                    <span>Vocational</span>
+                                </div>
+
+                                <div class="flex items-center space-x-2">
+                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
+                                    </div>
+                                    <span>Elementary</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="border border-black w-4 h-4"></div>
+                                    <span>Senior High School (K-12)</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="border border-black w-4 h-4"></div>
+                                    <span>Post-graduate</span>
+                                </div>
+
+                                <div class="flex items-center space-x-2">
+                                    <div class="border border-black w-4 h-4"></div>
+                                    <span>High School (non K-12)</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="border border-black w-4 h-4"></div>
+                                    <span>College</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="border border-black w-4 h-4"></div>
+                                    <span>None</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="border-b border-black p-2">
+                            <div class="flex justify-between">
+                                <span class="text-xs font-bold uppercase">4P’s Beneficiary?</span>
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="border border-black w-4 h-4"></div>
+                                        <span class="text-xs">Yes</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                        <span class="text-xs">No</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex justify-between mt-2">
+                                <span class="text-xs font-bold uppercase">Member of an <span class="font-bold italic">Indigenous Group</span>?</span>
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="border border-black w-4 h-4"></div>
+                                        <span class="text-xs">Yes</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                        <span class="text-xs">No</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-2">
+                                <p class="text-xs">If yes, specify:</p>
+                                <div class="border-b border-black w-full h-6 text-xs italic text-center">T’boli Tribe</div>
+                            </div>
+                        </div>
+
+                        <!-- Government ID Section -->
+                        <div class="border-b border-black p-2">
+                            <div class="flex justify-between">
+                                <span class="text-xs font-bold uppercase">With <span class="font-bold">Government ID?</span></span>
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                        <span class="text-xs">Yes</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="border border-black w-4 h-4"></div>
+                                        <span class="text-xs">No</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-2">
+                                <p class="text-xs">If yes, specify <span class="font-bold">ID Type:</span></p>
+                                <div class="border-b border-black w-full h-6 text-xs italic text-center">PhilHealth</div>
+                            </div>
+
+                            <div class="mt-2">
+                                <p class="text-xs font-bold uppercase">ID Number:</p>
+                                <div class="border-b border-black w-full h-6 text-xs italic text-center">1234-5678-9012</div>
+                            </div>
+                        </div>
+
+                        <div class="border-b border-black p-2">
+                            <div class="flex justify-between">
+                                <span class="text-xs font-bold uppercase">Member of any <span class="font-bold">Farmers Association/Cooperative?</span></span>
+                                <div class="flex items-center space-x-4">
+                                    <div class="flex items-center space-x-2">
+                                        <div class="border border-black w-4 h-4"></div>
+                                        <span class="text-xs">Yes</span>
+                                    </div>
+                                    <div class="flex items-center space-x-2">
+                                        <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                        <span class="text-xs">No</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-2">
+                                <p class="text-xs">If yes, specify:</p>
+                                <div class="border-b border-black w-full h-6 text-xs italic text-center">DARBC Farmers Coop</div>
+                            </div>
+                        </div>
+
+                        <div class=" p-2">
+                            <p class="text-xs font-bold uppercase">Person to Notify in Case of Emergency:</p>
+                            <div class="border-b border-black w-full h-6 text-xs italic text-center">Juan Dela Cruz</div>
+
+                            <p class="text-xs font-bold uppercase mt-2">Contact Number:</p>
+                            <div class="flex space-x-1 mt-1">
+                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">0</div>
+                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">9</div>
+                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">1</div>
+                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">7</div>
+                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">1</div>
+                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">2</div>
+                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">3</div>
+                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">4</div>
+                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">5</div>
+                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">6</div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
 
                 </div>
 
