@@ -1427,10 +1427,40 @@
 
 
 
-    </div>
+            <div class="text-center p-2  font-bold  uppercase ">
+                This form is not for sale
+            </div>
 
-    <div class="text-center p-2  font-bold  uppercase ">
-        This form is not for sale
+            <div class="border border-black p-2 text-xs font-bold uppercase">
+                <p>Verified True and Correct By:</p>
+                <div class="grid grid-cols-3 text-center mt-4">
+                    <!-- Barangay Chairman -->
+                    <div class="p-4">
+                        <div class="h-12 border-b border-black"></div>
+                        <p class="uppercase text-xs font-bold mt-1">Signature Above Printed Name / Date</p>
+                        <p class="text-xs leading-tight mt-1">
+                            Barangay Chairman / City / Mun. Veterinarian (Livestock) /
+                            Mill District Officer (Sugarcane) / IP Leader / C/M/Paro (ARB)
+                        </p>
+                    </div>
+
+                    <!-- City / Municipal Agriculture Office -->
+                    <div class="p-4">
+                        <div class="h-12 border-b border-black"></div>
+                        <p class="uppercase text-xs font-bold mt-1">Signature Above Printed Name / Date</p>
+                        <p class="uppercase text-xs font-bold">City/Municipal Agriculture Office</p>
+                    </div>
+
+                    <!-- CAFC / MAFC Chairman -->
+                    <div class="p-4">
+                        <div class="h-12 border-b border-black"></div>
+                        <p class="uppercase text-xs font-bold mt-1">Signature Above Printed Name / Date</p>
+                        <p class="uppercase text-xs font-bold">CAFC/MAFC Chairman</p>
+                    </div>
+                </div>
+            </div>
+
+
     </div>
 
 
