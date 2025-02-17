@@ -488,7 +488,7 @@
 
                         </div>
                     </div>
-                    <div class=" bg-blue-400  col-span-6 border-l border-black border-b ">
+                    <div class=" col-span-6 border-l border-black border-b ">
                         <!-- Highest Formal Education Section -->
                         <div class="border-b border-black p-2">
                             <span class="text-xs font-bold uppercase ">Highest Formal Education:</span>
@@ -532,6 +532,19 @@
                                 <div class="flex items-center space-x-2">
                                     <div class="border border-black w-4 h-4"></div>
                                     <span>None</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex justify-between border-b border-black p-2">
+                            <span class="text-xs font-bold uppercase">Person With Disability (PWD)</span>
+                            <div class="flex items-center space-x-4">
+                                <div class="flex items-center space-x-2">
+                                    <div class="border border-black w-4 h-4"></div>
+                                    <span class="text-xs">Yes</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                    <span class="text-xs">No</span>
                                 </div>
                             </div>
                         </div>
