@@ -201,29 +201,28 @@
                         </div>
                         <div class="grid grid-cols-3 gap-4 p-2 pb-2 flex-1">
                             <div class="flex flex-col">
-                                <div class="border border-black h-8 text-center text-xs italic p-1">Purok Tagumpay 1
-                                </div>
+
+                                <x-display-text value="{{ $rsbsa->house_lot_bldg_purok ?? 'N/A' }}" class="border border-black h-8 text-center  text-xs italic p-1" />
                                 <span class="text-center text-xs font-bold uppercase ">House/Lot/Bldg. No./Purok</span>
                             </div>
                             <div class="flex flex-col">
-                                <div class="border border-black h-8 text-center  text-xs italic p-1">78 Salem</div>
+                                <x-display-text value="{{ $rsbsa->street_sitio_subdv ?? 'N/A' }}" class="border border-black h-8 text-center  text-xs italic p-1" />
                                 <span class="text-center text-xs font-bold uppercase ">Street/Sitio/Subdv.</span>
                             </div>
                             <div class="flex flex-col">
-                                <div class="border border-black h-8 text-center  text-xs italic p-1">Kalawahg 2</div>
+                                <x-display-text value="{{ $rsbsa->barangay ?? 'N/A' }}" class="border border-black h-8 text-center  text-xs italic p-1" />
                                 <span class="text-center text-xs font-bold uppercase ">Barangay</span>
                             </div>
                             <div class="flex flex-col">
-                                <div class="border border-black h-8 text-center  text-xs italic p-1">Isulan</div>
+                                <x-display-text value="{{ $rsbsa->city_municipality ?? 'N/A' }}" class="border border-black h-8 text-center  text-xs italic p-1" />
                                 <span class="text-center text-xs font-bold uppercase ">Municipality/City</span>
                             </div>
                             <div class="flex flex-col">
-                                <div class="border border-black h-8 text-center  text-xs italic p-1">Sultan Kudarat
-                                </div>
+                                <x-display-text value="{{ $rsbsa->province ?? 'N/A' }}" class="border border-black h-8 text-center  text-xs italic p-1" />
                                 <span class="text-center text-xs font-bold uppercase ">Province</span>
                             </div>
                             <div class="flex flex-col">
-                                <div class="border border-black h-8 text-center  text-xs italic p-1">Region 12</div>
+                                <x-display-text value="{{ $rsbsa->region ?? 'N/A' }}" class="border border-black h-8 text-center  text-xs italic p-1" />
                                 <span class="text-center text-xs font-bold uppercase ">Region</span>
                             </div>
                         </div>
@@ -234,44 +233,21 @@
 
                     <div class="col-span-6">
                         <div class="col-span-6 grid grid-cols-6 p-2 border-b-2  border-black ">
-                            <div class="col-span-3 ">
-                                <p class="text-xs font-bold uppercase  ">Mobile Number:</p>
-                                <div class="flex space-x-0.5">
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                            @php
+                            $mobileNumber = $rsbsa->getFormattedContactNumber();
+                        @endphp
+
+                        <div class="col-span-3">
+                            <p class="text-xs font-bold uppercase">Mobile Number:</p>
+                            <div class="flex space-x-0.5">
+                                @foreach(range(0, 10) as $index)
+                                    <div class="border border-black w-6 h-6 text-center text-xs  flex items-center justify-center">
+                                        {{ $mobileNumber[$index] ?? '' }}
                                     </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
+                        </div>
+
                             <div class="col-span-3 ">
                                 <p class="text-xs font-bold uppercase ">Landline Number:</p>
                                 <div class="flex space-x-0.5">

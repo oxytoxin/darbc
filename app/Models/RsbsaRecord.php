@@ -74,6 +74,24 @@ public function getFormattedLocationCodes()
 }
 
 
+public function getFormattedContactNumber()
+{
+    if (!$this->contact_number) {
+        return null;
+    }
+
+    // Split the numbers if they are separated by `/`
+    $numbers = explode('/', $this->contact_number);
+
+    foreach ($numbers as $number) {
+        $cleaned = preg_replace('/\D/', '', $number); // Remove non-numeric characters
+        if (strlen($cleaned) === 11) {
+            return $cleaned; // Return first valid 11-digit number
+        }
+    }
+
+    return null; // Return null if no valid number found
+}
 
 
 }
