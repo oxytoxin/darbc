@@ -137,4 +137,10 @@ public function getFormattedEmergencyContact()
 }
 
 
+public function hasLivelihood($livelihood)
+{
+    return in_array($livelihood, $this->main_livelihood ?? []);
+}
+
+
 }

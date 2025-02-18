@@ -631,26 +631,19 @@
             <!-- Main Livelihood -->
             <div class="grid grid-cols-4 text-xs font-bold border-b border-black p-2">
 
-                <div class="flex items-center space-x-2 uppercase">
-                    <div class="col-span-4">
-                        <span class="text-center text-xs font-bold uppercase ">Main livelihood</span>
+
+                @foreach(\App\Models\RsbsaRecord::LIVELIHOOD_OPTION as $key => $label)
+                    <div class="flex items-center space-x-2 uppercase">
+                        @if ($loop->first)
+                        <div class="col-span-4  text-xs font-bold uppercase">Main Livelihood</div>
+                        @endif
+                        <x-checkbox-display :checked="$rsbsa->hasLivelihood($key)" />
+                        <span>{{ $label }}</span>
                     </div>
-                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
-                    <span>Farmer</span>
-                </div>
-                <div class="flex items-center space-x-2 uppercase">
-                    <div class="border border-black w-4 h-4"></div>
-                    <span>Farmworker/Laborer</span>
-                </div>
-                <div class="flex items-center space-x-2 uppercase">
-                    <div class="border border-black w-4 h-4"></div>
-                    <span>Fisherfolk</span>
-                </div>
-                <div class="flex items-center space-x-2 uppercase">
-                    <div class="border border-black w-4 h-4"></div>
-                    <span>Agri Youth</span>
-                </div>
+                @endforeach
             </div>
+
+
 
             <!-- Farm Profile Details -->
             <div class="grid grid-cols-4 border-b border-black text-xs">
