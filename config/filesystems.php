@@ -69,6 +69,11 @@ return [
             'root'   => public_path('proof_of_release'),
             'url'    => env('APP_URL') . '/proof_of_release',
         ],
+        'rsbsa_two_by_two' => [
+            'driver' => 'local',
+            'root'   => public_path('rsbsa_two_by_two'),
+            'url'    => env('APP_URL') . '/rsbsa_two_by_two',
+        ],
         'documents' => [
             'driver' => 'local',
             'root'   => public_path('documents'),

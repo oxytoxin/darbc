@@ -30,6 +30,11 @@
                             <x-sidebars.office-staff />
                         </li>
                     @endif
+                    @if ($roles?->find(1))
+                        <li>
+                            <x-sidebars.rsbsa />
+                        </li>
+                    @endif
                 </ul>
             </div>
 

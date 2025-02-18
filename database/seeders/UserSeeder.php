@@ -23,10 +23,20 @@ class UserSeeder extends Seeder
             'username' => 'admin',
             'password' => Hash::make('Admindarbc1988'),
         ]);
+        $krelease_admin = User::create([
+            'first_name' => 'Kristine',
+            'surname' => 'Ampas',
+            'username' => 'kristineadmin',
+            'password' => Hash::make('Admindarbc1988'),
+        ]);
 
         $release_admin->roles()->attach(Role::RELEASE_ADMIN);
         $release_admin->roles()->attach(Role::OFFICE_STAFF);
         $release_admin->roles()->attach(Role::CASHIER);
+
+        $krelease_admin->roles()->attach(Role::RELEASE_ADMIN);
+        $krelease_admin->roles()->attach(Role::OFFICE_STAFF);
+        $krelease_admin->roles()->attach(Role::CASHIER);
 
         if (app()->environment('local')) {
             $cashier = User::create([

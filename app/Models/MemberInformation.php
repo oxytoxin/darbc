@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use DB;
+use App\Models\RsbsaRecord;
+use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Spatie\MediaLibrary\HasMedia;
-use Spatie\MediaLibrary\InteractsWithMedia;
 
 /**
  * @mixin IdeHelperMemberInformation
@@ -185,4 +186,51 @@ class MemberInformation extends Model implements HasMedia
     {
         return $this->belongsTo(Barangay::class, 'barangay_code', 'code');
     }
+
+    public function rsbsa(){
+        return $this->hasOne(RsbsaRecord::class);
+    }
+
+
+
+    public function hasRsbsaRecord()
+{
+    return $this->rsbsa()->exists();
 }
+
+
+public static function countWithRsbsa()
+{
+    return self::whereHas('rsbsa')->count();
+}
+
+public static function countWithoutRsbsa()
+{
+    return self::whereDoesntHave('rsbsa')->count();
+}
+
+
+public function isSingle()
+{
+    return $this->civil_status == self::CS_SINGLE;
+}
+
+public function isMarried()
+{
+    return $this->civil_status == self::CS_MARRIED;
+}
+
+public function isWidowed()
+{
+    return $this->civil_status == self::CS_WIDOW;
+}
+
+public function isSeparated()
+{
+    return $this->civil_status == self::CS_LEGALLY_SEPARATED;
+}
+
+
+}
+
+
