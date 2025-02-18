@@ -386,7 +386,7 @@
                         <div class="col-span-6 p-2 border-b border-black">
                             <div class=" ">
                                 <p class="text-xs font-bold uppercase">Mother's Maiden Name:</p>
-                                <div class=" border-black w-full h-6 text-xs italic ">Maria Dela Cruz</div>
+                                <x-display-text value="{{ $rsbsa->memberInformation->mother_maiden_name ?? '' }}" class="border-b border-black w-full h-6 text-xs italic "/>
                             </div>
 
                         </div>
@@ -397,41 +397,48 @@
                                 <!-- Household Head Question -->
                                 <div class="flex items-center">
                                     <span class="text-xs font-bold uppercase mr-2">Household Head?</span>
+
                                     <div class="flex items-center space-x-2">
-                                        <div class="border border-black w-4 h-4 flex items-center justify-center">
-                                            &#10003;</div>
+                                        <x-checkbox-display :checked="$rsbsa->household_head" />
                                         <span class="text-xs">Yes</span>
                                     </div>
+
                                     <div class="flex items-center space-x-2 ml-4">
-                                        <div class="border border-black w-4 h-4"></div>
+                                        <x-checkbox-display :checked="!$rsbsa->household_head" />
                                         <span class="text-xs">No</span>
                                     </div>
                                 </div>
 
+
                                 <!-- If No, Additional Information -->
                                 <div class="mt-2">
                                     <p class="text-xs">If no, name of household head:</p>
-                                    <div class="border-b border-black w-full h-6 text-xs italic ">Pedro Dela Cruz</div>
+
+                                    <x-display-text value="{{ $rsbsa->household_head_name ?? 'N/A'}}" class="border-b border-black w-full h-6 text-xs italic" />
                                 </div>
 
                                 <div class="mt-2">
                                     <p class="text-xs">Relationship:</p>
-                                    <div class="border-b border-black w-full h-6 text-xs italic ">Father</div>
+                                    <x-display-text value="{{ $rsbsa->relationship_with_household_head ?? 'N/A'}}" class="border-b border-black w-full h-6 text-xs italic" />
+
                                 </div>
 
                                 <div class="mt-2">
                                     <p class="text-xs">No. of living household members:</p>
-                                    <div class="border-b border-black w-full h-6 text-xs italic text-center">5</div>
+                                    <x-display-text value="{{ $rsbsa->no_of_living_household_members ?? 'N/A'}}" class="border-b border-black w-full h-6 text-xs italic text-center" />
+
                                 </div>
 
                                 <div class="mt-2 flex space-x-8">
                                     <div>
                                         <p class="text-xs">No. of male:</p>
-                                        <div class="border-b border-black w-20 h-6 text-xs italic  text-center">2</div>
+                                        <div class="border-b border-black w-20 h-6 text-xs italic  text-center">{{ $rsbsa->no_of_male ??'N/A' }}</div>
+                                        {{-- <x-display-text value="{{ $rsbsa->no_of_male ?? 'N/A'}}" class="border-b border-black w-20 h-6 text-xs italic  text-center" /> --}}
+
                                     </div>
                                     <div>
                                         <p class="text-xs">No. of female:</p>
-                                        <div class="border-b border-black w-20 h-6 text-xs italic text-center ">3</div>
+                                        <div class="border-b border-black w-20 h-6 text-xs italic text-center ">{{ $rsbsa->no_of_female ??'N/A' }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -441,77 +448,47 @@
                     <div class=" col-span-6 border-l border-black border-b ">
                         <!-- Highest Formal Education Section -->
                         <div class="border-b border-black p-2">
-                            <span class="text-xs font-bold uppercase ">Highest Formal Education:</span>
+                            <span class="text-xs font-bold uppercase">Highest Formal Education:</span>
 
                             <div class="grid grid-cols-3 gap-x-6 gap-y-2 mt-2 text-xs">
-                                <div class="flex items-center space-x-2">
-                                    <div class="border border-black w-4 h-4"></div>
-                                    <span>Pre-school</span>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="border border-black w-4 h-4"></div>
-                                    <span>Junior High School (K-12)</span>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="border border-black w-4 h-4"></div>
-                                    <span>Vocational</span>
-                                </div>
-
-                                <div class="flex items-center space-x-2">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
+                                @foreach(\App\Models\RsbsaRecord::HIGHEST_FORMAL_EDUCATION as $key => $label)
+                                    <div class="flex items-center space-x-2">
+                                        <x-checkbox-display :checked="$rsbsa->isEducationLevel($key)" />
+                                        <span>{{ $label }}</span>
                                     </div>
-                                    <span>Elementary</span>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="border border-black w-4 h-4"></div>
-                                    <span>Senior High School (K-12)</span>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="border border-black w-4 h-4"></div>
-                                    <span>Post-graduate</span>
-                                </div>
-
-                                <div class="flex items-center space-x-2">
-                                    <div class="border border-black w-4 h-4"></div>
-                                    <span>High School (non K-12)</span>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="border border-black w-4 h-4"></div>
-                                    <span>College</span>
-                                </div>
-                                <div class="flex items-center space-x-2">
-                                    <div class="border border-black w-4 h-4"></div>
-                                    <span>None</span>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
-                        <div class="flex  border-b border-black p-2">
+
+                        <div class="flex border-b border-black p-2">
                             <span class="text-xs font-bold uppercase">Person With Disability (PWD)</span>
                             <div class="flex items-center space-x-4 ml-6">
                                 <div class="flex items-center space-x-2">
-                                    <div class="border border-black w-4 h-4"></div>
+                                    <x-checkbox-display :checked="$rsbsa->is_pwd" />
                                     <span class="text-xs">Yes</span>
                                 </div>
                                 <div class="flex items-center space-x-2">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
-                                    </div>
+                                    <x-checkbox-display :checked="!$rsbsa->is_pwd" />
                                     <span class="text-xs">No</span>
                                 </div>
                             </div>
                         </div>
+
                         <div class="border-b border-black p-2">
                             <div class="grid grid-cols-6 ">
                                 <span class="text-xs font-bold uppercase col-span-3">4P’s Beneficiary?</span>
                                 <div class="flex items-center space-x-4 col-span-3">
-                                    <div class="flex items-center space-x-2">
-                                        <div class="border border-black w-4 h-4"></div>
-                                        <span class="text-xs">Yes</span>
+                                    <div class="flex items-center space-x-4">
+                                        <div class="flex items-center space-x-2">
+                                            <x-checkbox-display :checked="$rsbsa->is_4ps_beneficiary" />
+                                            <span class="text-xs">Yes</span>
+                                        </div>
+                                        <div class="flex items-center space-x-2">
+                                            <x-checkbox-display :checked="!$rsbsa->is_4ps_beneficiary" />
+                                            <span class="text-xs">No</span>
+                                        </div>
                                     </div>
-                                    <div class="flex items-center space-x-2">
-                                        <div class="border border-black w-4 h-4 flex items-center justify-center">
-                                            &#10003;</div>
-                                        <span class="text-xs">No</span>
-                                    </div>
+
                                 </div>
                             </div>
 
@@ -519,22 +496,25 @@
                                 <span class="text-xs font-bold uppercase col-span-3">Member of an <span
                                         class="font-bold italic">Indigenous Group</span>?</span>
                                 <div class="flex items-center space-x-4 col-span-3">
-                                    <div class="flex items-center space-x-2">
-                                        <div class="border border-black w-4 h-4"></div>
-                                        <span class="text-xs">Yes</span>
-                                    </div>
-                                    <div class="flex items-center space-x-2">
-                                        <div class="border border-black w-4 h-4 flex items-center justify-center">
-                                            &#10003;</div>
-                                        <span class="text-xs">No</span>
+                                    <div class="flex items-center space-x-4">
+                                        <div class="flex items-center space-x-2">
+                                            <x-checkbox-display :checked="$rsbsa->is_indigenous_group_member" />
+                                            <span class="text-xs">Yes</span>
+                                        </div>
+                                        <div class="flex items-center space-x-2">
+                                            <x-checkbox-display :checked="!$rsbsa->is_indigenous_group_member" />
+                                            <span class="text-xs">No</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="mt-2">
                                 <p class="text-xs">If yes, specify:</p>
-                                <div class="border-b border-black w-full h-6 text-xs italic text-center">T’boli Tribe
-                                </div>
+                                {{-- <div class="border-b border-black w-full h-6 text-xs italic text-center">T’boli Tribe
+                                </div> --}}
+                                <x-display-text value="{{ $rsbsa->indigenous_group_name ?? 'N/A'}}" class="border-b border-black w-full h-6 text-xs italic text-center" />
+
                             </div>
                         </div>
 
@@ -545,12 +525,11 @@
                                         class="font-bold">Government ID?</span></span>
                                 <div class="flex items-center space-x-4 col-span-3">
                                     <div class="flex items-center space-x-2">
-                                        <div class="border border-black w-4 h-4 flex items-center justify-center">
-                                            &#10003;</div>
+                                        <x-checkbox-display :checked="$rsbsa->has_government_id" />
                                         <span class="text-xs">Yes</span>
                                     </div>
                                     <div class="flex items-center space-x-2">
-                                        <div class="border border-black w-4 h-4"></div>
+                                        <x-checkbox-display :checked="!$rsbsa->has_government_id" />
                                         <span class="text-xs">No</span>
                                     </div>
                                 </div>
@@ -562,13 +541,14 @@
 
                             <div class="mt-2">
                                 <p class="text-xs font-bold uppercase">ID Type:</p>
-                                <div class="border-b border-black w-full h-6 text-xs italic text-center">PhilHealth
-                                </div>
+
+                                <x-display-text value="{{ $rsbsa->id_type ?? 'N/A'}}" class="border-b border-black w-full h-6 text-xs italic text-center" />
+
                             </div>
                             <div class="mt-2">
                                 <p class="text-xs font-bold uppercase">ID Number:</p>
-                                <div class="border-b border-black w-full h-6 text-xs italic text-center">1234-5678-9012
-                                </div>
+                                <x-display-text value="{{ $rsbsa->id_number ?? 'N/A'}}" class="border-b border-black w-full h-6 text-xs italic text-center" />
+
                             </div>
                         </div>
 
@@ -578,12 +558,11 @@
                                         class="font-bold">Farmers Association/Cooperative?</span></span>
                                 <div class="flex items-center space-x-4 col-span-2">
                                     <div class="flex items-center space-x-2">
-                                        <div class="border border-black w-4 h-4"></div>
+                                        <x-checkbox-display :checked="$rsbsa->is_farmers_association_member" />
                                         <span class="text-xs">Yes</span>
                                     </div>
                                     <div class="flex items-center space-x-2">
-                                        <div class="border border-black w-4 h-4 flex items-center justify-center">
-                                            &#10003;</div>
+                                        <x-checkbox-display :checked="!$rsbsa->is_farmers_association_member" />
                                         <span class="text-xs">No</span>
                                     </div>
                                 </div>
@@ -591,49 +570,30 @@
 
                             <div class="mt-2">
                                 <p class="text-xs">If yes, specify:</p>
-                                <div class="border-b border-black w-full h-6 text-xs italic text-center">DARBC Farmers
-                                    Coop</div>
+                                <x-display-text value="{{ $rsbsa->farmers_association_name ?? 'N/A'}}" class="border-b border-black w-full h-6 text-xs italic text-center" />
+
                             </div>
                         </div>
 
                         <div class=" p-2">
                             <p class="text-xs font-bold uppercase">Person to Notify in Case of Emergency:</p>
-                            <div class="border-b border-black w-full h-6 text-xs italic text-center">Juan Dela Cruz
-                            </div>
+
+                            <x-display-text value="{{ $rsbsa->emergency_contact_name ?? 'N/A'}}" class="border-b border-black w-full h-6 text-xs italic text-center" />
+
+
+                                @php
+                                $emergencyNumber = $rsbsa->getFormattedEmergencyContact();
+                            @endphp
 
                             <p class="text-xs font-bold uppercase mt-2">Contact Number:</p>
                             <div class="flex space-x-1 mt-1">
-                                <div
-                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
-                                    0</div>
-                                <div
-                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
-                                    9</div>
-                                <div
-                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
-                                    1</div>
-                                <div
-                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
-                                    7</div>
-                                <div
-                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
-                                    1</div>
-                                <div
-                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
-                                    2</div>
-                                <div
-                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
-                                    3</div>
-                                <div
-                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
-                                    4</div>
-                                <div
-                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
-                                    5</div>
-                                <div
-                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
-                                    6</div>
+                                @foreach($emergencyNumber as $digit)
+                                    <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
+                                        {{ $digit }}
+                                    </div>
+                                @endforeach
                             </div>
+
                         </div>
 
 

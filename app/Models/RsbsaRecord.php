@@ -121,6 +121,20 @@ public function getFormattedDateOfBirth()
 }
 
 
+public function isEducationLevel($level)
+{
+    return $this->highest_formal_education === $level;
+}
+
+public function getFormattedEmergencyContact()
+{
+    if (!$this->emergency_contact_number) {
+        return array_fill(0, 11, ''); // Ensure layout remains intact
+    }
+
+    $cleaned = preg_replace('/\D/', '', $this->emergency_contact_number); // Remove non-numeric characters
+    return str_split(substr($cleaned, 0, 11)); // Ensure it's exactly 11 digits
+}
 
 
 }
