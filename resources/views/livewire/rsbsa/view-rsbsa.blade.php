@@ -993,21 +993,7 @@
                                     Name
                                 </div>
                             </div>
-                            <div
-                                class="inline-flex items-center justify-center border-l-2 border-t-2  border-black p-2">
-                                <div class="text-xs font-bold uppercase">Sex:</div>
-                                <div class="flex items-center space-x-2 ml-2">
-                                    <x-checkbox-display
-                                        checked="{{ $rsbsa->memberinformation?->gender?->name === 'Male' }}" />
-
-                                    <span class="text-xs">Male</span>
-                                </div>
-                                <div class="flex items-center space-x-2 ml-4">
-                                    <x-checkbox-display
-                                        checked="{{ $rsbsa->memberinformation?->gender?->name === 'Female' }}" />
-                                    <span class="text-xs">Female</span>
-                                </div>
-                            </div>
+                           
                         </div>
                     </div>
                 </div>
