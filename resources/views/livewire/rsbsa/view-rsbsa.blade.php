@@ -993,7 +993,7 @@
                                     Name
                                 </div>
                             </div>
-                           
+
                         </div>
                     </div>
                 </div>
@@ -1011,9 +1011,9 @@
             <div class="grid grid-cols-5 gap-x-2 border-b border-black p-1 font-bold uppercase">
                 <div>No. of Farm Parcels: <span class="italic font-normal">3</span></div>
                 <div>Name of Farmer’s in Rotation: </div>
-                <div class="border-b border-black">(P1) <span class="italic font-normal  ">Juan Dela Cruz</span></div>
-                <div class="border-b border-black">(P2) <span class="italic font-normal  ">Juan Dela Cruz</span></div>
-                <div class="border-b border-black">(P3) <span class="italic font-normal  ">Juan Dela Cruz</span></div>
+                <div class="border-b border-black">(P1) <span class="italic font-normal  "></span></div>
+                <div class="border-b border-black">(P2) <span class="italic font-normal  "></span></div>
+                <div class="border-b border-black">(P3) <span class="italic font-normal  "></span></div>
             </div>
 
             <!-- Table Headers -->
@@ -1044,11 +1044,11 @@
                         <!-- Farm Location -->
                         <span class="text-xs font-bold ">Farm Location:</span>
                         <div class="mt-2">
-                            <div class="border-b border-black w-full text-xs italic text-center">Poblacion</div>
+                            <div class="border-b border-black w-full text-xs italic text-center"></div>
                             <p class="text-center text-xs font-bold ">Barangay</p>
                         </div>
                         <div class="mt-2">
-                            <div class="border-b border-black w-full text-xs italic text-center">Isulan</div>
+                            <div class="border-b border-black w-full text-xs italic text-center"></div>
                             <p class="text-center text-xs font-bold ">City/Municipality</p>
                         </div>
                     </div>
@@ -1057,13 +1057,13 @@
                     <div class="border-b border-black p-2">
                         <div class="flex justify-between">
                             <span class="text-xs font-bold ">Total Farm Area (in hectares):</span>
-                            <div class="border-b border-black w-20 text-xs italic text-center">3.5</div>
+                            <div class="border-b border-black w-20 text-xs italic text-center"></div>
                             <span class="text-xs font-bold  ml-2">ha</span>
                         </div>
 
                         <div class="flex justify-between mt-2">
                             <span class="text-xs font-bold ">Ownership Document No*:</span>
-                            <div class="border-b border-black w-32 text-xs italic text-center">123456</div>
+                            <div class="border-b border-black w-32 text-xs italic text-center"></div>
                         </div>
                     </div>
 
@@ -1115,40 +1115,40 @@
                             <div class="flex items-center space-x-2 col-span-2">
                                 <div class="border border-black w-4 h-4"></div>
                                 <span>Tenant (Name of Land Owner: </span>
-                                <div class="border-b border-black flex-grow italic text-center">Juan Dela Cruz</div>
+                                <div class="border-b border-black flex-grow italic text-center"></div>
                                 <span>)</span>
                             </div>
                             <div class="flex items-center space-x-2 col-span-2">
                                 <div class="border border-black w-4 h-4"></div>
                                 <span>Lessee (Name of Land Owner: </span>
-                                <div class="border-b border-black flex-grow italic text-center">Maria Santos</div>
+                                <div class="border-b border-black flex-grow italic text-center"></div>
                                 <span>)</span>
                             </div>
                         </div>
                     </div>
 
                 </div>
-                <div class="col-span-1 p-2 border-r border-black text-center">Rice</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">3.5</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">-</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">1</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">No</div>
-                <div class="col-span-1 p-2 text-center">Good condition</div>
+                <div class="col-span-1 p-2 border-r border-black text-center"></div>
+                <div class="col-span-1 p-2 border-r border-black text-center"></div>
+                <div class="col-span-1 p-2 border-r border-black text-center"></div>
+                <div class="col-span-1 p-2 border-r border-black text-center"></div>
+                <div class="col-span-1 p-2 border-r border-black text-center"></div>
+                <div class="col-span-1 p-2 text-center"></div>
             </div>
 
             <!-- Farm Parcel 2 -->
             <div class="grid grid-cols-10 border-b border-black text-xs">
-                <div class="col-span-1 p-2 border-r border-black text-center">2</div>
+                <div class="col-span-1 p-2 border-r border-black text-center"></div>
                 <div class="col-span-3 p-2 border-r border-black">
                     <div class="">
                         <!-- Farm Location -->
                         <span class="text-xs font-bold ">Farm Location:</span>
                         <div class="mt-2">
-                            <div class="border-b border-black w-full text-xs italic text-center">Poblacion</div>
+                            <div class="border-b border-black w-full text-xs italic text-center"></div>
                             <p class="text-center text-xs font-bold ">Barangay</p>
                         </div>
                         <div class="mt-2">
-                            <div class="border-b border-black w-full text-xs italic text-center">Isulan</div>
+                            <div class="border-b border-black w-full text-xs italic text-center"></div>
                             <p class="text-center text-xs font-bold ">City/Municipality</p>
                         </div>
                     </div>
@@ -1157,13 +1157,13 @@
                     <div class="border-b border-black p-2">
                         <div class="flex justify-between">
                             <span class="text-xs font-bold ">Total Farm Area (in hectares):</span>
-                            <div class="border-b border-black w-20 text-xs italic text-center">3.5</div>
+                            <div class="border-b border-black w-20 text-xs italic text-center"></div>
                             <span class="text-xs font-bold  ml-2">ha</span>
                         </div>
 
                         <div class="flex justify-between mt-2">
                             <span class="text-xs font-bold ">Ownership Document No*:</span>
-                            <div class="border-b border-black w-32 text-xs italic text-center">123456</div>
+                            <div class="border-b border-black w-32 text-xs italic text-center"></div>
                         </div>
                     </div>
 
@@ -1210,29 +1210,29 @@
                             <div class="flex items-center space-x-2">
                                 <div class="border border-black w-4 h-4"></div>
                                 <span>Others:</span>
-                                <div class="border-b border-black w-full italic text-center">Corporate Ownership</div>
+                                <div class="border-b border-black w-full italic text-center"></div>
                             </div>
                             <div class="flex items-center space-x-2 col-span-2">
                                 <div class="border border-black w-4 h-4"></div>
                                 <span>Tenant (Name of Land Owner: </span>
-                                <div class="border-b border-black flex-grow italic text-center">Juan Dela Cruz</div>
+                                <div class="border-b border-black flex-grow italic text-center"></div>
                                 <span>)</span>
                             </div>
                             <div class="flex items-center space-x-2 col-span-2">
                                 <div class="border border-black w-4 h-4"></div>
                                 <span>Lessee (Name of Land Owner: </span>
-                                <div class="border-b border-black flex-grow italic text-center">Maria Santos</div>
+                                <div class="border-b border-black flex-grow italic text-center"></div>
                                 <span>)</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-span-1 p-2 border-r border-black text-center">Corn</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">5.0</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">-</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">2</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">Yes</div>
-                <div class="col-span-1 p-2 text-center">Needs irrigation</div>
+                <div class="col-span-1 p-2 border-r border-black text-center"></div>
+                <div class="col-span-1 p-2 border-r border-black text-center"></div>
+                <div class="col-span-1 p-2 border-r border-black text-center"></div>
+                <div class="col-span-1 p-2 border-r border-black text-center"></div>
+                <div class="col-span-1 p-2 border-r border-black text-center"></div>
+                <div class="col-span-1 p-2 text-center"></div>
             </div>
 
             <!-- Farm Parcel 3 -->
@@ -1243,11 +1243,11 @@
                         <!-- Farm Location -->
                         <span class="text-xs font-bold ">Farm Location:</span>
                         <div class="mt-2">
-                            <div class="border-b border-black w-full text-xs italic text-center">Poblacion</div>
+                            <div class="border-b border-black w-full text-xs italic text-center"></div>
                             <p class="text-center text-xs font-bold ">Barangay</p>
                         </div>
                         <div class="mt-2">
-                            <div class="border-b border-black w-full text-xs italic text-center">Isulan</div>
+                            <div class="border-b border-black w-full text-xs italic text-center"></div>
                             <p class="text-center text-xs font-bold ">City/Municipality</p>
                         </div>
                     </div>
@@ -1256,13 +1256,13 @@
                     <div class="border-b border-black p-2">
                         <div class="flex justify-between">
                             <span class="text-xs font-bold ">Total Farm Area (in hectares):</span>
-                            <div class="border-b border-black w-20 text-xs italic text-center">3.5</div>
+                            <div class="border-b border-black w-20 text-xs italic text-center"></div>
                             <span class="text-xs font-bold  ml-2">ha</span>
                         </div>
 
                         <div class="flex justify-between mt-2">
                             <span class="text-xs font-bold ">Ownership Document No*:</span>
-                            <div class="border-b border-black w-32 text-xs italic text-center">123456</div>
+                            <div class="border-b border-black w-32 text-xs italic text-center"></div>
                         </div>
                     </div>
 
@@ -1309,29 +1309,29 @@
                             <div class="flex items-center space-x-2">
                                 <div class="border border-black w-4 h-4"></div>
                                 <span>Others:</span>
-                                <div class="border-b border-black w-full italic text-center">Corporate Ownership</div>
+                                <div class="border-b border-black w-full italic text-center"></div>
                             </div>
                             <div class="flex items-center space-x-2 col-span-2">
                                 <div class="border border-black w-4 h-4"></div>
                                 <span>Tenant (Name of Land Owner: </span>
-                                <div class="border-b border-black flex-grow italic text-center">Juan Dela Cruz</div>
+                                <div class="border-b border-black flex-grow italic text-center"></div>
                                 <span>)</span>
                             </div>
                             <div class="flex items-center space-x-2 col-span-2">
                                 <div class="border border-black w-4 h-4"></div>
                                 <span>Lessee (Name of Land Owner: </span>
-                                <div class="border-b border-black flex-grow italic text-center">Maria Santos</div>
+                                <div class="border-b border-black flex-grow italic text-center"></div>
                                 <span>)</span>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-span-1 p-2 border-r border-black text-center">Vegetables</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">2.8</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">-</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">3</div>
-                <div class="col-span-1 p-2 border-r border-black text-center">No</div>
-                <div class="col-span-1 p-2 text-center">Flood-prone</div>
+                <div class="col-span-1 p-2 border-r border-black text-center"></div>
+                <div class="col-span-1 p-2 border-r border-black text-center"></div>
+                <div class="col-span-1 p-2 border-r border-black text-center"></div>
+                <div class="col-span-1 p-2 border-r border-black text-center"></div>
+                <div class="col-span-1 p-2 border-r border-black text-center"></div>
+                <div class="col-span-1 p-2 text-center"></div>
             </div>
 
 
