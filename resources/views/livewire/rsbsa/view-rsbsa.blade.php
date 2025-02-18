@@ -37,8 +37,9 @@
                                 $dateDigits = $rsbsa->getFormattedUpdatedAt();
                             @endphp
                             <div class="flex space-x-1">
-                                @foreach($dateDigits as $digit)
-                                    <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                @foreach ($dateDigits as $digit)
+                                    <div
+                                        class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
                                         {{ $digit }}
                                     </div>
                                 @endforeach
@@ -59,80 +60,86 @@
 
                     <!-- Reference Number -->
                     @php
-    $codes = $rsbsa->getFormattedLocationCodes();
-@endphp
+                        $codes = $rsbsa->getFormattedLocationCodes();
+                    @endphp
 
-<div class="flex mt-4">
-    <p class="font-semibold italic text-xs mr-4 min-w-[160px]">Reference Number:</p>
-    <div class="flex space-x-2">
-        <!-- Region -->
-        <div class="flex flex-col">
-            <div class="flex border border-black">
-                @foreach ($codes['region'] as $index => $digit)
-                    <div class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
-                        {{ $digit }}
-                    </div>
-                @endforeach
-            </div>
-            <span class="uppercase text-xs text-center mt-1">Region</span>
-        </div>
+                    <div class="flex mt-4">
+                        <p class="font-semibold italic text-xs mr-4 min-w-[160px]">Reference Number:</p>
+                        <div class="flex space-x-2">
+                            <!-- Region -->
+                            <div class="flex flex-col">
+                                <div class="flex border border-black">
+                                    @foreach ($codes['region'] as $index => $digit)
+                                        <div
+                                            class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
+                                            {{ $digit }}
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <span class="uppercase text-xs text-center mt-1">Region</span>
+                            </div>
 
-        <!-- Province -->
-        <div class="flex flex-col">
-            <div class="flex border border-black">
-                @foreach ($codes['province'] as $index => $digit)
-                    <div class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
-                        {{ $digit }}
-                    </div>
-                @endforeach
-            </div>
-            <span class="uppercase text-xs text-center mt-1">Province</span>
-        </div>
+                            <!-- Province -->
+                            <div class="flex flex-col">
+                                <div class="flex border border-black">
+                                    @foreach ($codes['province'] as $index => $digit)
+                                        <div
+                                            class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
+                                            {{ $digit }}
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <span class="uppercase text-xs text-center mt-1">Province</span>
+                            </div>
 
-        <!-- City/Municipality -->
-        <div class="flex flex-col">
-            <div class="flex border border-black">
-                @foreach ($codes['city_municipality'] as $index => $digit)
-                    <div class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
-                        {{ $digit }}
-                    </div>
-                @endforeach
-            </div>
-            <span class="uppercase text-xs text-center mt-1">City/Muni</span>
-        </div>
+                            <!-- City/Municipality -->
+                            <div class="flex flex-col">
+                                <div class="flex border border-black">
+                                    @foreach ($codes['city_municipality'] as $index => $digit)
+                                        <div
+                                            class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
+                                            {{ $digit }}
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <span class="uppercase text-xs text-center mt-1">City/Muni</span>
+                            </div>
 
-        <!-- Barangay -->
-        <div class="flex flex-col">
-            <div class="flex border border-black">
-                @foreach ($codes['barangay'] as $index => $digit)
-                    <div class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
-                        {{ $digit }}
-                    </div>
-                @endforeach
-            </div>
-            <span class="uppercase text-xs text-center mt-1">Barangay</span>
-        </div>
+                            <!-- Barangay -->
+                            <div class="flex flex-col">
+                                <div class="flex border border-black">
+                                    @foreach ($codes['barangay'] as $index => $digit)
+                                        <div
+                                            class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
+                                            {{ $digit }}
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <span class="uppercase text-xs text-center mt-1">Barangay</span>
+                            </div>
 
-        <!-- Last 6 Digits (Always Exists) -->
-        <div class="flex flex-col">
-            <div class="flex border border-black">
-                @foreach ($codes['last_six'] as $index => $digit)
-                    <div class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
-                        {{ $digit }}
+                            <!-- Last 6 Digits (Always Exists) -->
+                            <div class="flex flex-col">
+                                <div class="flex border border-black">
+                                    @foreach ($codes['last_six'] as $index => $digit)
+                                        <div
+                                            class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
+
+                                        </div>
+                                    @endforeach
+                                </div>
+                                <span class="uppercase text-xs text-center mt-1 invisible">""</span>
+                            </div>
+                        </div>
                     </div>
-                @endforeach
-            </div>
-            <span class="uppercase text-xs text-center mt-1 invisible">""</span>
-        </div>
-    </div>
-</div>
 
                 </div>
 
                 <!-- Right Side: 2x2 Picture Box -->
                 <div class="flex items-center justify-center min-w-[200px]">
                     <a href="{{ $rsbsa->getImage() }}" target="_blank">
-                        <img src="{{ $rsbsa->getImage() }}" alt="2x2 Picture" class="w-[140px] h-[140px] object-cover border border-black">
+                        <img src="{{ $rsbsa->getImage() }}" alt="2x2 Picture"
+                            class="w-[140px] h-[140px] object-cover border border-black">
                     </a>
                 </div>
 
@@ -152,24 +159,27 @@
 
                     <div class="grid grid-cols-2">
                         <div class="p-2">
-                            <x-display-text value="{{ $rsbsa->memberinformation?->user?->surname ?? 'N/A' }}" class="text-center" />
+                            <x-display-text value="{{ $rsbsa->memberinformation?->user?->surname ?? 'N/A' }}"
+                                class="text-center" />
 
                             <div class="text-center text-xs font-bold uppercase border-t border-black ">Surname</div>
                         </div>
                         <div class="p-2">
-                            <x-display-text value="{{ $rsbsa->memberinformation?->user?->surname ?? 'N/A' }}" class="text-center" />
+                            <x-display-text value="{{ $rsbsa->memberinformation?->user?->surname ?? 'N/A' }}"
+                                class="text-center" />
                             <div class="text-center text-xs font-bold uppercase border-t border-black ">First Name</div>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-2 border-b-2 border-black">
                         <div class="p-2">
-                            <x-display-text value="{{ $rsbsa->memberinformation?->user?->middle_name ?? 'N/A' }}" class="text-center" />
-                                <div class="text-center text-xs font-bold uppercase border-t border-black ">Middle Name
-                                </div>
+                            <x-display-text value="{{ $rsbsa->memberinformation?->user?->middle_name ?? 'N/A' }}"
+                                class="text-center" />
+                            <div class="text-center text-xs font-bold uppercase border-t border-black ">Middle Name
                             </div>
-                            <div class="grid grid-cols-2">
-                                <div class="p-2">
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="p-2">
 
                                 <x-display-text value="{{ $rsbsa->extension_name }}" class="text-center" />
 
@@ -181,12 +191,14 @@
                                 class="inline-flex items-center justify-center border-l-2 border-t-2  border-black p-2">
                                 <div class="text-xs font-bold uppercase">Sex:</div>
                                 <div class="flex items-center space-x-2 ml-2">
-                                    <x-checkbox-display checked="{{ $rsbsa->memberinformation?->gender?->name === 'Male' }}" />
+                                    <x-checkbox-display
+                                        checked="{{ $rsbsa->memberinformation?->gender?->name === 'Male' }}" />
 
                                     <span class="text-xs">Male</span>
                                 </div>
                                 <div class="flex items-center space-x-2 ml-4">
-                                    <x-checkbox-display checked="{{ $rsbsa->memberinformation?->gender?->name === 'Female' }}" />
+                                    <x-checkbox-display
+                                        checked="{{ $rsbsa->memberinformation?->gender?->name === 'Female' }}" />
                                     <span class="text-xs">Female</span>
                                 </div>
                             </div>
@@ -202,27 +214,33 @@
                         <div class="grid grid-cols-3 gap-4 p-2 pb-2 flex-1">
                             <div class="flex flex-col">
 
-                                <x-display-text value="{{ $rsbsa->house_lot_bldg_purok ?? 'N/A' }}" class="border border-black h-8 text-center  text-xs italic p-1" />
+                                <x-display-text value="{{ $rsbsa->house_lot_bldg_purok ?? 'N/A' }}"
+                                    class="border border-black h-8 text-center  text-xs italic p-1" />
                                 <span class="text-center text-xs font-bold uppercase ">House/Lot/Bldg. No./Purok</span>
                             </div>
                             <div class="flex flex-col">
-                                <x-display-text value="{{ $rsbsa->street_sitio_subdv ?? 'N/A' }}" class="border border-black h-8 text-center  text-xs italic p-1" />
+                                <x-display-text value="{{ $rsbsa->street_sitio_subdv ?? 'N/A' }}"
+                                    class="border border-black h-8 text-center  text-xs italic p-1" />
                                 <span class="text-center text-xs font-bold uppercase ">Street/Sitio/Subdv.</span>
                             </div>
                             <div class="flex flex-col">
-                                <x-display-text value="{{ $rsbsa->barangay ?? 'N/A' }}" class="border border-black h-8 text-center  text-xs italic p-1" />
+                                <x-display-text value="{{ $rsbsa->barangay ?? 'N/A' }}"
+                                    class="border border-black h-8 text-center  text-xs italic p-1" />
                                 <span class="text-center text-xs font-bold uppercase ">Barangay</span>
                             </div>
                             <div class="flex flex-col">
-                                <x-display-text value="{{ $rsbsa->city_municipality ?? 'N/A' }}" class="border border-black h-8 text-center  text-xs italic p-1" />
+                                <x-display-text value="{{ $rsbsa->city_municipality ?? 'N/A' }}"
+                                    class="border border-black h-8 text-center  text-xs italic p-1" />
                                 <span class="text-center text-xs font-bold uppercase ">Municipality/City</span>
                             </div>
                             <div class="flex flex-col">
-                                <x-display-text value="{{ $rsbsa->province ?? 'N/A' }}" class="border border-black h-8 text-center  text-xs italic p-1" />
+                                <x-display-text value="{{ $rsbsa->province ?? 'N/A' }}"
+                                    class="border border-black h-8 text-center  text-xs italic p-1" />
                                 <span class="text-center text-xs font-bold uppercase ">Province</span>
                             </div>
                             <div class="flex flex-col">
-                                <x-display-text value="{{ $rsbsa->region ?? 'N/A' }}" class="border border-black h-8 text-center  text-xs italic p-1" />
+                                <x-display-text value="{{ $rsbsa->region ?? 'N/A' }}"
+                                    class="border border-black h-8 text-center  text-xs italic p-1" />
                                 <span class="text-center text-xs font-bold uppercase ">Region</span>
                             </div>
                         </div>
@@ -234,88 +252,50 @@
                     <div class="col-span-6">
                         <div class="col-span-6 grid grid-cols-6 p-2 border-b-2  border-black ">
                             @php
-                            $mobileNumber = $rsbsa->getFormattedContactNumber();
-                        @endphp
+                                $mobileNumber = $rsbsa->getFormattedContactNumber();
+                            @endphp
 
-                        <div class="col-span-3">
-                            <p class="text-xs font-bold uppercase">Mobile Number:</p>
-                            <div class="flex space-x-0.5">
-                                @foreach(range(0, 10) as $index)
-                                    <div class="border border-black w-6 h-6 text-center text-xs  flex items-center justify-center">
-                                        {{ $mobileNumber[$index] ?? '' }}
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-
-                            <div class="col-span-3 ">
-                                <p class="text-xs font-bold uppercase ">Landline Number:</p>
+                            <div class="col-span-3">
+                                <p class="text-xs font-bold uppercase">Mobile Number:</p>
                                 <div class="flex space-x-0.5">
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
-                                    <div
-                                        class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
-                                    </div>
+                                    @foreach (range(0, 10) as $index)
+                                        <div
+                                            class="border border-black w-6 h-6 text-center text-xs  flex items-center justify-center">
+                                            {{ $mobileNumber[$index] ?? '' }}
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
+
+                            @php
+                                $landlineNumber = $rsbsa->getFormattedLandlineNumber();
+                            @endphp
+
+                            <div class="col-span-3">
+                                <p class="text-xs font-bold uppercase">Landline Number:</p>
+                                <div class="flex space-x-0.5">
+                                    @foreach (range(0, 9) as $index)
+                                        <div
+                                            class="border border-black w-6 h-6 text-center text-xs italic flex items-center justify-center">
+                                            {{ $landlineNumber[$index] ?? '' }}
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+
                         </div>
                         <div class="col-span-6 grid grid-cols-6  border-b-2 border-black ">
-                            <div class=" col-span-3 p-2">
-
+                            <div class="col-span-3 p-2">
                                 <p class="text-xs font-bold uppercase">Date of Birth:</p>
-                                <div class="">
+                                <div>
                                     <div class="flex space-x-1">
-                                        <div
-                                            class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
-                                            0</div>
-                                        <div
-                                            class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
-                                            7</div>
-                                        <div
-                                            class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
-                                            2</div>
-                                        <div
-                                            class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
-                                            1</div>
-                                        <div
-                                            class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
-                                            1</div>
-                                        <div
-                                            class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
-                                            1</div>
-                                        <div
-                                            class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
-                                            2</div>
-                                        <div
-                                            class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
-                                            4</div>
+                                        @foreach ($rsbsa->getFormattedDateOfBirth() as $digit)
+                                            <div class="border border-black w-6 h-6 text-center text-xs flex items-center justify-center">
+                                                {{ $digit }}
+                                            </div>
+                                        @endforeach
                                     </div>
-                                    <div class="flex space-x-1 uppercase text-center  ">
+                                    <div class="flex space-x-1 uppercase text-center">
                                         <span class="w-6">M</span>
                                         <span class="w-6">M</span>
                                         <span class="w-6">D</span>
@@ -327,21 +307,23 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-span-3 border-l-2 p-2 border-black">
                                 <div class="grid grid-cols-2 ">
                                     <p class="text-xs font-bold uppercase col-span-2">Place Of Birth:</p>
                                     <div class="flex flex-col col-span-2">
-                                        <div class="   text-center text-xs italic p-1">Quezon City</div>
+                                        <x-display-text value="{{ $rsbsa->place_of_birth_municipality ?? '' }}" class="text-center "/>
                                         <span
                                             class="text-center text-[8px] font-bold uppercase border-t border-black">Municipality</span>
                                     </div>
                                     <div class="flex flex-col">
-                                        <div class="   text-center text-xs italic p-1">Metro Manila</div>
+                                        <x-display-text value="{{ $rsbsa->place_of_birth_province ?? '' }}" class="text-center "/>
                                         <span
                                             class="text-center text-[8px] font-bold uppercase border-t border-black">Province/State</span>
                                     </div>
                                     <div class="flex flex-col">
-                                        <div class="   text-center text-xs italic p-1">Philippines</div>
+
+                                     <x-display-text value="{{ $rsbsa->place_of_birth_province ?? '' }}" class="text-center "/>
                                         <span
                                             class="text-center text-[8px] font-bold uppercase border-t border-black">Country</span>
                                     </div>
@@ -356,49 +338,43 @@
                                 <!-- Religion -->
                                 <div class="flex items-center">
                                     <span class="text-xs font-bold uppercase mr-2">Religion:</span>
-                                    <div class="flex items-center space-x-2">
-                                        <div class="border border-black w-4 h-4 flex items-center justify-center">
-                                            &#10003;</div>
-                                        <span class="text-xs">Christianity</span>
-                                    </div>
+
                                     <div class="flex items-center space-x-2 ml-4">
-                                        <div class="border border-black w-4 h-4"></div>
-                                        <span class="text-xs">Islam</span>
-                                    </div>
-                                    <div class="flex items-center space-x-2 ml-4">
-                                        <div class="border border-black w-4 h-4"></div>
-                                        <span class="text-xs">Others, specify</span>
-                                        <div class="border-b border-black w-32 h-4 text-xs italic text-center">Hinduism
-                                        </div>
+
+                                        <x-display-text value="{{ $rsbsa->memberInformation?->religion ?? '' }}" class="border-b border-black w-32 h-4 text-xs italic text-center"/>
+
                                     </div>
                                 </div>
 
                                 <!-- Civil Status -->
                                 <div class="flex items-center mt-2">
                                     <span class="text-xs font-bold uppercase mr-2">Civil Status:</span>
+
                                     <div class="flex items-center space-x-2">
-                                        <div class="border border-black w-4 h-4"></div>
+                                        <x-checkbox-display :checked="$rsbsa->memberInformation?->isSingle()" />
                                         <span class="text-xs">Single</span>
                                     </div>
+
                                     <div class="flex items-center space-x-2 ml-4">
-                                        <div class="border border-black w-4 h-4 flex items-center justify-center">
-                                            &#10003;</div>
+                                        <x-checkbox-display :checked="$rsbsa->memberInformation?->isMarried()" />
                                         <span class="text-xs">Married</span>
                                     </div>
+
                                     <div class="flex items-center space-x-2 ml-4">
-                                        <div class="border border-black w-4 h-4"></div>
+                                        <x-checkbox-display :checked="$rsbsa->memberInformation?->isWidowed()" />
                                         <span class="text-xs">Widowed</span>
                                     </div>
+
                                     <div class="flex items-center space-x-2 ml-4">
-                                        <div class="border border-black w-4 h-4"></div>
+                                        <x-checkbox-display :checked="$rsbsa->memberInformation?->isSeparated()" />
                                         <span class="text-xs">Separated</span>
                                     </div>
                                 </div>
 
+
                                 <div class="mt-2 ">
                                     <p class="text-xs font-bold uppercase">Name of Spouse if Married:</p>
-                                    <div class="border-b border-black w-full h-6 text-xs italic ">Maria Dela
-                                        Cruz</div>
+                                        <x-display-text value="{{ $rsbsa->memberInformation->spouse ?? '' }}" class="border-b border-black w-full h-6 text-xs italic "/>
                                 </div>
 
                             </div>
@@ -517,7 +493,8 @@
                                     <span class="text-xs">Yes</span>
                                 </div>
                                 <div class="flex items-center space-x-2">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
+                                    </div>
                                     <span class="text-xs">No</span>
                                 </div>
                             </div>
@@ -531,21 +508,24 @@
                                         <span class="text-xs">Yes</span>
                                     </div>
                                     <div class="flex items-center space-x-2">
-                                        <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                        <div class="border border-black w-4 h-4 flex items-center justify-center">
+                                            &#10003;</div>
                                         <span class="text-xs">No</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="grid grid-cols-6 mt-2">
-                                <span class="text-xs font-bold uppercase col-span-3">Member of an <span class="font-bold italic">Indigenous Group</span>?</span>
+                                <span class="text-xs font-bold uppercase col-span-3">Member of an <span
+                                        class="font-bold italic">Indigenous Group</span>?</span>
                                 <div class="flex items-center space-x-4 col-span-3">
                                     <div class="flex items-center space-x-2">
                                         <div class="border border-black w-4 h-4"></div>
                                         <span class="text-xs">Yes</span>
                                     </div>
                                     <div class="flex items-center space-x-2">
-                                        <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                        <div class="border border-black w-4 h-4 flex items-center justify-center">
+                                            &#10003;</div>
                                         <span class="text-xs">No</span>
                                     </div>
                                 </div>
@@ -553,17 +533,20 @@
 
                             <div class="mt-2">
                                 <p class="text-xs">If yes, specify:</p>
-                                <div class="border-b border-black w-full h-6 text-xs italic text-center">T’boli Tribe</div>
+                                <div class="border-b border-black w-full h-6 text-xs italic text-center">T’boli Tribe
+                                </div>
                             </div>
                         </div>
 
                         <!-- Government ID Section -->
                         <div class="border-b border-black p-2">
                             <div class="grid grid-cols-6">
-                                <span class="text-xs font-bold uppercase col-span-3">With <span class="font-bold">Government ID?</span></span>
+                                <span class="text-xs font-bold uppercase col-span-3">With <span
+                                        class="font-bold">Government ID?</span></span>
                                 <div class="flex items-center space-x-4 col-span-3">
                                     <div class="flex items-center space-x-2">
-                                        <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                        <div class="border border-black w-4 h-4 flex items-center justify-center">
+                                            &#10003;</div>
                                         <span class="text-xs">Yes</span>
                                     </div>
                                     <div class="flex items-center space-x-2">
@@ -579,24 +562,28 @@
 
                             <div class="mt-2">
                                 <p class="text-xs font-bold uppercase">ID Type:</p>
-                                <div class="border-b border-black w-full h-6 text-xs italic text-center">PhilHealth</div>
+                                <div class="border-b border-black w-full h-6 text-xs italic text-center">PhilHealth
+                                </div>
                             </div>
                             <div class="mt-2">
                                 <p class="text-xs font-bold uppercase">ID Number:</p>
-                                <div class="border-b border-black w-full h-6 text-xs italic text-center">1234-5678-9012</div>
+                                <div class="border-b border-black w-full h-6 text-xs italic text-center">1234-5678-9012
+                                </div>
                             </div>
                         </div>
 
                         <div class="border-b border-black p-2">
                             <div class="grid grid-cols-6">
-                                <span class="text-xs font-bold uppercase col-span-4">Member of any <span class="font-bold">Farmers Association/Cooperative?</span></span>
+                                <span class="text-xs font-bold uppercase col-span-4">Member of any <span
+                                        class="font-bold">Farmers Association/Cooperative?</span></span>
                                 <div class="flex items-center space-x-4 col-span-2">
                                     <div class="flex items-center space-x-2">
                                         <div class="border border-black w-4 h-4"></div>
                                         <span class="text-xs">Yes</span>
                                     </div>
                                     <div class="flex items-center space-x-2">
-                                        <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                        <div class="border border-black w-4 h-4 flex items-center justify-center">
+                                            &#10003;</div>
                                         <span class="text-xs">No</span>
                                     </div>
                                 </div>
@@ -604,26 +591,48 @@
 
                             <div class="mt-2">
                                 <p class="text-xs">If yes, specify:</p>
-                                <div class="border-b border-black w-full h-6 text-xs italic text-center">DARBC Farmers Coop</div>
+                                <div class="border-b border-black w-full h-6 text-xs italic text-center">DARBC Farmers
+                                    Coop</div>
                             </div>
                         </div>
 
                         <div class=" p-2">
                             <p class="text-xs font-bold uppercase">Person to Notify in Case of Emergency:</p>
-                            <div class="border-b border-black w-full h-6 text-xs italic text-center">Juan Dela Cruz</div>
+                            <div class="border-b border-black w-full h-6 text-xs italic text-center">Juan Dela Cruz
+                            </div>
 
                             <p class="text-xs font-bold uppercase mt-2">Contact Number:</p>
                             <div class="flex space-x-1 mt-1">
-                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">0</div>
-                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">9</div>
-                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">1</div>
-                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">7</div>
-                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">1</div>
-                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">2</div>
-                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">3</div>
-                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">4</div>
-                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">5</div>
-                                <div class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">6</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
+                                    0</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
+                                    9</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
+                                    1</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
+                                    7</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
+                                    1</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
+                                    2</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
+                                    3</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
+                                    4</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
+                                    5</div>
+                                <div
+                                    class="border border-black w-6 h-6 text-xs italic flex items-center justify-center">
+                                    6</div>
                             </div>
                         </div>
 
@@ -664,8 +673,8 @@
 
                 <div class="flex items-center space-x-2 uppercase">
                     <div class="col-span-4">
-                    <span class="text-center text-xs font-bold uppercase ">Main livelihood</span>
-                </div>
+                        <span class="text-center text-xs font-bold uppercase ">Main livelihood</span>
+                    </div>
                     <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
                     <span>Farmer</span>
                 </div>
@@ -835,7 +844,9 @@
 
     </div>
     <div class="relative  border-black h-8">
-        <div class="absolute left-0 right-0 top-1/2 transform -translate-y-1/2 border-t border-dashed border-black w-full border-spacing-[7px] "></div>
+        <div
+            class="absolute left-0 right-0 top-1/2 transform -translate-y-1/2 border-t border-dashed border-black w-full border-spacing-[7px] ">
+        </div>
         <i class="fas fa-cut absolute right-0 top-1/2 transform -translate-y-1/2 rotate-180  text-xl bg-white"></i>
     </div>
 
@@ -843,109 +854,112 @@
         <div class="">
 
 
-        <div class="text-center p-2 ">
-            <h1 class="text-lg font-bold ">Registry System for Basic Sectors in Agriculture (RSBSA)</h1>
-            <h2 class="text-lg font-bold uppercase">Enrollment Client’s Copy</h2>
-        </div>
+            <div class="text-center p-2 ">
+                <h1 class="text-lg font-bold ">Registry System for Basic Sectors in Agriculture (RSBSA)</h1>
+                <h2 class="text-lg font-bold uppercase">Enrollment Client’s Copy</h2>
+            </div>
 
-        <div class="flex mt-4 p-2">
-            <p class="font-semibold italic text-xs mr-4 min-w-[160px]">Reference Number:</p>
-            <div class="flex space-x-2">
-                <!-- Region -->
-                <div class="flex flex-col">
-                    <div class="flex border border-black">
-                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                            1</div>
-                        <div class="w-6 h-6 flex items-center justify-center text-xs">9</div>
+            <div class="flex mt-4 p-2">
+                <p class="font-semibold italic text-xs mr-4 min-w-[160px]">Reference Number:</p>
+                <div class="flex space-x-2">
+                    <!-- Region -->
+                    <div class="flex flex-col">
+                        <div class="flex border border-black">
+                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                1</div>
+                            <div class="w-6 h-6 flex items-center justify-center text-xs">9</div>
+                        </div>
+                        <span class="uppercase text-xs text-center mt-1">Region</span>
                     </div>
-                    <span class="uppercase text-xs text-center mt-1">Region</span>
-                </div>
-                <!-- Province -->
-                <div class="flex flex-col">
-                    <div class="flex border border-black">
-                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                            3</div>
-                        <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
+                    <!-- Province -->
+                    <div class="flex flex-col">
+                        <div class="flex border border-black">
+                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                3</div>
+                            <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
+                        </div>
+                        <span class="uppercase text-xs text-center mt-1">Province</span>
                     </div>
-                    <span class="uppercase text-xs text-center mt-1">Province</span>
-                </div>
-                <!-- City/Municipality -->
-                <div class="flex flex-col">
-                    <div class="flex border border-black">
-                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                            3</div>
-                        <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
+                    <!-- City/Municipality -->
+                    <div class="flex flex-col">
+                        <div class="flex border border-black">
+                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                3</div>
+                            <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
+                        </div>
+                        <span class="uppercase text-xs text-center mt-1">City/Muni</span>
                     </div>
-                    <span class="uppercase text-xs text-center mt-1">City/Muni</span>
-                </div>
-                <!-- Barangay -->
-                <div class="flex flex-col">
-                    <div class="flex border border-black">
-                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                            1</div>
-                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                            3</div>
-                        <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
+                    <!-- Barangay -->
+                    <div class="flex flex-col">
+                        <div class="flex border border-black">
+                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                1</div>
+                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                3</div>
+                            <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
+                        </div>
+                        <span class="uppercase text-xs text-center mt-1">Barangay</span>
                     </div>
-                    <span class="uppercase text-xs text-center mt-1">Barangay</span>
-                </div>
-                <!-- Additional Numbers -->
-                <div class="flex flex-col">
-                    <div class="flex border border-black">
-                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                            2</div>
-                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                            3</div>
-                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                            4</div>
-                        <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                            2</div>
-                        <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
+                    <!-- Additional Numbers -->
+                    <div class="flex flex-col">
+                        <div class="flex border border-black">
+                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                2</div>
+                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                3</div>
+                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                4</div>
+                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
+                                2</div>
+                            <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
+                        </div>
+                        <span class="uppercase text-xs text-center mt-1 invisible">""</span>
                     </div>
-                    <span class="uppercase text-xs text-center mt-1 invisible">""</span>
                 </div>
             </div>
-        </div>
 
-        <!-- Personal Information Section -->
-        <div class="grid grid-cols-12">
-            <div class="col-span-12">
-                <div class="grid grid-cols-2">
-                    <div class="p-2">
-                        <p class="text-center text-xs italic">Dela Cruz</p>
-                        <div class="text-center text-xs font-bold uppercase border-t border-black">Surname</div>
-                    </div>
-                    <div class="p-2">
-                        <p class="text-center text-xs italic">Juan</p>
-                        <div class="text-center text-xs font-bold uppercase border-t border-black">First Name</div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 ">
-                    <div class="p-2">
-                        <p class="text-center text-xs italic">Santos</p>
-                        <div class="text-center text-xs font-bold uppercase border-t border-black">Middle Name</div>
-                    </div>
+            <!-- Personal Information Section -->
+            <div class="grid grid-cols-12">
+                <div class="col-span-12">
                     <div class="grid grid-cols-2">
                         <div class="p-2">
-                            <p class="text-center text-xs italic">Jr.</p>
-                            <div class="text-center text-xs font-bold uppercase border-t border-black">Extension Name</div>
+                            <p class="text-center text-xs italic">Dela Cruz</p>
+                            <div class="text-center text-xs font-bold uppercase border-t border-black">Surname</div>
                         </div>
-                        <div class="inline-flex items-center justify-center border-l border-t border-black p-2">
-                            <div class="text-xs font-bold uppercase">Sex:</div>
-                            <div class="flex items-center space-x-2 ml-2">
-                                <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
-                                <span class="text-xs">Male</span>
+                        <div class="p-2">
+                            <p class="text-center text-xs italic">Juan</p>
+                            <div class="text-center text-xs font-bold uppercase border-t border-black">First Name</div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 ">
+                        <div class="p-2">
+                            <p class="text-center text-xs italic">Santos</p>
+                            <div class="text-center text-xs font-bold uppercase border-t border-black">Middle Name
                             </div>
-                            <div class="flex items-center space-x-2 ml-4">
-                                <div class="border border-black w-4 h-4"></div>
-                                <span class="text-xs">Female</span>
+                        </div>
+                        <div class="grid grid-cols-2">
+                            <div class="p-2">
+                                <p class="text-center text-xs italic">Jr.</p>
+                                <div class="text-center text-xs font-bold uppercase border-t border-black">Extension
+                                    Name</div>
+                            </div>
+                            <div class="inline-flex items-center justify-center border-l border-t border-black p-2">
+                                <div class="text-xs font-bold uppercase">Sex:</div>
+                                <div class="flex items-center space-x-2 ml-2">
+                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
+                                    </div>
+                                    <span class="text-xs">Male</span>
+                                </div>
+                                <div class="flex items-center space-x-2 ml-4">
+                                    <div class="border border-black w-4 h-4"></div>
+                                    <span class="text-xs">Female</span>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
 
         <!-- Footer Text -->
@@ -970,7 +984,7 @@
                 <div class="col-span-1 p-2 border-r border-black">Farm Parcel No.</div>
                 <div class="col-span-3 p-2 border-r border-black">Farm Land Description</div>
                 <div class="col-span-1 p-2 border-r border-black ">
-                     CROP/COMMODITY
+                    CROP/COMMODITY
                     <p class="italic font-normal break-words">(Rice/Corn/HVC/Livestock/Poultry/Agri-fishery)</p>
                     <p class="mt-2 font-bold">For Livestock & Poultry</p>
                     <p class="italic font-normal">(specify type of animal)</p>
@@ -979,7 +993,7 @@
                 <div class="col-span-1 p-2 border-r border-black">
                     <p class="mt-2 font-bold"> No. of Head</p>
                     <p class="italic font-normal break-words">(For Livestock and Poultry)</p>
-                   </div>
+                </div>
                 <div class="col-span-1 p-2 border-r border-black">Farm Type **</div>
                 <div class="col-span-1 p-2 border-r border-black">Organic Practitioner (Y/N)</div>
                 <div class="col-span-1 p-2">Remarks</div>
@@ -1026,7 +1040,8 @@
                                     <span class="text-xs">Yes</span>
                                 </div>
                                 <div class="flex items-center space-x-2 ml-4">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
+                                    </div>
                                     <span class="text-xs">No</span>
                                 </div>
                             </div>
@@ -1038,7 +1053,8 @@
                                     <span class="text-xs">Yes</span>
                                 </div>
                                 <div class="flex items-center space-x-2 ml-4">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
+                                    </div>
                                     <span class="text-xs">No</span>
                                 </div>
                             </div>
@@ -1050,7 +1066,8 @@
                         <span class="text-xs font-bold uppercase">Ownership Type:</span>
                         <div class="grid grid-cols-2 gap-x-4 mt-2 text-xs">
                             <div class="flex items-center space-x-2">
-                                <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
+                                </div>
                                 <span>Registered Owner</span>
                             </div>
                             <div class="flex items-center space-x-2">
@@ -1123,7 +1140,8 @@
                                     <span class="text-xs">Yes</span>
                                 </div>
                                 <div class="flex items-center space-x-2 ml-4">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
+                                    </div>
                                     <span class="text-xs">No</span>
                                 </div>
                             </div>
@@ -1135,7 +1153,8 @@
                                     <span class="text-xs">Yes</span>
                                 </div>
                                 <div class="flex items-center space-x-2 ml-4">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
+                                    </div>
                                     <span class="text-xs">No</span>
                                 </div>
                             </div>
@@ -1147,7 +1166,8 @@
                         <span class="text-xs font-bold uppercase">Ownership Type:</span>
                         <div class="grid grid-cols-2 gap-x-4 mt-2 text-xs">
                             <div class="flex items-center space-x-2">
-                                <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
+                                </div>
                                 <span>Registered Owner</span>
                             </div>
                             <div class="flex items-center space-x-2">
@@ -1219,7 +1239,8 @@
                                     <span class="text-xs">Yes</span>
                                 </div>
                                 <div class="flex items-center space-x-2 ml-4">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
+                                    </div>
                                     <span class="text-xs">No</span>
                                 </div>
                             </div>
@@ -1231,7 +1252,8 @@
                                     <span class="text-xs">Yes</span>
                                 </div>
                                 <div class="flex items-center space-x-2 ml-4">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
+                                    </div>
                                     <span class="text-xs">No</span>
                                 </div>
                             </div>
@@ -1243,7 +1265,8 @@
                         <span class="text-xs font-bold uppercase">Ownership Type:</span>
                         <div class="grid grid-cols-2 gap-x-4 mt-2 text-xs">
                             <div class="flex items-center space-x-2">
-                                <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                                <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
+                                </div>
                                 <span>Registered Owner</span>
                             </div>
                             <div class="flex items-center space-x-2">
@@ -1308,136 +1331,141 @@
                     <p>2 - Rainfed Upland</p>
                     <p>3 - Rainfed Lowland</p>
                     <p class="italic text-sm ">(NOTE: no to agri-fishery)</p>
-            </div>
-        </div>
-        <div class="border-t-2 border-black  p-2 text-xs ">
-            I hereby declare that all information indicated above are true and correct, and that they may be
-            used by the
-            Department of Agriculture for the purposes of registration to the Registry System for Basic Sectors
-            in
-            Agriculture (RSBSA) and other legitimate interests of the Department pursuant to its mandates.
-        </div>
-        <div class="grid grid-cols-4 border-t-2 border-black text-xs text-center">
-            <!-- Date Field -->
-
-
-            <!-- Printed Name of Applicant -->
-            <div class="border-r border-black">
-                <div class="w-full h-24 border-b border-black"></div>
-                <p class="bg-black text-white font-bold uppercase p-1">Date</p>
-            </div>
-            <div class="border-r border-black">
-                <div class="w-full h-24 border-b border-black"></div>
-                <p class="bg-black text-white font-bold uppercase p-1">Printed Name of Applicant</p>
-            </div>
-
-            <!-- Signature of Applicant -->
-            <div class="border-r border-black">
-                <div class="w-full h-24 border-b border-black"></div>
-                <p class="bg-black text-white font-bold uppercase p-1">Signature of Applicant</p>
-            </div>
-
-            <!-- Thumbmark -->
-            <div>
-                <div class="w-full h-24 border-b border-black"></div>
-                <p class="bg-black text-white font-bold uppercase p-1">Thumbmark</p>
-            </div>
-        </div>
-
-
-        <!-- Footer Section -->
-        <div class="border-t-2 border-black p-2  uppercase">
-            <p class="font-bold">Verified True and Correct By:</p>
-            <div class="grid grid-cols-3 text-center mt-2">
-                <!-- Barangay Chairman -->
-                <div class="p-2 leading-none">
-                    <div class="border-b border-black w-full h-6"></div>
-                    <p class="text-[10px] uppercase mt-1">Signature Above Printed Name / Date</p>
-                    <p class="font-bold uppercase mt-1 ">Barangay Chairman / City / Mun. Veterinarian (Livestock) / Mill District Officer (Sugarcane) / IP Leader / C/M-PARO (ARB)</p>
-                </div>
-                <!-- City/Municipal Agriculture Office -->
-                <div class="p-2 leading-none">
-                    <div class="border-b border-black w-full h-6"></div>
-                    <p class="text-[10px] uppercase mt-1">Signature Above Printed Name / Date</p>
-                    <p class="font-bold uppercase mt-1 ">City/Municipal Agriculture Office</p>
-                </div>
-                <!-- CAFC/MAFC Chairman -->
-                <div class="p-2 leading-none">
-                    <div class="border-b border-black w-full h-6"></div>
-                    <p class="text-[10px] uppercase mt-1">Signature Above Printed Name / Date</p>
-                    <p class="font-bold uppercase mt-1 ">CAFC/MAFC Chairman</p>
                 </div>
             </div>
-        </div>
+            <div class="border-t-2 border-black  p-2 text-xs ">
+                I hereby declare that all information indicated above are true and correct, and that they may be
+                used by the
+                Department of Agriculture for the purposes of registration to the Registry System for Basic Sectors
+                in
+                Agriculture (RSBSA) and other legitimate interests of the Department pursuant to its mandates.
+            </div>
+            <div class="grid grid-cols-4 border-t-2 border-black text-xs text-center">
+                <!-- Date Field -->
 
 
-                <!-- Data Privacy Policy -->
-
-
-                <!-- Declaration -->
-
-
-                <!-- Signature Section -->
-
-                <div class="">
-                    <div class="bg-black text-white text-xs font-bold p-2 uppercase text-center">
-                        Data Privacy Policy
-                    </div>
-                    <div class="p-3 text-xs leading-relaxed">
-                        <p>
-                            The collection of personal information is for documentation, planning, reporting, and processing purposes in availing agricultural-related interventions.
-                            Processed data shall only be shared with partner agencies for planning, reporting, and other use in accordance with the mandate of the agency.
-                            This is in compliance with the Data Sharing Policy of the department.
-                        </p>
-                        <p class="mt-2">
-                            You have the right to ask for a copy of your personal data that we hold about you as well as to ask for it to be corrected if you think it is wrong.
-                            To do so, please contact <span class="italic">&lt;Contact Person and Contact Details&gt;</span>.
-                        </p>
-                    </div>
+                <!-- Printed Name of Applicant -->
+                <div class="border-r border-black">
+                    <div class="w-full h-24 border-b border-black"></div>
+                    <p class="bg-black text-white font-bold uppercase p-1">Date</p>
+                </div>
+                <div class="border-r border-black">
+                    <div class="w-full h-24 border-b border-black"></div>
+                    <p class="bg-black text-white font-bold uppercase p-1">Printed Name of Applicant</p>
                 </div>
 
+                <!-- Signature of Applicant -->
+                <div class="border-r border-black">
+                    <div class="w-full h-24 border-b border-black"></div>
+                    <p class="bg-black text-white font-bold uppercase p-1">Signature of Applicant</p>
+                </div>
+
+                <!-- Thumbmark -->
+                <div>
+                    <div class="w-full h-24 border-b border-black"></div>
+                    <p class="bg-black text-white font-bold uppercase p-1">Thumbmark</p>
+                </div>
             </div>
-        </div>
 
 
-
-            <div class="text-center p-2  font-bold  uppercase ">
-                This form is not for sale
-            </div>
-
-            <div class="border border-black p-2 text-xs font-bold uppercase">
-                <p>Verified True and Correct By:</p>
-                <div class="grid grid-cols-3 text-center mt-4">
+            <!-- Footer Section -->
+            <div class="border-t-2 border-black p-2  uppercase">
+                <p class="font-bold">Verified True and Correct By:</p>
+                <div class="grid grid-cols-3 text-center mt-2">
                     <!-- Barangay Chairman -->
-                    <div class="p-4">
-                        <div class="h-12 border-b border-black"></div>
-                        <p class="uppercase text-xs font-bold mt-1">Signature Above Printed Name / Date</p>
-                        <p class="text-xs leading-tight mt-1">
-                            Barangay Chairman / City / Mun. Veterinarian (Livestock) /
-                            Mill District Officer (Sugarcane) / IP Leader / C/M/Paro (ARB)
-                        </p>
+                    <div class="p-2 leading-none">
+                        <div class="border-b border-black w-full h-6"></div>
+                        <p class="text-[10px] uppercase mt-1">Signature Above Printed Name / Date</p>
+                        <p class="font-bold uppercase mt-1 ">Barangay Chairman / City / Mun. Veterinarian (Livestock) /
+                            Mill District Officer (Sugarcane) / IP Leader / C/M-PARO (ARB)</p>
                     </div>
-
-                    <!-- City / Municipal Agriculture Office -->
-                    <div class="p-4">
-                        <div class="h-12 border-b border-black"></div>
-                        <p class="uppercase text-xs font-bold mt-1">Signature Above Printed Name / Date</p>
-                        <p class="uppercase text-xs font-bold">City/Municipal Agriculture Office</p>
+                    <!-- City/Municipal Agriculture Office -->
+                    <div class="p-2 leading-none">
+                        <div class="border-b border-black w-full h-6"></div>
+                        <p class="text-[10px] uppercase mt-1">Signature Above Printed Name / Date</p>
+                        <p class="font-bold uppercase mt-1 ">City/Municipal Agriculture Office</p>
                     </div>
-
-                    <!-- CAFC / MAFC Chairman -->
-                    <div class="p-4">
-                        <div class="h-12 border-b border-black"></div>
-                        <p class="uppercase text-xs font-bold mt-1">Signature Above Printed Name / Date</p>
-                        <p class="uppercase text-xs font-bold">CAFC/MAFC Chairman</p>
+                    <!-- CAFC/MAFC Chairman -->
+                    <div class="p-2 leading-none">
+                        <div class="border-b border-black w-full h-6"></div>
+                        <p class="text-[10px] uppercase mt-1">Signature Above Printed Name / Date</p>
+                        <p class="font-bold uppercase mt-1 ">CAFC/MAFC Chairman</p>
                     </div>
                 </div>
             </div>
 
 
+            <!-- Data Privacy Policy -->
+
+
+            <!-- Declaration -->
+
+
+            <!-- Signature Section -->
+
+            <div class="">
+                <div class="bg-black text-white text-xs font-bold p-2 uppercase text-center">
+                    Data Privacy Policy
+                </div>
+                <div class="p-3 text-xs leading-relaxed">
+                    <p>
+                        The collection of personal information is for documentation, planning, reporting, and processing
+                        purposes in availing agricultural-related interventions.
+                        Processed data shall only be shared with partner agencies for planning, reporting, and other use
+                        in accordance with the mandate of the agency.
+                        This is in compliance with the Data Sharing Policy of the department.
+                    </p>
+                    <p class="mt-2">
+                        You have the right to ask for a copy of your personal data that we hold about you as well as to
+                        ask for it to be corrected if you think it is wrong.
+                        To do so, please contact <span class="italic">&lt;Contact Person and Contact
+                            Details&gt;</span>.
+                    </p>
+                </div>
+            </div>
+
+        </div>
     </div>
 
 
 
-
+    <div class="text-center p-2  font-bold  uppercase ">
+        This form is not for sale
     </div>
+
+    <div class="border border-black p-2 text-xs font-bold uppercase">
+        <p>Verified True and Correct By:</p>
+        <div class="grid grid-cols-3 text-center mt-4">
+            <!-- Barangay Chairman -->
+            <div class="p-4">
+                <div class="h-12 border-b border-black"></div>
+                <p class="uppercase text-xs font-bold mt-1">Signature Above Printed Name / Date</p>
+                <p class="text-xs leading-tight mt-1">
+                    Barangay Chairman / City / Mun. Veterinarian (Livestock) /
+                    Mill District Officer (Sugarcane) / IP Leader / C/M/Paro (ARB)
+                </p>
+            </div>
+
+            <!-- City / Municipal Agriculture Office -->
+            <div class="p-4">
+                <div class="h-12 border-b border-black"></div>
+                <p class="uppercase text-xs font-bold mt-1">Signature Above Printed Name / Date</p>
+                <p class="uppercase text-xs font-bold">City/Municipal Agriculture Office</p>
+            </div>
+
+            <!-- CAFC / MAFC Chairman -->
+            <div class="p-4">
+                <div class="h-12 border-b border-black"></div>
+                <p class="uppercase text-xs font-bold mt-1">Signature Above Printed Name / Date</p>
+                <p class="uppercase text-xs font-bold">CAFC/MAFC Chairman</p>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+</div>

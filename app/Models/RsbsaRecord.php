@@ -94,4 +94,33 @@ public function getFormattedContactNumber()
 }
 
 
+public function getFormattedLandlineNumber()
+{
+    if (!$this->landline_number) {
+        return null;
+    }
+
+    // Remove non-numeric characters
+    $cleaned = preg_replace('/\D/', '', $this->landline_number);
+
+    // Ensure it has 10 digits (standard landline format)
+    if (strlen($cleaned) >= 7 && strlen($cleaned) <= 10) {
+        return str_pad($cleaned, 10, ' ', STR_PAD_LEFT); // Pad left if necessary
+    }
+
+    return null; // Return null if invalid format
+}
+public function getFormattedDateOfBirth()
+{
+    if (!$this->memberInformation?->date_of_birth) {
+        return array_fill(0, 8, ''); // Return empty values if no date
+    }
+
+    $date = \Carbon\Carbon::parse($this->memberInformation->date_of_birth);
+    return str_split($date->format('mdY')); // Convert to MMDDYYYY and split into an array
+}
+
+
+
+
 }

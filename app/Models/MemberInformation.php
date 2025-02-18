@@ -209,6 +209,28 @@ public static function countWithoutRsbsa()
     return self::whereDoesntHave('rsbsa')->count();
 }
 
+
+public function isSingle()
+{
+    return $this->civil_status == self::CS_SINGLE;
+}
+
+public function isMarried()
+{
+    return $this->civil_status == self::CS_MARRIED;
+}
+
+public function isWidowed()
+{
+    return $this->civil_status == self::CS_WIDOW;
+}
+
+public function isSeparated()
+{
+    return $this->civil_status == self::CS_LEGALLY_SEPARATED;
+}
+
+
 }
 
 
