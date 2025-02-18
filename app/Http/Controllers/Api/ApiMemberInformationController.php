@@ -60,7 +60,7 @@ class ApiMemberInformationController extends Controller
             ->join('users', 'users.id', '=', 'member_information.user_id')
             ->join('free_lots', 'free_lots.user_id', '=', 'users.id') // Corrected this join
             ->select([
-                'member_information.id', 
+                'member_information.darbc_id', 
                 'users.surname', 
                 'users.first_name', 
                 'member_information.succession_number', 
