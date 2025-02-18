@@ -53,4 +53,13 @@ class ApiMemberInformationController extends Controller
             ->when(request()->boolean('holographic'), fn ($query) => $query->whereHolographic(request()->boolean('holographic')))
             ->get();
     }
+
+    public function darbc_members()
+    {
+        return MemberInformation::query()
+        ->join('users', 'users.id', '=', 'member_information.user_id')
+        ->join('users', 'users.id', '=', 'free_lots.user_id')
+        ->select(['member_information.id', 'users.surname', 'users.first_name', 'member_information.succession_number', 'member_information.spa', 'free_lots.area'])
+        ->get();
+    }
 }
