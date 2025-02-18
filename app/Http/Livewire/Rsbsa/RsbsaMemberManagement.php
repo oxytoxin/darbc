@@ -66,7 +66,7 @@ class RsbsaMemberManagement extends Component implements HasTable
             TextColumn::make('application_date')
                 ->label('Member since')
                 ->date(),
-           
+
 
         ];
     }
@@ -142,7 +142,7 @@ class RsbsaMemberManagement extends Component implements HasTable
     {
         return [
             Action::make('RSBSA')
-            ->label('RSBSA')
+            ->label('Register this MEMBER')
                 ->button()
                 ->icon('heroicon-o-user')
                 ->url(fn ($record): string => route('rsbsa.register', ['member' => $record]))
@@ -153,20 +153,20 @@ class RsbsaMemberManagement extends Component implements HasTable
     ->label('Edit RSBSA')
     ->button()
     ->icon('heroicon-o-pencil')
-    ->url(fn ($record): string => route('rsbsa.edit', ['rsbsa' => $record->rsbsa])) 
+    ->url(fn ($record): string => route('rsbsa.edit', ['rsbsa' => $record->rsbsa]))
     ->hidden(fn($record) => !$record->hasRsbsaRecord()),
             Action::make('View')
-            ->label('View')
+            ->label('View RSBSA')
                 ->button()
                 ->outlined()
                 ->icon('heroicon-o-cash')
-                ->url(fn ($record): string => route('rsbsa.view', ['rsbsa' => $record->rsbsa])) 
+                ->url(fn ($record): string => route('rsbsa.view', ['rsbsa' => $record->rsbsa]))
                 ->hidden(fn($record) => !$record->hasRsbsaRecord())
                 ,
-                
-                
+
+
                 ActionGroup::make([
-               
+
                     ])
         ];
     }
