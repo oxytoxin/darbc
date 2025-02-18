@@ -51,7 +51,7 @@ class EditRsbsa extends Component implements HasForms
             'civil_status' => $this->rsbsa->memberInformation?->civil_status ?? null,
             'name_of_spouse' => $this->rsbsa->memberInformation?->spouse ?? null,
             'mother_maiden_name' => $this->rsbsa->memberInformation?->mother_maiden_name ?? null,
-        ]); 
+        ]);
 
         $twoByTwoMediaPath = $this->rsbsa->getFirstMediaPath('two_by_two');
 
@@ -64,21 +64,22 @@ class EditRsbsa extends Component implements HasForms
 
     public function update()
     {
-       
+
         try {
             $this->form->validate();
         } catch (\Throwable $th) {
             notify(title: $th->getMessage(), type: 'danger');
             throw $th;
         }
-    
+
         DB::beginTransaction();
 
         $validatedData = $this->form->validate();
-      
+
         $twoByTwo['two_by_two'] = $validatedData['two_by_two'];
-        unset($validatedData['two_by_two']); 
-        
+       $validatedData['enrollment_type'] = 'Updating';
+        unset($validatedData['two_by_two']);
+
 
         unset(
             $validatedData['darbc_id'],
@@ -100,7 +101,7 @@ class EditRsbsa extends Component implements HasForms
         if ($twoByTwo['two_by_two']) {
             $this->rsbsa->addMedia(collect( $twoByTwo['two_by_two'])?->first())->toMediaCollection('two_by_two');
         }
-        
+
 
 
         DB::commit();
@@ -112,9 +113,9 @@ class EditRsbsa extends Component implements HasForms
             ->send();
 
         return redirect()->route('rsbsa.manage-members');
-        
+
     }
-    
+
 
     public function render()
     {

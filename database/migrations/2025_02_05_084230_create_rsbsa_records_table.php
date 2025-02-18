@@ -19,8 +19,8 @@ return new class extends Migration
             $table->unsignedBigInteger('member_information_id');
     $table->foreign('member_information_id')->references('id')->on('member_information')->onDelete('cascade');
 
-            
-            
+
+
 
     $table->unsignedBigInteger('user_id');
     $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -38,12 +38,12 @@ return new class extends Migration
             $table->string('first_name')->nullable();
             $table->string('extension_name')->nullable();
             $table->string('sex')->nullable();
-            $table->text('house_lot_bldg_purok')->nullable(); 
-            $table->string('street_sitio_subdv')->nullable(); 
-            $table->string('barangay')->nullable(); 
-            $table->string('city_municipality')->nullable(); 
-            $table->string('province')->nullable(); 
-            $table->string('region')->nullable(); 
+            $table->text('house_lot_bldg_purok')->nullable();
+            $table->string('street_sitio_subdv')->nullable();
+            $table->string('barangay')->nullable();
+            $table->string('city_municipality')->nullable();
+            $table->string('province')->nullable();
+            $table->string('region')->nullable();
             $table->string('contact_number')->nullable();
             $table->string('landline_number')->nullable();
             $table->date('date_of_birth')->nullable();
@@ -65,15 +65,15 @@ return new class extends Migration
             $table->boolean('is_4ps_beneficiary')->default(false);
             $table->boolean('is_indigenous_group_member')->default(false);
             $table->string('indigenous_group_name')->nullable();
-            $table->boolean('has_government_id')->default(false); 
+            $table->boolean('has_government_id')->default(false);
             $table->string('id_type')->nullable();
-            $table->string('id_number')->nullable(); 
+            $table->string('id_number')->nullable();
             $table->boolean('is_farmers_association_member')->default(false);
             $table->string('farmers_association_name')->nullable();
             $table->string('emergency_contact_name')->nullable();
             $table->string('emergency_contact_number')->nullable();
-            
-            
+
+
             // Farm Profile
             $table->json('main_livelihood')->default(json_encode([]));
 
@@ -81,11 +81,11 @@ return new class extends Migration
             $table->boolean('farming_rice')->default(false);
             $table->boolean('farming_corn')->default(false);
             $table->boolean('other_crops')->default(false);
-            $table->string('farming_other_crops')->nullable(); 
+            $table->string('farming_other_crops')->nullable();
             $table->boolean('livestock')->default(false);
-            $table->string('farming_livestock')->nullable();  
+            $table->string('farming_livestock')->nullable();
             $table->boolean('poultry')->default(false);
-            $table->string('farming_poultry')->nullable();    
+            $table->string('farming_poultry')->nullable();
 
             // For Farmworkers
             $table->boolean('work_land_preparation')->default(false);
@@ -93,7 +93,7 @@ return new class extends Migration
             $table->boolean('work_cultivation')->default(false);
             $table->boolean('work_harvesting')->default(false);
             $table->boolean('work_others')->default(false);
-            $table->string('work_others_specify')->nullable(); 
+            $table->string('work_others_specify')->nullable();
 
             // For Fisherfolk
             $table->boolean('fishing_fish_capture')->default(false);
@@ -101,7 +101,7 @@ return new class extends Migration
             $table->boolean('fishing_gleaning')->default(false);
             $table->boolean('fishing_fish_processing')->default(false);
             $table->boolean('fishing_fish_vending')->default(false);
-            $table->string('fishing_others')->default(false); 
+            $table->string('fishing_others')->default(false);
             $table->string('fishing_others_specify')->nullable();
 
             // For Agri Youth
@@ -110,13 +110,13 @@ return new class extends Migration
             $table->boolean('youth_nonformal_agri_course')->default(false);
             $table->boolean('youth_agri_program')->default(false);
             $table->boolean('youth_others')->default(false);
-            $table->string('youth_others_specify')->nullable(); 
+            $table->string('youth_others_specify')->nullable();
 
             // Gross Annual Income
-            $table->decimal('gross_annual_income_farming', 15, 2)->nullable(); 
-            $table->decimal('gross_annual_income_nonfarming', 15, 2)->nullable(); 
+            $table->decimal('gross_annual_income_farming', 15, 2)->nullable();
+            $table->decimal('gross_annual_income_nonfarming', 15, 2)->nullable();
 
-         
+
 
 
 

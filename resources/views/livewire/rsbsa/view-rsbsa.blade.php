@@ -651,61 +651,99 @@
                 <div class="border-r border-black p-2">
                     <p class="font-bold italic text-center">For farmers:</p>
                     <p class="font-bold mt-2">Type of Farming Activity</p>
+
                     <div class="space-y-2 mt-2">
+                        <!-- Rice -->
                         <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                            <x-checkbox-display :checked="$rsbsa->farming_rice" />
                             <span>Rice</span>
                         </div>
+
+                        <!-- Corn -->
                         <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
+                            <x-checkbox-display :checked="$rsbsa->farming_corn" />
                             <span>Corn</span>
                         </div>
-                        <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
-                            <span>Other crops, please specify: <span
-                                    class="underline text-xs italic p-1">Mango</span></span>
+
+                        <!-- Other Crops (Full Width Input) -->
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-2">
+                                <x-checkbox-display :checked="$rsbsa->other_crops" />
+                                <span>Other crops, please specify:</span>
+                            </div>
+                            <div class="border-b border-black w-full text-xs italic p-1">
+                                {{ $rsbsa->other_crops ? $rsbsa->farming_other_crops : '' }}
+                            </div>
                         </div>
-                        <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
-                            <span>Livestock, please specify: <span
-                                    class="underline text-xs italic p-1">Goats</span></span>
+
+                        <!-- Livestock (Full Width Input) -->
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-2">
+                                <x-checkbox-display :checked="$rsbsa->livestock" />
+                                <span>Livestock, please specify:</span>
+                            </div>
+                            <div class="border-b border-black w-full text-xs italic p-1">
+                                {{ $rsbsa->livestock ? $rsbsa->farming_livestock : '' }}
+                            </div>
                         </div>
-                        <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
-                            <span>Poultry, please specify: <span
-                                    class="underline text-xs italic p-1">Chicken</span></span>
+
+                        <!-- Poultry (Full Width Input) -->
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-2">
+                                <x-checkbox-display :checked="$rsbsa->poultry" />
+                                <span>Poultry, please specify:</span>
+                            </div>
+                            <div class="border-b border-black w-full text-xs italic p-1">
+                                {{ $rsbsa->poultry ? $rsbsa->farming_poultry : '' }}
+                            </div>
                         </div>
                     </div>
                 </div>
+
 
                 <!-- Farmworkers -->
                 <div class="border-r border-black p-2">
                     <p class="font-bold italic text-center">For farmworkers:</p>
                     <p class="font-bold mt-2">Kind of Work</p>
+
                     <div class="space-y-2 mt-2">
+                        <!-- Land Preparation -->
                         <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
+                            <x-checkbox-display :checked="$rsbsa->work_land_preparation" />
                             <span>Land Preparation</span>
                         </div>
+
+                        <!-- Planting/Transplanting -->
                         <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                            <x-checkbox-display :checked="$rsbsa->work_planting_transplanting" />
                             <span>Planting/Transplanting</span>
                         </div>
+
+                        <!-- Cultivation -->
                         <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
+                            <x-checkbox-display :checked="$rsbsa->work_cultivation" />
                             <span>Cultivation</span>
                         </div>
+
+                        <!-- Harvesting -->
                         <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
+                            <x-checkbox-display :checked="$rsbsa->work_harvesting" />
                             <span>Harvesting</span>
                         </div>
-                        <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
-                            <span>Others, please specify: <span
-                                    class="underline text-xs italic p-1">Irrigation</span></span>
+
+                        <!-- Other Work (Full Width Input) -->
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-2">
+                                <x-checkbox-display :checked="$rsbsa->work_others" />
+                                <span>Others, please specify:</span>
+                            </div>
+                            <div class="border-b border-black w-full text-xs italic p-1">
+                                {{ $rsbsa->work_others ? $rsbsa->work_others_specify : '' }}
+                            </div>
                         </div>
                     </div>
                 </div>
+
 
                 <!-- Fisherfolk -->
                 <!-- Fisherfolk -->
@@ -715,82 +753,122 @@
                         The Lending Conduit shall coordinate with the Bureau of Fisheries and
                         Aquatic Resources (<span class="font-bold">BFAR</span>) in the issuance of a certification
                         that the fisherfolk-borrower under <span class="font-bold">PUNLA/PLEA</span> is registered
-                        under
-                        the Municipal Registration (<span class="font-bold">FishR</span>).
+                        under the Municipal Registration (<span class="font-bold">FishR</span>).
                     </p>
                     <p class="font-bold mt-2">Type of Fishing Activity</p>
+
                     <div class="space-y-2 mt-2">
+                        <!-- Fish Capture -->
                         <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
+                            <x-checkbox-display :checked="$rsbsa->fishing_fish_capture" />
                             <span>Fish Capture</span>
                         </div>
+
+                        <!-- Fish Processing -->
                         <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
+                            <x-checkbox-display :checked="$rsbsa->fishing_fish_processing" />
                             <span>Fish Processing</span>
                         </div>
+
+                        <!-- Aquaculture -->
                         <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
+                            <x-checkbox-display :checked="$rsbsa->fishing_aquaculture" />
                             <span>Aquaculture</span>
                         </div>
+
+                        <!-- Fish Vending -->
                         <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
+                            <x-checkbox-display :checked="$rsbsa->fishing_fish_vending" />
                             <span>Fish Vending</span>
                         </div>
+
+                        <!-- Gleaning -->
                         <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
+                            <x-checkbox-display :checked="$rsbsa->fishing_gleaning" />
                             <span>Gleaning</span>
                         </div>
-                        <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
-                            <span>Others, please specify: <span class="underline text-xs italic p-1">Dried Fish
-                                    Production</span></span>
+
+                        <!-- Other Fishing Activity (Full Width Input) -->
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-2">
+                                <x-checkbox-display :checked="$rsbsa->fishing_others" />
+                                <span>Others, please specify:</span>
+                            </div>
+                            <div class="border-b border-black w-full text-xs italic p-1">
+                                {{ $rsbsa->fishing_others ? $rsbsa->fishing_others_specify : '' }}
+                            </div>
                         </div>
                     </div>
                 </div>
+
 
 
                 <!-- Agri Youth -->
                 <div class="p-2">
-                    <p class="font-bold italic text-center">For agri youth:</p>
-                    <p class="text-xs italic"> For the purposes of trainings, financial assistance, and other programs
-                        catered
-                        to the youth with involvement to any agriculture activity.</p>
+                    <p class="font-bold italic text-center">For Agri Youth:</p>
+                    <p class="text-xs italic">
+                        For the purposes of trainings, financial assistance, and other programs
+                        catered to the youth with involvement in any agricultural activity.
+                    </p>
                     <p class="font-bold mt-2">Type of Involvement</p>
+
                     <div class="space-y-2 mt-2">
+                        <!-- Part of a Farming Household -->
                         <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;</div>
+                            <x-checkbox-display :checked="$rsbsa->youth_farming_household" />
                             <span>Part of a farming household</span>
                         </div>
+
+                        <!-- Attended Formal Agri-Fishery Course -->
                         <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
+                            <x-checkbox-display :checked="$rsbsa->youth_agri_course" />
                             <span>Attended formal agri-fishery course</span>
                         </div>
+
+                        <!-- Attended Non-Formal Agri-Fishery Course -->
                         <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
+                            <x-checkbox-display :checked="$rsbsa->youth_nonformal_agri_course" />
                             <span>Attended non-formal agri-fishery course</span>
                         </div>
+
+                        <!-- Participated in Any Agricultural Program -->
                         <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
+                            <x-checkbox-display :checked="$rsbsa->youth_agri_program" />
                             <span>Participated in any agricultural program</span>
                         </div>
-                        <div class="flex items-center space-x-2">
-                            <div class="border border-black w-4 h-4"></div>
-                            <span>Others, please specify: <span class="underline text-xs italic p-1">Organic
-                                    Farming</span></span>
+
+                        <!-- Other (Full Width Input) -->
+                        <div class="space-y-1">
+                            <div class="flex items-center space-x-2">
+                                <x-checkbox-display :checked="$rsbsa->youth_others" />
+                                <span>Others, please specify:</span>
+                            </div>
+                            <div class="border-b border-black w-full text-xs italic p-1">
+                                {{ $rsbsa->youth_others ? $rsbsa->youth_others_specify : '' }}
+                            </div>
                         </div>
                     </div>
                 </div>
+
             </div>
 
-            <div class=" p-2 flex justify-between items-center">
+            <div class="p-2 flex justify-between items-center">
                 <span class="text-xs font-bold uppercase">Gross Annual Income Last Year:</span>
                 <div class="flex items-center space-x-4">
                     <span class="text-xs">Farming:</span>
-                    <div class="border-b border-black w-40 h-5 text-xs italic text-center">₱50,000</div>
+                    <x-display-text
+                        value="₱{{ number_format($rsbsa->gross_annual_income_farming ?? 0, 2) }}"
+                        class="border-b border-black w-40 h-5 text-xs italic text-center"
+                    />
+
                     <span class="text-xs">Non-farming:</span>
-                    <div class="border-b border-black w-40 h-5 text-xs italic text-center">₱30,000</div>
+                    <x-display-text
+                        value="₱{{ number_format($rsbsa->gross_annual_income_nonfarming ?? 0, 2) }}"
+                        class="border-b border-black w-40 h-5 text-xs italic text-center"
+                    />
                 </div>
             </div>
+
 
         </div>
 
@@ -812,107 +890,127 @@
                 <h2 class="text-lg font-bold uppercase">Enrollment Client’s Copy</h2>
             </div>
 
+
             <div class="flex mt-4 p-2">
                 <p class="font-semibold italic text-xs mr-4 min-w-[160px]">Reference Number:</p>
                 <div class="flex space-x-2">
                     <!-- Region -->
                     <div class="flex flex-col">
                         <div class="flex border border-black">
-                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                1</div>
-                            <div class="w-6 h-6 flex items-center justify-center text-xs">9</div>
+                            @foreach ($codes['region'] as $index => $digit)
+                                <div
+                                    class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
+                                    {{ $digit }}
+                                </div>
+                            @endforeach
                         </div>
                         <span class="uppercase text-xs text-center mt-1">Region</span>
                     </div>
+
                     <!-- Province -->
                     <div class="flex flex-col">
                         <div class="flex border border-black">
-                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                3</div>
-                            <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
+                            @foreach ($codes['province'] as $index => $digit)
+                                <div
+                                    class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
+                                    {{ $digit }}
+                                </div>
+                            @endforeach
                         </div>
                         <span class="uppercase text-xs text-center mt-1">Province</span>
                     </div>
+
                     <!-- City/Municipality -->
                     <div class="flex flex-col">
                         <div class="flex border border-black">
-                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                3</div>
-                            <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
+                            @foreach ($codes['city_municipality'] as $index => $digit)
+                                <div
+                                    class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
+                                    {{ $digit }}
+                                </div>
+                            @endforeach
                         </div>
                         <span class="uppercase text-xs text-center mt-1">City/Muni</span>
                     </div>
+
                     <!-- Barangay -->
                     <div class="flex flex-col">
                         <div class="flex border border-black">
-                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                1</div>
-                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                3</div>
-                            <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
+                            @foreach ($codes['barangay'] as $index => $digit)
+                                <div
+                                    class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
+                                    {{ $digit }}
+                                </div>
+                            @endforeach
                         </div>
                         <span class="uppercase text-xs text-center mt-1">Barangay</span>
                     </div>
-                    <!-- Additional Numbers -->
+
+                    <!-- Last 6 Digits (Always Exists) -->
                     <div class="flex flex-col">
                         <div class="flex border border-black">
-                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                2</div>
-                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                3</div>
-                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                4</div>
-                            <div class="w-6 h-6 flex items-center justify-center text-xs border-r border-black">
-                                2</div>
-                            <div class="w-6 h-6 flex items-center justify-center text-xs">1</div>
+                            @foreach ($codes['last_six'] as $index => $digit)
+                                <div
+                                    class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
+
+                                </div>
+                            @endforeach
                         </div>
                         <span class="uppercase text-xs text-center mt-1 invisible">""</span>
                     </div>
                 </div>
             </div>
 
-            <!-- Personal Information Section -->
-            <div class="grid grid-cols-12">
-                <div class="col-span-12">
+            <div class="col-span-12">
+
                     <div class="grid grid-cols-2">
                         <div class="p-2">
-                            <p class="text-center text-xs italic">Dela Cruz</p>
-                            <div class="text-center text-xs font-bold uppercase border-t border-black">Surname</div>
+                            <x-display-text value="{{ $rsbsa->memberinformation?->user?->surname ?? 'N/A' }}"
+                                class="text-center" />
+
+                            <div class="text-center text-xs font-bold uppercase border-t border-black ">Surname</div>
                         </div>
                         <div class="p-2">
-                            <p class="text-center text-xs italic">Juan</p>
-                            <div class="text-center text-xs font-bold uppercase border-t border-black">First Name</div>
+                            <x-display-text value="{{ $rsbsa->memberinformation?->user?->surname ?? 'N/A' }}"
+                                class="text-center" />
+                            <div class="text-center text-xs font-bold uppercase border-t border-black ">First Name</div>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-2 ">
                         <div class="p-2">
-                            <p class="text-center text-xs italic">Santos</p>
-                            <div class="text-center text-xs font-bold uppercase border-t border-black">Middle Name
+                            <x-display-text value="{{ $rsbsa->memberinformation?->user?->middle_name ?? 'N/A' }}"
+                                class="text-center" />
+                            <div class="text-center text-xs font-bold uppercase border-t border-black ">Middle Name
                             </div>
                         </div>
                         <div class="grid grid-cols-2">
                             <div class="p-2">
-                                <p class="text-center text-xs italic">Jr.</p>
-                                <div class="text-center text-xs font-bold uppercase border-t border-black">Extension
-                                    Name</div>
+
+                                <x-display-text value="{{ $rsbsa->extension_name }}" class="text-center" />
+
+                                <div class="text-center text-xs font-bold uppercase border-t border-black ">Extension
+                                    Name
+                                </div>
                             </div>
-                            <div class="inline-flex items-center justify-center border-l border-t border-black p-2">
+                            <div
+                                class="inline-flex items-center justify-center border-l-2 border-t-2  border-black p-2">
                                 <div class="text-xs font-bold uppercase">Sex:</div>
                                 <div class="flex items-center space-x-2 ml-2">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
-                                    </div>
+                                    <x-checkbox-display
+                                        checked="{{ $rsbsa->memberinformation?->gender?->name === 'Male' }}" />
+
                                     <span class="text-xs">Male</span>
                                 </div>
                                 <div class="flex items-center space-x-2 ml-4">
-                                    <div class="border border-black w-4 h-4"></div>
+                                    <x-checkbox-display
+                                        checked="{{ $rsbsa->memberinformation?->gender?->name === 'Female' }}" />
                                     <span class="text-xs">Female</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
         </div>
 
         <!-- Footer Text -->
