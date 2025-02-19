@@ -59,6 +59,23 @@ class ApiMemberInformationController extends Controller
         return MemberInformation::query()
             ->join('users', 'users.id', '=', 'member_information.user_id')
             ->join('free_lots', 'free_lots.user_id', '=', 'users.id') // Corrected this join
+            ->select([
+                'member_information.darbc_id',
+                'users.surname',
+                'users.first_name',
+                'member_information.succession_number',
+                'member_information.spa',
+                'free_lots.area',
+            ])
+            ->get();
+    }
+
+
+    public function darbc_members_complete()
+    {
+        return MemberInformation::query()
+            ->join('users', 'users.id', '=', 'member_information.user_id')
+            ->join('free_lots', 'free_lots.user_id', '=', 'users.id') // Corrected this join
             ->join('occupations', 'occupations.id', '=','member_information.occupation_id')
             ->join('clusters', 'clusters.id', '=','member_information.cluster_id')
             ->join('genders', 'genders.id', '=','member_information.gender_id')
