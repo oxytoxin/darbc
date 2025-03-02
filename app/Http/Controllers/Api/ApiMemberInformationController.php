@@ -97,6 +97,7 @@ class ApiMemberInformationController extends Controller
             'member_information.occupation_details',
             'member_information.spouse',
             'member_information.tin_number',
+'member_information.tin_verification_status',
             'member_information.status',
             'member_information.blood_type',
             'member_information.children',
