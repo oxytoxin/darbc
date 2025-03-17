@@ -48,6 +48,21 @@ class ApiMemberInformationController extends Controller
     {
         return MemberInformation::query()
             ->join('users', 'users.id', '=', 'member_information.user_id')
+            ->select([
+                'member_information.id',
+                'member_information.darbc_id',
+                'users.full_name',
+                'users.surname',
+                'users.first_name',
+                'users.middle_name',
+                'member_information.succession_number'])
+            ->when(request()->integer('status'), fn ($query) => $query->whereStatus(request()->integer('status')))
+            ->when(request()->boolean('holographic'), fn ($query) => $query->whereHolographic(request()->boolean('holographic')))
+            ->get();
+
+
+        return MemberInformation::query()
+            ->join('users', 'users.id', '=', 'member_information.user_id')
             ->select(['member_information.id', 'member_information.darbc_id', 'users.full_name'])
             ->when(request()->integer('status'), fn ($query) => $query->whereStatus(request()->integer('status')))
             ->when(request()->boolean('holographic'), fn ($query) => $query->whereHolographic(request()->boolean('holographic')))
