@@ -51,6 +51,7 @@ class ApiMemberInformationController extends Controller
             ->select([
                 'member_information.id',
                 'member_information.darbc_id',
+                'member_information.tin_verification_status',
                 'users.full_name',
                 'users.surname',
                 'users.first_name',
