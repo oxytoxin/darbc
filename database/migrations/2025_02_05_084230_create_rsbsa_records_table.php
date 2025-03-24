@@ -17,13 +17,10 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('darbc_id');
             $table->unsignedBigInteger('member_information_id');
-    $table->foreign('member_information_id')->references('id')->on('member_information')->onDelete('cascade');
-
-
-
-
-    $table->unsignedBigInteger('user_id');
-    $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('member_information_id')->references('id')->on('member_information')->onDelete('cascade');
+            
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->enum('enrollment_type', ['New', 'Updating']);
             $table->string('reference_number')->nullable();

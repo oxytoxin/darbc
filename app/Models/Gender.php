@@ -20,4 +20,8 @@ class Gender extends Model
     {
         return $this->hasMany(MemberInformation::class);
     }
+    public function rsbsa_records()
+    {
+        return $this->hasMany(RsbsaRecord::class);
+    }
 }

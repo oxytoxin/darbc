@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Rsbase;
 
 use Closure;
 use App\Models\City;
+use App\Models\Gender;
 use App\Models\Region;
 use App\Models\Barangay;
 use App\Models\Province;
@@ -59,14 +60,14 @@ class RsbsaFroms extends Controller
                 ->schema([
 
                     Fieldset::make('Reference Number')->columns(4)->schema([
-                        // TextInput::make('reference_number')->required(),
-                        TextInput::make('region_code')->required()->mask(fn(TextInput\Mask $mask) => $mask->pattern('00'))
+                        // TextInput::make('reference_number'),
+                        TextInput::make('region_code')->mask(fn(TextInput\Mask $mask) => $mask->pattern('00'))
                             ->label('Region')->placeholder('00'),
-                        TextInput::make('province_code')->required()->mask(fn(TextInput\Mask $mask) => $mask->pattern('00'))
+                        TextInput::make('province_code')->mask(fn(TextInput\Mask $mask) => $mask->pattern('00'))
                             ->label('Province')->placeholder('00'),
-                        TextInput::make('city_municipality_code')->required()->mask(fn(TextInput\Mask $mask) => $mask->pattern('00'))
+                        TextInput::make('city_municipality_code')->mask(fn(TextInput\Mask $mask) => $mask->pattern('00'))
                             ->label('City/Muni')->placeholder('00'),
-                        TextInput::make('barangay_code')->required()->mask(fn(TextInput\Mask $mask) => $mask->pattern('000000'))
+                        TextInput::make('barangay_code')->mask(fn(TextInput\Mask $mask) => $mask->pattern('000000'))
                             ->label('Barangay')->placeholder('000000'),
 
                     ]),
@@ -99,25 +100,30 @@ class RsbsaFroms extends Controller
                             ])
                             ->maxWidth('sm')
                             ,
-                        TextInput::make('surname')->required()->disabled()->hint('(Editable in Profiling)'),
-                        TextInput::make('first_name')->required()->disabled()->hint('(Editable in Profiling)'),
-                        TextInput::make('middle_name')->required()->disabled()->hint('(Editable in Profiling)'),
+                        TextInput::make('surname')->hint('(Editable in Profiling)'),
+                        TextInput::make('first_name')->hint('(Editable in Profiling)'),
+                        TextInput::make('middle_name')->hint('(Editable in Profiling)'),
                         TextInput::make('extension_name')
                             ->label('Extension Name')
 
                             ->helperText('Example: "Jr.", "Sr.", "III", "IV" (Leave blank if not applicable)'),
                         //->hint('Suffix such as Jr., Sr., III, IV (optional)'),
 
-                        TextInput::make('gender')->required()->disabled()->hint('(Editable in Profiling)'),
+                        Select::make('gender')
+                        ->default(Gender::UNKNOWN)
+                        ->label('Gender')
+                        ->required()
+                        ->disablePlaceholderSelection()
+                        ->options(Gender::pluck('name', 'id')),
 
-                        DatePicker::make('date_of_birth')->required()->disabled()->hint('(Editable in Profiling)'),
-                        TextInput::make('contact_number')->required()->label('Mobile Number')->disabled(),
+                        DatePicker::make('date_of_birth')->hint('(Editable in Profiling)'),
+                        TextInput::make('contact_number')->label('Mobile Number'),
                         TextInput::make('landline_number')->label('Landline'),
                     ]),
 
                     Fieldset::make('Address Information')->columns(3)->columnSpanFull()->schema([
-                        TextInput::make('house_lot_bldg_purok')->required()->label('House Lot/Purok')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        TextInput::make('street_sitio_subdv')->required()->label('Street/Sitio/Subdivision')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+                        TextInput::make('house_lot_bldg_purok')->label('House Lot/Purok')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+                        TextInput::make('street_sitio_subdv')->label('Street/Sitio/Subdivision')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
                         // Select::make('data.address.region')
                         // ->reactive()
                         // ->options(Region::pluck('description', 'code')),
@@ -133,10 +139,10 @@ class RsbsaFroms extends Controller
                         //     ->reactive()
                         //     ->visible(fn ($get) => $get(('data.address.city')))
                         //     ->options(fn ($get) => Barangay::when($get('data.address.city'), fn ($q) => $q->whereCityCode($get('data.address.city')))->pluck('description', 'code')),
-                        TextInput::make('barangay')->required()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        TextInput::make('city_municipality')->required()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        TextInput::make('province')->required()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        TextInput::make('region')->required()->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+                        TextInput::make('barangay')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+                        TextInput::make('city_municipality')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+                        TextInput::make('province')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+                        TextInput::make('region')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
                     ]),
 
                     Fieldset::make('Birth & Civil Status')->columns(2)->columnSpanFull()->schema([
@@ -151,8 +157,8 @@ class RsbsaFroms extends Controller
                                 MemberInformation::CS_LEGALLY_SEPARATED => 'Legally Separated',
                                 MemberInformation::CS_UNKNOWN => 'Unknown',
                             ])
-                            ->disabled()->required()->hint('(Editable in Profiling)')
-                            ->required()
+                            ->disabled()->hint('(Editable in Profiling)')
+
                             ->default(MemberInformation::CS_SINGLE),
                         TextInput::make('religion')->disabled()->hint('(Editable in Profiling)'),
                         TextInput::make('name_of_spouse')->disabled()->hint('(Editable in Profiling)'),
@@ -164,7 +170,7 @@ class RsbsaFroms extends Controller
                             ->columnSpanFull()
                             ->helperText('check this if you are the head of your household.')
                             ->reactive(),
-                        TextInput::make('name_of_household_head')->label('Household Head Name')->hidden(fn(Closure $get) => $get('household_head'))->columnSpanFull()->required(),
+                        TextInput::make('name_of_household_head')->label('Household Head Name')->hidden(fn(Closure $get) => $get('household_head'))->columnSpanFull(),
 
                         TextInput::make('relationship_with_household_head')->hidden(fn(Closure $get) => $get('household_head'))->columnSpanFull(),
                         TextInput::make('no_of_living_household_members')->mask(fn(TextInput\Mask $mask) => $mask->pattern('00'))->label('No. of living household members'),
@@ -173,7 +179,7 @@ class RsbsaFroms extends Controller
                     ]),
 
                     Fieldset::make('Education & Status')->columns(2)->columnSpanFull()->schema([
-                        Select::make('highest_formal_education')->options(RsbsaRecord::HIGHEST_FORMAL_EDUCATION)->columnSpanFull()->required(),
+                        Select::make('highest_formal_education')->options(RsbsaRecord::HIGHEST_FORMAL_EDUCATION)->columnSpanFull(),
                         Checkbox::make('is_pwd')->label('Person with disability?')->columnSpanFull(),
                         Checkbox::make('is_4ps_beneficiary')
                             ->label('4Ps Beneficiary?')
@@ -186,25 +192,25 @@ class RsbsaFroms extends Controller
                             ->columnSpanFull(),
 
                         TextInput::make('indigenous_group_name')
-                            ->required()
+
                             ->label('Indigenous Group Name')->columnSpanFull()->hidden(fn(Closure $get) => !$get('is_indigenous_group_member')),
                     ]),
 
                     Fieldset::make('Identification & Emergency')->columns(2)->columnSpanFull()->schema([
                         Checkbox::make('has_government_id')->label('With Government ID?')->reactive()->columnSpanFull(),
                         TextInput::make('id_type')->label('ID Type')
-                            ->required()
+
                             ->hidden(fn(Closure $get) => !$get('has_government_id')),
                         TextInput::make('id_number')->label('ID Number')
-                            ->required()
+
 
                             ->hidden(fn(Closure $get) => !$get('has_government_id')),
                         Checkbox::make('is_farmers_association_member')->label('Are you a Farmers Association Member?')->reactive()->columnSpanFull(),
                         TextInput::make('farmers_association_name')
-                            ->required()
+
                             ->label('Farmers Association Name')->columnSpanFull()->hidden(fn(Closure $get) => !$get('is_farmers_association_member')),
-                        TextInput::make('emergency_contact_name')->required()->label('Emergency Contact Name'),
-                        TextInput::make('emergency_contact_number')->required()->label('Emergency Contact Number'),
+                        TextInput::make('emergency_contact_name')->label('Emergency Contact Name'),
+                        TextInput::make('emergency_contact_number')->label('Emergency Contact Number'),
                     ]),
                 ]),
 
@@ -220,7 +226,7 @@ class RsbsaFroms extends Controller
                         // //     dd($state);
                         // // })
                         CheckboxList::make('main_livelihood')
-                            ->required()
+
                             ->reactive()
                             ->helperText('Select all applicable sources of livelihood.')
                             ->label('MAIN LIVELIHOOD')
@@ -228,7 +234,7 @@ class RsbsaFroms extends Controller
                             ->columns(4)
                             ->label('Main Livelihood')
                             ->options(RsbsaRecord::LIVELIHOOD_OPTION)
-                            ->required(),
+                            ,
 
                     ]),
 
@@ -248,7 +254,7 @@ class RsbsaFroms extends Controller
 
                         TextInput::make('farming_other_crops')
                             ->label('Specify Other Crops')
-                            ->hidden(fn(Closure $get) => !$get('other_crops'))->required(),
+                            ->hidden(fn(Closure $get) => !$get('other_crops')),
 
                         Checkbox::make('livestock')
                             ->label('Livestock ')
@@ -257,7 +263,7 @@ class RsbsaFroms extends Controller
 
                         TextInput::make('farming_livestock')
                             ->label('Specify Livestock')
-                            ->hidden(fn(Closure $get) => !$get('livestock'))->required(),
+                            ->hidden(fn(Closure $get) => !$get('livestock')),
 
                         Checkbox::make('poultry')
                             ->label('Poultry ')
@@ -267,7 +273,7 @@ class RsbsaFroms extends Controller
 
                         TextInput::make('farming_poultry')
                             ->label('Specify Poultry')
-                            ->required()
+
                             ->hidden(fn(Closure $get) => !$get('poultry')),
 
 
@@ -283,7 +289,7 @@ class RsbsaFroms extends Controller
                         Checkbox::make('work_harvesting')->columnSpanFull()->label('Harvesting'),
                         Checkbox::make('work_others')->columnSpanFull()->reactive()->label('Other'),
                         TextInput::make('work_others_specify')
-                            ->required()
+
                             ->columnSpanFull()->hidden(fn(Closure $get) => !$get('work_others'))->label('Please Specify other work'),
                     ])
                         // ->hidden(fn (Closure $get) => $get('main_livelihood') != 'Farmworker/Laborer')
@@ -322,7 +328,7 @@ class RsbsaFroms extends Controller
 
                             TextInput::make('fishing_others_specify')
                                 ->columnSpanFull()
-                                ->required()
+
                                 ->hidden(fn(Closure $get) => !$get('fishing_others'))
                                 ->label('Specify Other Fishing Activity'),
                         ])
@@ -360,14 +366,14 @@ class RsbsaFroms extends Controller
                             TextInput::make('youth_others_specify')
                                 ->label('Specify Other Involvement')
                                 ->columnSpanFull()
-                                ->required()
+
                                 ->hidden(fn(Closure $get) => !$get('youth_others')), // Only shows if 'Others' is checked
                         ])->hidden(fn(Closure $get) => !in_array('Agri Youth', $get('main_livelihood') ?? [])),
 
 
                     Fieldset::make('Annual Income')->columns(2)->schema([
                         TextInput::make('gross_annual_income_farming')
-                        
+
                         ->numeric()
                         ->mask(fn (TextInput\Mask $mask) => $mask
                         ->numeric()
@@ -383,7 +389,7 @@ class RsbsaFroms extends Controller
                     )
                         ->prefix('₱')
                         // ->maxValue(9999999999999)
-                        
+
                         ,
                         TextInput::make('gross_annual_income_nonfarming')->prefix('₱')
                         ->numeric()
@@ -399,7 +405,7 @@ class RsbsaFroms extends Controller
                         ->padFractionalZeros() // Pad zeros at the end of the number to always maintain the maximum number of decimal places.
                         ->thousandsSeparator(','), // Add a separator for thousands.
                     )
-                        
+
                         ,
                     ]),
 

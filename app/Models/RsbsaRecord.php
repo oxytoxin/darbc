@@ -7,10 +7,64 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Support\Str;
 class RsbsaRecord extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
+
+    const FIELDS = [
+        'surname',
+        'first_name',
+        'middle_name',
+        // 'extension_name',
+        // 'sex',
+        // 'contact_number',
+        // 'date_of_birth',
+        // 'place_of_birth_municipality',
+        // 'place_of_birth_province',
+        // 'place_of_birth_country',
+        // 'religion',
+        // 'civil_status',
+        // 'mother_maiden_name',
+        // 'name_of_spouse',
+        // 'highest_formal_education',
+        // 'id_type',
+        // 'id_number',
+        // 'region_code',
+        // 'province_code',
+        // 'city_municipality_code',
+        // 'barangay_code',
+    ];
+
+    public function missingDetails(): Attribute
+{
+    return new Attribute(
+        get: function () {
+            return collect($this->toArray())
+                ->filter(function ($v, $k) {
+                    return in_array($k, self::FIELDS) && (is_null($v) || $v === '' || $v === 'Unknown');
+                })
+                ->keys()
+                ->map(fn($v) => Str::of($v)->replace('_', ' ')->upper());
+        }
+    );
+}
+
+public function missingDetailsCount(): Attribute
+{
+    return new Attribute(
+        get: function () {
+            return collect($this->toArray())
+                ->filter(function ($v, $k) {
+                    return in_array($k, self::FIELDS) && (is_null($v) || $v === '' || $v === 'Unknown');
+                })
+                ->count();
+        }
+    );
+}
+
 
     public function registerMediaCollections(): void
     {
@@ -142,5 +196,10 @@ public function hasLivelihood($livelihood)
     return in_array($livelihood, $this->main_livelihood ?? []);
 }
 
+
+public function gender()
+{
+    return $this->belongsTo(Gender::class);
+}
 
 }

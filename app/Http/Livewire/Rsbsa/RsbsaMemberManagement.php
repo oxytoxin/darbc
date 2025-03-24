@@ -5,19 +5,20 @@ namespace App\Http\Livewire\Rsbsa;
 use Livewire\Component;
 use App\Models\MembershipStatus;
 use App\Models\MemberInformation;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Actions\ActionGroup;
+
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Concerns\InteractsWithTable;
-
-use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\ActionGroup;
-use Filament\Tables\Actions\DeleteAction;
-use Filament\Tables\Actions\EditAction;
 
 class RsbsaMemberManagement extends Component implements HasTable
 {
@@ -66,6 +67,18 @@ class RsbsaMemberManagement extends Component implements HasTable
             TextColumn::make('application_date')
                 ->label('Member since')
                 ->date(),
+
+                ViewColumn::make('rsbsa_missing_details')->view('tables.columns.rsbsa.rsbsa-missing-details')->label('Missing RSBSA Details')   ->tooltip(function ($record){
+                    if($record->rsbsa){
+                        return implode(", ", $record->rsbsa->missingDetails->toArray());
+                    }
+                    return '';
+                })
+
+                // BadgeColumn::make('rsbsa.missing_details_count')
+                // ->label('Missing RSBSA Details')
+                // ->tooltip(fn ($record) => implode(", ", $record->missing_details->toArray()))
+
 
 
         ];

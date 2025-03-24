@@ -46,7 +46,7 @@ class CreateRsbsa extends Component implements HasForms
     }
 
 
- 
+
     public function register()
 {
     DB::beginTransaction();
@@ -55,13 +55,19 @@ class CreateRsbsa extends Component implements HasForms
         // Validate the form data using Filament's form validation
         $validatedData = $this->form->validate()['data'];
         // dd($validatedData);
-    
-      
+
+
         $rsbsaData = [
             'darbc_id' => $this->member->darbc_id,
             'member_information_id' => $this->member->id,
             'user_id' => $this->member->user_id,
             'enrollment_type' => 'New',
+            'surname' => $validatedData['surname'] ?? null,
+            'middle_name' => $validatedData['middle_name'] ?? null,
+            'first_name' => $validatedData['first_name'] ?? null,
+            'gender_id' => $validatedData['gender_id'] ?? null,
+            'date_of_birth' => $validatedData['date_of_birth'] ?? null,
+
             'region_code' => $validatedData['region_code'] ?? null,
             'province_code' => $validatedData['province_code'] ?? null,
             'city_municipality_code' => $validatedData['city_municipality_code'] ?? null,
@@ -132,10 +138,10 @@ class CreateRsbsa extends Component implements HasForms
 
         // Create an RsbsaRecord with validated data
         $twoByTwo['two_by_two'] = $validatedData['two_by_two'];
-        unset($validatedData['two_by_two']); 
+        unset($validatedData['two_by_two']);
 
         $rsbsaRecord = RsbsaRecord::create($rsbsaData);
-        
+
         if ($twoByTwo['two_by_two']) {
             $rsbsaRecord->addMedia(collect($twoByTwo['two_by_two'])->first())->toMediaCollection('two_by_two');
         }
@@ -167,11 +173,11 @@ class CreateRsbsa extends Component implements HasForms
     }
 }
 
-    
-    // protected function getFormModel(): RsbsaRecord 
+
+    // protected function getFormModel(): RsbsaRecord
     // {
     //     // return RsbsaRecord::cl;
-    // } 
+    // }
     protected function getFormStatePath(): ?string
     {
         return 'data';
@@ -180,7 +186,6 @@ class CreateRsbsa extends Component implements HasForms
 {
     //   dd($this->member);
     // dd($this->member->gender);
-    //   dd($this->member->user);
     $this->form->fill([
         'darbc_id'=> $this->member->darbc_id,
         'member_information_id'=> $this->member->id,
@@ -188,7 +193,8 @@ class CreateRsbsa extends Component implements HasForms
         'surname'=> $this->member->user?->surname,
         'first_name'=> $this->member->user?->first_name,
         'middle_name'=> $this->member->user?->middle_name,
-        'gender'=> $this->member?->gender->name,
+
+        'gender_id'=> $this->member?->gender->id,
         'date_of_birth'=> $this->member?->date_of_birth,
         'contact_number'=> $this->member?->contact_number,
         'religion'=> $this->member?->religion,
