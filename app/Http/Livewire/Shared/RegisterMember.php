@@ -102,7 +102,7 @@ class RegisterMember extends Component implements HasForms
                                     ->options(User::has('member_information')->pluck('full_name', 'id'))
                                     ->searchable()
                                     ->reactive()
-                                    ->afterStateUpdated(fn ($set, $state) => $set('data.darbc_id', MemberInformation::firstWhere('user_id', $state)->darbc_id))
+                                    ->afterStateUpdated(fn($set, $state) => $set('data.darbc_id', MemberInformation::firstWhere('user_id', $state)->darbc_id))
                                     ->required(),
                                 Select::make('data.old_member_status')->options([
                                     MemberInformation::STATUS_ACTIVE => 'Active',
@@ -116,7 +116,7 @@ class RegisterMember extends Component implements HasForms
                                     ->label('Required Documents')
                                     ->multiple(),
                             ])
-                            ->visible(fn ($get) => $get('data.membership_status') == MembershipStatus::REPLACEMENT),
+                            ->visible(fn($get) => $get('data.membership_status') == MembershipStatus::REPLACEMENT),
 
                     ]),
                 Step::make('Address')
@@ -127,16 +127,16 @@ class RegisterMember extends Component implements HasForms
                             ->options(Region::pluck('description', 'code')),
                         Select::make('data.address.province')
                             ->reactive()
-                            ->visible(fn ($get) => $get(('data.address.region')))
-                            ->options(fn ($get) => Province::when($get('data.address.region'), fn ($q) => $q->whereRegionCode($get('data.address.region')))->pluck('description', 'code')),
+                            ->visible(fn($get) => $get(('data.address.region')))
+                            ->options(fn($get) => Province::when($get('data.address.region'), fn($q) => $q->whereRegionCode($get('data.address.region')))->pluck('description', 'code')),
                         Select::make('data.address.city')
                             ->reactive()
-                            ->visible(fn ($get) => $get(('data.address.province')))
-                            ->options(fn ($get) => City::when($get('data.address.province'), fn ($q) => $q->whereProvinceCode($get('data.address.province')))->pluck('description', 'code')),
+                            ->visible(fn($get) => $get(('data.address.province')))
+                            ->options(fn($get) => City::when($get('data.address.province'), fn($q) => $q->whereProvinceCode($get('data.address.province')))->pluck('description', 'code')),
                         Select::make('data.address.barangay')
                             ->reactive()
-                            ->visible(fn ($get) => $get(('data.address.city')))
-                            ->options(fn ($get) => Barangay::when($get('data.address.city'), fn ($q) => $q->whereCityCode($get('data.address.city')))->pluck('description', 'code')),
+                            ->visible(fn($get) => $get(('data.address.city')))
+                            ->options(fn($get) => Barangay::when($get('data.address.city'), fn($q) => $q->whereCityCode($get('data.address.city')))->pluck('description', 'code')),
                         TextInput::make('data.address.address_line')
                             ->label('Address Line'),
                     ]),
@@ -206,7 +206,7 @@ class RegisterMember extends Component implements HasForms
                         TextInput::make('data.darbc_id')
                             ->label('DARBC ID number')
                             ->validationAttribute('DARBC ID')
-                            ->disabled(fn ($get) => $get('data.membership_status') == MembershipStatus::REPLACEMENT)
+                            ->disabled(fn($get) => $get('data.membership_status') == MembershipStatus::REPLACEMENT)
                             ->required(),
                         TextInput::make('data.sss_number')
                             ->validationAttribute('SSS Number')
@@ -217,11 +217,22 @@ class RegisterMember extends Component implements HasForms
                         TextInput::make('data.tin_number')
                             ->validationAttribute('TIN Number')
                             ->label('TIN number'),
+                        Select::make('data.tin_verification_status')
+                            ->label('TIN Verification Status')
+                            ->options([
+                                'NO RECORD FOUND' => 'NO RECORD FOUND',
+                                'NO RECORD FOUND/W/ TIN CARD' => 'NO RECORD FOUND/W/ TIN CARD',
+                                'NO TIN' => 'NO TIN',
+                                'REQUIREMENTS RECEIVED' => 'REQUIREMENTS RECEIVED',
+                                'TAN' => 'TAN',
+                                'VERIFIED' => 'VERIFIED',
+                            ])
+                            ->required(),
                         TextInput::make('data.contact_number')
                             ->label('Contact No.'),
                         Select::make('data.cluster_id')
                             ->label('Cluster')
-                            ->options(fn () => Cluster::orderByName()->selectRaw("id, concat(name, ' - ', address) as name")->pluck('name', 'id')),
+                            ->options(fn() => Cluster::orderByName()->selectRaw("id, concat(name, ' - ', address) as name")->pluck('name', 'id')),
                     ]),
                 Step::make('Application Date and Signature')
                     ->description('Date of membership application and signature is required.')
@@ -324,6 +335,7 @@ class RegisterMember extends Component implements HasForms
             'sss_number' => $this->data['sss_number'],
             'philhealth_number' => $this->data['philhealth_number'],
             'tin_number' => $this->data['tin_number'],
+            'tin_verification_status' => $this->data['tin_verification_status'],
             'contact_number' => $this->data['contact_number'],
             'application_date' => $this->data['application_date'],
         ]);

@@ -92,7 +92,7 @@ class UpdateMemberInformation extends Component implements HasForms
                         ])->required(),
                         Select::make('cluster_id')
                             ->label('Cluster')
-                            ->options(fn () => Cluster::orderByName()->selectRaw("id, concat(name, ' - ', address) as name")->pluck('name', 'id')),
+                            ->options(fn() => Cluster::orderByName()->selectRaw("id, concat(name, ' - ', address) as name")->pluck('name', 'id')),
                         TextInput::make('percentage')->required()->numeric()->minValue(0)->maxValue(100),
                         TextInput::make('darbc_id')->label('DARBC ID'),
                         Select::make('membership_status_id')
@@ -111,7 +111,7 @@ class UpdateMemberInformation extends Component implements HasForms
                             ->required(),
                         TextInput::make('occupation_details')
                             ->label('If others, please specify')
-                            ->required(fn ($get) => $get('occupation') == 4),
+                            ->required(fn($get) => $get('occupation') == 4),
                     ]),
                 Fieldset::make('Civil Status')
                     ->schema([
@@ -174,6 +174,17 @@ class UpdateMemberInformation extends Component implements HasForms
                         TextInput::make('tin_number')
                             ->validationAttribute('TIN Number')
                             ->label('TIN number'),
+                        Select::make('tin_verification_status')
+                            ->label('TIN Verification Status')
+                            ->options([
+                                'NO RECORD FOUND' => 'NO RECORD FOUND',
+                                'NO RECORD FOUND/W/ TIN CARD' => 'NO RECORD FOUND/W/ TIN CARD',
+                                'NO TIN' => 'NO TIN',
+                                'REQUIREMENTS RECEIVED' => 'REQUIREMENTS RECEIVED',
+                                'TAN' => 'TAN',
+                                'VERIFIED' => 'VERIFIED',
+                            ])
+                            ->required(),
                         TextInput::make('contact_number')
                             ->label('Contact No.'),
                     ]),
@@ -225,6 +236,7 @@ class UpdateMemberInformation extends Component implements HasForms
             'sss_number' => $this->member->sss_number,
             'philhealth_number' => $this->member->philhealth_number,
             'tin_number' => $this->member->tin_number,
+            'tin_verification_status' => $this->member->tin_verification_status,
             'contact_number' => $this->member->contact_number,
             'spa' => $this->member->spa,
             'holographic' => $this->member->holographic,
@@ -274,6 +286,7 @@ class UpdateMemberInformation extends Component implements HasForms
             'sss_number' => $this->data['sss_number'],
             'philhealth_number' => $this->data['philhealth_number'],
             'tin_number' => $this->data['tin_number'],
+            'tin_verification_status' => $this->data['tin_verification_status'],
             'contact_number' => $this->data['contact_number'],
             'spa' => $this->data['spa'],
             'holographic' => $this->data['holographic'],

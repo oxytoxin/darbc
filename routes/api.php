@@ -24,3 +24,4 @@ Route::resource('member-information', ApiMemberInformationController::class)->on
 Route::get('member-darbc-ids', [ApiMemberInformationController::class, 'darbc_ids']);
 Route::get('member-darbc-names', [ApiMemberInformationController::class, 'darbc_names']);
 Route::get('member-darbc-members', [ApiMemberInformationController::class, 'darbc_members']);
+Route::get('member-darbc-members-complete', [ApiMemberInformationController::class, 'darbc_members_complete']);

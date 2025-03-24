@@ -48,7 +48,23 @@ class ApiMemberInformationController extends Controller
     {
         return MemberInformation::query()
             ->join('users', 'users.id', '=', 'member_information.user_id')
-            ->select(['member_information.id', 'users.full_name'])
+            ->select([
+                'member_information.id',
+                'member_information.darbc_id',
+                'member_information.tin_verification_status',
+                'users.full_name',
+                'users.surname',
+                'users.first_name',
+                'users.middle_name',
+                'member_information.succession_number'])
+            ->when(request()->integer('status'), fn ($query) => $query->whereStatus(request()->integer('status')))
+            ->when(request()->boolean('holographic'), fn ($query) => $query->whereHolographic(request()->boolean('holographic')))
+            ->get();
+
+
+        return MemberInformation::query()
+            ->join('users', 'users.id', '=', 'member_information.user_id')
+            ->select(['member_information.id', 'member_information.darbc_id', 'users.full_name'])
             ->when(request()->integer('status'), fn ($query) => $query->whereStatus(request()->integer('status')))
             ->when(request()->boolean('holographic'), fn ($query) => $query->whereHolographic(request()->boolean('holographic')))
             ->get();
@@ -59,43 +75,61 @@ class ApiMemberInformationController extends Controller
         return MemberInformation::query()
             ->join('users', 'users.id', '=', 'member_information.user_id')
             ->join('free_lots', 'free_lots.user_id', '=', 'users.id') // Corrected this join
-            ->join('occupations', 'occupations.id', '=','member_information.occupation_id')
-            ->join('clusters', 'clusters.id', '=','member_information.cluster_id')
-            ->join('genders', 'genders.id', '=','member_information.gender_id')
-            ->join('membership_statuses', 'membership_statuses.id', '=','member_information.membership_status_id')
             ->select([
                 'member_information.darbc_id',
                 'users.surname',
                 'users.first_name',
-                'users.middle_name',
                 'member_information.succession_number',
                 'member_information.spa',
                 'free_lots.area',
-                'member_information.place_of_birth',
-                'occupations.name as occupation',
-                'member_information.mother_maiden_name',
-                'member_information.sss_number',
-                'clusters.name as cluster',
-                'genders.name as gender',
-                'member_information.occupation_details',
-                'member_information.spouse',
-                'member_information.tin_number',
-                'member_information.status',
-                'member_information.blood_type',
-                'member_information.children',
-                'member_information.philhealth_number',
-                'member_information.percentage',
-                'member_information.date_of_birth',
-                'member_information.religion',
-                'member_information.address_line',
-                'member_information.dependents_count',
-                'member_information.contact_number',
-                'member_information.deceased_at',
-                'membership_statuses.name as membership_status',
-                'member_information.civil_status',
-                'member_information.application_date',
             ])
             ->get();
+    }
+
+
+    public function darbc_members_complete()
+    {
+        return MemberInformation::query()
+        ->join('users', 'users.id', '=', 'member_information.user_id')
+        ->join('free_lots', 'free_lots.user_id', '=', 'users.id')
+        ->leftJoin('occupations', 'occupations.id', '=', 'member_information.occupation_id')
+        ->leftJoin('clusters', 'clusters.id', '=', 'member_information.cluster_id')
+        ->leftJoin('genders', 'genders.id', '=', 'member_information.gender_id')
+        ->leftJoin('membership_statuses', 'membership_statuses.id', '=', 'member_information.membership_status_id')
+        ->select([
+            'member_information.darbc_id',
+            'users.surname',
+            'users.first_name',
+            'users.middle_name',
+            'member_information.succession_number',
+            'member_information.spa',
+            'free_lots.area',
+            'member_information.place_of_birth',
+            'occupations.name as occupation',
+            'member_information.mother_maiden_name',
+            'member_information.sss_number',
+            'clusters.name as cluster',
+            'genders.name as gender',
+            'member_information.occupation_details',
+            'member_information.spouse',
+            'member_information.tin_number',
+'member_information.tin_verification_status',
+            'member_information.status',
+            'member_information.blood_type',
+            'member_information.children',
+            'member_information.philhealth_number',
+            'member_information.percentage',
+            'member_information.date_of_birth',
+            'member_information.religion',
+            'member_information.address_line',
+            'member_information.dependents_count',
+            'member_information.contact_number',
+            'member_information.deceased_at',
+            'membership_statuses.name as membership_status',
+            'member_information.civil_status',
+            'member_information.application_date',
+        ])
+        ->get();
     }
 
 }

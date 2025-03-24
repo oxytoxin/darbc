@@ -70,11 +70,11 @@ class MemberInformationQuery extends Component implements HasTable
     {
         return [
             TextColumn::make('darbc_id')
-                ->visible(fn () => $this->tableFilters['darbc_id']['isActive'])
+                ->visible(fn() => $this->tableFilters['darbc_id']['isActive'])
                 ->label('DARBC ID')
                 ->sortable(),
             BadgeColumn::make('status')
-                ->visible(fn () => $this->tableFilters['status']['isActive'])
+                ->visible(fn() => $this->tableFilters['status']['isActive'])
                 ->label('Status')
                 ->enum([
                     MemberInformation::STATUS_ACTIVE => 'Active',
@@ -87,61 +87,61 @@ class MemberInformationQuery extends Component implements HasTable
                     'danger' => MemberInformation::STATUS_DECEASED,
                 ]),
             TextColumn::make('percentage')
-                ->visible(fn () => $this->tableFilters['percentage']['isActive'])
+                ->visible(fn() => $this->tableFilters['percentage']['isActive'])
                 ->label('Percentage')
                 ->sortable(),
             TextColumn::make('user.surname')
-                ->visible(fn () => $this->tableFilters['user_surname']['isActive'])
+                ->visible(fn() => $this->tableFilters['user_surname']['isActive'])
                 ->label('Last Name')
                 ->sortable(),
             TextColumn::make('user.first_name')
-                ->visible(fn () => $this->tableFilters['user_first_name']['isActive'])
+                ->visible(fn() => $this->tableFilters['user_first_name']['isActive'])
                 ->label('First Name'),
             TextColumn::make('user.middle_name')
-                ->visible(fn () => $this->tableFilters['user_middle_name']['isActive'])
+                ->visible(fn() => $this->tableFilters['user_middle_name']['isActive'])
                 ->label('Middle Name'),
             TextColumn::make('cluster.name')
-                ->visible(fn () => $this->tableFilters['cluster']['isActive'])
+                ->visible(fn() => $this->tableFilters['cluster']['isActive'])
                 ->label('Cluster'),
             BadgeColumn::make('succession_number')
                 ->colors([
                     'success'
                 ])
                 ->sortable()
-                ->formatStateUsing(fn ($state) => $state == 0 ? 'Original' : ordinal($state) . ' Successor')
-                ->visible(fn () => $this->tableFilters['succession_number']['isActive'])
+                ->formatStateUsing(fn($state) => $state == 0 ? 'Original' : ordinal($state) . ' Successor')
+                ->visible(fn() => $this->tableFilters['succession_number']['isActive'])
                 ->label('Ownership'),
             TextColumn::make('date_of_birth')
-                ->visible(fn () => $this->tableFilters['date_of_birth']['isActive'])
+                ->visible(fn() => $this->tableFilters['date_of_birth']['isActive'])
                 ->label('Date of Birth')
                 ->date('F d, Y'),
             TextColumn::make('deceased_at')
-                ->visible(fn () => $this->tableFilters['deceased_at']['isActive'])
+                ->visible(fn() => $this->tableFilters['deceased_at']['isActive'])
                 ->label('Date of Death')
                 ->date('F d, Y'),
             TextColumn::make('place_of_birth')
-                ->visible(fn () => $this->tableFilters['place_of_birth']['isActive'])
+                ->visible(fn() => $this->tableFilters['place_of_birth']['isActive'])
                 ->label('Place of Birth'),
             TextColumn::make('gender.name')
-                ->visible(fn () => $this->tableFilters['gender_name']['isActive'])
+                ->visible(fn() => $this->tableFilters['gender_name']['isActive'])
                 ->label('Gender'),
             TextColumn::make('blood_type')
-                ->visible(fn () => $this->tableFilters['blood_type']['isActive'])
+                ->visible(fn() => $this->tableFilters['blood_type']['isActive'])
                 ->label('Blood Type'),
             TextColumn::make('religion')
-                ->visible(fn () => $this->tableFilters['religion']['isActive'])
+                ->visible(fn() => $this->tableFilters['religion']['isActive'])
                 ->label('Religion'),
             TextColumn::make('membership_status.name')
-                ->visible(fn () => $this->tableFilters['membership_status_name']['isActive'])
+                ->visible(fn() => $this->tableFilters['membership_status_name']['isActive'])
                 ->label('Membership'),
             TextColumn::make('occupation.name')
-                ->visible(fn () => $this->tableFilters['occupation_name']['isActive'])
+                ->visible(fn() => $this->tableFilters['occupation_name']['isActive'])
                 ->label('Occupation'),
             TextColumn::make('occupation_details')
-                ->visible(fn () => $this->tableFilters['occupation_details']['isActive'])
+                ->visible(fn() => $this->tableFilters['occupation_details']['isActive'])
                 ->label('Occupation Details'),
             TextColumn::make('address_line')
-                ->visible(fn () => $this->tableFilters['address_line']['isActive'])
+                ->visible(fn() => $this->tableFilters['address_line']['isActive'])
                 ->label('Address'),
             BadgeColumn::make('civil_status')
                 ->enum([
@@ -151,42 +151,45 @@ class MemberInformationQuery extends Component implements HasTable
                     MemberInformation::CS_WIDOW => 'Widow',
                     MemberInformation::CS_UNKNOWN => 'Unknown',
                 ])
-                ->visible(fn () => $this->tableFilters['civil_status']['isActive'])
+                ->visible(fn() => $this->tableFilters['civil_status']['isActive'])
                 ->label('Civil Status'),
             TextColumn::make('mother_maiden_name')
-                ->visible(fn () => $this->tableFilters['mother_maiden_name']['isActive'])
+                ->visible(fn() => $this->tableFilters['mother_maiden_name']['isActive'])
                 ->label("Mother's Maiden Name"),
             TextColumn::make('spouse')
-                ->visible(fn () => $this->tableFilters['spouse']['isActive'])
+                ->visible(fn() => $this->tableFilters['spouse']['isActive'])
                 ->label('Name of Spouse'),
             TextColumn::make('children_list')
-                ->formatStateUsing(fn ($record) => implode(', ', collect($record->children)->pluck('name')->toArray()))
-                ->visible(fn () => $this->tableFilters['children_list']['isActive'])
+                ->formatStateUsing(fn($record) => implode(', ', collect($record->children)->pluck('name')->toArray()))
+                ->visible(fn() => $this->tableFilters['children_list']['isActive'])
                 ->label('Children'),
             TextColumn::make('dependents_count')
-                ->visible(fn () => $this->tableFilters['dependents_count']['isActive'])
+                ->visible(fn() => $this->tableFilters['dependents_count']['isActive'])
                 ->label('No. of Dependents')
                 ->sortable()
                 ->alignCenter(),
             TextColumn::make('spa_list')
-                ->formatStateUsing(fn ($record) => implode(', ', $record->spa))
-                ->visible(fn () => $this->tableFilters['spa_list']['isActive'])
+                ->formatStateUsing(fn($record) => implode(', ', $record->spa))
+                ->visible(fn() => $this->tableFilters['spa_list']['isActive'])
                 ->label('SPA/Representatives'),
             TextColumn::make('sss_number')
-                ->visible(fn () => $this->tableFilters['sss_number']['isActive'])
+                ->visible(fn() => $this->tableFilters['sss_number']['isActive'])
                 ->label('SSS'),
             TextColumn::make('tin_number')
-                ->visible(fn () => $this->tableFilters['tin_number']['isActive'])
+                ->visible(fn() => $this->tableFilters['tin_number']['isActive'])
                 ->label('TIN'),
+            TextColumn::make('tin_verification_status')
+                ->visible(fn() => $this->tableFilters['tin_verification_status']['isActive'])
+                ->label('TIN Verification Status'),
             TextColumn::make('philhealth_number')
-                ->visible(fn () => $this->tableFilters['philhealth_number']['isActive'])
+                ->visible(fn() => $this->tableFilters['philhealth_number']['isActive'])
                 ->label('PhilHealth'),
             TextColumn::make('contact_number')
-                ->visible(fn () => $this->tableFilters['contact_number']['isActive'])
+                ->visible(fn() => $this->tableFilters['contact_number']['isActive'])
                 ->label('Contact Number'),
             TextColumn::make('application_date')
                 ->date('F d, Y')
-                ->visible(fn () => $this->tableFilters['application_date']['isActive'])
+                ->visible(fn() => $this->tableFilters['application_date']['isActive'])
                 ->label('Date of Application')
         ];
     }
@@ -253,6 +256,8 @@ class MemberInformationQuery extends Component implements HasTable
                 ->label('SSS'),
             Filter::make('tin_number')
                 ->label('TIN'),
+            Filter::make('tin_verification_status')
+                ->label('TIN Verification Status'),
             Filter::make('philhealth_number')
                 ->label('PhilHealth'),
             Filter::make('contact_number')
@@ -311,18 +316,18 @@ class MemberInformationQuery extends Component implements HasTable
 
                 ])->query(function ($query, $data) {
                     info($data);
-                    $query->when($data['darbc_id'], fn ($q) => $q->where('darbc_id', $data['darbc_id']));
-                    $query->when($data['status'], fn ($q) => $q->where('status', $data['status']));
-                    $query->when($data['first_name'], fn ($q) => $q->whereRelation('user', 'first_name', 'like', "%{$data['first_name']}%"));
-                    $query->when($data['last_name'], fn ($q) => $q->whereRelation('user', 'surname', 'like', "%{$data['last_name']}%"));
-                    $query->when($data['middle_name'], fn ($q) => $q->whereRelation('user', 'middle_name', 'like', "%{$data['middle_name']}%"));
-                    $query->when($data['ownership'], fn ($q) => $q->where('membership_status_id', $data['ownership']));
-                    $query->when($data['civil_status'], fn ($q) => $q->where('civil_status', $data['civil_status']));
-                    $query->when($data['occupation'], fn ($q) => $q->where('occupation_id', $data['occupation']));
-                    $query->when($data['blood_type'], fn ($q) => $q->where('blood_type', $data['blood_type']));
-                    $query->when($data['cluster_id'], fn ($q) => $q->whereClusterId($data['cluster_id']));
-                    $query->when($data['from'], fn ($q) => $q->whereDate('application_date', '>=', $data['from']));
-                    $query->when($data['to'], fn ($q) => $q->whereDate('application_date', '<=', $data['to']));
+                    $query->when($data['darbc_id'], fn($q) => $q->where('darbc_id', $data['darbc_id']));
+                    $query->when($data['status'], fn($q) => $q->where('status', $data['status']));
+                    $query->when($data['first_name'], fn($q) => $q->whereRelation('user', 'first_name', 'like', "%{$data['first_name']}%"));
+                    $query->when($data['last_name'], fn($q) => $q->whereRelation('user', 'surname', 'like', "%{$data['last_name']}%"));
+                    $query->when($data['middle_name'], fn($q) => $q->whereRelation('user', 'middle_name', 'like', "%{$data['middle_name']}%"));
+                    $query->when($data['ownership'], fn($q) => $q->where('membership_status_id', $data['ownership']));
+                    $query->when($data['civil_status'], fn($q) => $q->where('civil_status', $data['civil_status']));
+                    $query->when($data['occupation'], fn($q) => $q->where('occupation_id', $data['occupation']));
+                    $query->when($data['blood_type'], fn($q) => $q->where('blood_type', $data['blood_type']));
+                    $query->when($data['cluster_id'], fn($q) => $q->whereClusterId($data['cluster_id']));
+                    $query->when($data['from'], fn($q) => $q->whereDate('application_date', '>=', $data['from']));
+                    $query->when($data['to'], fn($q) => $q->whereDate('application_date', '<=', $data['to']));
                 }),
         ];
     }
@@ -336,7 +341,7 @@ class MemberInformationQuery extends Component implements HasTable
     {
         return [
             ViewAction::make()
-                ->url(fn ($record) => route('release-admin.member-profile', ['member' => $record])),
+                ->url(fn($record) => route('release-admin.member-profile', ['member' => $record])),
         ];
     }
 
