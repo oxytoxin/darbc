@@ -1,3 +1,4 @@
+
 <h4 class="font-bold text-gray-800">RSBSA</h4>
 <hr class="mb-4">
 <x-minor.nav-link href="{{ route('rsbsa.dashboard') }}" :active="request()->routeIs('rsbsa.dashboard')">
@@ -7,6 +8,10 @@
     </svg>
     <span class="font-medium">Overview</span>
 </x-minor.nav-link>
+
+
+
+
 <x-minor.nav-link href="{{ route('rsbsa.manage-members') }}" :active="request()->routeIs('rsbsa.manage-members')">
     <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round"
@@ -14,3 +19,6 @@
     </svg>
     <span class="font-medium">Members</span>
 </x-minor.nav-link>
+
+
+

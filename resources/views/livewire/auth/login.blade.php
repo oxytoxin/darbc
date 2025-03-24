@@ -15,6 +15,9 @@
                 <x-login-link :user-attributes="['username' => 'cashier2']" label="Login as cashier2" />
                 <x-login-link :user-attributes="['username' => 'cashier19']" label="Login as cashier19" />
                 <x-login-link :user-attributes="['username' => 'j7']" label="Login as office staff" />
+                <x-login-link :user-attributes="['username' => 'rsbsaofficer']" label="Login as rsbsa officer" />
+                
+
             </div>
             @endenv
 

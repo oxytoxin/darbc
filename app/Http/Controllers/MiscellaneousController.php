@@ -22,6 +22,9 @@ class MiscellaneousController extends Controller
             case Role::CASHIER:
                 return redirect()->route('cashier.dashboard');
                 break;
+            case Role::RSBSA_OFFICER:
+                return redirect()->route('rsbsa.dashboard');
+                break;
 
             default:
                 abort(404);

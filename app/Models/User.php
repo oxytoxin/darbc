@@ -158,4 +158,15 @@ class User extends Authenticatable implements HasMedia, FilamentUser, HasName
     {
         return $this->hasMany(ElderlyIncentive::class);
     }
+
+
+    public function hasRole($roleId)
+    {
+        return $this->roles->contains('id', $roleId);
+    }
+
+    public function isRsbsaOfficer()
+    {
+        return $this->hasRole(\App\Models\Role::RSBSA_OFFICER);
+    }
 }

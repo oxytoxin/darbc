@@ -31,6 +31,8 @@ class AuthServiceProvider extends ServiceProvider
             return $user?->username == 'admin';
         });
 
+        // Gate::define('access-rsbsa', fn ($user) => $user->isRsbsaOfficer());
+
         if (app()->environment('production')) {
             LogViewer::auth(function ($request) {
                 return $request->user()

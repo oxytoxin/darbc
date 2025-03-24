@@ -6,6 +6,7 @@ namespace Database\Seeders;
 
 use Artisan;
 use Illuminate\Database\Seeder;
+use Database\Seeders\RsbsaRoleSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -36,5 +37,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LotAddressSeeder::class);
         $this->call(AreaAddressSeeder::class);
         $this->call(LotInformationSeeder::class);
+        $this->call(RsbsaRoleSeeder::class);
     }
 }
