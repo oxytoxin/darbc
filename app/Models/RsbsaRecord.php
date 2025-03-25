@@ -9,61 +9,141 @@ use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Support\Str;
+
 class RsbsaRecord extends Model implements HasMedia
 {
     use HasFactory;
     use InteractsWithMedia;
 
     const FIELDS = [
-        'surname',
-        'first_name',
-        'middle_name',
-        // 'extension_name',
-        // 'sex',
-        // 'contact_number',
-        // 'date_of_birth',
-        // 'place_of_birth_municipality',
-        // 'place_of_birth_province',
-        // 'place_of_birth_country',
-        // 'religion',
-        // 'civil_status',
-        // 'mother_maiden_name',
-        // 'name_of_spouse',
-        // 'highest_formal_education',
-        // 'id_type',
-        // 'id_number',
-        // 'region_code',
-        // 'province_code',
-        // 'city_municipality_code',
-        // 'barangay_code',
+//header
+
+        'region_code',
+        'province_code',
+        'city_municipality_code',
+        'barangay_code',
+        'two_by_two',
+
+// personal information
+         'surname',
+         'middle_name',
+         'first_name',
+         'extension_name',
+         'gender_id',
+         'date_of_birth',
+         'contact_number',
+         'landline_number',
+// ADDRESS INFORMATION
+        'house_lot_bldg_purok',
+        'street_sitio_subdv',
+        'barangay',
+        'city_municipality',
+        'province',
+        'region',
+
+        // BIRTH & CIVIL STATUS
+        'place_of_birth_municipality',
+        'place_of_birth_province',
+        'place_of_birth_country',
+        'civil_status',
+        'name_of_spouse',
+        'mother_maiden_name',
+        'religion',
+
+        // House Hold information
+        // 'household_head',
+        // 'name_of_household_head',
+        // 'relationship_with_household_head',
+        'no_of_living_household_members',
+        'no_of_male',
+        'no_of_female',
+
+        // EDUCATION
+
+        'highest_formal_education',
+        //'is_pwd',
+        // 'is_4ps_beneficiary',
+        // 'is_indigenous_group_member',
+        // 'indigenous_group_name',
+
+
+        // ID
+        'has_government_id',
+        'id_type',
+        'id_number',
+
+        // FARMERS ASSOCIATION
+        'is_farmers_association_member',
+        'farmers_association_name',
+
+        // EMERGENCY CONTACT
+        'emergency_contact_name',
+        'emergency_contact_number',
+
+        // LIVELIHOOD
+        'main_livelihood',
+
+        // Annual Income
+        'gross_annual_income_farming',
+        'gross_annual_income_nonfarming',
+
+
+
+
+
     ];
 
     public function missingDetails(): Attribute
-{
-    return new Attribute(
-        get: function () {
-            return collect($this->toArray())
-                ->filter(function ($v, $k) {
-                    return in_array($k, self::FIELDS) && (is_null($v) || $v === '' || $v === 'Unknown');
-                })
-                ->keys()
-                ->map(fn($v) => Str::of($v)->replace('_', ' ')->upper());
-        }
-    );
-}
+    {
+        return new Attribute(
+            get: function () {
+                $missing = collect($this->toArray())
+                    ->filter(function ($v, $k) {
+                        // Skip checking boolean values, even if false
+                        if (in_array($k, self::FIELDS) && is_bool($v)) {
+                            return false;
+                        }
 
-public function missingDetailsCount(): Attribute
-{
-    return new Attribute(
-        get: function () {
-            return collect($this->toArray())
-                ->filter(function ($v, $k) {
-                    return in_array($k, self::FIELDS) && (is_null($v) || $v === '' || $v === 'Unknown');
-                })
-                ->count();
-        }
-    );
-}
+                        return in_array($k, self::FIELDS) && (is_null($v) || $v === '' || $v === 'Unknown');
+                    })
+                    ->keys()
+                    ->map(fn($v) => Str::of($v)->replace('_', ' ')->upper())
+                    ->toArray();
+
+                // Check media
+                if (!$this->hasMedia('two_by_two')) {
+                    $missing[] = 'TWO BY TWO';
+                }
+
+                return collect($missing);
+            }
+        );
+    }
+
+    public function missingDetailsCount(): Attribute
+    {
+        return new Attribute(
+            get: function () {
+                $missingCount = collect($this->toArray())
+                    ->filter(function ($v, $k) {
+                        if (in_array($k, self::FIELDS) && is_bool($v)) {
+                            return false;
+                        }
+
+                        return in_array($k, self::FIELDS) && (is_null($v) || $v === '' || $v === 'Unknown');
+                    })
+                    ->count();
+
+                if (!$this->hasMedia('two_by_two')) {
+                    $missingCount++;
+                }
+
+                return $missingCount;
+            }
+        );
+    }
+
+
 
 
     public function registerMediaCollections(): void

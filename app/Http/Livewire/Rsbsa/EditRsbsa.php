@@ -41,16 +41,16 @@ class EditRsbsa extends Component implements HasForms
             'darbc_id' => $this->rsbsa->memberInformation->darbc_id ?? null,
             'memberInformation_information_id' => $this->rsbsa->memberInformation->id ?? null,
             'user_id' => $this->rsbsa->memberInformation->user_id ?? null,
-            'surname' => $this->rsbsa->memberInformation->user?->surname ?? null,
-            'first_name' => $this->rsbsa->memberInformation->user?->first_name ?? null,
-            'middle_name' => $this->rsbsa->memberInformation->user?->middle_name ?? null,
-            'gender' => $this->rsbsa->memberInformation?->gender->name ?? null,
-            'date_of_birth' => $this->rsbsa->memberInformation?->date_of_birth ?? null,
-            'contact_number' => $this->rsbsa->memberInformation?->contact_number ?? null,
-            'religion' => $this->rsbsa->memberInformation?->religion ?? null,
-            'civil_status' => $this->rsbsa->memberInformation?->civil_status ?? null,
-            'name_of_spouse' => $this->rsbsa->memberInformation?->spouse ?? null,
-            'mother_maiden_name' => $this->rsbsa->memberInformation?->mother_maiden_name ?? null,
+            // 'surname' => $this->rsbsa->memberInformation->user?->surname ?? null,
+            // 'first_name' => $this->rsbsa->memberInformation->user?->first_name ?? null,
+            // 'middle_name' => $this->rsbsa->memberInformation->user?->middle_name ?? null,
+            // 'gender' => $this->rsbsa->memberInformation?->gender->name ?? null,
+            // 'date_of_birth' => $this->rsbsa->memberInformation?->date_of_birth ?? null,
+            // 'contact_number' => $this->rsbsa->memberInformation?->contact_number ?? null,
+            // 'religion' => $this->rsbsa->memberInformation?->religion ?? null,
+            // 'civil_status' => $this->rsbsa->memberInformation?->civil_status ?? null,
+            // 'name_of_spouse' => $this->rsbsa->memberInformation?->spouse ?? null,
+            // 'mother_maiden_name' => $this->rsbsa->memberInformation?->mother_maiden_name ?? null,
         ]);
 
         $twoByTwoMediaPath = $this->rsbsa->getFirstMediaPath('two_by_two');
@@ -77,26 +77,27 @@ class EditRsbsa extends Component implements HasForms
         $validatedData = $this->form->validate();
 
         $twoByTwo['two_by_two'] = $validatedData['two_by_two'];
-       $validatedData['enrollment_type'] = 'Updating';
+        $validatedData['enrollment_type'] = 'Updating';
         unset($validatedData['two_by_two']);
 
 
-        unset(
-            $validatedData['darbc_id'],
-            $validatedData['memberInformation_information_id'],
-            $validatedData['user_id'],
-            $validatedData['surname'],
-            $validatedData['first_name'],
-            $validatedData['middle_name'],
-            $validatedData['gender'],
-            $validatedData['date_of_birth'],
-            $validatedData['contact_number'],
-            $validatedData['religion'],
-            $validatedData['civil_status'],
-            $validatedData['name_of_spouse'],
-            $validatedData['mother_maiden_name'],
+        // unset(
+        //     $validatedData['darbc_id'],
+        //     $validatedData['memberInformation_information_id'],
+        //     $validatedData['user_id'],
+        //     $validatedData['surname'],
+        //     $validatedData['first_name'],
+        //     $validatedData['middle_name'],
+        //     $validatedData['gender'],
+        //     $validatedData['date_of_birth'],
+        //     $validatedData['contact_number'],
+        //     $validatedData['religion'],
+        //     $validatedData['civil_status'],
+        //     $validatedData['name_of_spouse'],
+        //     $validatedData['mother_maiden_name'],
 
-        );
+        // );
+        // dd($validatedData);
         $this->rsbsa->update($validatedData);
         if ($twoByTwo['two_by_two']) {
             $this->rsbsa->addMedia(collect( $twoByTwo['two_by_two'])?->first())->toMediaCollection('two_by_two');

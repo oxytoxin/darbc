@@ -109,12 +109,13 @@ class RsbsaFroms extends Controller
                             ->helperText('Example: "Jr.", "Sr.", "III", "IV" (Leave blank if not applicable)'),
                         //->hint('Suffix such as Jr., Sr., III, IV (optional)'),
 
-                        Select::make('gender')
-                        ->default(Gender::UNKNOWN)
+                        Select::make('gender_id')
+
                         ->label('Gender')
-                        ->required()
+                        // ->required()
+                        ->default(Gender::UNKNOWN)
                         ->disablePlaceholderSelection()
-                        ->options(Gender::pluck('name', 'id')),
+                        ->options(Gender::all()->pluck('name', 'id')),
 
                         DatePicker::make('date_of_birth')->hint('(Editable in Profiling)'),
                         TextInput::make('contact_number')->label('Mobile Number'),
@@ -157,12 +158,12 @@ class RsbsaFroms extends Controller
                                 MemberInformation::CS_LEGALLY_SEPARATED => 'Legally Separated',
                                 MemberInformation::CS_UNKNOWN => 'Unknown',
                             ])
-                            ->disabled()->hint('(Editable in Profiling)')
+
 
                             ->default(MemberInformation::CS_SINGLE),
-                        TextInput::make('religion')->disabled()->hint('(Editable in Profiling)'),
-                        TextInput::make('name_of_spouse')->disabled()->hint('(Editable in Profiling)'),
-                        TextInput::make('mother_maiden_name')->disabled()->hint('(Editable in Profiling)'),
+                        TextInput::make('religion'),
+                        TextInput::make('name_of_spouse'),
+                        TextInput::make('mother_maiden_name'),
                     ]),
 
                     Fieldset::make('Household Information')->columns(3)->columnSpanFull()->schema([

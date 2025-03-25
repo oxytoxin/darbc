@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('darbc_id');
             $table->unsignedBigInteger('member_information_id');
             $table->foreign('member_information_id')->references('id')->on('member_information')->onDelete('cascade');
-            
+
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
@@ -35,15 +35,21 @@ return new class extends Migration
             $table->string('first_name')->nullable();
             $table->string('extension_name')->nullable();
             $table->string('sex')->nullable();
+            $table->string('contact_number')->nullable();
+            $table->string('landline_number')->nullable();
+            $table->date('date_of_birth')->nullable();
+
+              //ADDRESS INFORMATION
             $table->text('house_lot_bldg_purok')->nullable();
             $table->string('street_sitio_subdv')->nullable();
             $table->string('barangay')->nullable();
             $table->string('city_municipality')->nullable();
             $table->string('province')->nullable();
             $table->string('region')->nullable();
-            $table->string('contact_number')->nullable();
-            $table->string('landline_number')->nullable();
-            $table->date('date_of_birth')->nullable();
+
+            //
+
+
             $table->string('place_of_birth_municipality')->nullable();
             $table->string('place_of_birth_province')->nullable();
             $table->string('place_of_birth_country')->nullable();
@@ -51,12 +57,15 @@ return new class extends Migration
             $table->string('civil_status')->nullable();
             $table->string('name_of_spouse')->nullable();
             $table->string('mother_maiden_name')->nullable();
+
+
             $table->boolean('household_head')->default(false);
             $table->string('name_of_household_head')->nullable();
             $table->string('relationship_with_household_head')->nullable();
             $table->integer('no_of_living_household_members')->default(0);
             $table->integer('no_of_male')->default(0);
             $table->integer('no_of_female')->default(0);
+            
             $table->string('highest_formal_education')->nullable();
             $table->boolean('is_pwd')->default(false);
             $table->boolean('is_4ps_beneficiary')->default(false);
