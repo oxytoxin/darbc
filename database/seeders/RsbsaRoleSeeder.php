@@ -21,7 +21,7 @@ class RsbsaRoleSeeder extends Seeder
             'name' => 'Rsbsa Officer',
         ]);
 
-        if (app()->environment('local')) {
+        // if (app()->environment('local')) {
 
             $rsbsa_officer = User::create([
                 'first_name' => 'Juan ',
@@ -32,7 +32,7 @@ class RsbsaRoleSeeder extends Seeder
 
             $rsbsa_officer->roles()->attach(Role::RSBSA_OFFICER);
 
-        }
+        // }
 
     }
 }
