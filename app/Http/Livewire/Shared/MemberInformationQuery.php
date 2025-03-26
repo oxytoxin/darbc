@@ -315,7 +315,6 @@ class MemberInformationQuery extends Component implements HasTable
                         ->withoutTime(),
 
                 ])->query(function ($query, $data) {
-                    info($data);
                     $query->when($data['darbc_id'], fn($q) => $q->where('darbc_id', $data['darbc_id']));
                     $query->when($data['status'], fn($q) => $q->where('status', $data['status']));
                     $query->when($data['first_name'], fn($q) => $q->whereRelation('user', 'first_name', 'like', "%{$data['first_name']}%"));
