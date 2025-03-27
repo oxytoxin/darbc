@@ -48,6 +48,7 @@ class ApiMemberInformationController extends Controller
     {
         return MemberInformation::query()
             ->join('users', 'users.id', '=', 'member_information.user_id')
+            ->leftJoin('rsbsa_records', 'member_information.id', '=', 'rsbsa_records.member_information_id')
             ->select([
                 'member_information.id',
                 'member_information.darbc_id',
@@ -56,7 +57,9 @@ class ApiMemberInformationController extends Controller
                 'users.surname',
                 'users.first_name',
                 'users.middle_name',
-                'member_information.succession_number'])
+                'member_information.succession_number',
+                'rsbsa_records.id as rsbsa_record_id',
+                'rsbsa_records.missingDetails'])
             ->when(request()->integer('status'), fn ($query) => $query->whereStatus(request()->integer('status')))
             ->when(request()->boolean('holographic'), fn ($query) => $query->whereHolographic(request()->boolean('holographic')))
             ->get();
@@ -113,7 +116,7 @@ class ApiMemberInformationController extends Controller
             'member_information.occupation_details',
             'member_information.spouse',
             'member_information.tin_number',
-'member_information.tin_verification_status',
+            'member_information.tin_verification_status',
             'member_information.status',
             'member_information.blood_type',
             'member_information.children',
