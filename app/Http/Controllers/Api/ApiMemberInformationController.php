@@ -100,6 +100,7 @@ class ApiMemberInformationController extends Controller
                     'first_name' => $member->user->first_name ?? null,
                     'middle_name' => $member->user->middle_name ?? null,
                     'succession_number' => $member->succession_number,
+                    'rsbsa_record_id' => $rsbsa ? $rsbsa->id : null,
                     'has_missing_details' => $rsbsa ? $rsbsa->missingDetails->isNotEmpty() : false,
                     'total_missing_details' => $rsbsa ? $rsbsa->missingDetailsCount : 0,
                 ];
