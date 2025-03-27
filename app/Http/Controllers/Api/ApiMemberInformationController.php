@@ -44,34 +44,71 @@ class ApiMemberInformationController extends Controller
             ->get();
     }
 
+    // public function darbc_names()
+    // {
+    //     return MemberInformation::query()
+    //         ->join('users', 'users.id', '=', 'member_information.user_id')
+    //         ->leftJoin('rsbsa_records', 'member_information.id', '=', 'rsbsa_records.member_information_id')
+    //         ->select([
+    //             'member_information.id',
+    //             'member_information.darbc_id',
+    //             'member_information.tin_verification_status',
+    //             'users.full_name',
+    //             'users.surname',
+    //             'users.first_name',
+    //             'users.middle_name',
+    //             'member_information.succession_number',
+    //             'rsbsa_records.id as rsbsa_record_id',
+
+    //             // 'rsbsa_records.missingDetails'
+    //             ])
+    //         ->when(request()->integer('status'), fn ($query) => $query->whereStatus(request()->integer('status')))
+    //         ->when(request()->boolean('holographic'), fn ($query) => $query->whereHolographic(request()->boolean('holographic')))
+    //         ->get();
+
+
+    //     return MemberInformation::query()
+    //         ->join('users', 'users.id', '=', 'member_information.user_id')
+    //         ->select(['member_information.id', 'member_information.darbc_id', 'users.full_name'])
+    //         ->when(request()->integer('status'), fn ($query) => $query->whereStatus(request()->integer('status')))
+    //         ->when(request()->boolean('holographic'), fn ($query) => $query->whereHolographic(request()->boolean('holographic')))
+    //         ->get();
+    // }
+
     public function darbc_names()
     {
-        return MemberInformation::query()
-            ->join('users', 'users.id', '=', 'member_information.user_id')
-            ->leftJoin('rsbsa_records', 'member_information.id', '=', 'rsbsa_records.member_information_id')
+        $members = MemberInformation::query()
+            ->with(['user', 'rsbsa']) // Eager load relationships
             ->select([
-                'member_information.id',
-                'member_information.darbc_id',
-                'member_information.tin_verification_status',
-                'users.full_name',
-                'users.surname',
-                'users.first_name',
-                'users.middle_name',
-                'member_information.succession_number',
-                'rsbsa_records.id as rsbsa_record_id',
-                'rsbsa_records.missingDetails'])
+                'id',
+                'user_id',
+                'darbc_id',
+                'tin_verification_status',
+                'succession_number',
+            ])
             ->when(request()->integer('status'), fn ($query) => $query->whereStatus(request()->integer('status')))
             ->when(request()->boolean('holographic'), fn ($query) => $query->whereHolographic(request()->boolean('holographic')))
-            ->get();
+            ->get()
+            ->map(function ($member) {
+                $rsbsa = $member->rsbsa;
 
+                return [
+                    'id' => $member->id,
+                    'darbc_id' => $member->darbc_id,
+                    'full_name' => $member->user->full_name ?? null,
+                    'surname' => $member->user->surname ?? null,
+                    'first_name' => $member->user->first_name ?? null,
+                    'middle_name' => $member->user->middle_name ?? null,
+                    'succession_number' => $member->succession_number,
+                    'has_missing_details' => $rsbsa ? $rsbsa->missingDetails->isNotEmpty() : false,
+                    'total_missing_details' => $rsbsa ? $rsbsa->missingDetailsCount : 0,
+                ];
+            });
 
-        return MemberInformation::query()
-            ->join('users', 'users.id', '=', 'member_information.user_id')
-            ->select(['member_information.id', 'member_information.darbc_id', 'users.full_name'])
-            ->when(request()->integer('status'), fn ($query) => $query->whereStatus(request()->integer('status')))
-            ->when(request()->boolean('holographic'), fn ($query) => $query->whereHolographic(request()->boolean('holographic')))
-            ->get();
+        return $members;
     }
+
+
 
     public function darbc_members()
     {
