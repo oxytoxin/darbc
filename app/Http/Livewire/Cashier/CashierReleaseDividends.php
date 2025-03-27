@@ -92,16 +92,19 @@ class CashierReleaseDividends extends ReleaseDividends
                 $printer->text($gift_certificate_number);
                 $printer->feed(2);
             }
+            $printer->feed(2);
+            $printer->text("Giveaways:");
+            $printer->feed(1);
             foreach ($dividend->particulars as $key => $value) {
-                $printer->text($value['name']);
-                $printer->feed(1);
+                $printer->text($value['name'] . "  ");
                 if ($value['claimed']) {
                     $printer->text($dividend->release->particulars[$value['name']] ?? "");
                 } else {
                     $printer->text('UNCLAIMED');
                 }
+                $printer->feed(1);
             }
-            $printer->feed(2);
+            $printer->feed(1);
             $printer->text("TELLER NAME:  " . $dividend->cashier->first_name . ' ' . $dividend->cashier->surname . "\n");
             $printer->feed(1);
             $printer->text("Date : " . $dividend->released_at->format('m/d/Y'));
@@ -193,16 +196,19 @@ class CashierReleaseDividends extends ReleaseDividends
                 $printer->text($gift_certificate_number);
                 $printer->feed(2);
             }
+            $printer->feed(2);
+            $printer->text("Giveaways:");
+            $printer->feed(1);
             foreach ($dividend->particulars as $key => $value) {
-                $printer->text($value['name']);
-                $printer->feed(1);
+                $printer->text($value['name'] . "  ");
                 if ($value['claimed']) {
                     $printer->text($dividend->release->particulars[$value['name']] ?? "");
                 } else {
                     $printer->text('UNCLAIMED');
                 }
+                $printer->feed(1);
             }
-            $printer->feed(2);
+            $printer->feed(1);
             $printer->text("TELLER NAME:  " . $dividend->cashier->first_name . ' ' . $dividend->cashier->surname . "\n");
             $printer->feed(1);
             $printer->text("Date : " . $dividend->released_at->format('m/d/Y'));
