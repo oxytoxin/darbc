@@ -28,8 +28,8 @@ class ClusterManagement extends Component implements HasTable
         return [
             TextColumn::make('name'),
             TextColumn::make('address'),
-            TextColumn::make('members_count')
-                ->counts('members'),
+            TextColumn::make('active_members_count')
+                ->counts('active_members'),
             TextColumn::make('leader.full_name'),
 
         ];
@@ -42,7 +42,7 @@ class ClusterManagement extends Component implements HasTable
                 ->label('Unassigned Members')
                 ->button()
                 ->outlined()
-                ->url(fn () => route('clusterless-members')),
+                ->url(fn() => route('clusterless-members')),
             CreateAction::make('create')
                 ->form([
                     TextInput::make('name')->required(),
@@ -50,7 +50,7 @@ class ClusterManagement extends Component implements HasTable
                     Select::make('leader_id')
                         ->searchable()
                         ->debounce(2000)
-                        ->options(fn () => User::has('member_information')->pluck('full_name', 'id'))
+                        ->options(fn() => User::has('member_information')->pluck('full_name', 'id'))
                         ->label('Leader'),
                 ])
                 ->icon('heroicon-o-plus')
@@ -68,7 +68,7 @@ class ClusterManagement extends Component implements HasTable
                     Select::make('leader_id')
                         ->debounce(2000)
                         ->searchable()
-                        ->options(fn () => User::has('member_information')->pluck('full_name', 'id'))
+                        ->options(fn() => User::has('member_information')->pluck('full_name', 'id'))
                         ->label('Leader'),
                 ])
                 ->modalWidth('md')
@@ -77,7 +77,7 @@ class ClusterManagement extends Component implements HasTable
             Action::make('members')
                 ->color('primary')
                 ->outlined()
-                ->url(fn ($record) => route('cluster-members', ['cluster' => $record]))
+                ->url(fn($record) => route('cluster-members', ['cluster' => $record]))
                 ->icon('heroicon-o-user-group')
                 ->button(),
         ];

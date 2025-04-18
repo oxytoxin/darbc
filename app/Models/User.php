@@ -81,7 +81,7 @@ class User extends Authenticatable implements HasMedia, FilamentUser, HasName
 
     public function name(): Attribute
     {
-        return new Attribute(get: fn () => $this->first_name . ' ' . $this->surname);
+        return new Attribute(get: fn() => $this->first_name . ' ' . $this->suffix . ' ' . $this->middle_name . ' ' . $this->surname);
     }
 
     public function roles()
@@ -91,7 +91,7 @@ class User extends Authenticatable implements HasMedia, FilamentUser, HasName
 
     public function activeRole(): Attribute
     {
-        return new Attribute(get: fn () => $this->roles()->first());
+        return new Attribute(get: fn() => $this->roles()->first());
     }
 
     public function clusters_lead()

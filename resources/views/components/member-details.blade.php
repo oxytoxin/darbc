@@ -1,12 +1,12 @@
 @props(['member'])
 
-<div class="space-y-4 flex flex-col items-center mb-4">
+<div class="mb-4 flex flex-col items-center space-y-4">
     <div class="mb-4">
-        <img class="w-32 h-32 rounded-full border-4 border-primary-600" src="{{ $member->profile_photo }}" alt="avatar">
+        <img class="h-32 w-32 rounded-full border-4 border-primary-600" src="{{ $member->profile_photo }}" alt="avatar">
     </div>
-    <div class="grid grid-cols-4 w-full">
+    <div class="grid w-full grid-cols-4">
         <div>
-            <h4 class="text-lg font-semibold">{{ $member->user->full_name }}</h4>
+            <h4 class="text-lg font-semibold">{{ $member->user->name }}</h4>
             <h5 class="text-sm font-semibold text-gray-600">
                 {{ $member->succession_number == '0' ? 'Original Owner' : ordinal($member->succession_number) . ' Successor' }}
             </h5>
@@ -27,7 +27,7 @@
         </div>
     </div>
     <div>
-        <p class="font-semibold text-center text-gray-600">Address</p>
-        <p class="text-lg font-bold text-center">{{ filled($member->address_line) ? $member->address_line : 'No address found.' }}</p>
+        <p class="text-center font-semibold text-gray-600">Address</p>
+        <p class="text-center text-lg font-bold">{{ filled($member->address_line) ? $member->address_line : 'No address found.' }}</p>
     </div>
 </div>

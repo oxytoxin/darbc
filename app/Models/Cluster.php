@@ -22,6 +22,11 @@ class Cluster extends Model
         return $this->hasMany(MemberInformation::class);
     }
 
+    public function active_members()
+    {
+        return $this->hasMany(MemberInformation::class)->active();
+    }
+
     public function scopeOrderByName($query)
     {
         return $query->orderByRaw("name != '0',  CAST(name AS UNSIGNED)");
