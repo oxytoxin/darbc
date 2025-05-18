@@ -1,20 +1,20 @@
-<div x-data class="my-10">
+<div class="my-10" x-data>
     <div class="space-y-8">
         <h1 class="text-xl font-bold text-primary-500">Print Member Form</h1>
     </div>
-    <div x-ref="print" class="mx-auto max-w-4xl space-y-4 bg-white p-4">
+    <div class="mx-auto max-w-4xl space-y-4 bg-white p-4" x-ref="print">
         <div class="flex">
-            <div class="flex items-center gap-8 flex-1">
-                <img class="w-[5rem] h-[5rem]" src="/assets/darbc-logo.svg" alt="darbc logo">
+            <div class="flex flex-1 items-center gap-8">
+                <img class="h-[5rem] w-[5rem]" src="/assets/darbc-logo.svg" alt="darbc logo">
                 <h2 class="font-bold">DOLEFIL AGRARIAN REFORM BENEFICIARIES COOPERATIVE (DARBC) MEMBERSHIP</h2>
             </div>
             <div class="mb-4">
-                <img class="w-32 h-32" src="{{ $member->profile_photo }}" alt="avatar">
+                <img class="h-32 w-32" src="{{ $member->profile_photo }}" alt="avatar">
             </div>
         </div>
         <div class="flex gap-2">
             <h4 class="font-bold">Name:</h4>
-            <h4>{{ $member->user->alt_full_name }}</h4>
+            <h4>{{ $member->user->name }}</h4>
         </div>
 
         <div class="flex justify-between gap-2">
@@ -97,10 +97,10 @@
 
         <div class="">
             <h4 class="font-bold">Children Information</h4>
-            <table class="border border-black w-full">
+            <table class="w-full border border-black">
                 <thead>
                     <tr>
-                        <th class="border min-w-[10rem] border-black">Name</th>
+                        <th class="min-w-[10rem] border border-black">Name</th>
                         <th class="border border-black">Date of Birth</th>
                         <th class="border border-black">Educational Attainment</th>
                         <th class="border border-black">Blood Type</th>
@@ -158,7 +158,7 @@
             </div>
         </div>
     </div>
-    <div class="max-w-4xl flex justify-end mx-auto mt-16">
+    <div class="mx-auto mt-16 flex max-w-4xl justify-end">
         <x-filament-support::button icon="heroicon-o-printer" @click="printOut($refs.print.outerHTML, 'RELEASE PAYSLIP')">Print</x-filament-support::button>
     </div>
 </div>

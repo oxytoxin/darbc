@@ -63,6 +63,10 @@ class MemberManagement extends Component implements HasTable
                 ->label('Last Name')
                 ->sortable()
                 ->searchable(isIndividual: true),
+            TextColumn::make('user.middle_name')
+                ->label('Middle Name')
+                ->sortable()
+                ->searchable(isIndividual: true),
             TextColumn::make('user.first_name')
                 ->label('First Name')
                 ->searchable(isIndividual: true),
@@ -71,17 +75,17 @@ class MemberManagement extends Component implements HasTable
                     'success'
                 ])
                 ->sortable()
-                ->formatStateUsing(fn ($state) => $state == 0 ? 'Original' : ordinal($state) . ' Successor')
+                ->formatStateUsing(fn($state) => $state == 0 ? 'Original' : ordinal($state) . ' Successor')
                 ->label('Ownership'),
             TextColumn::make('application_date')
                 ->label('Member since')
                 ->date(),
             BadgeColumn::make('missing_details_count')
                 ->label('Missing Details')
-                ->tooltip(fn ($record) => implode(", ", $record->missing_details->toArray()))
+                ->tooltip(fn($record) => implode(", ", $record->missing_details->toArray()))
                 ->extraAttributes(['class' => 'cursor-pointer'])
                 ->alignCenter()
-                ->color(fn ($state) => $state > 0 ? 'warning' : 'success'),
+                ->color(fn($state) => $state > 0 ? 'warning' : 'success'),
 
         ];
     }
@@ -126,8 +130,8 @@ class MemberManagement extends Component implements HasTable
                 ])
                 ->query(function ($query, $data) {
                     $query
-                        ->when($data['from'], fn ($query, $from) => $query->whereDate('application_date', '>=', $from))
-                        ->when($data['to'], fn ($query, $to) => $query->whereDate('application_date', '<=', $to));
+                        ->when($data['from'], fn($query, $from) => $query->whereDate('application_date', '>=', $from))
+                        ->when($data['to'], fn($query, $to) => $query->whereDate('application_date', '<=', $to));
                 })
                 ->columns(2)
                 ->columnSpan(2)
@@ -145,15 +149,15 @@ class MemberManagement extends Component implements HasTable
             Action::make('profile')
                 ->button()
                 ->icon('heroicon-o-user')
-                ->url(fn ($record) => $this->getProfileRoute($record)),
+                ->url(fn($record) => $this->getProfileRoute($record)),
             Action::make('claims')
                 ->button()
                 ->outlined()
                 ->icon('heroicon-o-cash')
-                ->url(fn ($record) => $this->getMemberClaimsRoute($record)),
+                ->url(fn($record) => $this->getMemberClaimsRoute($record)),
             ActionGroup::make([
                 EditAction::make('edit')
-                    ->url(fn ($record) => $this->getEditMemberRoute($record))
+                    ->url(fn($record) => $this->getEditMemberRoute($record))
                     ->color('success')
                     ->button(),
                 DeleteAction::make('delete')
