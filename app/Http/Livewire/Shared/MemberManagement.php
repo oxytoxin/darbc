@@ -63,12 +63,12 @@ class MemberManagement extends Component implements HasTable
                 ->label('Last Name')
                 ->sortable()
                 ->searchable(isIndividual: true),
+            TextColumn::make('user.first_name')
+                ->label('First Name')
+                ->searchable(isIndividual: true),
             TextColumn::make('user.middle_name')
                 ->label('Middle Name')
                 ->sortable()
-                ->searchable(isIndividual: true),
-            TextColumn::make('user.first_name')
-                ->label('First Name')
                 ->searchable(isIndividual: true),
             BadgeColumn::make('succession_number')
                 ->colors([

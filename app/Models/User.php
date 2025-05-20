@@ -81,7 +81,7 @@ class User extends Authenticatable implements HasMedia, FilamentUser, HasName
 
     public function name(): Attribute
     {
-        return new Attribute(get: fn() => $this->first_name . ' ' . $this->suffix . ' ' . $this->middle_name . ' ' . $this->surname);
+        return new Attribute(get: fn() => $this->surname . ', ' . $this->first_name . ' ' . $this->middle_name . ' ' . $this->suffix);
     }
 
     public function roles()
