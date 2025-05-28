@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use AlperenErsoy\FilamentExport\Actions\FilamentExportHeaderAction;
 use App\Models\Cluster;
 use App\Models\Occupation;
+use App\Models\User;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\ViewAction;
@@ -100,6 +101,9 @@ class MemberInformationQuery extends Component implements HasTable
             TextColumn::make('user.middle_name')
                 ->visible(fn() => $this->tableFilters['user_middle_name']['isActive'])
                 ->label('Middle Name'),
+            TextColumn::make('user.suffix')
+                ->visible(fn() => $this->tableFilters['user_suffix']['isActive'])
+                ->label('Suffix'),
             TextColumn::make('cluster.name')
                 ->visible(fn() => $this->tableFilters['cluster']['isActive'])
                 ->label('Cluster'),
@@ -215,6 +219,9 @@ class MemberInformationQuery extends Component implements HasTable
             Filter::make('user_middle_name')
                 ->default()
                 ->label('Middle Name'),
+            Filter::make('user_suffix')
+                ->default()
+                ->label('Suffix'),
             Filter::make('succession_number')
                 ->default()
                 ->label('Ownership'),
@@ -282,6 +289,8 @@ class MemberInformationQuery extends Component implements HasTable
                         ->label('Middle Name'),
                     TextInput::make('last_name')
                         ->label('Last Name'),
+                    TextInput::make('suffix')
+                        ->label('Suffix'),
                     Select::make('ownership')
                         ->options(MembershipStatus::pluck('name', 'id'))
                         ->placeholder('ALL'),
@@ -320,6 +329,7 @@ class MemberInformationQuery extends Component implements HasTable
                     $query->when($data['first_name'], fn($q) => $q->whereRelation('user', 'first_name', 'like', "%{$data['first_name']}%"));
                     $query->when($data['last_name'], fn($q) => $q->whereRelation('user', 'surname', 'like', "%{$data['last_name']}%"));
                     $query->when($data['middle_name'], fn($q) => $q->whereRelation('user', 'middle_name', 'like', "%{$data['middle_name']}%"));
+                    $query->when($data['suffix'], fn($q) => $q->whereRelation('user', 'suffix', 'like', "%{$data['suffix']}%"));
                     $query->when($data['ownership'], fn($q) => $q->where('membership_status_id', $data['ownership']));
                     $query->when($data['civil_status'], fn($q) => $q->where('civil_status', $data['civil_status']));
                     $query->when($data['occupation'], fn($q) => $q->where('occupation_id', $data['occupation']));
