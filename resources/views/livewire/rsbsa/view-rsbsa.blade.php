@@ -7,7 +7,7 @@
 
     .rsbsa-form {
         font-family: Arial, sans-serif;
-        font-size: 10px;
+        font-size: 11px;
         line-height: 1.25;
         color: #000;
     }
@@ -26,6 +26,7 @@
         justify-content: center;
         font-size: 10px;
         vertical-align: middle;
+        margin-right: 2px;
     }
 
     .chk.checked::after {
@@ -42,8 +43,8 @@
 
     /* Digit box styling */
     .digit-box {
-        width: 15px;
-        height: 15px;
+        width: 14px;
+        height: 14px;
         border: 1px solid #000;
         display: inline-flex;
         align-items: center;
@@ -124,7 +125,7 @@
     <!-- ==================== PAGE 1 ==================== -->
     <div class="page-1 no-break">
         <!-- Version -->
-        <div style="text-align: right; font-size: 8px; font-weight: bold;">REVISED VERSION: 03-2021</div>
+        <div style="text-align: right; font-size: 9px; font-weight: bold;">REVISED VERSION: 03-2021</div>
 
         <!-- Main Form Border -->
         <div style="border: 2px solid #000;">
@@ -138,7 +139,7 @@
                         <div>
                             <div style="font-size: 16px; font-weight: bold; line-height: 1.1;">ANI AT KITA<br>RSBSA
                                 ENROLLMENT FORM</div>
-                            <div style="font-size: 8px; font-weight: bold;">REGISTRY SYSTEM FOR BASIC SECTORS IN
+                            <div style="font-size: 9px; font-weight: bold;">REGISTRY SYSTEM FOR BASIC SECTORS IN
                                 AGRICULTURE (RSBSA)</div>
                         </div>
                     </div>
@@ -158,7 +159,7 @@
                             @endforeach
                         </div>
                     </div>
-                    <div style="font-size: 7px; margin-left: 160px;">
+                    <div style="font-size: 8px; margin-left: 160px;">
                         <span style="margin-left: 4px;">M</span><span style="margin-left: 10px;">M</span>
                         <span style="margin-left: 10px;">D</span><span style="margin-left: 10px;">D</span>
                         <span style="margin-left: 10px;">Y</span><span style="margin-left: 10px;">Y</span>
@@ -176,7 +177,7 @@
                                         <div class="digit-box">{{ $d }}</div>
                                     @endforeach
                                 </div>
-                                <div style="text-align: center; font-size: 7px;">REGION</div>
+                                <div style="text-align: center; font-size: 8px;">REGION</div>
                             </div>
                             <div>
                                 <div style="display: flex;">
@@ -184,7 +185,7 @@
                                         <div class="digit-box">{{ $d }}</div>
                                     @endforeach
                                 </div>
-                                <div style="text-align: center; font-size: 7px;">PROVINCE</div>
+                                <div style="text-align: center; font-size: 8px;">PROVINCE</div>
                             </div>
                             <div>
                                 <div style="display: flex;">
@@ -192,7 +193,7 @@
                                         <div class="digit-box">{{ $d }}</div>
                                     @endforeach
                                 </div>
-                                <div style="text-align: center; font-size: 7px;">CITY/MUNI</div>
+                                <div style="text-align: center; font-size: 8px;">CITY/MUNI</div>
                             </div>
                             <div>
                                 <div style="display: flex;">
@@ -200,7 +201,7 @@
                                         <div class="digit-box">{{ $d }}</div>
                                     @endforeach
                                 </div>
-                                <div style="text-align: center; font-size: 7px;">BARANGAY</div>
+                                <div style="text-align: center; font-size: 8px;">BARANGAY</div>
                             </div>
                             <div>
                                 <div style="display: flex;">
@@ -216,10 +217,10 @@
                 <!-- Right: 2x2 Photo -->
                 <div
                     style="width: 90px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 4px;">
-                    <div style="font-size: 10px; font-weight: bold; text-align: center;">2x2<br>PICTURE</div>
+                    <div style="font-size: 8px; font-weight: bold; text-align: center;">2x2<br>PICTURE</div>
                     <img src="{{ $rsbsa->getImage() }}"
                         style="width: 60px; height: 60px; border: 1px solid #000; object-fit: cover; margin-top: 2px;">
-                    <div style="font-size: 7px; text-align: center; margin-top: 2px;">PHOTO TAKEN<br>WITHIN 6 MONTHS
+                    <div style="font-size: 8px; text-align: center; margin-top: 2px;">PHOTO TAKEN<br>WITHIN 6 MONTHS
                     </div>
                 </div>
             </div>
@@ -274,22 +275,22 @@
                 <div style="flex: 1; display: flex;">
                     <div style="flex: 1; padding: 2px; border-left: 1px solid #000;">
                         <div
-                            style="border: 1px solid #000; min-height: 14px; padding: 1px; font-size: 7px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            style="border: 1px solid #000; min-height: 14px; padding: 1px; font-size: 8px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                             {{ $rsbsa->house_lot_bldg_purok ?? '' }}</div>
-                        <div style="font-size: 7px; font-weight: bold; text-align: center;">HOUSE/LOT/BLDG. NO./PUROK
+                        <div style="font-size: 9px; font-weight: bold; text-align: center;">HOUSE/LOT/BLDG. NO./PUROK
                         </div>
                     </div>
                     <div style="flex: 1; padding: 2px;">
                         <div
-                            style="border: 1px solid #000; min-height: 14px; padding: 1px; font-size: 7px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            style="border: 1px solid #000; min-height: 14px; padding: 1px; font-size: 8px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                             {{ $rsbsa->street_sitio_subdv ?? '' }}</div>
-                        <div style="font-size: 7px; font-weight: bold; text-align: center;">STREET/SITIO/SUBDV.</div>
+                        <div style="font-size: 9px; font-weight: bold; text-align: center;">STREET/SITIO/SUBDV.</div>
                     </div>
                     <div style="flex: 1; padding: 2px;">
                         <div
-                            style="border: 1px solid #000; min-height: 14px; padding: 1px; font-size: 7px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            style="border: 1px solid #000; min-height: 14px; padding: 1px; font-size: 8px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                             {{ $rsbsa->barangay ?? '' }}</div>
-                        <div style="font-size: 7px; font-weight: bold; text-align: center;">BARANGAY</div>
+                        <div style="font-size: 9px; font-weight: bold; text-align: center;">BARANGAY</div>
                     </div>
                 </div>
             </div>
@@ -299,21 +300,21 @@
                 <div style="flex: 1; display: flex;">
                     <div style="flex: 1; padding: 2px; border-left: 1px solid #000;">
                         <div
-                            style="border: 1px solid #000; min-height: 14px; padding: 1px; font-size: 7px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            style="border: 1px solid #000; min-height: 14px; padding: 1px; font-size: 8px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                             {{ $rsbsa->city_municipality ?? '' }}</div>
-                        <div style="font-size: 7px; font-weight: bold; text-align: center;">MUNICIPALITY/CITY</div>
+                        <div style="font-size: 9px; font-weight: bold; text-align: center;">MUNICIPALITY/CITY</div>
                     </div>
                     <div style="flex: 1; padding: 2px;">
                         <div
-                            style="border: 1px solid #000; min-height: 14px; padding: 1px; font-size: 7px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            style="border: 1px solid #000; min-height: 14px; padding: 1px; font-size: 8px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                             {{ $rsbsa->province ?? '' }}</div>
-                        <div style="font-size: 7px; font-weight: bold; text-align: center;">PROVINCE</div>
+                        <div style="font-size: 9px; font-weight: bold; text-align: center;">PROVINCE</div>
                     </div>
                     <div style="flex: 1; padding: 2px;">
                         <div
-                            style="border: 1px solid #000; min-height: 14px; padding: 1px; font-size: 7px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            style="border: 1px solid #000; min-height: 14px; padding: 1px; font-size: 8px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
                             {{ $rsbsa->region ?? '' }}</div>
-                        <div style="font-size: 7px; font-weight: bold; text-align: center;">REGION</div>
+                        <div style="font-size: 9px; font-weight: bold; text-align: center;">REGION</div>
                     </div>
                 </div>
             </div>
@@ -326,7 +327,7 @@
                     <div style="display: flex; padding: 2px 4px; border-bottom: 1px solid #000;">
                         @php $mobile = $rsbsa->getFormattedContactNumber(); @endphp
                         <div style="flex: 1;">
-                            <div style="font-weight: bold; font-size: 8px;">MOBILE NUMBER:</div>
+                            <div style="font-weight: bold; font-size: 9px;">MOBILE NUMBER:</div>
                             <div style="display: flex;">
                                 @for ($i = 0; $i < 11; $i++)
                                     <div class="digit-box">{{ $mobile[$i] ?? '' }}</div>
@@ -335,7 +336,7 @@
                         </div>
                         @php $landline = $rsbsa->getFormattedLandlineNumber(); @endphp
                         <div style="flex: 1; margin-left: 8px;">
-                            <div style="font-weight: bold; font-size: 8px;">LANDLINE NUMBER:</div>
+                            <div style="font-weight: bold; font-size: 9px;">LANDLINE NUMBER:</div>
                             <div style="display: flex;">
                                 @for ($i = 0; $i < 10; $i++)
                                     <div class="digit-box">{{ $landline[$i] ?? '' }}</div>
@@ -348,13 +349,13 @@
                     <div style="display: flex; border-bottom: 1px solid #000;">
                         @php $dob = $rsbsa->getFormattedDateOfBirth(); @endphp
                         <div style="flex: 1; padding: 2px 4px; border-right: 1px solid #000;">
-                            <div style="font-weight: bold; font-size: 8px;">DATE OF BIRTH:</div>
+                            <div style="font-weight: bold; font-size: 9px;">DATE OF BIRTH:</div>
                             <div style="display: flex;">
                                 @foreach ($dob as $d)
                                     <div class="digit-box">{{ $d }}</div>
                                 @endforeach
                             </div>
-                            <div style="font-size: 6px; display: flex; margin-top: 1px;">
+                            <div style="font-size: 8px; display: flex; margin-top: 1px;">
                                 <span style="width: 15px; text-align: center;">M</span>
                                 <span style="width: 15px; text-align: center;">M</span>
                                 <span style="width: 15px; text-align: center;">D</span>
@@ -366,20 +367,23 @@
                             </div>
                         </div>
                         <div style="flex: 1; padding: 2px 4px;">
-                            <div style="font-weight: bold; font-size: 8px;">PLACE OF BIRTH:</div>
-                            <div style="border-bottom: 1px solid #000; min-height: 10px; font-size: 8px;">
+                            <div style="font-weight: bold; font-size: 9px;">PLACE OF BIRTH:</div>
+                            <div
+                                style="border-bottom: 1px solid #000; min-height: 10px; font-size: 8px; text-align: center;">
                                 {{ $rsbsa->place_of_birth_municipality ?? '' }}</div>
-                            <div style="font-size: 6px; text-align: center;">MUNICIPALITY</div>
+                            <div style="font-size: 8px; text-align: center;">MUNICIPALITY</div>
                             <div style="display: flex;">
                                 <div style="flex: 1;">
-                                    <div style="border-bottom: 1px solid #000; min-height: 10px; font-size: 8px;">
+                                    <div
+                                        style="border-bottom: 1px solid #000; min-height: 10px; font-size: 8px; text-align: center;">
                                         {{ $rsbsa->place_of_birth_province ?? '' }}</div>
-                                    <div style="font-size: 6px; text-align: center;">PROVINCE/STATE</div>
+                                    <div style="font-size: 8px; text-align: center;">PROVINCE/STATE</div>
                                 </div>
                                 <div style="flex: 1; margin-left: 4px;">
-                                    <div style="border-bottom: 1px solid #000; min-height: 10px; font-size: 8px;">
+                                    <div
+                                        style="border-bottom: 1px solid #000; min-height: 10px; font-size: 8px; text-align: center;">
                                         {{ $rsbsa->place_of_birth_country ?? 'Philippines' }}</div>
-                                    <div style="font-size: 6px; text-align: center;">COUNTRY</div>
+                                    <div style="font-size: 8px; text-align: center;">COUNTRY</div>
                                 </div>
                             </div>
                         </div>
@@ -417,14 +421,14 @@
 
                     <!-- Spouse -->
                     <div style="padding: 2px 4px; border-bottom: 1px solid #000;">
-                        <div style="font-weight: bold; font-size: 8px;">NAME OF SPOUSE IF MARRIED:</div>
+                        <div style="font-weight: bold; font-size: 9px;">NAME OF SPOUSE IF MARRIED:</div>
                         <div style="border-bottom: 1px solid #000; min-height: 12px; font-size: 8px;">
                             {{ $rsbsa->memberInformation->spouse ?? '' }}</div>
                     </div>
 
                     <!-- Mother's Maiden Name -->
                     <div style="padding: 2px 4px; border-bottom: 1px solid #000;">
-                        <div style="font-weight: bold; font-size: 8px;">MOTHER'S MAIDEN NAME:</div>
+                        <div style="font-weight: bold; font-size: 9px;">MOTHER'S MAIDEN NAME:</div>
                         <div style="border-bottom: 1px solid #000; min-height: 12px; font-size: 8px;">
                             {{ $rsbsa->memberInformation->mother_maiden_name ?? '' }}</div>
                     </div>
@@ -462,7 +466,7 @@
                 <div style="flex: 1;">
                     <!-- Highest Formal Education -->
                     <div style="padding: 2px 4px; border-bottom: 1px solid #000;">
-                        <div style="font-weight: bold; font-size: 8px;">HIGHEST FORMAL EDUCATION:</div>
+                        <div style="font-weight: bold; font-size: 9px;">HIGHEST FORMAL EDUCATION:</div>
                         <div style="display: flex; flex-wrap: wrap; gap: 2px; font-size: 8px;">
                             @foreach (\App\Models\RsbsaRecord::HIGHEST_FORMAL_EDUCATION as $key => $label)
                                 <div style="width: 32%; display: flex; align-items: center;">
@@ -548,7 +552,7 @@
 
                     <!-- Emergency Contact -->
                     <div style="padding: 2px 4px;">
-                        <div style="font-weight: bold; font-size: 8px;">PERSON TO NOTIFY IN CASE OF EMERGENCY:</div>
+                        <div style="font-weight: bold; font-size: 9px;">PERSON TO NOTIFY IN CASE OF EMERGENCY:</div>
                         <div style="border-bottom: 1px solid #000; min-height: 12px; font-size: 8px;">
                             {{ $rsbsa->emergency_contact_name ?? '' }}</div>
                         @php $emergency = $rsbsa->getFormattedEmergencyContact(); @endphp
@@ -586,15 +590,15 @@
                     <div><span class="chk {{ $rsbsa->farming_corn ? 'checked' : '' }}"></span> Corn</div>
                     <div><span class="chk {{ $rsbsa->other_crops ? 'checked' : '' }}"></span> Other crops,</div>
                     <div style="margin-left: 12px;">please specify: <span
-                            style="border-bottom: 1px solid #000; display: inline-block; width: 60px; font-size: 7px;">{{ $rsbsa->farming_other_crops ?? '' }}</span>
+                            style="border-bottom: 1px solid #000; display: inline-block; width: 60px; font-size: 8px;">{{ $rsbsa->farming_other_crops ?? '' }}</span>
                     </div>
                     <div><span class="chk {{ $rsbsa->livestock ? 'checked' : '' }}"></span> Livestock,</div>
                     <div style="margin-left: 12px;">please specify: <span
-                            style="border-bottom: 1px solid #000; display: inline-block; width: 60px; font-size: 7px;">{{ $rsbsa->farming_livestock ?? '' }}</span>
+                            style="border-bottom: 1px solid #000; display: inline-block; width: 60px; font-size: 8px;">{{ $rsbsa->farming_livestock ?? '' }}</span>
                     </div>
                     <div><span class="chk {{ $rsbsa->poultry ? 'checked' : '' }}"></span> Poultry,</div>
                     <div style="margin-left: 12px;">please specify: <span
-                            style="border-bottom: 1px solid #000; display: inline-block; width: 60px; font-size: 7px;">{{ $rsbsa->farming_poultry ?? '' }}</span>
+                            style="border-bottom: 1px solid #000; display: inline-block; width: 60px; font-size: 8px;">{{ $rsbsa->farming_poultry ?? '' }}</span>
                     </div>
                 </div>
 
@@ -610,14 +614,14 @@
                     <div><span class="chk {{ $rsbsa->work_harvesting ? 'checked' : '' }}"></span> Harvesting</div>
                     <div><span class="chk {{ $rsbsa->work_others ? 'checked' : '' }}"></span> Others, please specify:
                     </div>
-                    <div style="border-bottom: 1px solid #000; min-height: 10px; font-size: 7px;">
+                    <div style="border-bottom: 1px solid #000; min-height: 10px; font-size: 8px;">
                         {{ $rsbsa->work_others_specify ?? '' }}</div>
                 </div>
 
                 <!-- Fisherfolk -->
                 <div style="flex: 1; padding: 2px 4px; border-right: 1px solid #000;">
                     <div style="font-weight: bold; font-style: italic; text-align: center;">For fisherfolk:</div>
-                    <div style="font-size: 7px; font-style: italic;">The Lending Conduit shall coordinate with the
+                    <div style="font-size: 8px; font-style: italic;">The Lending Conduit shall coordinate with the
                         Bureau of Fisheries and Aquatic Resources (BFAR) in the issuance of a certification that the
                         fisherfolk-borrower under PUNLA/PLEA is registered under the Municipal Registration (FishR).
                     </div>
@@ -640,14 +644,14 @@
                     </div>
                     <div><span class="chk {{ $rsbsa->fishing_others ? 'checked' : '' }}"></span> Others, please
                         specify:</div>
-                    <div style="border-bottom: 1px solid #000; min-height: 10px; font-size: 7px;">
+                    <div style="border-bottom: 1px solid #000; min-height: 10px; font-size: 8px;">
                         {{ $rsbsa->fishing_others_specify ?? '' }}</div>
                 </div>
 
                 <!-- Agri Youth -->
                 <div style="flex: 1; padding: 2px 4px;">
                     <div style="font-weight: bold; font-style: italic; text-align: center;">For agri youth:</div>
-                    <div style="font-size: 7px; font-style: italic;">For the purposes of trainings, financial
+                    <div style="font-size: 8px; font-style: italic;">For the purposes of trainings, financial
                         assistance, and other programs catered to the youth with involvement to any agriculture
                         activity.</div>
                     <div style="font-weight: bold;">Type of Involvement</div>
@@ -660,7 +664,7 @@
                     <div><span class="chk {{ $rsbsa->youth_agri_program ? 'checked' : '' }}"></span> participated in
                         any agricultural activity/program</div>
                     <div><span class="chk {{ $rsbsa->youth_others ? 'checked' : '' }}"></span> others, specify:</div>
-                    <div style="border-bottom: 1px solid #000; min-height: 10px; font-size: 7px;">
+                    <div style="border-bottom: 1px solid #000; min-height: 10px; font-size: 8px;">
                         {{ $rsbsa->youth_others_specify ?? '' }}</div>
                 </div>
             </div>
@@ -678,7 +682,7 @@
         </div>
 
         <!-- Cut Line -->
-        <div style="position: relative; height: 12px; margin: 4px 0;">
+        <div style="position: relative; height: 10px; margin: 4px 0;">
             <div style="position: absolute; left: 0; right: 0; top: 50%; border-top: 1px dashed #000;"></div>
             <div style="position: absolute; right: 0; top: 50%; transform: translateY(-50%) rotate(180deg);">✂</div>
         </div>
@@ -701,7 +705,7 @@
                                 <div class="digit-box">{{ $d }}</div>
                             @endforeach
                         </div>
-                        <div style="text-align: center; font-size: 6px;">REGION</div>
+                        <div style="text-align: center; font-size: 8px;">REGION</div>
                     </div>
                     <div>
                         <div style="display: flex;">
@@ -709,7 +713,7 @@
                                 <div class="digit-box">{{ $d }}</div>
                             @endforeach
                         </div>
-                        <div style="text-align: center; font-size: 6px;">PROVINCE</div>
+                        <div style="text-align: center; font-size: 8px;">PROVINCE</div>
                     </div>
                     <div>
                         <div style="display: flex;">
@@ -717,7 +721,7 @@
                                 <div class="digit-box">{{ $d }}</div>
                             @endforeach
                         </div>
-                        <div style="text-align: center; font-size: 6px;">CITY/MUNI</div>
+                        <div style="text-align: center; font-size: 8px;">CITY/MUNI</div>
                     </div>
                     <div>
                         <div style="display: flex;">
@@ -725,7 +729,7 @@
                                 <div class="digit-box">{{ $d }}</div>
                             @endforeach
                         </div>
-                        <div style="text-align: center; font-size: 6px;">BARANGAY</div>
+                        <div style="text-align: center; font-size: 8px;">BARANGAY</div>
                     </div>
                     <div>
                         <div style="display: flex;">
@@ -739,30 +743,30 @@
 
             <div style="display: flex; padding: 4px;">
                 <div style="flex: 1; padding: 2px;">
-                    <div style="min-height: 12px; font-size: 8px; font-weight: 500;">
+                    <div style="min-height: 12px; font-size: 9px; font-weight: 500; text-align: center;">
                         {{ $rsbsa->memberinformation?->user?->surname ?? '' }}</div>
-                    <div style="border-top: 1px solid #000; font-size: 7px; font-weight: bold; text-align: center;">
+                    <div style="border-top: 1px solid #000; font-size: 8px; font-weight: bold; text-align: center;">
                         SURNAME</div>
                 </div>
                 <div style="flex: 1; padding: 2px;">
-                    <div style="min-height: 12px; font-size: 8px; font-weight: 500;">
+                    <div style="min-height: 12px; font-size: 9px; font-weight: 500; text-align: center;">
                         {{ $rsbsa->memberinformation?->user?->first_name ?? '' }}</div>
-                    <div style="border-top: 1px solid #000; font-size: 7px; font-weight: bold; text-align: center;">
+                    <div style="border-top: 1px solid #000; font-size: 8px; font-weight: bold; text-align: center;">
                         FIRST NAME</div>
                 </div>
             </div>
 
             <div style="display: flex; padding: 0 4px 4px 4px;">
                 <div style="flex: 1; padding: 2px;">
-                    <div style="min-height: 12px; font-size: 8px; font-weight: 500;">
+                    <div style="min-height: 12px; font-size: 9px; font-weight: 500; text-align: center;">
                         {{ $rsbsa->memberinformation?->user?->middle_name ?? '' }}</div>
-                    <div style="border-top: 1px solid #000; font-size: 7px; font-weight: bold; text-align: center;">
+                    <div style="border-top: 1px solid #000; font-size: 8px; font-weight: bold; text-align: center;">
                         MIDDLE NAME</div>
                 </div>
                 <div style="flex: 1; padding: 2px;">
-                    <div style="min-height: 12px; font-size: 8px; font-weight: 500;">
+                    <div style="min-height: 12px; font-size: 9px; font-weight: 500; text-align: center;">
                         {{ $rsbsa->extension_name ?? '' }}</div>
-                    <div style="border-top: 1px solid #000; font-size: 7px; font-weight: bold; text-align: center;">
+                    <div style="border-top: 1px solid #000; font-size: 8px; font-weight: bold; text-align: center;">
                         EXTENSION NAME</div>
                 </div>
             </div>
@@ -770,10 +774,10 @@
 
         </div>
     </div>
-    <div style="text-align: center; font-weight: bold; font-size: 9px; padding: 4px;  #000; background-color: #fff;">
+    <div style="text-align: center; font-weight: bold; font-size: 11px; padding: 4px; background-color: #fff;">
         THIS FORM IS NOT FOR SALE</div>
     <!-- ==================== PAGE 2 ==================== -->
-    <div class="page-2 page-break no-break" style="font-size: 8px;">
+    <div class="page-2 page-break no-break" style="font-size: 9px;">
         <div style="border: 1px solid #000;">
             <!-- Header -->
             <div style="display: flex; align-items: center; padding: 2px 4px; border-bottom: 1px solid #000;">
@@ -789,19 +793,19 @@
             </div>
 
             <!-- Farm Parcels Table -->
-            <table class="form-table" style="font-size: 7px;">
+            <table class="form-table" style="font-size: 8px;">
                 <thead>
                     <tr style="font-weight: bold; text-align: center;">
                         <th style="width: 5%;">FARM PARCEL NO.</th>
                         <th style="width: 30%;">FARM LAND DESCRIPTION</th>
                         <th style="width: 12%;">CROP/COMMODITY<br><span
-                                style="font-weight: normal; font-style: italic; font-size: 6px;">(Rice/Corn/HVC/Livestock/Poultry/Agri-fishery)</span><br><b>For
+                                style="font-weight: normal; font-style: italic; font-size: 8px;">(Rice/Corn/HVC/Livestock/Poultry/Agri-fishery)</span><br><b>For
                                 Livestock & Poultry</b><br><span
-                                style="font-weight: normal; font-style: italic; font-size: 6px;">(specify type of
+                                style="font-weight: normal; font-style: italic; font-size: 8px;">(specify type of
                                 animal)</span></th>
                         <th style="width: 8%;">SIZE (ha)</th>
                         <th style="width: 8%;">NO. OF HEAD<br><span
-                                style="font-weight: normal; font-style: italic; font-size: 6px;">(For Livestock and
+                                style="font-weight: normal; font-style: italic; font-size: 8px;">(For Livestock and
                                 Poultry)</span></th>
                         <th style="width: 8%;">FARM TYPE **</th>
                         <th style="width: 8%;">ORGANIC PRACTITIONER (Y/N)</th>
@@ -814,12 +818,14 @@
                             <td style="text-align: center; font-weight: bold;">{{ $parcel }}</td>
                             <td style="padding: 4px;">
                                 <div><b>Farm Location:</b></div>
-                                <div style="display: flex; align-items: center;"><span
-                                        style="border-bottom: 1px solid #000; flex: 1; min-height: 10px;"></span><span
-                                        style="font-size: 6px; margin-left: 2px;">BARANGAY</span></div>
-                                <div style="display: flex; align-items: center;"><span
-                                        style="border-bottom: 1px solid #000; flex: 1; min-height: 10px;"></span><span
-                                        style="font-size: 6px; margin-left: 2px;">CITY/MUNICIPALITY</span></div>
+                                <div>
+                                    <div style="border-bottom: 1px solid #000; min-height: 12px;"></div>
+                                    <div style="font-size: 8px; text-align: center;">CITY/MUNICIPALITY</div>
+                                </div>
+                                <div>
+                                    <div style="border-bottom: 1px solid #000; min-height: 12px;"></div>
+                                    <div style="font-size: 8px; text-align: center;">BARANGAY</div>
+                                </div>
                                 <div style="margin-top: 2px;">
                                     <b>Total Farm Area (in hectares):</b> <span
                                         style="border-bottom: 1px solid #000; width: 30px; display: inline-block;"></span>
@@ -841,9 +847,9 @@
                                         style="margin-left: 4px;"></span> Others: <span
                                         style="border-bottom: 1px solid #000; width: 50px; display: inline-block;"></span><br>
                                     <span class="chk"></span> Tenant (Name of Land Owner: <span
-                                        style="border-bottom: 1px solid #000; width: 80px; display: inline-block;"></span>)<br>
+                                        style="border-bottom: 1px solid #000; width: 70px; display: inline-block;"></span>)<br>
                                     <span class="chk"></span> Lessee (Name of Land Owner: <span
-                                        style="border-bottom: 1px solid #000; width: 80px; display: inline-block;"></span>)
+                                        style="border-bottom: 1px solid #000; width: 70px; display: inline-block;"></span>)
                                 </div>
                             </td>
                             <td></td>
@@ -886,7 +892,7 @@
                     <div>1 - Irrigated</div>
                     <div>2 - Rainfed Upland</div>
                     <div>3 - Rainfed Lowland</div>
-                    <div style="font-style: italic; font-size: 7px;">(NOTE: not applicable to agri-fishery)</div>
+                    <div style="font-style: italic; font-size: 8px;">(NOTE: not applicable to agri-fishery)</div>
                 </div>
             </div>
 
@@ -923,19 +929,19 @@
                 <div style="display: flex; text-align: center; margin-top: 8px;">
                     <div style="flex: 1; padding: 4px;">
                         <div style="border-bottom: 1px solid #000; height: 20px;"></div>
-                        <div style="font-size: 7px;">SIGNATURE ABOVE PRINTED NAME / DATE</div>
-                        <div style="font-weight: bold; font-size: 7px;">BARANGAY CHAIRMAN/CITY/MUN. VETERINARIAN
+                        <div style="font-size: 9px;">SIGNATURE ABOVE PRINTED NAME / DATE</div>
+                        <div style="font-weight: bold; font-size: 9px;">BARANGAY CHAIRMAN/CITY/MUN. VETERINARIAN
                             (LIVESTOCK)/MILL DISTRICT OFFICER (SUGARCANE)/IP LEADER/C/M/PARO (ARB)</div>
                     </div>
                     <div style="flex: 1; padding: 4px;">
                         <div style="border-bottom: 1px solid #000; height: 20px;"></div>
-                        <div style="font-size: 7px;">SIGNATURE ABOVE PRINTED NAME / DATE</div>
-                        <div style="font-weight: bold; font-size: 7px;">CITY/MUNICIPAL AGRICULTURE OFFICE</div>
+                        <div style="font-size: 9px;">SIGNATURE ABOVE PRINTED NAME / DATE</div>
+                        <div style="font-weight: bold; font-size: 9px;">CITY/MUNICIPAL AGRICULTURE OFFICE</div>
                     </div>
                     <div style="flex: 1; padding: 4px;">
                         <div style="border-bottom: 1px solid #000; height: 20px;"></div>
-                        <div style="font-size: 7px;">SIGNATURE ABOVE PRINTED NAME / DATE</div>
-                        <div style="font-weight: bold; font-size: 7px;">CAFC/MAFC CHAIRMAN</div>
+                        <div style="font-size: 9px;">SIGNATURE ABOVE PRINTED NAME / DATE</div>
+                        <div style="font-weight: bold; font-size: 9px;">CAFC/MAFC CHAIRMAN</div>
                     </div>
                 </div>
             </div>
@@ -943,7 +949,7 @@
             <!-- Data Privacy Policy -->
             <div style="border-top: 1px solid #000;">
                 <div class="section-header" style="text-align: center;">DATA PRIVACY POLICY</div>
-                <div style="padding: 4px; font-size: 7px;">
+                <div style="padding: 4px; font-size: 9px;">
                     <p>The collection of personal information is for documentation, planning, reporting and processing
                         purposes in availing agricultural related interventions. Processed data shall only be shared to
                         partner agencies for planning, reporting and other use in accordance to the mandate of the
@@ -956,7 +962,7 @@
 
             <!-- Footer -->
             <div
-                style="text-align: center; font-weight: bold; font-size: 9px; padding: 4px; border-top: 1px solid #000;">
+                style="text-align: center; font-weight: bold; font-size: 11px; padding: 4px; border-top: 1px solid #000;">
                 THIS FORM IS NOT FOR SALE</div>
         </div>
     </div>
