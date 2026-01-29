@@ -774,7 +774,7 @@
 
         </div>
     </div>
-    <div style="text-align: center; font-weight: bold; font-size: 11px; padding: 4px; background-color: #fff;">
+    <div style="text-align: center; font-weight: bold; font-size: 9px; padding: 3px; background-color: #fff;">
         THIS FORM IS NOT FOR SALE</div>
     <!-- ==================== PAGE 2 ==================== -->
     <div class="page-2 page-break no-break" style="font-size: 9px;">
@@ -897,7 +897,7 @@
             </div>
 
             <!-- Declaration -->
-            <div style="padding: 4px; border-top: 1px solid #000; font-size: 8px;">
+            <div style="padding: 2px 4px; border-top: 1px solid #000; font-size: 7px;">
                 I hereby declare that all information indicated above are true and correct, and that they may be used by
                 Department of Agriculture for the purposes of registration to the Registry System for Basic Sectors in
                 Agriculture (RSBSA) and other legitimate interests of the Department pursuant to its mandates.
@@ -905,43 +905,43 @@
 
             <!-- Signature Section -->
             <div style="display: flex; border-top: 1px solid #000; text-align: center;">
-                <div style="flex: 1; border-right: 1px solid #000; padding: 4px;">
-                    <div style="height: 40px; border-bottom: 1px solid #000;"></div>
-                    <div class="section-header" style="font-size: 8px;">DATE</div>
+                <div style="flex: 1; border-right: 1px solid #000; padding: 2px;">
+                    <div style="height: 30px; border-bottom: 1px solid #000;"></div>
+                    <div class="section-header" style="font-size: 7px;">DATE</div>
                 </div>
-                <div style="flex: 1; border-right: 1px solid #000; padding: 4px;">
-                    <div style="height: 40px; border-bottom: 1px solid #000;"></div>
-                    <div class="section-header" style="font-size: 8px;">PRINTED NAME OF APPLICANT</div>
+                <div style="flex: 1; border-right: 1px solid #000; padding: 2px;">
+                    <div style="height: 30px; border-bottom: 1px solid #000;"></div>
+                    <div class="section-header" style="font-size: 7px;">PRINTED NAME OF APPLICANT</div>
                 </div>
-                <div style="flex: 1; border-right: 1px solid #000; padding: 4px;">
-                    <div style="height: 40px; border-bottom: 1px solid #000;"></div>
-                    <div class="section-header" style="font-size: 8px;">SIGNATURE OF APPLICANT</div>
+                <div style="flex: 1; border-right: 1px solid #000; padding: 2px;">
+                    <div style="height: 30px; border-bottom: 1px solid #000;"></div>
+                    <div class="section-header" style="font-size: 7px;">SIGNATURE OF APPLICANT</div>
                 </div>
-                <div style="flex: 1; padding: 4px;">
-                    <div style="height: 40px; border-bottom: 1px solid #000;"></div>
-                    <div class="section-header" style="font-size: 8px;">THUMBMARK</div>
+                <div style="flex: 1; padding: 2px;">
+                    <div style="height: 30px; border-bottom: 1px solid #000;"></div>
+                    <div class="section-header" style="font-size: 7px;">THUMBMARK</div>
                 </div>
             </div>
 
             <!-- Verified Section -->
-            <div style="padding: 4px; border-top: 1px solid #000;">
-                <div style="font-weight: bold;">VERIFIED TRUE AND CORRECT BY:</div>
-                <div style="display: flex; text-align: center; margin-top: 8px;">
-                    <div style="flex: 1; padding: 4px;">
-                        <div style="border-bottom: 1px solid #000; height: 20px;"></div>
-                        <div style="font-size: 9px;">SIGNATURE ABOVE PRINTED NAME / DATE</div>
-                        <div style="font-weight: bold; font-size: 9px;">BARANGAY CHAIRMAN/CITY/MUN. VETERINARIAN
+            <div style="padding: 2px; border-top: 1px solid #000;">
+                <div style="font-weight: bold; font-size: 8px;">VERIFIED TRUE AND CORRECT BY:</div>
+                <div style="display: flex; text-align: center; margin-top: 4px;">
+                    <div style="flex: 1; padding: 2px;">
+                        <div style="border-bottom: 1px solid #000; height: 15px;"></div>
+                        <div style="font-size: 7px;">SIGNATURE ABOVE PRINTED NAME / DATE</div>
+                        <div style="font-weight: bold; font-size: 6px;">BARANGAY CHAIRMAN/CITY/MUN. VETERINARIAN
                             (LIVESTOCK)/MILL DISTRICT OFFICER (SUGARCANE)/IP LEADER/C/M/PARO (ARB)</div>
                     </div>
-                    <div style="flex: 1; padding: 4px;">
-                        <div style="border-bottom: 1px solid #000; height: 20px;"></div>
-                        <div style="font-size: 9px;">SIGNATURE ABOVE PRINTED NAME / DATE</div>
-                        <div style="font-weight: bold; font-size: 9px;">CITY/MUNICIPAL AGRICULTURE OFFICE</div>
+                    <div style="flex: 1; padding: 2px;">
+                        <div style="border-bottom: 1px solid #000; height: 15px;"></div>
+                        <div style="font-size: 7px;">SIGNATURE ABOVE PRINTED NAME / DATE</div>
+                        <div style="font-weight: bold; font-size: 7px;">CITY/MUNICIPAL AGRICULTURE OFFICE</div>
                     </div>
-                    <div style="flex: 1; padding: 4px;">
-                        <div style="border-bottom: 1px solid #000; height: 20px;"></div>
-                        <div style="font-size: 9px;">SIGNATURE ABOVE PRINTED NAME / DATE</div>
-                        <div style="font-weight: bold; font-size: 9px;">CAFC/MAFC CHAIRMAN</div>
+                    <div style="flex: 1; padding: 2px;">
+                        <div style="border-bottom: 1px solid #000; height: 15px;"></div>
+                        <div style="font-size: 7px;">SIGNATURE ABOVE PRINTED NAME / DATE</div>
+                        <div style="font-weight: bold; font-size: 7px;">CAFC/MAFC CHAIRMAN</div>
                     </div>
                 </div>
             </div>
@@ -949,7 +949,7 @@
             <!-- Data Privacy Policy -->
             <div style="border-top: 1px solid #000;">
                 <div class="section-header" style="text-align: center;">DATA PRIVACY POLICY</div>
-                <div style="padding: 4px; font-size: 9px;">
+                <div style="padding: 3px; font-size: 7px;">
                     <p>The collection of personal information is for documentation, planning, reporting and processing
                         purposes in availing agricultural related interventions. Processed data shall only be shared to
                         partner agencies for planning, reporting and other use in accordance to the mandate of the
@@ -962,7 +962,7 @@
 
             <!-- Footer -->
             <div
-                style="text-align: center; font-weight: bold; font-size: 11px; padding: 4px; border-top: 1px solid #000;">
+                style="text-align: center; font-weight: bold; font-size: 9px; padding: 3px; border-top: 1px solid #000;">
                 THIS FORM IS NOT FOR SALE</div>
         </div>
     </div>
