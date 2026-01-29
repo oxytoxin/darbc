@@ -654,7 +654,7 @@
 
 
 
-        <div class="border-black print:break-before-page">
+        <div class="border-black">
             <!-- Section Header -->
             <div class="bg-black text-white font-bold p-1 uppercase">
                 Part II: Farm Profile
@@ -913,7 +913,7 @@
         <i class="fas fa-cut absolute right-0 top-1/2 transform -translate-y-1/2 rotate-180  text-xl bg-white"></i>
     </div>
 
-    <div class="border border-black print:break-before-page">
+    <div class="border border-black">
         <div class="">
 
 
@@ -1037,333 +1037,274 @@
     <div class="text-center p-2  font-bold  ">
         This form is not for sale
     </div>
-    <div class="mt-2 grid grid-cols-12">
+    <!-- Page 2: Farm Parcels Table -->
+    <div class="mt-2 grid grid-cols-12 print:break-before-page">
         <div class="border border-black  text-xs col-span-12">
             <!-- Header Row -->
-            <div class="grid grid-cols-5 gap-x-2 border-b border-black p-1 font-bold uppercase">
-                <div>No. of Farm Parcels: <span class="italic font-normal">3</span></div>
-                <div>Name of Farmer’s in Rotation: </div>
-                <div class="border-b border-black">(P1) <span class="italic font-normal  "></span></div>
-                <div class="border-b border-black">(P2) <span class="italic font-normal  "></span></div>
-                <div class="border-b border-black">(P3) <span class="italic font-normal  "></span></div>
+            <div class="flex items-center border-b border-black p-1 text-[10px]">
+                <span class="font-bold">No. of Farm Parcels:</span>
+                <div class="border-b border-black w-8 mx-1"></div>
+                <span class="font-bold ml-4">Name of Farmer/s in Rotation:</span>
+                <span class="ml-2">(P1)</span>
+                <div class="border-b border-black w-24 mx-1"></div>
+                <span class="ml-2">(P2)</span>
+                <div class="border-b border-black w-24 mx-1"></div>
+                <span class="ml-2">(P3)</span>
+                <div class="border-b border-black w-24 mx-1"></div>
             </div>
 
             <!-- Table Headers -->
-            <div class="grid grid-cols-10 border-b border-black font-bold text-center uppercase">
-                <div class="col-span-1 p-2 border-r border-black">Farm Parcel No.</div>
-                <div class="col-span-3 p-2 border-r border-black">Farm Land Description</div>
-                <div class="col-span-1 p-2 border-r border-black ">
+            <div class="grid grid-cols-10 border-b border-black font-bold text-center uppercase text-[9px]">
+                <div class="col-span-1 p-1 border-r border-black">Farm Parcel No.</div>
+                <div class="col-span-3 p-1 border-r border-black">Farm Land Description</div>
+                <div class="col-span-1 p-1 border-r border-black leading-tight">
                     CROP/COMMODITY
-                    <p class="italic font-normal break-words">(Rice/Corn/HVC/Livestock/Poultry/Agri-fishery)</p>
-                    <p class="mt-2 font-bold">For Livestock & Poultry</p>
-                    <p class="italic font-normal">(specify type of animal)</p>
+                    <p class="italic font-normal text-[8px]">(Rice/Corn/HVC/Livestock/Poultry/Agri-fishery)</p>
+                    <p class="font-bold mt-1">For Livestock & Poultry</p>
+                    <p class="italic font-normal text-[8px]">(specify type of animal)</p>
                 </div>
-                <div class="col-span-1 p-2 border-r border-black">Size (ha)</div>
-                <div class="col-span-1 p-2 border-r border-black">
-                    <p class="mt-2 font-bold"> No. of Head</p>
-                    <p class="italic font-normal break-words">(For Livestock and Poultry)</p>
+                <div class="col-span-1 p-1 border-r border-black">Size (ha)</div>
+                <div class="col-span-1 p-1 border-r border-black leading-tight">
+                    No. of Head
+                    <p class="italic font-normal text-[8px]">(For Livestock and Poultry)</p>
                 </div>
-                <div class="col-span-1 p-2 border-r border-black">Farm Type **</div>
-                <div class="col-span-1 p-2 border-r border-black">Organic Practitioner (Y/N)</div>
-                <div class="col-span-1 p-2">Remarks</div>
+                <div class="col-span-1 p-1 border-r border-black">Farm Type **</div>
+                <div class="col-span-1 p-1 border-r border-black leading-tight">Organic Practitioner (Y/N)</div>
+                <div class="col-span-1 p-1">Remarks</div>
             </div>
 
             <!-- Farm Parcel 1 -->
-            <div class="grid grid-cols-10 border-b border-black text-xs">
-                <div class="col-span-1 p-2 border-r border-black text-center">1</div>
-                <div class="col-span-3 p-2 border-r border-black">
-                    <div class="">
-                        <!-- Farm Location -->
-                        <span class="text-xs font-bold ">Farm Location:</span>
-                        <div class="mt-2">
-                            <div class="border-b border-black w-full text-xs italic text-center"></div>
-                            <p class="text-center text-xs font-bold ">Barangay</p>
+            <div class="grid grid-cols-10 border-b border-black text-[10px]">
+                <div class="col-span-1 p-1 border-r border-black text-center font-bold">1</div>
+                <div class="col-span-3 p-1 border-r border-black">
+                    <!-- Farm Location -->
+                    <div class="font-bold">Farm Location:</div>
+                    <div class="flex items-center mt-1">
+                        <div class="border-b border-black flex-grow h-4"></div>
+                        <span class="text-[8px] ml-1 uppercase">Barangay</span>
+                    </div>
+                    <div class="flex items-center mt-1">
+                        <div class="border-b border-black flex-grow h-4"></div>
+                        <span class="text-[8px] ml-1 uppercase">City/Municipality</span>
+                    </div>
+
+                    <!-- Total Farm Area + Within Ancestral Domain -->
+                    <div class="flex items-center mt-2">
+                        <span class="font-bold">Total Farm Area (in hectares):</span>
+                        <div class="border-b border-black w-10 mx-1 h-4"></div>
+                        <span class="font-bold">ha</span>
+                        <span class="font-bold ml-2">Within Ancestral Domain:</span>
+                        <div class="flex items-center ml-1">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">Yes</span>
                         </div>
-                        <div class="mt-2">
-                            <div class="border-b border-black w-full text-xs italic text-center"></div>
-                            <p class="text-center text-xs font-bold ">City/Municipality</p>
+                        <div class="flex items-center ml-1">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">No</span>
                         </div>
                     </div>
 
-                    <!-- Total Farm Area & Ownership -->
-                    <div class="border-b border-black p-2">
-                        <div class="flex justify-between">
-                            <span class="text-xs font-bold ">Total Farm Area (in hectares):</span>
-                            <div class="border-b border-black w-20 text-xs italic text-center"></div>
-                            <span class="text-xs font-bold  ml-2">ha</span>
+                    <!-- Ownership Document No + Agrarian Reform -->
+                    <div class="flex items-center mt-1">
+                        <span class="font-bold">Ownership Document No*:</span>
+                        <div class="border-b border-black w-12 mx-1 h-4"></div>
+                        <span class="font-bold ml-2">Agrarian Reform Beneficiary:</span>
+                        <div class="flex items-center ml-1">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">Yes</span>
                         </div>
-
-                        <div class="flex justify-between mt-2">
-                            <span class="text-xs font-bold ">Ownership Document No*:</span>
-                            <div class="border-b border-black w-32 text-xs italic text-center"></div>
-                        </div>
-                    </div>
-
-                    <!-- Ancestral Domain & Agrarian Reform -->
-                    <div class="border-b border-black p-2">
-                        <div class="flex justify-between">
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs font-bold ">Within Ancestral Domain:</span>
-                                <div class="flex items-center space-x-2 ml-2">
-                                    <div class="border border-black w-4 h-4"></div>
-                                    <span class="text-xs">Yes</span>
-                                </div>
-                                <div class="flex items-center space-x-2 ml-4">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
-                                    </div>
-                                    <span class="text-xs">No</span>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs font-bold uppercase">Agrarian Reform Beneficiary:</span>
-                                <div class="flex items-center space-x-2 ml-2">
-                                    <div class="border border-black w-4 h-4"></div>
-                                    <span class="text-xs">Yes</span>
-                                </div>
-                                <div class="flex items-center space-x-2 ml-4">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
-                                    </div>
-                                    <span class="text-xs">No</span>
-                                </div>
-                            </div>
+                        <div class="flex items-center ml-1">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">No</span>
                         </div>
                     </div>
 
                     <!-- Ownership Type -->
-                    <div class="border-b border-black p-2">
-                        <span class="text-xs font-bold uppercase">Ownership Type:</span>
-                        <div class="grid grid-cols-2 gap-x-4 mt-2 text-xs">
-                            <div class="flex items-center space-x-2">
-                                <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
-                                </div>
-                                <span>Registered Owner</span>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <div class="border border-black w-4 h-4"></div>
-                                <span>Others:</span>
-                                <div class="border-b border-black w-full italic text-center">Corporate Ownership</div>
-                            </div>
-                            <div class="flex items-center space-x-2 col-span-2">
-                                <div class="border border-black w-4 h-4"></div>
-                                <span>Tenant (Name of Land Owner: </span>
-                                <div class="border-b border-black flex-grow italic text-center"></div>
-                                <span>)</span>
-                            </div>
-                            <div class="flex items-center space-x-2 col-span-2">
-                                <div class="border border-black w-4 h-4"></div>
-                                <span>Lessee (Name of Land Owner: </span>
-                                <div class="border-b border-black flex-grow italic text-center"></div>
-                                <span>)</span>
-                            </div>
+                    <div class="mt-1">
+                        <span class="font-bold">Ownership Type:</span>
+                        <div class="flex items-center mt-0.5">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">Registered Owner</span>
+                            <div class="border border-black w-3 h-3 ml-2"></div>
+                            <span class="ml-0.5">Others:</span>
+                            <div class="border-b border-black flex-grow ml-1 h-4"></div>
+                        </div>
+                        <div class="flex items-center mt-0.5">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">Tenant (Name of Land Owner:</span>
+                            <div class="border-b border-black flex-grow mx-1 h-4"></div>
+                            <span>)</span>
+                        </div>
+                        <div class="flex items-center mt-0.5">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">Lessee (Name of Land Owner:</span>
+                            <div class="border-b border-black flex-grow mx-1 h-4"></div>
+                            <span>)</span>
                         </div>
                     </div>
-
                 </div>
-                <div class="col-span-1 p-2 border-r border-black text-center"></div>
-                <div class="col-span-1 p-2 border-r border-black text-center"></div>
-                <div class="col-span-1 p-2 border-r border-black text-center"></div>
-                <div class="col-span-1 p-2 border-r border-black text-center"></div>
-                <div class="col-span-1 p-2 border-r border-black text-center"></div>
-                <div class="col-span-1 p-2 text-center"></div>
+                <div class="col-span-1 p-1 border-r border-black text-center"></div>
+                <div class="col-span-1 p-1 border-r border-black text-center"></div>
+                <div class="col-span-1 p-1 border-r border-black text-center"></div>
+                <div class="col-span-1 p-1 border-r border-black text-center"></div>
+                <div class="col-span-1 p-1 border-r border-black text-center"></div>
+                <div class="col-span-1 p-1 text-center"></div>
             </div>
 
             <!-- Farm Parcel 2 -->
-            <div class="grid grid-cols-10 border-b border-black text-xs">
-                <div class="col-span-1 p-2 border-r border-black text-center"></div>
-                <div class="col-span-3 p-2 border-r border-black">
-                    <div class="">
-                        <!-- Farm Location -->
-                        <span class="text-xs font-bold ">Farm Location:</span>
-                        <div class="mt-2">
-                            <div class="border-b border-black w-full text-xs italic text-center"></div>
-                            <p class="text-center text-xs font-bold ">Barangay</p>
+            <div class="grid grid-cols-10 border-b border-black text-[10px]">
+                <div class="col-span-1 p-1 border-r border-black text-center font-bold">2</div>
+                <div class="col-span-3 p-1 border-r border-black">
+                    <!-- Farm Location -->
+                    <div class="font-bold">Farm Location:</div>
+                    <div class="flex items-center mt-1">
+                        <div class="border-b border-black flex-grow h-4"></div>
+                        <span class="text-[8px] ml-1 uppercase">Barangay</span>
+                    </div>
+                    <div class="flex items-center mt-1">
+                        <div class="border-b border-black flex-grow h-4"></div>
+                        <span class="text-[8px] ml-1 uppercase">City/Municipality</span>
+                    </div>
+
+                    <!-- Total Farm Area + Within Ancestral Domain -->
+                    <div class="flex items-center mt-2">
+                        <span class="font-bold">Total Farm Area (in hectares):</span>
+                        <div class="border-b border-black w-10 mx-1 h-4"></div>
+                        <span class="font-bold">ha</span>
+                        <span class="font-bold ml-2">Within Ancestral Domain:</span>
+                        <div class="flex items-center ml-1">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">Yes</span>
                         </div>
-                        <div class="mt-2">
-                            <div class="border-b border-black w-full text-xs italic text-center"></div>
-                            <p class="text-center text-xs font-bold ">City/Municipality</p>
+                        <div class="flex items-center ml-1">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">No</span>
                         </div>
                     </div>
 
-                    <!-- Total Farm Area & Ownership -->
-                    <div class="border-b border-black p-2">
-                        <div class="flex justify-between">
-                            <span class="text-xs font-bold ">Total Farm Area (in hectares):</span>
-                            <div class="border-b border-black w-20 text-xs italic text-center"></div>
-                            <span class="text-xs font-bold  ml-2">ha</span>
+                    <!-- Ownership Document No + Agrarian Reform -->
+                    <div class="flex items-center mt-1">
+                        <span class="font-bold">Ownership Document No*:</span>
+                        <div class="border-b border-black w-12 mx-1 h-4"></div>
+                        <span class="font-bold ml-2">Agrarian Reform Beneficiary:</span>
+                        <div class="flex items-center ml-1">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">Yes</span>
                         </div>
-
-                        <div class="flex justify-between mt-2">
-                            <span class="text-xs font-bold ">Ownership Document No*:</span>
-                            <div class="border-b border-black w-32 text-xs italic text-center"></div>
-                        </div>
-                    </div>
-
-                    <!-- Ancestral Domain & Agrarian Reform -->
-                    <div class="border-b border-black p-2">
-                        <div class="flex justify-between">
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs font-bold ">Within Ancestral Domain:</span>
-                                <div class="flex items-center space-x-2 ml-2">
-                                    <div class="border border-black w-4 h-4"></div>
-                                    <span class="text-xs">Yes</span>
-                                </div>
-                                <div class="flex items-center space-x-2 ml-4">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
-                                    </div>
-                                    <span class="text-xs">No</span>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs font-bold uppercase">Agrarian Reform Beneficiary:</span>
-                                <div class="flex items-center space-x-2 ml-2">
-                                    <div class="border border-black w-4 h-4"></div>
-                                    <span class="text-xs">Yes</span>
-                                </div>
-                                <div class="flex items-center space-x-2 ml-4">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
-                                    </div>
-                                    <span class="text-xs">No</span>
-                                </div>
-                            </div>
+                        <div class="flex items-center ml-1">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">No</span>
                         </div>
                     </div>
 
                     <!-- Ownership Type -->
-                    <div class="border-b border-black p-2">
-                        <span class="text-xs font-bold uppercase">Ownership Type:</span>
-                        <div class="grid grid-cols-2 gap-x-4 mt-2 text-xs">
-                            <div class="flex items-center space-x-2">
-                                <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
-                                </div>
-                                <span>Registered Owner</span>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <div class="border border-black w-4 h-4"></div>
-                                <span>Others:</span>
-                                <div class="border-b border-black w-full italic text-center"></div>
-                            </div>
-                            <div class="flex items-center space-x-2 col-span-2">
-                                <div class="border border-black w-4 h-4"></div>
-                                <span>Tenant (Name of Land Owner: </span>
-                                <div class="border-b border-black flex-grow italic text-center"></div>
-                                <span>)</span>
-                            </div>
-                            <div class="flex items-center space-x-2 col-span-2">
-                                <div class="border border-black w-4 h-4"></div>
-                                <span>Lessee (Name of Land Owner: </span>
-                                <div class="border-b border-black flex-grow italic text-center"></div>
-                                <span>)</span>
-                            </div>
+                    <div class="mt-1">
+                        <span class="font-bold">Ownership Type:</span>
+                        <div class="flex items-center mt-0.5">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">Registered Owner</span>
+                            <div class="border border-black w-3 h-3 ml-2"></div>
+                            <span class="ml-0.5">Others:</span>
+                            <div class="border-b border-black flex-grow ml-1 h-4"></div>
+                        </div>
+                        <div class="flex items-center mt-0.5">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">Tenant (Name of Land Owner:</span>
+                            <div class="border-b border-black flex-grow mx-1 h-4"></div>
+                            <span>)</span>
+                        </div>
+                        <div class="flex items-center mt-0.5">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">Lessee (Name of Land Owner:</span>
+                            <div class="border-b border-black flex-grow mx-1 h-4"></div>
+                            <span>)</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-span-1 p-2 border-r border-black text-center"></div>
-                <div class="col-span-1 p-2 border-r border-black text-center"></div>
-                <div class="col-span-1 p-2 border-r border-black text-center"></div>
-                <div class="col-span-1 p-2 border-r border-black text-center"></div>
-                <div class="col-span-1 p-2 border-r border-black text-center"></div>
-                <div class="col-span-1 p-2 text-center"></div>
+                <div class="col-span-1 p-1 border-r border-black text-center"></div>
+                <div class="col-span-1 p-1 border-r border-black text-center"></div>
+                <div class="col-span-1 p-1 border-r border-black text-center"></div>
+                <div class="col-span-1 p-1 border-r border-black text-center"></div>
+                <div class="col-span-1 p-1 border-r border-black text-center"></div>
+                <div class="col-span-1 p-1 text-center"></div>
             </div>
 
             <!-- Farm Parcel 3 -->
-            <div class="grid grid-cols-10 border-b border-black text-xs">
-                <div class="col-span-1 p-2 border-r border-black text-center">3</div>
-                <div class="col-span-3 p-2 border-r border-black">
-                    <div class="">
-                        <!-- Farm Location -->
-                        <span class="text-xs font-bold ">Farm Location:</span>
-                        <div class="mt-2">
-                            <div class="border-b border-black w-full text-xs italic text-center"></div>
-                            <p class="text-center text-xs font-bold ">Barangay</p>
+            <div class="grid grid-cols-10 border-b border-black text-[10px]">
+                <div class="col-span-1 p-1 border-r border-black text-center font-bold">3</div>
+                <div class="col-span-3 p-1 border-r border-black">
+                    <!-- Farm Location -->
+                    <div class="font-bold">Farm Location:</div>
+                    <div class="flex items-center mt-1">
+                        <div class="border-b border-black flex-grow h-4"></div>
+                        <span class="text-[8px] ml-1 uppercase">Barangay</span>
+                    </div>
+                    <div class="flex items-center mt-1">
+                        <div class="border-b border-black flex-grow h-4"></div>
+                        <span class="text-[8px] ml-1 uppercase">City/Municipality</span>
+                    </div>
+
+                    <!-- Total Farm Area + Within Ancestral Domain -->
+                    <div class="flex items-center mt-2">
+                        <span class="font-bold">Total Farm Area (in hectares):</span>
+                        <div class="border-b border-black w-10 mx-1 h-4"></div>
+                        <span class="font-bold">ha</span>
+                        <span class="font-bold ml-2">Within Ancestral Domain:</span>
+                        <div class="flex items-center ml-1">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">Yes</span>
                         </div>
-                        <div class="mt-2">
-                            <div class="border-b border-black w-full text-xs italic text-center"></div>
-                            <p class="text-center text-xs font-bold ">City/Municipality</p>
+                        <div class="flex items-center ml-1">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">No</span>
                         </div>
                     </div>
 
-                    <!-- Total Farm Area & Ownership -->
-                    <div class="border-b border-black p-2">
-                        <div class="flex justify-between">
-                            <span class="text-xs font-bold ">Total Farm Area (in hectares):</span>
-                            <div class="border-b border-black w-20 text-xs italic text-center"></div>
-                            <span class="text-xs font-bold  ml-2">ha</span>
+                    <!-- Ownership Document No + Agrarian Reform -->
+                    <div class="flex items-center mt-1">
+                        <span class="font-bold">Ownership Document No*:</span>
+                        <div class="border-b border-black w-12 mx-1 h-4"></div>
+                        <span class="font-bold ml-2">Agrarian Reform Beneficiary:</span>
+                        <div class="flex items-center ml-1">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">Yes</span>
                         </div>
-
-                        <div class="flex justify-between mt-2">
-                            <span class="text-xs font-bold ">Ownership Document No*:</span>
-                            <div class="border-b border-black w-32 text-xs italic text-center"></div>
-                        </div>
-                    </div>
-
-                    <!-- Ancestral Domain & Agrarian Reform -->
-                    <div class="border-b border-black p-2">
-                        <div class="flex justify-between">
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs font-bold ">Within Ancestral Domain:</span>
-                                <div class="flex items-center space-x-2 ml-2">
-                                    <div class="border border-black w-4 h-4"></div>
-                                    <span class="text-xs">Yes</span>
-                                </div>
-                                <div class="flex items-center space-x-2 ml-4">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
-                                    </div>
-                                    <span class="text-xs">No</span>
-                                </div>
-                            </div>
-
-                            <div class="flex items-center space-x-2">
-                                <span class="text-xs font-bold uppercase">Agrarian Reform Beneficiary:</span>
-                                <div class="flex items-center space-x-2 ml-2">
-                                    <div class="border border-black w-4 h-4"></div>
-                                    <span class="text-xs">Yes</span>
-                                </div>
-                                <div class="flex items-center space-x-2 ml-4">
-                                    <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
-                                    </div>
-                                    <span class="text-xs">No</span>
-                                </div>
-                            </div>
+                        <div class="flex items-center ml-1">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">No</span>
                         </div>
                     </div>
 
                     <!-- Ownership Type -->
-                    <div class="border-b border-black p-2">
-                        <span class="text-xs font-bold uppercase">Ownership Type:</span>
-                        <div class="grid grid-cols-2 gap-x-4 mt-2 text-xs">
-                            <div class="flex items-center space-x-2">
-                                <div class="border border-black w-4 h-4 flex items-center justify-center">&#10003;
-                                </div>
-                                <span>Registered Owner</span>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <div class="border border-black w-4 h-4"></div>
-                                <span>Others:</span>
-                                <div class="border-b border-black w-full italic text-center"></div>
-                            </div>
-                            <div class="flex items-center space-x-2 col-span-2">
-                                <div class="border border-black w-4 h-4"></div>
-                                <span>Tenant (Name of Land Owner: </span>
-                                <div class="border-b border-black flex-grow italic text-center"></div>
-                                <span>)</span>
-                            </div>
-                            <div class="flex items-center space-x-2 col-span-2">
-                                <div class="border border-black w-4 h-4"></div>
-                                <span>Lessee (Name of Land Owner: </span>
-                                <div class="border-b border-black flex-grow italic text-center"></div>
-                                <span>)</span>
-                            </div>
+                    <div class="mt-1">
+                        <span class="font-bold">Ownership Type:</span>
+                        <div class="flex items-center mt-0.5">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">Registered Owner</span>
+                            <div class="border border-black w-3 h-3 ml-2"></div>
+                            <span class="ml-0.5">Others:</span>
+                            <div class="border-b border-black flex-grow ml-1 h-4"></div>
+                        </div>
+                        <div class="flex items-center mt-0.5">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">Tenant (Name of Land Owner:</span>
+                            <div class="border-b border-black flex-grow mx-1 h-4"></div>
+                            <span>)</span>
+                        </div>
+                        <div class="flex items-center mt-0.5">
+                            <div class="border border-black w-3 h-3"></div>
+                            <span class="ml-0.5">Lessee (Name of Land Owner:</span>
+                            <div class="border-b border-black flex-grow mx-1 h-4"></div>
+                            <span>)</span>
                         </div>
                     </div>
                 </div>
-                <div class="col-span-1 p-2 border-r border-black text-center"></div>
-                <div class="col-span-1 p-2 border-r border-black text-center"></div>
-                <div class="col-span-1 p-2 border-r border-black text-center"></div>
-                <div class="col-span-1 p-2 border-r border-black text-center"></div>
-                <div class="col-span-1 p-2 border-r border-black text-center"></div>
-                <div class="col-span-1 p-2 text-center"></div>
+                <div class="col-span-1 p-1 border-r border-black text-center"></div>
+                <div class="col-span-1 p-1 border-r border-black text-center"></div>
+                <div class="col-span-1 p-1 border-r border-black text-center"></div>
+                <div class="col-span-1 p-1 border-r border-black text-center"></div>
+                <div class="col-span-1 p-1 border-r border-black text-center"></div>
+                <div class="col-span-1 p-1 text-center"></div>
             </div>
 
 
