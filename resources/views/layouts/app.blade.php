@@ -4,10 +4,10 @@
 @endphp
 @section('body')
     <div class="relative h-full">
-        <div class="fixed inset-0 p-4 bg-primary-600 text-white z-50 md:hidden flex">
+        <div class="fixed inset-0 p-4 bg-primary-600 text-white z-50 md:hidden flex print:hidden">
             This site is not optimized for mobile devices.
         </div>
-        <div class="w-[18rem] fixed top-0 left-0 bottom-0 bg-white flex flex-col overflow-hidden  px-[1rem] py-[1.2rem]">
+        <div class="w-[18rem] fixed top-0 left-0 bottom-0 bg-white flex flex-col overflow-hidden  px-[1rem] py-[1.2rem] print:hidden">
             <section class="flex items-center space-x-2">
                 <img class="w-[3rem] h-[3rem]" src="/assets/darbc-logo.svg" alt="darbc logo">
                 <h1 class="text-3xl font-[900] text-custom-blue">DARBC</h1>
@@ -77,8 +77,10 @@
         </div>
     </div>
 
-    <main class="flex-1 px-[1.5rem] ml-[18rem] pt-[1.3rem]">
-        <x-topbar />
+    <main class="flex-1 px-[1.5rem] ml-[18rem] pt-[1.3rem] print:ml-0 print:px-0 print:pt-0">
+        <div class="print:hidden">
+            <x-topbar />
+        </div>
 
         @yield('content')
 

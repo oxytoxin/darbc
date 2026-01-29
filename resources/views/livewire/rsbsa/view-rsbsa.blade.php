@@ -1,4 +1,36 @@
+<style>
+    @media print {
+        .ref-number-box {
+            width: fit-content !important;
+            overflow: hidden !important;
+        }
+        .print\:break-before-page {
+            break-before: page !important;
+            page-break-before: always !important;
+        }
+        .print\:break-after-page {
+            break-after: page !important;
+            page-break-after: always !important;
+        }
+    }
+</style>
 <div class="max-w-7xl mx-auto">
+    <!-- Print Button - Hidden when printing -->
+    <div class="print:hidden mb-4 flex justify-between items-center">
+        <a href="{{ route('rsbsa.manage-members') }}" class="inline-flex items-center px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded-lg shadow">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+            </svg>
+            Back
+        </a>
+        <button onclick="window.print()" class="inline-flex items-center px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-lg shadow">
+            <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/>
+            </svg>
+            Print RSBSA Form
+        </button>
+    </div>
+
     <p class="text-xs font-bold uppercase text-right ">Revised Version: 03-2021</p>
     <div class="border-2 border-black">
         <div class="">
@@ -65,7 +97,7 @@
 
                     <div class="flex mt-4">
                         <p class="font-semibold italic text-xs mr-4 min-w-[160px]">Reference Number:</p>
-                        <div class="flex space-x-2">
+                        <div class="flex space-x-2 ref-number-box">
                             <!-- Region -->
                             <div class="flex flex-col">
                                 <div class="flex border border-black">
@@ -120,7 +152,7 @@
 
                             <!-- Last 6 Digits (Always Exists) -->
                             <div class="flex flex-col">
-                                <div class="flex border border-black">
+                                <div class="flex border border-black overflow-hidden">
                                     @foreach ($codes['last_six'] as $index => $digit)
                                         <div
                                             class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
@@ -165,7 +197,7 @@
                             <div class="text-center text-xs font-bold uppercase border-t border-black ">Surname</div>
                         </div>
                         <div class="p-2">
-                            <x-display-text value="{{ $rsbsa->memberinformation?->user?->surname ?? 'N/A' }}"
+                            <x-display-text value="{{ $rsbsa->memberinformation?->user?->first_name ?? 'N/A' }}"
                                 class="text-center" />
                             <div class="text-center text-xs font-bold uppercase border-t border-black ">First Name</div>
                         </div>
@@ -622,7 +654,7 @@
 
 
 
-        <div class=" border-black">
+        <div class="border-black print:break-before-page">
             <!-- Section Header -->
             <div class="bg-black text-white font-bold p-1 uppercase">
                 Part II: Farm Profile
@@ -881,19 +913,19 @@
         <i class="fas fa-cut absolute right-0 top-1/2 transform -translate-y-1/2 rotate-180  text-xl bg-white"></i>
     </div>
 
-    <div class="border border-black">
+    <div class="border border-black print:break-before-page">
         <div class="">
 
 
             <div class="text-center p-2 ">
                 <h1 class="text-lg font-bold ">Registry System for Basic Sectors in Agriculture (RSBSA)</h1>
-                <h2 class="text-lg font-bold uppercase">Enrollment Client’s Copy</h2>
+                <h2 class="text-lg font-bold uppercase">Enrollment Client's Copy</h2>
             </div>
 
 
             <div class="flex mt-4 p-2">
                 <p class="font-semibold italic text-xs mr-4 min-w-[160px]">Reference Number:</p>
-                <div class="flex space-x-2">
+                <div class="flex space-x-2 ref-number-box">
                     <!-- Region -->
                     <div class="flex flex-col">
                         <div class="flex border border-black">
@@ -948,7 +980,7 @@
 
                     <!-- Last 6 Digits (Always Exists) -->
                     <div class="flex flex-col">
-                        <div class="flex border border-black">
+                        <div class="flex border border-black overflow-hidden">
                             @foreach ($codes['last_six'] as $index => $digit)
                                 <div
                                     class="w-6 h-6 flex items-center justify-center text-xs {{ $loop->last ? '' : 'border-r border-black' }}">
@@ -971,7 +1003,7 @@
                             <div class="text-center text-xs font-bold uppercase border-t border-black ">Surname</div>
                         </div>
                         <div class="p-2">
-                            <x-display-text value="{{ $rsbsa->memberinformation?->user?->surname ?? 'N/A' }}"
+                            <x-display-text value="{{ $rsbsa->memberinformation?->user?->first_name ?? 'N/A' }}"
                                 class="text-center" />
                             <div class="text-center text-xs font-bold uppercase border-t border-black ">First Name</div>
                         </div>

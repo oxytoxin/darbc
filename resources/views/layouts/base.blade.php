@@ -20,28 +20,32 @@
     @stack('scripts')
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-</head>
-
-<body class="relative antialiased pb-8">
-    @yield('body')
-    @livewire('notifications')
     <script>
         function printOut(data, title) {
             var mywindow = window.open('', title, 'height=1000,width=1000');
             mywindow.document.write('<html><head>');
             mywindow.document.write('<title>' + title + '</title>');
-            mywindow.document.write(`<link rel="stylesheet" href="{{ Vite::asset('resources/css/app.css') }}" />`);
-            mywindow.document.write('</head><body >');
+            // Get current page stylesheets
+            var links = document.querySelectorAll('link[rel="stylesheet"]');
+            links.forEach(function(link) {
+                mywindow.document.write('<link rel="stylesheet" href="' + link.href + '" />');
+            });
+            mywindow.document.write('</head><body>');
             mywindow.document.write(data);
             mywindow.document.write('</body></html>');
             mywindow.document.close();
             mywindow.focus();
-            setTimeout(() => {
+            setTimeout(function() {
                 mywindow.print();
             }, 1000);
             return false;
         }
     </script>
+</head>
+
+<body class="relative antialiased pb-8">
+    @yield('body')
+    @livewire('notifications')
 </body>
 
 </html>

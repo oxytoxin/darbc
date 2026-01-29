@@ -226,3 +226,52 @@ input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
+
+/* Print Styles */
+@media print {
+    @page {
+        size: legal portrait;
+        margin: 0.5cm;
+    }
+
+    body {
+        background-color: white !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .print\:hidden {
+        display: none !important;
+    }
+
+    .print\:ml-0 {
+        margin-left: 0 !important;
+    }
+
+    .print\:px-0 {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    .print\:pt-0 {
+        padding-top: 0 !important;
+    }
+
+    /* Ensure borders print */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* Page breaks */
+    .page-break {
+        page-break-before: always;
+    }
+
+    /* Hide unnecessary elements */
+    .sidebar,
+    nav,
+    .topbar {
+        display: none !important;
+    }
+}
