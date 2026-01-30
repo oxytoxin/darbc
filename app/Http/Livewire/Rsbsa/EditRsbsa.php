@@ -33,38 +33,80 @@ class EditRsbsa extends Component implements HasForms
         return RsbsaFroms::editForm($this->rsbsa);
     }
 
+    protected function getFormStatePath(): ?string
+    {
+        return 'data';
+    }
+
     public function mount(RsbsaRecord $rsbsa)
     {
         $this->rsbsa = $rsbsa;
+        $member = $this->rsbsa->memberInformation;
         $data = $this->rsbsa->toArray();
+
         $data = array_merge($data, [
-            'darbc_id' => $this->rsbsa->memberInformation->darbc_id ?? null,
-            'memberInformation_information_id' => $this->rsbsa->memberInformation->id ?? null,
-            'user_id' => $this->rsbsa->memberInformation->user_id ?? null,
-            // 'surname' => $this->rsbsa->memberInformation->user?->surname ?? null,
-            // 'first_name' => $this->rsbsa->memberInformation->user?->first_name ?? null,
-            // 'middle_name' => $this->rsbsa->memberInformation->user?->middle_name ?? null,
-            // 'gender' => $this->rsbsa->memberInformation?->gender->name ?? null,
-            // 'date_of_birth' => $this->rsbsa->memberInformation?->date_of_birth ?? null,
-            // 'contact_number' => $this->rsbsa->memberInformation?->contact_number ?? null,
-            // 'religion' => $this->rsbsa->memberInformation?->religion ?? null,
-            // 'civil_status' => $this->rsbsa->memberInformation?->civil_status ?? null,
-            // 'name_of_spouse' => $this->rsbsa->memberInformation?->spouse ?? null,
-            // 'mother_maiden_name' => $this->rsbsa->memberInformation?->mother_maiden_name ?? null,
+            'darbc_id' => $member->darbc_id ?? null,
+            'memberInformation_information_id' => $member->id ?? null,
+            'user_id' => $member->user_id ?? null,
         ]);
 
+        // Auto-fill empty personal details from Member (recommended for better UX)
+        if (empty($data['surname'])) {
+            $data['surname'] = $member->user?->surname;
+        }
+        if (empty($data['first_name'])) {
+            $data['first_name'] = $member->user?->first_name;
+        }
+        if (empty($data['middle_name'])) {
+            $data['middle_name'] = $member->user?->middle_name;
+        }
+        if (empty($data['gender_id'])) {
+            $data['gender_id'] = $member->gender?->id;
+        }
+        if (empty($data['date_of_birth'])) {
+            $data['date_of_birth'] = $member->date_of_birth;
+        }
+        if (empty($data['contact_number'])) {
+            $data['contact_number'] = $member->contact_number;
+        }
+        if (empty($data['religion'])) {
+            $data['religion'] = $member->religion;
+        }
+        if (empty($data['civil_status'])) {
+            $data['civil_status'] = $member->civil_status;
+        }
+        if (empty($data['name_of_spouse'])) {
+            $data['name_of_spouse'] = $member->spouse;
+        }
+        if (empty($data['mother_maiden_name'])) {
+            $data['mother_maiden_name'] = $member->mother_maiden_name;
+        }
+        if (empty($data['barangay'])) {
+            $data['barangay'] = $member->barangay;
+        }
+
+        // Validate location codes - clear invalid ones so user can re-select
+        if (!empty($data['region_code']) && !\App\Models\Region::where('code', $data['region_code'])->exists()) {
+            $data['region_code'] = null;
+        }
+        if (!empty($data['province_code']) && !\App\Models\Province::where('code', $data['province_code'])->exists()) {
+            $data['province_code'] = null;
+        }
+        if (!empty($data['city_municipality_code']) && !\App\Models\City::where('code', $data['city_municipality_code'])->exists()) {
+            $data['city_municipality_code'] = null;
+        }
+        if (!empty($data['barangay_code']) && !\App\Models\Barangay::where('code', $data['barangay_code'])->exists()) {
+            $data['barangay_code'] = null;
+        }
+
         $twoByTwoMediaPath = $this->rsbsa->getFirstMediaPath('two_by_two');
-
-    // Set FileUpload field correctly (must be a file path, not URL)
-    $data['two_by_two'] = !empty($twoByTwoMediaPath) ? $twoByTwoMediaPath : null;
-
+        $data['two_by_two'] = !empty($twoByTwoMediaPath) ? $twoByTwoMediaPath : null;
 
         $this->form->fill($data);
     }
 
     public function update()
     {
-
         try {
             $this->form->validate();
         } catch (\Throwable $th) {
@@ -74,9 +116,9 @@ class EditRsbsa extends Component implements HasForms
 
         DB::beginTransaction();
 
-        $validatedData = $this->form->validate();
+        $validatedData = $this->form->validate()['data'];
 
-        $twoByTwo['two_by_two'] = $validatedData['two_by_two'];
+        $twoByTwo['two_by_two'] = $validatedData['two_by_two'] ?? null;
         $validatedData['enrollment_type'] = 'Updating';
         unset($validatedData['two_by_two']);
 

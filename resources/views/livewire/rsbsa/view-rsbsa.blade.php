@@ -232,13 +232,13 @@
             <div style="display: flex; border-bottom: 1px solid #000;">
                 <div style="flex: 1; padding: 2px 4px; border-right: 1px solid #000;">
                     <div style="min-height: 14px; font-weight: 500; text-align: center;">
-                        {{ $rsbsa->memberinformation?->user?->surname ?? '' }}</div>
+                        {{ $rsbsa->memberInformation?->user?->surname ?? '' }}</div>
                     <div style="border-top: 1px solid #000; font-size: 8px; font-weight: bold; text-align: center;">
                         SURNAME</div>
                 </div>
                 <div style="flex: 1; padding: 2px 4px;">
                     <div style="min-height: 14px; font-weight: 500; text-align: center;">
-                        {{ $rsbsa->memberinformation?->user?->first_name ?? '' }}</div>
+                        {{ $rsbsa->memberInformation?->user?->first_name ?? '' }}</div>
                     <div style="border-top: 1px solid #000; font-size: 8px; font-weight: bold; text-align: center;">
                         FIRST NAME</div>
                 </div>
@@ -247,7 +247,7 @@
             <div style="display: flex; border-bottom: 1px solid #000;">
                 <div style="flex: 1; padding: 2px 4px; border-right: 1px solid #000;">
                     <div style="min-height: 14px; font-weight: 500; text-align: center;">
-                        {{ $rsbsa->memberinformation?->user?->middle_name ?? '' }}</div>
+                        {{ $rsbsa->memberInformation?->user?->middle_name ?? '' }}</div>
                     <div style="border-top: 1px solid #000; font-size: 8px; font-weight: bold; text-align: center;">
                         MIDDLE NAME</div>
                 </div>
@@ -260,9 +260,9 @@
                 <div
                     style="width: 120px; padding: 2px 4px; display: flex; align-items: center; justify-content: center;">
                     <span style="font-weight: bold; font-size: 8px;">SEX:</span>
-                    <span class="chk {{ $rsbsa->memberinformation?->gender?->name === 'Male' ? 'checked' : '' }}"
+                    <span class="chk {{ $rsbsa->memberInformation?->gender?->name === 'Male' ? 'checked' : '' }}"
                         style="margin-left: 8px;"></span> <span style="margin-left: 2px;">Male</span>
-                    <span class="chk {{ $rsbsa->memberinformation?->gender?->name === 'Female' ? 'checked' : '' }}"
+                    <span class="chk {{ $rsbsa->memberInformation?->gender?->name === 'Female' ? 'checked' : '' }}"
                         style="margin-left: 8px;"></span> <span style="margin-left: 2px;">Female</span>
                 </div>
             </div>
@@ -744,13 +744,13 @@
             <div style="display: flex; padding: 4px;">
                 <div style="flex: 1; padding: 2px;">
                     <div style="min-height: 12px; font-size: 9px; font-weight: 500; text-align: center;">
-                        {{ $rsbsa->memberinformation?->user?->surname ?? '' }}</div>
+                        {{ $rsbsa->memberInformation?->user?->surname ?? '' }}</div>
                     <div style="border-top: 1px solid #000; font-size: 8px; font-weight: bold; text-align: center;">
                         SURNAME</div>
                 </div>
                 <div style="flex: 1; padding: 2px;">
                     <div style="min-height: 12px; font-size: 9px; font-weight: 500; text-align: center;">
-                        {{ $rsbsa->memberinformation?->user?->first_name ?? '' }}</div>
+                        {{ $rsbsa->memberInformation?->user?->first_name ?? '' }}</div>
                     <div style="border-top: 1px solid #000; font-size: 8px; font-weight: bold; text-align: center;">
                         FIRST NAME</div>
                 </div>
@@ -759,7 +759,7 @@
             <div style="display: flex; padding: 0 4px 4px 4px;">
                 <div style="flex: 1; padding: 2px;">
                     <div style="min-height: 12px; font-size: 9px; font-weight: 500; text-align: center;">
-                        {{ $rsbsa->memberinformation?->user?->middle_name ?? '' }}</div>
+                        {{ $rsbsa->memberInformation?->user?->middle_name ?? '' }}</div>
                     <div style="border-top: 1px solid #000; font-size: 8px; font-weight: bold; text-align: center;">
                         MIDDLE NAME</div>
                 </div>
