@@ -60,16 +60,73 @@ class RsbsaFroms extends Controller
                 ->schema([
 
                     Fieldset::make('Reference Number')->columns(4)->schema([
-                        // TextInput::make('reference_number'),
-                        TextInput::make('region_code')->mask(fn(TextInput\Mask $mask) => $mask->pattern('00'))
-                            ->label('Region')->placeholder('00'),
-                        TextInput::make('province_code')->mask(fn(TextInput\Mask $mask) => $mask->pattern('00'))
-                            ->label('Province')->placeholder('00'),
-                        TextInput::make('city_municipality_code')->mask(fn(TextInput\Mask $mask) => $mask->pattern('00'))
-                            ->label('City/Muni')->placeholder('00'),
-                        TextInput::make('barangay_code')->mask(fn(TextInput\Mask $mask) => $mask->pattern('000000'))
-                            ->label('Barangay')->placeholder('000000'),
-
+                        Select::make('region_code')
+                            ->label('Region')
+                            ->placeholder('Select Region')
+                            ->options(fn () => Region::pluck('description', 'code')->toArray())
+                            ->reactive()
+                            ->afterStateUpdated(function (callable $set) {
+                                $set('province_code', null);
+                                $set('city_municipality_code', null);
+                                $set('barangay_code', null);
+                            })
+                            ->searchable(),
+                        Select::make('province_code')
+                            ->label('Province')
+                            ->placeholder('Select Province')
+                            ->options(function (callable $get) {
+                                $regionCode = $get('region_code');
+                                if ($regionCode) {
+                                    return Province::where('region_code', $regionCode)->pluck('description', 'code')->toArray();
+                                }
+                                return Province::pluck('description', 'code')->toArray();
+                            })
+                            ->reactive()
+                            ->afterStateUpdated(function (callable $set, $state) {
+                                $set('city_municipality_code', null);
+                                $set('barangay_code', null);
+                                if ($state) {
+                                    $province = Province::where('code', $state)->first();
+                                    if ($province) {
+                                        $set('region_code', $province->region_code);
+                                    }
+                                }
+                            })
+                            ->searchable(),
+                        Select::make('city_municipality_code')
+                            ->label('City/Muni')
+                            ->placeholder('Select City/Municipality')
+                            ->options(function (callable $get) {
+                                $provinceCode = $get('province_code');
+                                if ($provinceCode) {
+                                    return City::where('province_code', $provinceCode)->pluck('description', 'code')->toArray();
+                                }
+                                return [];
+                            })
+                            ->reactive()
+                            ->afterStateUpdated(function (callable $set, $state) {
+                                $set('barangay_code', null);
+                                if ($state) {
+                                    $city = City::where('code', $state)->first();
+                                    if ($city) {
+                                        $set('province_code', $city->province_code);
+                                        $set('region_code', $city->region_code);
+                                    }
+                                }
+                            })
+                            ->searchable(),
+                        Select::make('barangay_code')
+                            ->label('Barangay')
+                            ->placeholder('Select Barangay')
+                            ->options(function (callable $get) {
+                                $cityCode = $get('city_municipality_code');
+                                if ($cityCode) {
+                                    return Barangay::where('city_code', $cityCode)->pluck('description', 'code')->toArray();
+                                }
+                                // Don't load all 42k barangays - require city selection
+                                return [];
+                            })
+                            ->searchable(),
                     ]),
                 ]),
             Step::make('Part I: Personal Information')

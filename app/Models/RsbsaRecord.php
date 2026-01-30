@@ -198,12 +198,27 @@ public function getFormattedUpdatedAt()
 
 public function getFormattedLocationCodes()
 {
+    // Region code is 2 digits (e.g., "12")
+    $regionCode = str_pad($this->region_code ?? '', 2, '0', STR_PAD_LEFT);
+
+    // Province code is 4 digits (e.g., "1265"), extract last 2 digits for display
+    $provinceCode = $this->province_code ?? '';
+    $provinceDisplay = strlen($provinceCode) >= 2 ? substr($provinceCode, -2) : str_pad($provinceCode, 2, '0', STR_PAD_LEFT);
+
+    // City code is 6 digits (e.g., "126504"), extract last 2 digits for display
+    $cityCode = $this->city_municipality_code ?? '';
+    $cityDisplay = strlen($cityCode) >= 2 ? substr($cityCode, -2) : str_pad($cityCode, 2, '0', STR_PAD_LEFT);
+
+    // Barangay code - extract last 3 digits for display
+    $barangayCode = $this->barangay_code ?? '';
+    $barangayDisplay = strlen($barangayCode) >= 3 ? substr($barangayCode, -3) : str_pad($barangayCode, 3, '0', STR_PAD_LEFT);
+
     return [
-        'region' => str_split(str_pad($this->region_code, 2, '0', STR_PAD_LEFT)),
-        'province' => str_split(str_pad($this->province_code, 2, '0', STR_PAD_LEFT)),
-        'city_municipality' => str_split(str_pad($this->city_municipality_code, 2, '0', STR_PAD_LEFT)),
-        'barangay' => str_split(str_pad($this->barangay_code, 3, '0', STR_PAD_LEFT)),
-        'last_six' => str_split(str_pad($this->reference_last_six ?? '', 6, '0', STR_PAD_RIGHT)), // Ensuring 6 digits always exist
+        'region' => str_split($regionCode),
+        'province' => str_split($provinceDisplay),
+        'city_municipality' => str_split($cityDisplay),
+        'barangay' => str_split($barangayDisplay),
+        'last_six' => str_split(str_pad($this->reference_last_six ?? '', 6, '0', STR_PAD_RIGHT)),
     ];
 }
 
