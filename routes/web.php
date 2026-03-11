@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/claimed-releases-by-type/{release}', [ReportsDownloadController::class, 'claimedReleasesByType'])->name('claimed-releases-by-type');
         Route::get('/members', [ReportsDownloadController::class, 'members'])->name('members');
         Route::get('/active-members', [ReportsDownloadController::class, 'active_members'])->name('active-members');
+        Route::get('/dividends-import-template/{release}', [ReportsDownloadController::class, 'dividendsImportTemplate'])->name('dividends-import-template');
     });
 });
 
@@ -50,6 +51,5 @@ Route::middleware(['auth', 'role:shared'])->group(function () {
     Route::get('clusterless-members', ClusterlessMembers::class)->name('clusterless-members');
     Route::get('elderly-incentives-template/{user}', ElderlyIncentiveTemplate::class)->name('elderly-incentives-template');
 });
-
 
 Route::get('test', TestComponent::class);

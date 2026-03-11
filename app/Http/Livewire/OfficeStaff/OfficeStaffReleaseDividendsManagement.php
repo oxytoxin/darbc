@@ -5,13 +5,11 @@ namespace App\Http\Livewire\OfficeStaff;
 use App\Models\Dividend;
 use App\Models\MemberInformation;
 use App\Models\Release;
-use App\Models\Restriction;
 use App\Models\User;
 use DB;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\KeyValue;
-use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\TagsInput;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
@@ -21,7 +19,6 @@ use Filament\Tables\Columns\TagsColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
-use Illuminate\Support\HtmlString;
 use Livewire\Component;
 use Livewire\TemporaryUploadedFile;
 use Spatie\SimpleExcel\SimpleExcelReader;
@@ -31,11 +28,19 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
     use InteractsWithTable;
 
     public $amount = 0;
-    public $restrict_by_default = false;
+
+    public $restrict_by_default;
+
     public Release $release;
+
     public $import;
+
+    public $import_from_file;
+
     public $share_columns = [];
+
     public $add_columns = [];
+
     public $less_columns = [];
 
     protected function getTableQuery()
@@ -45,6 +50,30 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
 
     protected function getFormSchema()
     {
+        $default_share_columns = [
+            'DARBC ID' => 'darbc_id',
+            'GROSS PAY' => 'gross_pay',
+            'TOTAL DEDUCTIONS' => 'total_deductions',
+            'NET PAY' => 'net_pay',
+            'BANK' => 'bank',
+            'CHEQUE NUMBER' => 'cheque_number',
+        ];
+
+        $default_add_columns = [
+            $this->release->share_description => 'gross_pay',
+        ];
+
+        $default_less_columns = [
+            'Members Advances' => 'advance',
+            'Mortuary (2020-2022)' => 'mortuary',
+        ];
+
+        if ($this->release->import_columns) {
+            $default_share_columns = $this->release->import_columns['share_columns'] ?? $default_share_columns;
+            $default_add_columns = $this->release->import_columns['add_columns'] ?? $default_add_columns;
+            $default_less_columns = $this->release->import_columns['less_columns'] ?? $default_less_columns;
+        }
+
         return [
             Toggle::make('restrict_by_default')
                 ->default(true)
@@ -54,11 +83,12 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                 ->placeholder('0.00')
                 ->numeric()
                 ->helperText('Enter initial amount applicable for majority of members.')
-                ->required(fn($get) => !$get('import')),
+                ->required(fn ($get) => ! $get('import_from_file')),
             Toggle::make('import_from_file')
+                ->default(true)
                 ->reactive(),
             Fieldset::make('From File')
-                ->visible(fn($get) => $get('import_from_file'))
+                ->visible(fn ($get) => $get('import_from_file'))
                 ->schema([
                     KeyValue::make('share_columns')
                         ->keyLabel('Name')
@@ -66,38 +96,25 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                         ->disableAddingRows()
                         ->disableDeletingRows()
                         ->disableEditingKeys()
-                        ->default([
-                            'DARBC ID' => 'darbc_id',
-                            'GROSS PAY' => 'gross_pay',
-                            'TOTAL DEDUCTIONS' => 'total_deductions',
-                            'NET PAY' => 'net_pay',
-                            'BANK' => 'bank',
-                            'CHEQUE NUMBER' => 'cheque_number',
-                        ]),
+                        ->default($default_share_columns),
                     KeyValue::make('add_columns')
                         ->keyLabel('Name')
                         ->valueLabel('Column')
-                        ->default([
-                            $this->release->share_description => 'gross_pay'
-                        ]),
+                        ->default($default_add_columns),
                     KeyValue::make('less_columns')
                         ->keyLabel('Name')
                         ->valueLabel('Column')
-                        ->default(null)
-                        ->default([
-                            'Members Advances' => 'advance',
-                            'Mortuary (2020-2022)' => 'mortuary',
-                        ]),
+                        ->default($default_less_columns),
                     FileUpload::make('import')
                         ->label('Import from Excel')
                         ->reactive()
                         ->acceptedFileTypes([
                             'application/vnd.ms-excel',
                             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                            'text/csv'
+                            'text/csv',
                         ]),
                 ])
-                ->columns(1)
+                ->columns(1),
         ];
     }
 
@@ -162,8 +179,8 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                         ->lte('gross_amount'),
                     TagsInput::make('restriction_entries')
                         ->label('Restrictions (Press Enter for each entry)')
-                        ->placeholder('Enter a restriction')
-                ])
+                        ->placeholder('Enter a restriction'),
+                ]),
         ];
     }
 
@@ -179,8 +196,16 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
 
     public function mount()
     {
-        if ($this->release->disbursed)
+        if ($this->release->disbursed) {
             abort(403, 'This released has been disbursed.');
+        }
+
+        if ($this->release->import_columns) {
+            $this->share_columns = $this->release->import_columns['share_columns'] ?? [];
+            $this->add_columns = $this->release->import_columns['add_columns'] ?? [];
+            $this->less_columns = $this->release->import_columns['less_columns'] ?? [];
+        }
+
         $this->form->fill();
     }
 
@@ -195,20 +220,23 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
     {
         $headers = SimpleExcelReader::create($file->getRealPath())->getHeaders();
         foreach ($this->share_columns as $key => $value) {
-            if (!collect($headers)->contains($value)) {
-                notify('Invalid Excel file.', ' Please check if column is present: ' . $value, type: 'danger');
+            if (! collect($headers)->contains($value)) {
+                notify('Invalid Excel file.', ' Please check if column is present: '.$value, type: 'danger');
+
                 return;
             }
         }
         foreach ($this->add_columns as $key => $value) {
-            if (!collect($headers)->contains($value)) {
-                notify('Invalid Excel file.', ' Please check if column is present: ' . $value, type: 'danger');
+            if (! collect($headers)->contains($value)) {
+                notify('Invalid Excel file.', ' Please check if column is present: '.$value, type: 'danger');
+
                 return;
             }
         }
         foreach ($this->less_columns as $key => $value) {
-            if (!collect($headers)->contains($value)) {
-                notify('Invalid Excel file.', ' Please check if column is present: ' . $value, type: 'danger');
+            if (! collect($headers)->contains($value)) {
+                notify('Invalid Excel file.', ' Please check if column is present: '.$value, type: 'danger');
+
                 return;
             }
         }
@@ -228,8 +256,8 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
             ->where('member_information.status', MemberInformation::STATUS_ACTIVE)
             ->get(['users.id', 'member_information.darbc_id', 'member_information.split_claim', 'restrictions.entries as restriction_entries']);
         $now = now();
-        $users = $users->mapWithKeys(fn($u) => [str($u->darbc_id)->toString() => $u]);
-        $particulars = json_encode(collect($this->release->particulars)->map(fn($particular, $key) => [
+        $users = $users->mapWithKeys(fn ($u) => [str($u->darbc_id)->toString() => $u]);
+        $particulars = json_encode(collect($this->release->particulars)->map(fn ($particular, $key) => [
             'name' => $key,
             'claimed' => false,
         ])->values()->toArray());
@@ -239,14 +267,14 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
             foreach ($this->add_columns as $key => $value) {
                 $add[] = [
                     'name' => $key,
-                    'value' => floatval($row[$value])
+                    'value' => floatval($row[$value]),
                 ];
             }
             $less = [];
             foreach ($this->less_columns as $key => $value) {
                 $less[] = [
                     'name' => $key,
-                    'value' => floatval($row[$value])
+                    'value' => floatval($row[$value]),
                 ];
             }
             $breakdown = [
@@ -275,6 +303,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                 } catch (\Throwable $th) {
                     dd($th);
                     notify('Invalid import file.', type: 'danger');
+
                     return;
                 }
             } else {
@@ -304,7 +333,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
 
             $users = User::with(['active_restriction', 'member_information'])->whereRelation('member_information', 'status', MemberInformation::STATUS_ACTIVE)->get();
 
-            $particulars = json_encode(collect($this->release->particulars)->map(fn($particular, $key) => [
+            $particulars = json_encode(collect($this->release->particulars)->map(fn ($particular, $key) => [
                 'name' => $key,
                 'claimed' => false,
             ])->values()->toArray());
@@ -356,6 +385,21 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
         Notification::make()->title('Dividend deductions cleared.')->success()->send();
     }
 
+    public function saveImportColumns()
+    {
+        $this->form->getState();
+
+        $this->release->update([
+            'import_columns' => [
+                'share_columns' => $this->share_columns,
+                'add_columns' => $this->add_columns,
+                'less_columns' => $this->less_columns,
+            ],
+        ]);
+
+        Notification::make()->title('Import columns saved successfully.')->success()->send();
+    }
+
     public function finalize()
     {
         $restricted_dividends = $this->release->pending_dividends()->whereJsonLength('restriction_entries', '>', 0);
@@ -368,10 +412,11 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
             'status' => Dividend::FOR_RELEASE,
         ]);
         $this->release->update([
-            'disbursed' => true
+            'disbursed' => true,
         ]);
         DB::commit();
         Notification::make()->title('Dividends disbursed.')->success()->send();
+
         return redirect()->route('office-staff.ledger.index');
     }
 }

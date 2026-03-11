@@ -213,4 +213,5 @@ return [
         'Image' => Intervention\Image\Facades\Image::class
     ])->toArray(),
 
+    'enable_printer' => env('APP_ENABLE_PRINTER', true),
 ];

@@ -29,6 +29,12 @@
                         <x-forms::button wire:click="clearDeductions" wire:target="clearDeductions">
                             Clear Dividend Deductions
                         </x-forms::button>
+                        <x-forms::button wire:click="saveImportColumns" wire:target="saveImportColumns">
+                            Save Import Column Configuration
+                        </x-forms::button>
+                        <a href="{{ route('download-report.dividends-import-template', ['release' => $release->id]) }}" class="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white transition-colors duration-150 bg-gray-600 border border-transparent rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+                            Download Excel Template
+                        </a>
                     </div>
                     <div class="mt-2">
                         <style>

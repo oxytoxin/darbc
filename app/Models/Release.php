@@ -17,6 +17,7 @@ class Release extends Model
         'disbursed' => 'boolean',
         'voting_restriction' => 'boolean',
         'particulars' => 'array',
+        'import_columns' => 'array',
         'gift_certificate_amount' => 'decimal:2',
     ];
 

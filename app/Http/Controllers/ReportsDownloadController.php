@@ -7,7 +7,6 @@ use App\Models\MemberInformation;
 use App\Models\MembershipStatus;
 use App\Models\Release;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Spatie\SimpleExcel\SimpleExcelWriter;
 
 class ReportsDownloadController extends Controller
@@ -26,6 +25,36 @@ class ReportsDownloadController extends Controller
                 $member->user->alt_full_name,
             ]);
         });
+        $writer->toBrowser();
+    }
+
+    public function dividendsImportTemplate(Release $release)
+    {
+        $columns = [];
+
+        if ($release->import_columns) {
+            $share_columns = $release->import_columns['share_columns'] ?? [];
+            $add_columns = $release->import_columns['add_columns'] ?? [];
+            $less_columns = $release->import_columns['less_columns'] ?? [];
+
+            foreach ($share_columns as $name => $column) {
+                $columns[$column] = $name;
+            }
+
+            foreach ($add_columns as $name => $column) {
+                $columns[$column] = $name;
+            }
+
+            foreach ($less_columns as $name => $column) {
+                $columns[$column] = $name;
+            }
+        }
+
+        $fileName = $release->name.'_TEMPLATE.xlsx';
+
+        $writer = SimpleExcelWriter::streamDownload(storage_path('app/livewire-tmp/'.$fileName))
+            ->addHeader(array_keys($columns));
+
         $writer->toBrowser();
     }
 
@@ -50,7 +79,7 @@ class ReportsDownloadController extends Controller
             'TIN Number',
             'PhilHealth Number',
             'SPA',
-            'Restrictions'
+            'Restrictions',
         ]);
         $members = MemberInformation::query()
             ->with(['user', 'cluster', 'gender', 'occupation'])
@@ -66,7 +95,7 @@ class ReportsDownloadController extends Controller
             $writer->addRow([
                 $member->darbc_id,
                 $member->user->alt_full_name,
-                $member->succession_number == 0 ? 'Original' : ordinal($member->succession_number) . ' Successor',
+                $member->succession_number == 0 ? 'Original' : ordinal($member->succession_number).' Successor',
                 match ($member->status) {
                     MemberInformation::STATUS_ACTIVE => 'Active',
                     MemberInformation::STATUS_DECEASED => 'Deceased',
@@ -86,13 +115,13 @@ class ReportsDownloadController extends Controller
                     4 => 'LEGALLY_SEPARATED',
                     5 => 'UNKNOWN',
                 },
-                $member->occupation_details ? $member->occupation?->name . ' - ' . $member->occupation_details : $member->occupation?->name,
+                $member->occupation_details ? $member->occupation?->name.' - '.$member->occupation_details : $member->occupation?->name,
                 $member->contact_number,
                 $member->sss_number,
                 $member->tin_number,
                 $member->philhealth_number,
                 implode(', ', $member->spa),
-                implode(', ', $member->user->active_restriction?->entries ?? [])
+                implode(', ', $member->user->active_restriction?->entries ?? []),
             ]);
         });
         $writer->toBrowser();
@@ -101,7 +130,7 @@ class ReportsDownloadController extends Controller
     public function releasesByCashier(User $cashier)
     {
         $release = Release::findOrFail(request('release_id'));
-        $writer = SimpleExcelWriter::streamDownload($release->name . ' Releases from ' . $cashier->full_name . '.xlsx');
+        $writer = SimpleExcelWriter::streamDownload($release->name.' Releases from '.$cashier->full_name.'.xlsx');
         $writer->addHeader([
             'DARBC ID',
             'Member Name',
@@ -125,7 +154,7 @@ class ReportsDownloadController extends Controller
     public function voidedReleasesByCashier(User $cashier)
     {
         $release = Release::findOrFail(request('release_id'));
-        $writer = SimpleExcelWriter::streamDownload($release->name . ' Voided Releases from ' . $cashier->full_name . '.xlsx');
+        $writer = SimpleExcelWriter::streamDownload($release->name.' Voided Releases from '.$cashier->full_name.'.xlsx');
         $writer->addHeader([
             'DARBC ID',
             'Member Name',
@@ -152,9 +181,9 @@ class ReportsDownloadController extends Controller
     public function releasesByStatus(Release $release, int $status)
     {
         $filename = match ($status) {
-            Dividend::FOR_RELEASE => $release->name . ' Overall Releases Unclaimed.xlsx',
-            Dividend::ON_HOLD => $release->name . ' Overall Releases On-Hold.xlsx',
-            Dividend::RELEASED => $release->name . ' Overall Releases.xlsx',
+            Dividend::FOR_RELEASE => $release->name.' Overall Releases Unclaimed.xlsx',
+            Dividend::ON_HOLD => $release->name.' Overall Releases On-Hold.xlsx',
+            Dividend::RELEASED => $release->name.' Overall Releases.xlsx',
         };
         $writer = SimpleExcelWriter::streamDownload($filename);
         if ($status == Dividend::RELEASED) {
@@ -216,7 +245,7 @@ class ReportsDownloadController extends Controller
 
     public function voidedReleases(Release $release)
     {
-        $writer = SimpleExcelWriter::streamDownload($release->name . ' Overall Voided Releases.xlsx');
+        $writer = SimpleExcelWriter::streamDownload($release->name.' Overall Voided Releases.xlsx');
         $writer->addHeader([
             'DARBC ID',
             'Member Name',
@@ -251,14 +280,14 @@ class ReportsDownloadController extends Controller
             3 => 'Authorized Representative',
             default => 'Member',
         };
-        $writer = SimpleExcelWriter::streamDownload($release->name . ' ' . $claim_type_name . ' Claimed Releases.xlsx');
+        $writer = SimpleExcelWriter::streamDownload($release->name.' '.$claim_type_name.' Claimed Releases.xlsx');
         $writer->addHeader([
             'DARBC ID',
             'Member Name',
             'Amount',
             'Cashier',
             'Released At',
-            'Claimed By ' . $claim_type_name,
+            'Claimed By '.$claim_type_name,
         ]);
         Dividend::with(['user.member_information', 'cashier'])
             ->whereReleaseId($release->id)
