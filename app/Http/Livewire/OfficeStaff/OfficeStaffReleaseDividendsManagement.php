@@ -400,6 +400,12 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
         Notification::make()->title('Import columns saved successfully.')->success()->send();
     }
 
+    public function downloadTemplate()
+    {
+       $this->saveImportColumns();
+       $this->redirect(route('download-report.dividends-import-template', ['release' => $this->release->id]));
+    }
+
     public function finalize()
     {
         $restricted_dividends = $this->release->pending_dividends()->whereJsonLength('restriction_entries', '>', 0);
