@@ -52,8 +52,29 @@ class ReportsDownloadController extends Controller
 
         $fileName = $release->name.'_TEMPLATE.xlsx';
 
+        $headers = array_merge(['member_id', 'member_name'], array_keys($columns));
+
         $writer = SimpleExcelWriter::streamDownload(storage_path('app/livewire-tmp/'.$fileName))
-            ->addHeader(array_keys($columns));
+            ->addHeader($headers);
+
+        $members = MemberInformation::query()
+            ->with('user')
+            ->whereStatus(MemberInformation::STATUS_ACTIVE)
+            ->orderBy('darbc_id')
+            ->get();
+
+        $members->each(function ($member) use ($writer, $columns) {
+            $row = [
+                $member->darbc_id,
+                $member->user->alt_full_name,
+            ];
+
+            foreach (array_keys($columns) as $column) {
+                $row[] = '';
+            }
+
+            $writer->addRow($row);
+        });
 
         $writer->toBrowser();
     }

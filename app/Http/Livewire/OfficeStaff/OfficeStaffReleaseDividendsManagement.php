@@ -219,6 +219,19 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
     private function processImport(TemporaryUploadedFile $file)
     {
         $headers = SimpleExcelReader::create($file->getRealPath())->getHeaders();
+
+        if (! collect($headers)->contains('member_id')) {
+            notify('Invalid Excel file.', ' Please check if column is present: member_id', type: 'danger');
+
+            return;
+        }
+
+        if (! collect($headers)->contains('member_name')) {
+            notify('Invalid Excel file.', ' Please check if column is present: member_name', type: 'danger');
+
+            return;
+        }
+
         foreach ($this->share_columns as $key => $value) {
             if (! collect($headers)->contains($value)) {
                 notify('Invalid Excel file.', ' Please check if column is present: '.$value, type: 'danger');
@@ -262,7 +275,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
             'claimed' => false,
         ])->values()->toArray());
         foreach ($rows as $key => $row) {
-            $user = $users[strval($row[$this->share_columns['DARBC ID']])] ?? null;
+            $user = $users[strval($row['member_id'])] ?? null;
             $add = [];
             foreach ($this->add_columns as $key => $value) {
                 $add[] = [
@@ -402,8 +415,8 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
 
     public function downloadTemplate()
     {
-       $this->saveImportColumns();
-       $this->redirect(route('download-report.dividends-import-template', ['release' => $this->release->id]));
+        $this->saveImportColumns();
+        $this->redirect(route('download-report.dividends-import-template', ['release' => $this->release->id]));
     }
 
     public function finalize()
