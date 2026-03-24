@@ -22,6 +22,7 @@ use Filament\Tables\Contracts\HasTable;
 use Livewire\Component;
 use Livewire\TemporaryUploadedFile;
 use Spatie\SimpleExcel\SimpleExcelReader;
+use Storage;
 
 class OfficeStaffReleaseDividendsManagement extends Component implements HasTable
 {
@@ -65,7 +66,6 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
 
         $default_less_columns = [
             'Members Advances' => 'advance',
-            'Mortuary (2020-2022)' => 'mortuary',
         ];
 
         if ($this->release->import_columns) {
@@ -108,6 +108,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                     FileUpload::make('import')
                         ->label('Import from Excel')
                         ->reactive()
+                        ->maxFiles(1)
                         ->acceptedFileTypes([
                             'application/vnd.ms-excel',
                             'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -200,12 +201,6 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
             abort(403, 'This released has been disbursed.');
         }
 
-        if ($this->release->import_columns) {
-            $this->share_columns = $this->release->import_columns['share_columns'] ?? [];
-            $this->add_columns = $this->release->import_columns['add_columns'] ?? [];
-            $this->less_columns = $this->release->import_columns['less_columns'] ?? [];
-        }
-
         $this->form->fill();
     }
 
@@ -216,22 +211,21 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
         ]);
     }
 
-    private function processImport(TemporaryUploadedFile $file)
+    private function processImport(TemporaryUploadedFile|string $file)
     {
-        $headers = SimpleExcelReader::create($file->getRealPath())->getHeaders();
-
-        if (! collect($headers)->contains('member_id')) {
-            notify('Invalid Excel file.', ' Please check if column is present: member_id', type: 'danger');
-
-            return;
-        }
-
-        if (! collect($headers)->contains('member_name')) {
-            notify('Invalid Excel file.', ' Please check if column is present: member_name', type: 'danger');
-
-            return;
-        }
-
+        $file = is_string($file) ? storage_path('app/public/' . $file) : $file->getRealPath();
+        $headers = SimpleExcelReader::create($file)->getHeaders();
+//        if (! collect($headers)->contains('member_id')) {
+//            notify('Invalid Excel file.', ' Please check if column is present: member_id', type: 'danger');
+//
+//            return;
+//        }
+//
+//        if (! collect($headers)->contains('member_name')) {
+//            notify('Invalid Excel file.', ' Please check if column is present: member_name', type: 'danger');
+//
+//            return;
+//        }
         foreach ($this->share_columns as $key => $value) {
             if (! collect($headers)->contains($value)) {
                 notify('Invalid Excel file.', ' Please check if column is present: '.$value, type: 'danger');
@@ -253,7 +247,7 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                 return;
             }
         }
-        $rows = SimpleExcelReader::create($file->getRealPath())->getRows();
+        $rows = SimpleExcelReader::create($file)->getRows();
         DB::beginTransaction();
         $this->release->pending_dividends()->delete();
 
@@ -274,8 +268,9 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
             'name' => $key,
             'claimed' => false,
         ])->values()->toArray());
+        $nonexistent_ids = [];
         foreach ($rows as $key => $row) {
-            $user = $users[strval($row['member_id'])] ?? null;
+            $user = $users[strval($row['darbc_id'])] ?? null;
             $add = [];
             foreach ($this->add_columns as $key => $value) {
                 $add[] = [
@@ -316,28 +311,33 @@ class OfficeStaffReleaseDividendsManagement extends Component implements HasTabl
                 } catch (\Throwable $th) {
                     dd($th);
                     notify('Invalid import file.', type: 'danger');
-
                     return;
                 }
             } else {
-                dd($user, $row);
+                $nonexistent_ids[] = $row['darbc_id'];
             }
         }
-
+        if(count($nonexistent_ids)){
+            notify('The following DARBC IDs do not exist: '.implode(', ', $nonexistent_ids), type: 'danger');
+            DB::rollBack();
+            return;
+        }
         $data->chunk(1000)->each(function ($chunk) {
             Dividend::insert($chunk->toArray());
         });
         DB::commit();
+        Storage::delete($file);
         notify('Dividends regenerated.');
     }
 
     public function generateDividends()
     {
-        $this->form->validate();
+        $this->form->getState();
         $file = collect($this->import)->first();
         if ($file) {
             $this->processImport($file);
-        } else {
+        }
+        else {
             DB::beginTransaction();
             $this->release->pending_dividends()->delete();
 
