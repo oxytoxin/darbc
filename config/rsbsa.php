@@ -1,167 +1,156 @@
 <?php
 
 /*
-|--------------------------------------------------------------------------
-| RSBSA Enrollment Form — PDF overlay configuration
-|--------------------------------------------------------------------------
-|
-| Coordinates are in points (pt). Page is US Letter (612 x 792).
-| Origin is top-left; y increases downward; for text/boxed, y is the baseline.
-|
-| Field types:
-|   text  => single line of text at (x, y)
-|   boxed => one glyph per fixed-width cell, starting at (x, y), spaced by 'gap'
-|   check => stamps an "X" at (x, y)
-|
-| Coordinates are tuned with the measurement grid (see RsbsaPdfService grid()).
-|
+|------------------------------------------------------------------
+| RSBSA Enrollment Form (rev. 01-2024) - PDF overlay coordinate map
+|------------------------------------------------------------------
+| Coordinates in points; page is US Letter (612 x 792); origin top-left,
+| y increases downward. Types: text | boxed (gap = cell pitch) | check | image.
+| Positions finalized via the visual tuner.
 */
 
 return [
 
     'template' => 'templates/rsbsa-template.pdf',
-
     'page' => ['w' => 612, 'h' => 792],
-
     'font' => ['family' => 'Helvetica', 'size' => 8],
 
     'fields' => [
-
-        // --- 2x2 photo (x,y = top-left corner; w,h in points) ---
-        'photo' => ['type' => 'image', 'page' => 1, 'x' => 450, 'y' => 45, 'w' => 120, 'h' => 120],
-
-        // --- Transaction code: PhilSys PCN (16 digits, 4 groups of 4 with separators) ---
-        'pcn_1' => ['type' => 'boxed', 'page' => 1, 'x' => 153, 'y' => 103, 'gap' => 14],
-        'pcn_2' => ['type' => 'boxed', 'page' => 1, 'x' => 225, 'y' => 103, 'gap' => 14],
-        'pcn_3' => ['type' => 'boxed', 'page' => 1, 'x' => 297, 'y' => 103, 'gap' => 14],
-        'pcn_4' => ['type' => 'boxed', 'page' => 1, 'x' => 369, 'y' => 103, 'gap' => 14],
-        // No-PhilID TRN
-        'trn' => ['type' => 'boxed', 'page' => 1, 'x' => 153, 'y' => 123, 'gap' => 14],
-
-        // --- Names ---
-        'surname'        => ['type' => 'text', 'page' => 1, 'x' => 108, 'y' => 186],
-        'first_name'     => ['type' => 'text', 'page' => 1, 'x' => 400, 'y' => 186],
-        'middle_name'    => ['type' => 'text', 'page' => 1, 'x' => 108, 'y' => 208],
-        'extension_name' => ['type' => 'text', 'page' => 1, 'x' => 348, 'y' => 208],
-
-        // --- Sex ---
-        'sex_male'   => ['type' => 'check', 'page' => 1, 'x' => 459, 'y' => 207],
-        'sex_female' => ['type' => 'check', 'page' => 1, 'x' => 505, 'y' => 207],
-
-        // --- Permanent address ---
-        'perm_house'    => ['type' => 'text', 'page' => 1, 'x' => 150, 'y' => 262],
-        'perm_street'   => ['type' => 'text', 'page' => 1, 'x' => 320, 'y' => 262],
-        'perm_barangay' => ['type' => 'text', 'page' => 1, 'x' => 485, 'y' => 262],
-        'perm_city'     => ['type' => 'text', 'page' => 1, 'x' => 95,  'y' => 290],
-        'perm_province' => ['type' => 'text', 'page' => 1, 'x' => 290, 'y' => 290],
-        'perm_region'   => ['type' => 'text', 'page' => 1, 'x' => 485, 'y' => 290],
-
-        // --- Date of birth (MM / DD / YYYY split for the separator gaps) & place of birth ---
-        'dob_mm'              => ['type' => 'boxed', 'page' => 1, 'x' => 100, 'y' => 384, 'gap' => 17],
-        'dob_dd'              => ['type' => 'boxed', 'page' => 1, 'x' => 150, 'y' => 384, 'gap' => 18],
-        'dob_yyyy'            => ['type' => 'boxed', 'page' => 1, 'x' => 196, 'y' => 384, 'gap' => 17],
-        'place_birth_city'    => ['type' => 'text',  'page' => 1, 'x' => 180, 'y' => 398],
-        'place_birth_province'=> ['type' => 'text',  'page' => 1, 'x' => 180, 'y' => 421],
-
-        // --- Mobile ---
-        'mobile' => ['type' => 'boxed', 'page' => 1, 'x' => 360, 'y' => 393, 'gap' => 13],
-
-        // --- Mother's maiden name & spouse ---
-        'mother_maiden_name' => ['type' => 'text', 'page' => 1, 'x' => 60, 'y' => 445],
-        'spouse'             => ['type' => 'text', 'page' => 1, 'x' => 60, 'y' => 540],
-
-        // --- Civil status ---
-        'civil_single'   => ['type' => 'check', 'page' => 1, 'x' => 64,  'y' => 471],
-        'civil_married'  => ['type' => 'check', 'page' => 1, 'x' => 64,  'y' => 491],
-        'civil_widow'    => ['type' => 'check', 'page' => 1, 'x' => 165, 'y' => 471],
-        'civil_legally'  => ['type' => 'check', 'page' => 1, 'x' => 165, 'y' => 491],
-
-        // --- Religion ---
-        'religion_christianity' => ['type' => 'check', 'page' => 1, 'x' => 82,  'y' => 586],
-        'religion_islam'        => ['type' => 'check', 'page' => 1, 'x' => 200, 'y' => 586],
-        'religion_others'       => ['type' => 'check', 'page' => 1, 'x' => 282, 'y' => 586],
-        'religion_none'         => ['type' => 'check', 'page' => 1, 'x' => 362, 'y' => 586],
-
-        // --- Highest formal education ---
-        'edu_preschool'         => ['type' => 'check', 'page' => 1, 'x' => 354, 'y' => 478],
-        'edu_elementary'        => ['type' => 'check', 'page' => 1, 'x' => 354, 'y' => 498],
-        'edu_highschool_nonk12' => ['type' => 'check', 'page' => 1, 'x' => 354, 'y' => 518],
-        'edu_juniorhigh'        => ['type' => 'check', 'page' => 1, 'x' => 354, 'y' => 538],
-        'edu_seniorhigh'        => ['type' => 'check', 'page' => 1, 'x' => 478, 'y' => 478],
-        'edu_college'           => ['type' => 'check', 'page' => 1, 'x' => 478, 'y' => 498],
-        'edu_postgrad'          => ['type' => 'check', 'page' => 1, 'x' => 478, 'y' => 518],
-        'edu_vocational'        => ['type' => 'check', 'page' => 1, 'x' => 478, 'y' => 538],
-        'edu_none'              => ['type' => 'check', 'page' => 1, 'x' => 540, 'y' => 538],
-
-        // --- Valid proof of identity ---
-        'id_type'   => ['type' => 'text', 'page' => 1, 'x' => 420, 'y' => 585],
-        'id_number' => ['type' => 'text', 'page' => 1, 'x' => 420, 'y' => 607],
-
-        // --- Provincial address (NCR only) ---
-        'prov_house'    => ['type' => 'text', 'page' => 1, 'x' => 150, 'y' => 340],
-        'prov_street'   => ['type' => 'text', 'page' => 1, 'x' => 320, 'y' => 340],
-        'prov_barangay' => ['type' => 'text', 'page' => 1, 'x' => 485, 'y' => 340],
-        'prov_city'     => ['type' => 'text', 'page' => 1, 'x' => 95,  'y' => 366],
-        'prov_province' => ['type' => 'text', 'page' => 1, 'x' => 290, 'y' => 366],
-        'prov_region'   => ['type' => 'text', 'page' => 1, 'x' => 485, 'y' => 366],
-
-        // --- Mobile ownership ---
-        'owns_mobile_yes'           => ['type' => 'check', 'page' => 1, 'x' => 548, 'y' => 405],
-        'owns_mobile_no'            => ['type' => 'check', 'page' => 1, 'x' => 575, 'y' => 405],
-        'mobile_owner_name'         => ['type' => 'text',  'page' => 1, 'x' => 430, 'y' => 423],
-        'mobile_owner_relationship' => ['type' => 'text',  'page' => 1, 'x' => 545, 'y' => 423],
-
-        // --- RSBSA number (system-generated) ---
-        'rsbsa_number' => ['type' => 'boxed', 'page' => 1, 'x' => 95, 'y' => 560, 'gap' => 16],
-
-        // --- ICC/IP ---
-        'icc_yes'  => ['type' => 'check', 'page' => 1, 'x' => 52,  'y' => 650],
-        'icc_no'   => ['type' => 'check', 'page' => 1, 'x' => 78,  'y' => 650],
-        'icc_name' => ['type' => 'text',  'page' => 1, 'x' => 200, 'y' => 650],
-
-        // --- PWD / 4Ps ---
-        'pwd_yes'    => ['type' => 'check', 'page' => 1, 'x' => 395, 'y' => 650],
-        'pwd_no'     => ['type' => 'check', 'page' => 1, 'x' => 420, 'y' => 650],
-        'fourps_yes' => ['type' => 'check', 'page' => 1, 'x' => 520, 'y' => 650],
-        'fourps_no'  => ['type' => 'check', 'page' => 1, 'x' => 548, 'y' => 650],
-
-        // --- Farmers/Irrigators association names ---
-        'fca_1' => ['type' => 'text', 'page' => 1, 'x' => 60,  'y' => 672],
-        'fca_2' => ['type' => 'text', 'page' => 1, 'x' => 230, 'y' => 672],
-        'fca_3' => ['type' => 'text', 'page' => 1, 'x' => 400, 'y' => 672],
-
-        // --- Part 2: livelihood profile ---
-        'liv_farmer' => ['type' => 'check', 'page' => 1, 'x' => 60,  'y' => 712],
-        'liv_worker' => ['type' => 'check', 'page' => 1, 'x' => 200, 'y' => 712],
-        'liv_fisher' => ['type' => 'check', 'page' => 1, 'x' => 360, 'y' => 712],
-        'liv_youth'  => ['type' => 'check', 'page' => 1, 'x' => 500, 'y' => 712],
-
-        /*
-        |--- Page 2: Farm Parcel 1 (parcels 2 & 3 are this block offset downward) ---
-        */
-        'p1_barangay'    => ['type' => 'text',  'page' => 2, 'x' => 95,  'y' => 110],
-        'p1_city'        => ['type' => 'text',  'page' => 2, 'x' => 95,  'y' => 125],
-        'p1_area'        => ['type' => 'text',  'page' => 2, 'x' => 95,  'y' => 145],
-        'p1_ad_yes'      => ['type' => 'check',  'page' => 2, 'x' => 150, 'y' => 145],
-        'p1_ad_no'       => ['type' => 'check',  'page' => 2, 'x' => 175, 'y' => 145],
-        'p1_arb_yes'     => ['type' => 'check',  'page' => 2, 'x' => 150, 'y' => 158],
-        'p1_arb_no'      => ['type' => 'check',  'page' => 2, 'x' => 175, 'y' => 158],
-        'p1_own_registered' => ['type' => 'check', 'page' => 2, 'x' => 35, 'y' => 185],
-        'p1_own_tenant'     => ['type' => 'check', 'page' => 2, 'x' => 35, 'y' => 195],
-        'p1_own_lessee'     => ['type' => 'check', 'page' => 2, 'x' => 110, 'y' => 185],
-        'p1_own_others'     => ['type' => 'check', 'page' => 2, 'x' => 110, 'y' => 195],
-        'p1_land_owner'  => ['type' => 'text',  'page' => 2, 'x' => 80,  'y' => 215],
-        'p1_tiller_name' => ['type' => 'text',  'page' => 2, 'x' => 120, 'y' => 233],
-        'p1_remarks'     => ['type' => 'text',  'page' => 2, 'x' => 460, 'y' => 233],
-        // parcel 1, commodity row 1
-        'p1_c1_schedule' => ['type' => 'text',  'page' => 2, 'x' => 250, 'y' => 110],
-        'p1_c1_commodity'=> ['type' => 'text',  'page' => 2, 'x' => 330, 'y' => 110],
-        'p1_c1_size'     => ['type' => 'text',  'page' => 2, 'x' => 415, 'y' => 110],
-        'p1_c1_heads'    => ['type' => 'text',  'page' => 2, 'x' => 460, 'y' => 110],
-        // parcel 1, commodity row 2
-        'p1_c2_schedule' => ['type' => 'text',  'page' => 2, 'x' => 250, 'y' => 125],
-        'p1_c2_commodity'=> ['type' => 'text',  'page' => 2, 'x' => 330, 'y' => 125],
-        'p1_c2_size'     => ['type' => 'text',  'page' => 2, 'x' => 415, 'y' => 125],
-        'p1_c2_heads'    => ['type' => 'text',  'page' => 2, 'x' => 460, 'y' => 125],
+        'photo' => ['type' => 'image', 'page' => 1, 'x' => 434.7, 'y' => 11.7, 'w' => 120, 'h' => 120],
+        'pcn_1' => ['type' => 'boxed', 'page' => 1, 'x' => 125, 'y' => 99.7, 'gap' => 14],
+        'pcn_2' => ['type' => 'boxed', 'page' => 1, 'x' => 204.7, 'y' => 100, 'gap' => 14],
+        'pcn_3' => ['type' => 'boxed', 'page' => 1, 'x' => 285.7, 'y' => 99, 'gap' => 14],
+        'pcn_4' => ['type' => 'boxed', 'page' => 1, 'x' => 366.7, 'y' => 100, 'gap' => 14],
+        'trn' => ['type' => 'boxed', 'page' => 1, 'x' => 115, 'y' => 121.7, 'gap' => 17.3],
+        'surname' => ['type' => 'text', 'page' => 1, 'x' => 106.4, 'y' => 164.7],
+        'first_name' => ['type' => 'text', 'page' => 1, 'x' => 307.3, 'y' => 164],
+        'middle_name' => ['type' => 'text', 'page' => 1, 'x' => 105.4, 'y' => 188.7],
+        'extension_name' => ['type' => 'text', 'page' => 1, 'x' => 297.3, 'y' => 186],
+        'sex_male' => ['type' => 'check', 'page' => 1, 'x' => 459, 'y' => 208],
+        'sex_female' => ['type' => 'check', 'page' => 1, 'x' => 503, 'y' => 208.3],
+        'perm_house' => ['type' => 'text', 'page' => 1, 'x' => 164, 'y' => 234],
+        'perm_street' => ['type' => 'text', 'page' => 1, 'x' => 272.7, 'y' => 233.7],
+        'perm_barangay' => ['type' => 'text', 'page' => 1, 'x' => 414.3, 'y' => 234],
+        'perm_city' => ['type' => 'text', 'page' => 1, 'x' => 66, 'y' => 267],
+        'perm_province' => ['type' => 'text', 'page' => 1, 'x' => 233, 'y' => 267],
+        'perm_region' => ['type' => 'text', 'page' => 1, 'x' => 472, 'y' => 267],
+        'dob_mm' => ['type' => 'boxed', 'page' => 1, 'x' => 62.7, 'y' => 386.3, 'gap' => 11],
+        'dob_dd' => ['type' => 'boxed', 'page' => 1, 'x' => 110, 'y' => 387, 'gap' => 10],
+        'dob_yyyy' => ['type' => 'boxed', 'page' => 1, 'x' => 146, 'y' => 387, 'gap' => 11],
+        'place_birth_city' => ['type' => 'text', 'page' => 1, 'x' => 200, 'y' => 386],
+        'place_birth_province' => ['type' => 'text', 'page' => 1, 'x' => 200, 'y' => 406],
+        'mobile' => ['type' => 'boxed', 'page' => 1, 'x' => 382, 'y' => 383, 'gap' => 13],
+        'mother_maiden_name' => ['type' => 'text', 'page' => 1, 'x' => 73, 'y' => 429],
+        'spouse' => ['type' => 'text', 'page' => 1, 'x' => 73.3, 'y' => 504],
+        'civil_single' => ['type' => 'check', 'page' => 1, 'x' => 67.7, 'y' => 465.7],
+        'civil_married' => ['type' => 'check', 'page' => 1, 'x' => 67.3, 'y' => 479],
+        'civil_widow' => ['type' => 'check', 'page' => 1, 'x' => 171.7, 'y' => 464.3],
+        'civil_legally' => ['type' => 'check', 'page' => 1, 'x' => 171.7, 'y' => 479],
+        'religion_christianity' => ['type' => 'check', 'page' => 1, 'x' => 68.7, 'y' => 566],
+        'religion_islam' => ['type' => 'check', 'page' => 1, 'x' => 142.3, 'y' => 566],
+        'religion_others' => ['type' => 'check', 'page' => 1, 'x' => 197, 'y' => 566],
+        'religion_none' => ['type' => 'check', 'page' => 1, 'x' => 261.7, 'y' => 565.3],
+        'edu_preschool' => ['type' => 'check', 'page' => 1, 'x' => 341, 'y' => 471],
+        'edu_elementary' => ['type' => 'check', 'page' => 1, 'x' => 341, 'y' => 484.3],
+        'edu_highschool_nonk12' => ['type' => 'check', 'page' => 1, 'x' => 341, 'y' => 497],
+        'edu_juniorhigh' => ['type' => 'check', 'page' => 1, 'x' => 341, 'y' => 510],
+        'edu_seniorhigh' => ['type' => 'check', 'page' => 1, 'x' => 440.7, 'y' => 471],
+        'edu_college' => ['type' => 'check', 'page' => 1, 'x' => 440.7, 'y' => 484.3],
+        'edu_postgrad' => ['type' => 'check', 'page' => 1, 'x' => 441.4, 'y' => 497.4],
+        'edu_vocational' => ['type' => 'check', 'page' => 1, 'x' => 441, 'y' => 509.7],
+        'edu_none' => ['type' => 'check', 'page' => 1, 'x' => 503.6, 'y' => 510],
+        'id_type' => ['type' => 'text', 'page' => 1, 'x' => 412.3, 'y' => 545],
+        'id_number' => ['type' => 'text', 'page' => 1, 'x' => 418, 'y' => 566.7],
+        'prov_house' => ['type' => 'text', 'page' => 1, 'x' => 164, 'y' => 314],
+        'prov_street' => ['type' => 'text', 'page' => 1, 'x' => 271, 'y' => 314],
+        'prov_barangay' => ['type' => 'text', 'page' => 1, 'x' => 412, 'y' => 314],
+        'prov_city' => ['type' => 'text', 'page' => 1, 'x' => 65, 'y' => 343],
+        'prov_province' => ['type' => 'text', 'page' => 1, 'x' => 231, 'y' => 342],
+        'prov_region' => ['type' => 'text', 'page' => 1, 'x' => 414, 'y' => 343],
+        'owns_mobile_yes' => ['type' => 'check', 'page' => 1, 'x' => 500.7, 'y' => 409],
+        'owns_mobile_no' => ['type' => 'check', 'page' => 1, 'x' => 532.3, 'y' => 408.3],
+        'mobile_owner_name' => ['type' => 'text', 'page' => 1, 'x' => 338.6, 'y' => 430.7],
+        'mobile_owner_relationship' => ['type' => 'text', 'page' => 1, 'x' => 449, 'y' => 429.7],
+        'rsbsa_number' => ['type' => 'boxed', 'page' => 1, 'x' => 104.3, 'y' => 533.3, 'gap' => 16],
+        'icc_yes' => ['type' => 'check', 'page' => 1, 'x' => 69.7, 'y' => 592],
+        'icc_no' => ['type' => 'check', 'page' => 1, 'x' => 104.7, 'y' => 592.7],
+        'icc_name' => ['type' => 'text', 'page' => 1, 'x' => 220.7, 'y' => 589.3],
+        'pwd_yes' => ['type' => 'check', 'page' => 1, 'x' => 338.6, 'y' => 591.6],
+        'pwd_no' => ['type' => 'check', 'page' => 1, 'x' => 376.7, 'y' => 592],
+        'fourps_yes' => ['type' => 'check', 'page' => 1, 'x' => 451.7, 'y' => 595],
+        'fourps_no' => ['type' => 'check', 'page' => 1, 'x' => 481.3, 'y' => 595.6],
+        'fca_1' => ['type' => 'text', 'page' => 1, 'x' => 80.3, 'y' => 621],
+        'fca_2' => ['type' => 'text', 'page' => 1, 'x' => 243, 'y' => 620.7],
+        'fca_3' => ['type' => 'text', 'page' => 1, 'x' => 405.7, 'y' => 620.7],
+        'liv_farmer' => ['type' => 'check', 'page' => 1, 'x' => 70.7, 'y' => 664.3],
+        'liv_worker' => ['type' => 'check', 'page' => 1, 'x' => 180.7, 'y' => 664],
+        'liv_fisher' => ['type' => 'check', 'page' => 1, 'x' => 372.7, 'y' => 663.7],
+        'liv_youth' => ['type' => 'check', 'page' => 1, 'x' => 483.3, 'y' => 664.3],
+        'p1_barangay' => ['type' => 'text', 'page' => 2, 'x' => 112.3, 'y' => 86],
+        'p1_city' => ['type' => 'text', 'page' => 2, 'x' => 79.7, 'y' => 99],
+        'p1_area' => ['type' => 'text', 'page' => 2, 'x' => 156.3, 'y' => 115.7],
+        'p1_ad_yes' => ['type' => 'check', 'page' => 2, 'x' => 158.3, 'y' => 124.3],
+        'p1_ad_no' => ['type' => 'check', 'page' => 2, 'x' => 176.3, 'y' => 125.3],
+        'p1_arb_yes' => ['type' => 'check', 'page' => 2, 'x' => 159, 'y' => 132.7],
+        'p1_arb_no' => ['type' => 'check', 'page' => 2, 'x' => 176.7, 'y' => 133],
+        'p1_own_registered' => ['type' => 'check', 'page' => 2, 'x' => 78, 'y' => 165],
+        'p1_own_tenant' => ['type' => 'check', 'page' => 2, 'x' => 77.7, 'y' => 172.7],
+        'p1_own_lessee' => ['type' => 'check', 'page' => 2, 'x' => 143.3, 'y' => 165],
+        'p1_own_others' => ['type' => 'check', 'page' => 2, 'x' => 143.3, 'y' => 172.7],
+        'p1_land_owner' => ['type' => 'text', 'page' => 2, 'x' => 127.7, 'y' => 180.3],
+        'p1_tiller_name' => ['type' => 'text', 'page' => 2, 'x' => 176, 'y' => 204.7],
+        'p1_remarks' => ['type' => 'text', 'page' => 2, 'x' => 480.7, 'y' => 209.7],
+        'p1_c1_schedule' => ['type' => 'text', 'page' => 2, 'x' => 242, 'y' => 91.3],
+        'p1_c1_commodity' => ['type' => 'text', 'page' => 2, 'x' => 316.7, 'y' => 90.7],
+        'p1_c1_size' => ['type' => 'text', 'page' => 2, 'x' => 396.3, 'y' => 89.3],
+        'p1_c1_heads' => ['type' => 'text', 'page' => 2, 'x' => 421.3, 'y' => 89.3],
+        'p1_c2_schedule' => ['type' => 'text', 'page' => 2, 'x' => 242.7, 'y' => 110.3],
+        'p1_c2_commodity' => ['type' => 'text', 'page' => 2, 'x' => 318, 'y' => 109],
+        'p1_c2_size' => ['type' => 'text', 'page' => 2, 'x' => 395, 'y' => 112.3],
+        'p1_c2_heads' => ['type' => 'text', 'page' => 2, 'x' => 425.7, 'y' => 111.7],
+        'p2_barangay' => ['type' => 'text', 'page' => 2, 'x' => 112.3, 'y' => 236],
+        'p2_city' => ['type' => 'text', 'page' => 2, 'x' => 79.7, 'y' => 249],
+        'p2_area' => ['type' => 'text', 'page' => 2, 'x' => 156.3, 'y' => 265.7],
+        'p2_ad_yes' => ['type' => 'check', 'page' => 2, 'x' => 158.3, 'y' => 274.3],
+        'p2_ad_no' => ['type' => 'check', 'page' => 2, 'x' => 176.3, 'y' => 275.3],
+        'p2_arb_yes' => ['type' => 'check', 'page' => 2, 'x' => 159, 'y' => 282.7],
+        'p2_arb_no' => ['type' => 'check', 'page' => 2, 'x' => 176.7, 'y' => 283],
+        'p2_own_registered' => ['type' => 'check', 'page' => 2, 'x' => 78, 'y' => 315],
+        'p2_own_tenant' => ['type' => 'check', 'page' => 2, 'x' => 77.7, 'y' => 322.7],
+        'p2_own_lessee' => ['type' => 'check', 'page' => 2, 'x' => 143.3, 'y' => 315],
+        'p2_own_others' => ['type' => 'check', 'page' => 2, 'x' => 143.3, 'y' => 322.7],
+        'p2_land_owner' => ['type' => 'text', 'page' => 2, 'x' => 127.7, 'y' => 330.3],
+        'p2_tiller_name' => ['type' => 'text', 'page' => 2, 'x' => 176, 'y' => 354.7],
+        'p2_remarks' => ['type' => 'text', 'page' => 2, 'x' => 480.7, 'y' => 359.7],
+        'p2_c1_schedule' => ['type' => 'text', 'page' => 2, 'x' => 242, 'y' => 241.3],
+        'p2_c1_commodity' => ['type' => 'text', 'page' => 2, 'x' => 316.7, 'y' => 240.7],
+        'p2_c1_size' => ['type' => 'text', 'page' => 2, 'x' => 396.3, 'y' => 239.3],
+        'p2_c1_heads' => ['type' => 'text', 'page' => 2, 'x' => 421.3, 'y' => 239.3],
+        'p2_c2_schedule' => ['type' => 'text', 'page' => 2, 'x' => 242.7, 'y' => 260.3],
+        'p2_c2_commodity' => ['type' => 'text', 'page' => 2, 'x' => 318, 'y' => 259],
+        'p2_c2_size' => ['type' => 'text', 'page' => 2, 'x' => 395, 'y' => 262.3],
+        'p2_c2_heads' => ['type' => 'text', 'page' => 2, 'x' => 425.7, 'y' => 261.7],
+        'p3_barangay' => ['type' => 'text', 'page' => 2, 'x' => 112.3, 'y' => 386],
+        'p3_city' => ['type' => 'text', 'page' => 2, 'x' => 79.7, 'y' => 399],
+        'p3_area' => ['type' => 'text', 'page' => 2, 'x' => 156.3, 'y' => 415.7],
+        'p3_ad_yes' => ['type' => 'check', 'page' => 2, 'x' => 158.3, 'y' => 424.3],
+        'p3_ad_no' => ['type' => 'check', 'page' => 2, 'x' => 176.3, 'y' => 425.3],
+        'p3_arb_yes' => ['type' => 'check', 'page' => 2, 'x' => 159, 'y' => 432.7],
+        'p3_arb_no' => ['type' => 'check', 'page' => 2, 'x' => 176.7, 'y' => 433],
+        'p3_own_registered' => ['type' => 'check', 'page' => 2, 'x' => 78, 'y' => 465],
+        'p3_own_tenant' => ['type' => 'check', 'page' => 2, 'x' => 77.7, 'y' => 472.7],
+        'p3_own_lessee' => ['type' => 'check', 'page' => 2, 'x' => 143.3, 'y' => 465],
+        'p3_own_others' => ['type' => 'check', 'page' => 2, 'x' => 143.3, 'y' => 472.7],
+        'p3_land_owner' => ['type' => 'text', 'page' => 2, 'x' => 127.7, 'y' => 480.3],
+        'p3_tiller_name' => ['type' => 'text', 'page' => 2, 'x' => 176, 'y' => 504.7],
+        'p3_remarks' => ['type' => 'text', 'page' => 2, 'x' => 480.7, 'y' => 509.7],
+        'p3_c1_schedule' => ['type' => 'text', 'page' => 2, 'x' => 242, 'y' => 391.3],
+        'p3_c1_commodity' => ['type' => 'text', 'page' => 2, 'x' => 316.7, 'y' => 390.7],
+        'p3_c1_size' => ['type' => 'text', 'page' => 2, 'x' => 396.3, 'y' => 389.3],
+        'p3_c1_heads' => ['type' => 'text', 'page' => 2, 'x' => 421.3, 'y' => 389.3],
+        'p3_c2_schedule' => ['type' => 'text', 'page' => 2, 'x' => 242.7, 'y' => 410.3],
+        'p3_c2_commodity' => ['type' => 'text', 'page' => 2, 'x' => 318, 'y' => 409],
+        'p3_c2_size' => ['type' => 'text', 'page' => 2, 'x' => 395, 'y' => 412.3],
+        'p3_c2_heads' => ['type' => 'text', 'page' => 2, 'x' => 425.7, 'y' => 411.7],
     ],
 ];

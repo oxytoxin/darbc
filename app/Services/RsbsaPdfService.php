@@ -15,52 +15,6 @@ class RsbsaPdfService
 {
     private Fpdi $pdf;
     private int $pageCount = 0;
-    private bool $debugGrid = false;
-
-    /** Enable a measurement grid overlay (development/coordinate tuning only). */
-    public function withGrid(bool $on = true): self
-    {
-        $this->debugGrid = $on;
-        return $this;
-    }
-
-    /** Path to the live coordinate overrides written by the visual tuner. */
-    public static function overridesPath(): string
-    {
-        return storage_path('app/rsbsa-overrides.json');
-    }
-
-    /**
-     * Effective field map: config defaults merged with any live overrides
-     * (x / y / gap) saved by the tuner. Read at request time, so saved
-     * positions take effect immediately without clearing config cache.
-     */
-    public static function fields(): array
-    {
-        $fields = config('rsbsa.fields');
-
-        if (is_file(self::overridesPath())) {
-            $overrides = json_decode((string) file_get_contents(self::overridesPath()), true) ?: [];
-            foreach ($overrides as $key => $pos) {
-                if (! isset($fields[$key])) {
-                    continue;
-                }
-                foreach (['x', 'y', 'gap'] as $prop) {
-                    if (isset($pos[$prop]) && is_numeric($pos[$prop])) {
-                        $fields[$key][$prop] = $pos[$prop] + 0;
-                    }
-                }
-            }
-        }
-
-        return $fields;
-    }
-
-    /** Expose the flat mapped data for a record (used by the visual tuner). */
-    public function mappedData(RsbsaRecord $record): array
-    {
-        return $this->mapRecord($record);
-    }
 
     public function __construct()
     {
@@ -76,7 +30,7 @@ class RsbsaPdfService
     public function fill(RsbsaRecord $record): Fpdi
     {
         $data = $this->mapRecord($record);
-        $fields = self::fields();
+        $fields = config('rsbsa.fields');
 
         $path = storage_path('app/' . config('rsbsa.template'));
         $this->pageCount = $this->pdf->setSourceFile($path);
@@ -87,10 +41,6 @@ class RsbsaPdfService
             $this->pdf->AddPage();
             $tpl = $this->pdf->importPage($n);
             $this->pdf->useTemplate($tpl, 0, 0, config('rsbsa.page.w'), config('rsbsa.page.h'));
-
-            if ($this->debugGrid) {
-                $this->drawGrid();
-            }
 
             foreach ($data as $key => $value) {
                 if ($value === null || $value === '' || ! isset($fields[$key])) {
@@ -173,31 +123,6 @@ class RsbsaPdfService
         return $d;
     }
 
-    /** Draw a 10pt/50pt measurement grid on the current page (debug only). */
-    private function drawGrid(): void
-    {
-        $w = config('rsbsa.page.w');
-        $h = config('rsbsa.page.h');
-        for ($x = 0; $x <= $w; $x += 10) {
-            $x % 50 === 0 ? $this->pdf->SetDrawColor(255, 150, 150) : $this->pdf->SetDrawColor(205, 225, 255);
-            $this->pdf->Line($x, 0, $x, $h);
-        }
-        for ($y = 0; $y <= $h; $y += 10) {
-            $y % 50 === 0 ? $this->pdf->SetDrawColor(255, 150, 150) : $this->pdf->SetDrawColor(205, 225, 255);
-            $this->pdf->Line(0, $y, $w, $y);
-        }
-        $this->pdf->SetTextColor(230, 0, 0);
-        $this->pdf->SetFont(config('rsbsa.font.family'), 'B', 6);
-        for ($x = 0; $x <= $w; $x += 50) {
-            $this->pdf->Text($x + 1, 10, (string) $x);
-        }
-        for ($y = 0; $y <= $h; $y += 50) {
-            $this->pdf->Text(1, $y - 1, (string) $y);
-        }
-        $this->pdf->SetTextColor(0, 0, 0);
-        $this->pdf->SetFont(config('rsbsa.font.family'), '', config('rsbsa.font.size'));
-    }
-
     /** FPDF core fonts are Latin-1; convert UTF-8 so accents render. */
     private function latin(string $s): string
     {
@@ -259,7 +184,7 @@ class RsbsaPdfService
 
         if ($r->date_of_birth) {
             $dob = Carbon::parse($r->date_of_birth);
-            $data['dob_mm'] = $dob->format('m');
+            $data['dob_mm'] = strtoupper($dob->format('M')); // 3-letter month: JAN, FEB, ...
             $data['dob_dd'] = $dob->format('d');
             $data['dob_yyyy'] = $dob->format('Y');
         }
@@ -307,45 +232,46 @@ class RsbsaPdfService
         if (in_array('Agri Youth', $liv)) $data['liv_youth'] = true;
     }
 
-    /** Map the first farm parcel (and its first two commodity rows) to Page 2. */
+    /** Map up to 3 farm parcels (each with 2 commodity rows) to Page 2. */
     private function mapFarmParcels(RsbsaRecord $r, array &$data): void
     {
-        $parcel = $r->farmParcels()->with('commodities')->orderBy('parcel_number')->first();
-        if (! $parcel) {
-            return;
-        }
+        $parcels = $r->farmParcels()->with('commodities')->orderBy('parcel_number')->take(3)->get();
 
-        $data['p1_barangay']    = $parcel->farm_location_barangay;
-        $data['p1_city']        = $parcel->farm_location_city_municipality;
-        $data['p1_area']        = $parcel->total_parcel_area;
-        $data['p1_land_owner']  = $parcel->land_owner_name;
-        $data['p1_tiller_name'] = $parcel->rotational_tiller_name;
-        $data['p1_remarks']     = $parcel->remarks;
+        foreach ($parcels as $i => $parcel) {
+            $p = 'p' . ($i + 1) . '_';
 
-        $this->mapYesNo($data, 'p1_ad', $parcel->within_ancestral_domain);
-        $this->mapYesNo($data, 'p1_arb', $parcel->agrarian_reform_beneficiary);
+            $data[$p . 'barangay']    = $parcel->farm_location_barangay;
+            $data[$p . 'city']        = $parcel->farm_location_city_municipality;
+            $data[$p . 'area']        = $parcel->total_parcel_area;
+            $data[$p . 'land_owner']  = $parcel->land_owner_name;
+            $data[$p . 'tiller_name'] = $parcel->rotational_tiller_name;
+            $data[$p . 'remarks']     = $parcel->remarks;
 
-        $ownMap = [
-            'Registered Owner' => 'p1_own_registered',
-            'Tenant'           => 'p1_own_tenant',
-            'Lessee'           => 'p1_own_lessee',
-            'Others'           => 'p1_own_others',
-        ];
-        if (isset($ownMap[$parcel->ownership_type])) {
-            $data[$ownMap[$parcel->ownership_type]] = true;
-        }
+            $this->mapYesNo($data, $p . 'ad', $parcel->within_ancestral_domain);
+            $this->mapYesNo($data, $p . 'arb', $parcel->agrarian_reform_beneficiary);
 
-        $commodities = $parcel->commodities->values();
-        foreach ([0, 1] as $j) {
-            $c = $commodities[$j] ?? null;
-            if (! $c) {
-                continue;
+            $ownMap = [
+                'Registered Owner' => $p . 'own_registered',
+                'Tenant'           => $p . 'own_tenant',
+                'Lessee'           => $p . 'own_lessee',
+                'Others'           => $p . 'own_others',
+            ];
+            if (isset($ownMap[$parcel->ownership_type])) {
+                $data[$ownMap[$parcel->ownership_type]] = true;
             }
-            $n = $j + 1;
-            $data["p1_c{$n}_schedule"]  = $c->cropping_schedule;
-            $data["p1_c{$n}_commodity"] = $c->commodity;
-            $data["p1_c{$n}_size"]      = $c->size;
-            $data["p1_c{$n}_heads"]     = $c->no_of_heads;
+
+            $commodities = $parcel->commodities->values();
+            foreach ([0, 1] as $j) {
+                $c = $commodities[$j] ?? null;
+                if (! $c) {
+                    continue;
+                }
+                $n = $j + 1;
+                $data["{$p}c{$n}_schedule"]  = $c->cropping_schedule;
+                $data["{$p}c{$n}_commodity"] = $c->commodity;
+                $data["{$p}c{$n}_size"]      = $c->size;
+                $data["{$p}c{$n}_heads"]     = $c->no_of_heads;
+            }
         }
     }
 

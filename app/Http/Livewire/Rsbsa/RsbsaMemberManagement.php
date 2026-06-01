@@ -193,16 +193,6 @@ class RsbsaMemberManagement extends Component implements HasTable
                     );
                 }),
 
-            Action::make('Tune PDF')
-                ->label('Tune PDF')
-                ->button()
-                ->outlined()
-                ->color('warning')
-                ->icon('heroicon-o-adjustments')
-                ->hidden(fn ($record) => !$record->hasRsbsaRecord())
-                ->url(fn ($record): string => route('rsbsa.pdf.tuner', ['rsbsa' => $record->rsbsa]))
-                ->openUrlInNewTab(),
-
 
                 ActionGroup::make([
 

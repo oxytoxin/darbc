@@ -19,11 +19,9 @@ Route::middleware(['auth', 'role:' . Role::RSBSA_OFFICER,])->prefix('rsbsa')->na
     Route::get('/rsbsa/edit/{rsbsa}', EditRsbsa::class)->name('edit');
     Route::get('/rsbsa/view/{rsbsa}', ViewRsbsa::class)->name('view');
 
-    // PDF overlay: inline preview, download, and the visual coordinate tuner
+    // RSBSA official-form PDF: inline preview + download
     Route::get('/pdf/{rsbsa}', [RsbsaPdfController::class, 'inline'])->name('pdf');
     Route::get('/pdf-download/{rsbsa}', [RsbsaPdfController::class, 'download'])->name('pdf.download');
-    Route::get('/pdf-tuner/{rsbsa}', [RsbsaPdfController::class, 'tuner'])->name('pdf.tuner');
-    Route::post('/pdf-tuner-save', [RsbsaPdfController::class, 'save'])->name('pdf.tuner.save');
 
 
 
