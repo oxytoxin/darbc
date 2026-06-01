@@ -177,6 +177,36 @@ class RsbsaRecord extends Model implements HasMedia
         return $this->belongsTo(MemberInformation::class,'member_information_id');
     }
 
+    public function farmParcels()
+    {
+        return $this->hasMany(RsbsaFarmParcel::class, 'rsbsa_record_id');
+    }
+
+    /**
+     * Replace this record's farm parcels (and their commodities) with the
+     * given form-repeater data. Existing parcels are removed first; the
+     * commodities cascade via the foreign key.
+     *
+     * @param  array  $parcels  array of parcel arrays, each may contain a 'commodities' array
+     */
+    public function syncFarmParcels(array $parcels): void
+    {
+        $this->farmParcels()->delete();
+
+        foreach (array_values($parcels) as $index => $parcelData) {
+            $commodities = $parcelData['commodities'] ?? [];
+            unset($parcelData['commodities'], $parcelData['id'], $parcelData['rsbsa_record_id']);
+
+            $parcelData['parcel_number'] = $index + 1;
+            $parcel = $this->farmParcels()->create($parcelData);
+
+            foreach ($commodities as $commodityData) {
+                unset($commodityData['id'], $commodityData['rsbsa_farm_parcel_id']);
+                $parcel->commodities()->create($commodityData);
+            }
+        }
+    }
+
     public function getImage(){
         return self::getFirstMediaUrl('two_by_two') ?: asset('assets/placeholder.jpg');
     }

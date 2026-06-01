@@ -26,6 +26,8 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Wizard\Step;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\CheckboxList;
 use Filament\Forms\Components\MarkdownEditor;
 
@@ -128,6 +130,23 @@ class RsbsaFroms extends Controller
                             })
                             ->searchable(),
                     ]),
+
+                    Fieldset::make('Transaction Code')->columns(2)->schema([
+                        Select::make('has_philid')
+                            ->label('PhilSys Registration')
+                            ->options([
+                                1 => 'With PhilID / ePhilID (PCN)',
+                                0 => 'No PhilID / ePhilID (TRN)',
+                            ])
+                            ->reactive()
+                            ->columnSpanFull(),
+                        TextInput::make('philsys_card_number')
+                            ->label('PhilSys Card Number (PCN)')
+                            ->hidden(fn (Closure $get) => (string) $get('has_philid') !== '1'),
+                        TextInput::make('transaction_reference_number')
+                            ->label('Transaction Reference Number (TRN)')
+                            ->hidden(fn (Closure $get) => (string) $get('has_philid') !== '0'),
+                    ]),
                 ]),
             Step::make('Part I: Personal Information')
                 ->description('Provide your personal details.')
@@ -177,6 +196,17 @@ class RsbsaFroms extends Controller
                         DatePicker::make('date_of_birth')->hint('(Editable in Profiling)'),
                         TextInput::make('contact_number')->label('Mobile Number'),
                         TextInput::make('landline_number')->label('Landline'),
+                        Checkbox::make('owns_mobile_number')
+                            ->label('Do you own the mobile number above?')
+                            ->default(true)
+                            ->reactive()
+                            ->columnSpanFull(),
+                        TextInput::make('mobile_owner_name')
+                            ->label('Full Name of Mobile Number Owner')
+                            ->hidden(fn (Closure $get) => (bool) $get('owns_mobile_number')),
+                        TextInput::make('mobile_owner_relationship')
+                            ->label('Relationship with Owner')
+                            ->hidden(fn (Closure $get) => (bool) $get('owns_mobile_number')),
                     ]),
 
                     Fieldset::make('Address Information')->columns(3)->columnSpanFull()->schema([
@@ -201,6 +231,15 @@ class RsbsaFroms extends Controller
                         TextInput::make('city_municipality')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
                         TextInput::make('province')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
                         TextInput::make('region')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+                    ]),
+
+                    Fieldset::make('Provincial Address (NCR residents only)')->columns(3)->columnSpanFull()->schema([
+                        TextInput::make('provincial_house_lot_bldg_purok')->label('House Lot/Purok')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+                        TextInput::make('provincial_street_sitio_subdv')->label('Street/Sitio/Subdivision')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+                        TextInput::make('provincial_barangay')->label('Barangay')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+                        TextInput::make('provincial_city_municipality')->label('City/Municipality')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+                        TextInput::make('provincial_province')->label('Province')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+                        TextInput::make('provincial_region')->label('Region')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
                     ]),
 
                     Fieldset::make('Birth & Civil Status')->columns(2)->columnSpanFull()->schema([
@@ -267,6 +306,10 @@ class RsbsaFroms extends Controller
                         TextInput::make('farmers_association_name')
 
                             ->label('Farmers Association Name')->columnSpanFull()->hidden(fn(Closure $get) => !$get('is_farmers_association_member')),
+                        TextInput::make('farmers_association_name_2')
+                            ->label('Farmers Association Name (2)')->columnSpanFull()->hidden(fn(Closure $get) => !$get('is_farmers_association_member')),
+                        TextInput::make('farmers_association_name_3')
+                            ->label('Farmers Association Name (3)')->columnSpanFull()->hidden(fn(Closure $get) => !$get('is_farmers_association_member')),
                         TextInput::make('emergency_contact_name')->label('Emergency Contact Name'),
                         TextInput::make('emergency_contact_number')->label('Emergency Contact Number'),
                     ]),
@@ -467,6 +510,58 @@ class RsbsaFroms extends Controller
                         ,
                     ]),
 
+                ]),
+
+            Step::make('Part III: Farm Parcels')
+                ->description('Provide farm land / parcel information (Page 2).')
+                ->schema([
+                    Repeater::make('farm_parcels')
+                        ->label('Farm Parcels')
+                        ->createItemButtonLabel('Add Farm Parcel')
+                        ->collapsible()
+                        ->defaultItems(0)
+                        ->columns(2)
+                        ->schema([
+                            TextInput::make('farm_location_barangay')->label('Farm Location - Barangay'),
+                            TextInput::make('farm_location_city_municipality')->label('City/Municipality'),
+                            TextInput::make('farm_location_province')->label('Province'),
+                            TextInput::make('total_parcel_area')->label('Total Parcel Area (ha)')->numeric(),
+
+                            Checkbox::make('within_ancestral_domain')->label('Within Ancestral Domain (AD)?'),
+                            Checkbox::make('agrarian_reform_beneficiary')->label('Agrarian Reform Beneficiary (ARB)?'),
+                            Checkbox::make('has_land_ownership_proof')->label('Submitted Proof of Land Ownership / Farming Agreement?')->columnSpanFull(),
+
+                            Select::make('ownership_type')
+                                ->label('Type of Ownership / Tenure')
+                                ->options(\App\Models\RsbsaFarmParcel::OWNERSHIP_TYPES)
+                                ->reactive(),
+                            TextInput::make('ownership_other_specify')
+                                ->label('Specify (if Others)')
+                                ->hidden(fn (Closure $get) => $get('ownership_type') !== 'Others'),
+
+                            TextInput::make('land_owner_name')->label('Name of Land Owner'),
+                            TextInput::make('parcel_rsbsa_number')->label('Parcel RSBSA Number (system-generated)'),
+                            TextInput::make('rotational_tiller_name')->label('Rotational Tiller - Full Name'),
+                            TextInput::make('rotational_tiller_rsbsa_number')->label('Rotational Tiller - RSBSA Number'),
+                            Textarea::make('remarks')->label('Remarks')->columnSpanFull(),
+
+                            Repeater::make('commodities')
+                                ->label('Commodities (use a new row for intercropping)')
+                                ->createItemButtonLabel('Add Commodity')
+                                ->defaultItems(0)
+                                ->columnSpanFull()
+                                ->columns(3)
+                                ->schema([
+                                    TextInput::make('cropping_schedule')->label('Cropping Schedule (e.g. Jan-Mar)'),
+                                    TextInput::make('commodity')->label('Commodity'),
+                                    TextInput::make('size')->label('Size (ha)')->numeric(),
+                                    TextInput::make('no_of_heads')->label('No. of Heads / Trees')->numeric(),
+                                    Select::make('farm_type')
+                                        ->label('Farm Type')
+                                        ->options(\App\Models\RsbsaFarmParcelCommodity::FARM_TYPES),
+                                    Checkbox::make('organic_practitioner')->label('Organic Practitioner?'),
+                                ]),
+                        ]),
                 ]),
 
             // Step 3: Income Details

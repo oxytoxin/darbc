@@ -177,6 +177,32 @@ class RsbsaMemberManagement extends Component implements HasTable
                 ->hidden(fn($record) => !$record->hasRsbsaRecord())
                 ,
 
+            Action::make('Download PDF')
+                ->label('Download PDF')
+                ->button()
+                ->outlined()
+                ->icon('heroicon-o-document-download')
+                ->hidden(fn ($record) => !$record->hasRsbsaRecord())
+                ->action(function ($record) {
+                    $pdf = app(\App\Services\RsbsaPdfService::class)->fill($record->rsbsa);
+
+                    return response()->streamDownload(
+                        fn () => print($pdf->Output('S')),
+                        'rsbsa-' . $record->darbc_id . '.pdf',
+                        ['Content-Type' => 'application/pdf'],
+                    );
+                }),
+
+            Action::make('Tune PDF')
+                ->label('Tune PDF')
+                ->button()
+                ->outlined()
+                ->color('warning')
+                ->icon('heroicon-o-adjustments')
+                ->hidden(fn ($record) => !$record->hasRsbsaRecord())
+                ->url(fn ($record): string => route('rsbsa.pdf.tuner', ['rsbsa' => $record->rsbsa]))
+                ->openUrlInNewTab(),
+
 
                 ActionGroup::make([
 

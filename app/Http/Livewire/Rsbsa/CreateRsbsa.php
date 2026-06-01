@@ -126,6 +126,22 @@ class CreateRsbsa extends Component implements HasForms
             'emergency_contact_number' => $validatedData['emergency_contact_number'] ?? null,
 
 
+            // New fields (RSBSA Enrollment Form rev. 01-2024)
+            'has_philid' => $validatedData['has_philid'] ?? null,
+            'philsys_card_number' => $validatedData['philsys_card_number'] ?? null,
+            'transaction_reference_number' => $validatedData['transaction_reference_number'] ?? null,
+            'provincial_house_lot_bldg_purok' => $validatedData['provincial_house_lot_bldg_purok'] ?? null,
+            'provincial_street_sitio_subdv' => $validatedData['provincial_street_sitio_subdv'] ?? null,
+            'provincial_barangay' => $validatedData['provincial_barangay'] ?? null,
+            'provincial_city_municipality' => $validatedData['provincial_city_municipality'] ?? null,
+            'provincial_province' => $validatedData['provincial_province'] ?? null,
+            'provincial_region' => $validatedData['provincial_region'] ?? null,
+            'owns_mobile_number' => $validatedData['owns_mobile_number'] ?? null,
+            'mobile_owner_name' => $validatedData['mobile_owner_name'] ?? null,
+            'mobile_owner_relationship' => $validatedData['mobile_owner_relationship'] ?? null,
+            'farmers_association_name_2' => $validatedData['farmers_association_name_2'] ?? null,
+            'farmers_association_name_3' => $validatedData['farmers_association_name_3'] ?? null,
+
             'main_livelihood' => $validatedData['main_livelihood'] ?? [],
             'farming_rice' => $validatedData['farming_rice'] ?? false,
             'farming_corn' => $validatedData['farming_corn'] ?? false,
@@ -174,6 +190,7 @@ class CreateRsbsa extends Component implements HasForms
             $rsbsaRecord->addMedia(collect($twoByTwo['two_by_two'])->first())->toMediaCollection('two_by_two');
         }
 
+        $rsbsaRecord->syncFarmParcels($validatedData['farm_parcels'] ?? []);
 
         DB::commit();
 

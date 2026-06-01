@@ -102,6 +102,12 @@ class EditRsbsa extends Component implements HasForms
         $twoByTwoMediaPath = $this->rsbsa->getFirstMediaPath('two_by_two');
         $data['two_by_two'] = !empty($twoByTwoMediaPath) ? $twoByTwoMediaPath : null;
 
+        $data['farm_parcels'] = $this->rsbsa->farmParcels()
+            ->with('commodities')
+            ->orderBy('parcel_number')
+            ->get()
+            ->toArray();
+
         $this->form->fill($data);
     }
 
@@ -120,7 +126,8 @@ class EditRsbsa extends Component implements HasForms
 
         $twoByTwo['two_by_two'] = $validatedData['two_by_two'] ?? null;
         $validatedData['enrollment_type'] = 'Updating';
-        unset($validatedData['two_by_two']);
+        $farmParcels = $validatedData['farm_parcels'] ?? [];
+        unset($validatedData['two_by_two'], $validatedData['farm_parcels']);
 
 
         // unset(
@@ -141,6 +148,7 @@ class EditRsbsa extends Component implements HasForms
         // );
         // dd($validatedData);
         $this->rsbsa->update($validatedData);
+        $this->rsbsa->syncFarmParcels($farmParcels);
         if ($twoByTwo['two_by_two']) {
             $this->rsbsa->addMedia(collect( $twoByTwo['two_by_two'])?->first())->toMediaCollection('two_by_two');
         }
