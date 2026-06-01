@@ -195,7 +195,6 @@ class RsbsaFroms extends Controller
 
                         DatePicker::make('date_of_birth')->hint('(Editable in Profiling)'),
                         TextInput::make('contact_number')->label('Mobile Number'),
-                        TextInput::make('landline_number')->label('Landline'),
                         Checkbox::make('owns_mobile_number')
                             ->label('Do you own the mobile number above?')
                             ->default(true)
@@ -262,19 +261,6 @@ class RsbsaFroms extends Controller
                         TextInput::make('mother_maiden_name'),
                     ]),
 
-                    Fieldset::make('Household Information')->columns(3)->columnSpanFull()->schema([
-                        Checkbox::make('household_head')->label('Household Head?')
-                            ->columnSpanFull()
-                            ->helperText('check this if you are the head of your household.')
-                            ->reactive(),
-                        TextInput::make('name_of_household_head')->label('Household Head Name')->hidden(fn(Closure $get) => $get('household_head'))->columnSpanFull(),
-
-                        TextInput::make('relationship_with_household_head')->hidden(fn(Closure $get) => $get('household_head'))->columnSpanFull(),
-                        TextInput::make('no_of_living_household_members')->mask(fn(TextInput\Mask $mask) => $mask->pattern('00'))->label('No. of living household members'),
-                        TextInput::make('no_of_male')->mask(fn(TextInput\Mask $mask) => $mask->pattern('00'))->label('No. of male'),
-                        TextInput::make('no_of_female')->mask(fn(TextInput\Mask $mask) => $mask->pattern('00'))->label('No. of female'),
-                    ]),
-
                     Fieldset::make('Education & Status')->columns(2)->columnSpanFull()->schema([
                         Select::make('highest_formal_education')->options(RsbsaRecord::HIGHEST_FORMAL_EDUCATION)->columnSpanFull(),
                         Checkbox::make('is_pwd')->label('Person with disability?')->columnSpanFull(),
@@ -293,7 +279,7 @@ class RsbsaFroms extends Controller
                             ->label('Indigenous Group Name')->columnSpanFull()->hidden(fn(Closure $get) => !$get('is_indigenous_group_member')),
                     ]),
 
-                    Fieldset::make('Identification & Emergency')->columns(2)->columnSpanFull()->schema([
+                    Fieldset::make('Identification')->columns(2)->columnSpanFull()->schema([
                         Checkbox::make('has_government_id')->label('With Government ID?')->reactive()->columnSpanFull(),
                         TextInput::make('id_type')->label('ID Type')
 
@@ -310,8 +296,6 @@ class RsbsaFroms extends Controller
                             ->label('Farmers Association Name (2)')->columnSpanFull()->hidden(fn(Closure $get) => !$get('is_farmers_association_member')),
                         TextInput::make('farmers_association_name_3')
                             ->label('Farmers Association Name (3)')->columnSpanFull()->hidden(fn(Closure $get) => !$get('is_farmers_association_member')),
-                        TextInput::make('emergency_contact_name')->label('Emergency Contact Name'),
-                        TextInput::make('emergency_contact_number')->label('Emergency Contact Number'),
                     ]),
                 ]),
 
@@ -337,177 +321,6 @@ class RsbsaFroms extends Controller
                             ->options(RsbsaRecord::LIVELIHOOD_OPTION)
                             ,
 
-                    ]),
-
-                    Fieldset::make('Farming Activities')->columns(2)->columnSpanFull()->schema([
-                        Checkbox::make('farming_rice')
-                            ->label('Rice Farming')
-                            ->columnSpanFull(),
-
-                        Checkbox::make('farming_corn')
-                            ->label('Corn Farming')
-                            ->columnSpanFull(),
-
-                        Checkbox::make('other_crops')
-                            ->label('Other Crops')
-                            ->columnSpanFull()
-                            ->reactive(),
-
-                        TextInput::make('farming_other_crops')
-                            ->label('Specify Other Crops')
-                            ->hidden(fn(Closure $get) => !$get('other_crops')),
-
-                        Checkbox::make('livestock')
-                            ->label('Livestock ')
-                            ->columnSpanFull()
-                            ->reactive(),
-
-                        TextInput::make('farming_livestock')
-                            ->label('Specify Livestock')
-                            ->hidden(fn(Closure $get) => !$get('livestock')),
-
-                        Checkbox::make('poultry')
-                            ->label('Poultry ')
-                            ->columnSpanFull()
-
-                            ->reactive(),
-
-                        TextInput::make('farming_poultry')
-                            ->label('Specify Poultry')
-
-                            ->hidden(fn(Closure $get) => !$get('poultry')),
-
-
-                    ])
-                        // ->hidden(fn (Closure $get) => $get('main_livelihood') != 'Farmer')
-                        ->hidden(fn(Closure $get) => !in_array('Farmer', $get('main_livelihood') ?? [])),
-
-
-                    Fieldset::make('Farmworker Kind of work')->columns(2)->columnSpanFull()->schema([
-                        Checkbox::make('work_land_preparation')->columnSpanFull()->label('Land Preparation'),
-                        Checkbox::make('work_planting_transplanting')->columnSpanFull()->label('Planting/Transplanting'),
-                        Checkbox::make('work_cultivation')->columnSpanFull()->label('Cultivation'),
-                        Checkbox::make('work_harvesting')->columnSpanFull()->label('Harvesting'),
-                        Checkbox::make('work_others')->columnSpanFull()->reactive()->label('Other'),
-                        TextInput::make('work_others_specify')
-
-                            ->columnSpanFull()->hidden(fn(Closure $get) => !$get('work_others'))->label('Please Specify other work'),
-                    ])
-                        // ->hidden(fn (Closure $get) => $get('main_livelihood') != 'Farmworker/Laborer')
-                        ->hidden(fn(Closure $get) => !in_array('Farmworker/Laborer', $get('main_livelihood') ?? [])),
-
-
-                    Fieldset::make('Fisherfolk Activities')
-                        ->columns(2)
-                        ->columnSpanFull()
-                        ->schema([
-                            Checkbox::make('fishing_fish_capture')
-                                ->columnSpanFull()
-                                ->label('Fish Capture'),
-
-                            Checkbox::make('fishing_aquaculture')
-                                ->columnSpanFull()
-                                ->label('Aquaculture'),
-
-                            Checkbox::make('fishing_gleaning')
-                                ->columnSpanFull()
-                                ->label('Gleaning'),
-
-                            Checkbox::make('fishing_fish_processing')
-                                ->columnSpanFull()
-                                ->label('Fish Processing'),
-
-                            Checkbox::make('fishing_fish_vending')
-                                ->columnSpanFull()
-                                ->label('Fish Vending'),
-
-                            Checkbox::make('fishing_others')
-                                ->reactive()
-                                ->columnSpanFull()
-
-                                ->label('Other'),
-
-                            TextInput::make('fishing_others_specify')
-                                ->columnSpanFull()
-
-                                ->hidden(fn(Closure $get) => !$get('fishing_others'))
-                                ->label('Specify Other Fishing Activity'),
-                        ])
-
-                        // ->hidden(fn (Closure $get) => $get('main_livelihood') != 'Fisherfolk')
-                        ->hidden(fn(Closure $get) => !in_array('Fisherfolk', $get('main_livelihood') ?? [])),
-
-
-                    Fieldset::make('Agri Youth Involvement')
-                        ->columns(2)
-                        ->columnSpanFull()
-                        ->schema([
-                            Checkbox::make('youth_farming_household')
-                                ->label('Involved in Household Farming')
-                                ->columnSpanFull(),
-
-                            Checkbox::make('youth_agri_course')
-                                ->label('Taken Agricultural Course')
-                                ->columnSpanFull(),
-
-                            Checkbox::make('youth_nonformal_agri_course')
-                                ->label('Taken Non-Formal Agri Course')
-                                ->columnSpanFull(),
-
-                            Checkbox::make('youth_agri_program')
-                                ->label('Participated in Agri Program')
-                                ->columnSpanFull(),
-
-                            Checkbox::make('youth_others')
-                                ->label('Other Involvement')
-                                ->reactive()
-
-                                ->columnSpanFull(), // Dynamically controls text input visibility
-
-                            TextInput::make('youth_others_specify')
-                                ->label('Specify Other Involvement')
-                                ->columnSpanFull()
-
-                                ->hidden(fn(Closure $get) => !$get('youth_others')), // Only shows if 'Others' is checked
-                        ])->hidden(fn(Closure $get) => !in_array('Agri Youth', $get('main_livelihood') ?? [])),
-
-
-                    Fieldset::make('Annual Income')->columns(2)->schema([
-                        TextInput::make('gross_annual_income_farming')
-
-                        ->numeric()
-                        ->mask(fn (TextInput\Mask $mask) => $mask
-                        ->numeric()
-                        ->decimalPlaces(2) // Set the number of digits after the decimal point.
-                        ->decimalSeparator(',') // Add a separator for decimal numbers.
-                        ->integer() // Disallow decimal numbers.
-                        ->mapToDecimalSeparator([',']) // Map additional characters to the decimal separator.
-                        ->minValue(1) // Set the minimum value that the number can be.
-                        ->maxValue(9999999999999) // Set the maximum value that the number can be.
-                        ->normalizeZeros() // Append or remove zeros at the end of the number.
-                        ->padFractionalZeros() // Pad zeros at the end of the number to always maintain the maximum number of decimal places.
-                        ->thousandsSeparator(','), // Add a separator for thousands.
-                    )
-                        ->prefix('₱')
-                        // ->maxValue(9999999999999)
-
-                        ,
-                        TextInput::make('gross_annual_income_nonfarming')->prefix('₱')
-                        ->numeric()
-                        ->mask(fn (TextInput\Mask $mask) => $mask
-                        ->numeric()
-                        ->decimalPlaces(2) // Set the number of digits after the decimal point.
-                        ->decimalSeparator(',') // Add a separator for decimal numbers.
-                        ->integer() // Disallow decimal numbers.
-                        ->mapToDecimalSeparator([',']) // Map additional characters to the decimal separator.
-                        ->minValue(1) // Set the minimum value that the number can be.
-                        ->maxValue(9999999999999) // Set the maximum value that the number can be.
-                        ->normalizeZeros() // Append or remove zeros at the end of the number.
-                        ->padFractionalZeros() // Pad zeros at the end of the number to always maintain the maximum number of decimal places.
-                        ->thousandsSeparator(','), // Add a separator for thousands.
-                    )
-
-                        ,
                     ]),
 
                 ]),
