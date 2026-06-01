@@ -179,10 +179,12 @@ class RsbsaFroms extends Controller
                         TextInput::make('surname')->hint('(Editable in Profiling)'),
                         TextInput::make('first_name')->hint('(Editable in Profiling)'),
                         TextInput::make('middle_name')->hint('(Editable in Profiling)'),
+                        Checkbox::make('no_middle_name')->label('No Middle Name'),
                         TextInput::make('extension_name')
                             ->label('Extension Name')
 
                             ->helperText('Example: "Jr.", "Sr.", "III", "IV" (Leave blank if not applicable)'),
+                        Checkbox::make('no_extension_name')->label('No Extension Name'),
                         //->hint('Suffix such as Jr., Sr., III, IV (optional)'),
 
                         Select::make('gender_id')

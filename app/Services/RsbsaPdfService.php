@@ -214,6 +214,9 @@ class RsbsaPdfService
         $data = [
             'trn' => $r->transaction_reference_number ? $digits($r->transaction_reference_number) : null,
 
+            'no_middle_name'    => $r->no_middle_name ? true : null,
+            'no_extension_name' => $r->no_extension_name ? true : null,
+
             'surname'        => $r->surname,
             'first_name'     => $r->first_name,
             'middle_name'    => $r->middle_name,
