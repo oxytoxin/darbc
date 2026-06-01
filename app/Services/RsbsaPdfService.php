@@ -15,6 +15,52 @@ class RsbsaPdfService
 {
     private Fpdi $pdf;
     private int $pageCount = 0;
+    private bool $debugGrid = false;
+
+    /** Enable a measurement grid overlay (used by the layout tuner). */
+    public function withGrid(bool $on = true): self
+    {
+        $this->debugGrid = $on;
+        return $this;
+    }
+
+    /** Path to the live coordinate overrides written by the layout tuner. */
+    public static function overridesPath(): string
+    {
+        return storage_path('app/rsbsa-overrides.json');
+    }
+
+    /**
+     * Effective field map: config defaults merged with any live overrides
+     * (x / y / gap) saved by the tuner. Read at request time so an RSBSA
+     * account's adjustments take effect immediately, without a code change.
+     */
+    public static function fields(): array
+    {
+        $fields = config('rsbsa.fields');
+
+        if (is_file(self::overridesPath())) {
+            $overrides = json_decode((string) file_get_contents(self::overridesPath()), true) ?: [];
+            foreach ($overrides as $key => $pos) {
+                if (! isset($fields[$key])) {
+                    continue;
+                }
+                foreach (['x', 'y', 'gap'] as $prop) {
+                    if (isset($pos[$prop]) && is_numeric($pos[$prop])) {
+                        $fields[$key][$prop] = $pos[$prop] + 0;
+                    }
+                }
+            }
+        }
+
+        return $fields;
+    }
+
+    /** Expose the flat mapped data for a record (used by the layout tuner). */
+    public function mappedData(RsbsaRecord $record): array
+    {
+        return $this->mapRecord($record);
+    }
 
     public function __construct()
     {
@@ -30,7 +76,7 @@ class RsbsaPdfService
     public function fill(RsbsaRecord $record): Fpdi
     {
         $data = $this->mapRecord($record);
-        $fields = config('rsbsa.fields');
+        $fields = self::fields();
 
         $path = storage_path('app/' . config('rsbsa.template'));
         $this->pageCount = $this->pdf->setSourceFile($path);
@@ -41,6 +87,10 @@ class RsbsaPdfService
             $this->pdf->AddPage();
             $tpl = $this->pdf->importPage($n);
             $this->pdf->useTemplate($tpl, 0, 0, config('rsbsa.page.w'), config('rsbsa.page.h'));
+
+            if ($this->debugGrid) {
+                $this->drawGrid();
+            }
 
             foreach ($data as $key => $value) {
                 if ($value === null || $value === '' || ! isset($fields[$key])) {
@@ -121,6 +171,31 @@ class RsbsaPdfService
             $d = substr($d, 2); // drop the pre-printed "09"
         }
         return $d;
+    }
+
+    /** Draw a 10pt/50pt measurement grid on the current page (tuner only). */
+    private function drawGrid(): void
+    {
+        $w = config('rsbsa.page.w');
+        $h = config('rsbsa.page.h');
+        for ($x = 0; $x <= $w; $x += 10) {
+            $x % 50 === 0 ? $this->pdf->SetDrawColor(255, 150, 150) : $this->pdf->SetDrawColor(205, 225, 255);
+            $this->pdf->Line($x, 0, $x, $h);
+        }
+        for ($y = 0; $y <= $h; $y += 10) {
+            $y % 50 === 0 ? $this->pdf->SetDrawColor(255, 150, 150) : $this->pdf->SetDrawColor(205, 225, 255);
+            $this->pdf->Line(0, $y, $w, $y);
+        }
+        $this->pdf->SetTextColor(230, 0, 0);
+        $this->pdf->SetFont(config('rsbsa.font.family'), 'B', 6);
+        for ($x = 0; $x <= $w; $x += 50) {
+            $this->pdf->Text($x + 1, 10, (string) $x);
+        }
+        for ($y = 0; $y <= $h; $y += 50) {
+            $this->pdf->Text(1, $y - 1, (string) $y);
+        }
+        $this->pdf->SetTextColor(0, 0, 0);
+        $this->pdf->SetFont(config('rsbsa.font.family'), '', config('rsbsa.font.size'));
     }
 
     /** FPDF core fonts are Latin-1; convert UTF-8 so accents render. */
