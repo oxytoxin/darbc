@@ -321,9 +321,11 @@ class RsbsaPdfService
             $data[$p . 'barangay']    = $parcel->farm_location_barangay;
             $data[$p . 'city']        = $parcel->farm_location_city_municipality;
             $data[$p . 'area']        = $parcel->total_parcel_area;
-            $data[$p . 'land_owner']  = $parcel->land_owner_name;
-            $data[$p . 'tiller_name'] = $parcel->rotational_tiller_name;
-            $data[$p . 'remarks']     = $parcel->remarks;
+            $data[$p . 'land_owner']   = $parcel->land_owner_name;
+            $data[$p . 'parcel_rsbsa'] = $parcel->parcel_rsbsa_number;
+            $data[$p . 'tiller_name']  = $parcel->rotational_tiller_name;
+            $data[$p . 'tiller_rsbsa'] = $parcel->rotational_tiller_rsbsa_number;
+            $data[$p . 'remarks']      = $parcel->remarks;
 
             $this->mapYesNo($data, $p . 'ad', $parcel->within_ancestral_domain);
             $this->mapYesNo($data, $p . 'arb', $parcel->agrarian_reform_beneficiary);

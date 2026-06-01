@@ -154,5 +154,13 @@ return [
         'p3_c2_commodity' => ['type' => 'text', 'page' => 2, 'x' => 318, 'y' => 409],
         'p3_c2_size' => ['type' => 'text', 'page' => 2, 'x' => 395, 'y' => 412.3],
         'p3_c2_heads' => ['type' => 'text', 'page' => 2, 'x' => 425.7, 'y' => 411.7],
+
+        // Parcel + rotational-tiller RSBSA numbers (system-generated) — tune in the layout editor
+        'p1_parcel_rsbsa' => ['type' => 'text', 'page' => 2, 'x' => 85, 'y' => 204.7],
+        'p1_tiller_rsbsa' => ['type' => 'text', 'page' => 2, 'x' => 330, 'y' => 204.7],
+        'p2_parcel_rsbsa' => ['type' => 'text', 'page' => 2, 'x' => 85, 'y' => 354.7],
+        'p2_tiller_rsbsa' => ['type' => 'text', 'page' => 2, 'x' => 330, 'y' => 354.7],
+        'p3_parcel_rsbsa' => ['type' => 'text', 'page' => 2, 'x' => 85, 'y' => 504.7],
+        'p3_tiller_rsbsa' => ['type' => 'text', 'page' => 2, 'x' => 330, 'y' => 504.7],
     ],
 ];
