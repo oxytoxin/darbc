@@ -299,11 +299,11 @@ class RsbsaFroms extends Controller
                     ]),
                 ]),
 
-            // Step 2: Farm Profile
-            Step::make('Part II: Farm Profile')
-                ->description('Provide details of your farming activities.')
+            // Step 2: Livelihood Profile (Part 2 of the 01-2024 form)
+            Step::make('Part II: Livelihood Profile')
+                ->description('Select all applicable sources of livelihood.')
                 ->schema([
-                    Fieldset::make('Livelihood Type')->schema([
+                    Fieldset::make('Main Livelihood')->schema([
                         // Select::make('main_livelihood')
                         // ->reactive()
                         // ->multiple()

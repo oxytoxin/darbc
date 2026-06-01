@@ -2,3 +2,5 @@
 !public/
 !.gitignore
 !proof_of_release/
+!templates/
+!templates/rsbsa-template.pdf

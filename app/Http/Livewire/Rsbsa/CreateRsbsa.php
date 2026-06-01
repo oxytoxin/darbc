@@ -57,140 +57,24 @@ class CreateRsbsa extends Component implements HasForms
         // dd($validatedData);
 
 
-        $rsbsaData = [
+        // Pull out keys that are handled separately (not direct columns).
+        $twoByTwo = $validatedData['two_by_two'] ?? null;
+        $farmParcels = $validatedData['farm_parcels'] ?? [];
+        unset($validatedData['two_by_two'], $validatedData['farm_parcels']);
 
-
-            'enrollment_type' => 'New',
-
-            'darbc_id' => $this->member->darbc_id,
-            'user_id' => $this->member->user_id,
+        // Every remaining form field maps 1:1 to a column; add system fields.
+        $rsbsaRecord = RsbsaRecord::create(array_merge($validatedData, [
+            'enrollment_type'       => 'New',
+            'darbc_id'              => $this->member->darbc_id,
+            'user_id'               => $this->member->user_id,
             'member_information_id' => $this->member->id,
+        ]));
 
-
-            'region_code' => $validatedData['region_code'] ?? null,
-            'province_code' => $validatedData['province_code'] ?? null,
-            'city_municipality_code' => $validatedData['city_municipality_code'] ?? null,
-            'barangay_code' => $validatedData['barangay_code'] ?? null,
-
-
-            'surname' => $validatedData['surname'] ?? null,
-            'middle_name' => $validatedData['middle_name'] ?? null,
-            'first_name' => $validatedData['first_name'] ?? null,
-            'extension_name' => $validatedData['extension_name'] ?? null,
-            'gender_id' => $validatedData['gender_id'] ?? null,
-            'date_of_birth' => $validatedData['date_of_birth'] ?? null,
-            'contact_number' => $validatedData['contact_number'] ?? null,
-            'landline_number' => $validatedData['landline_number'] ?? null,
-
-
-            'house_lot_bldg_purok' => $validatedData['house_lot_bldg_purok'] ?? null,
-            'street_sitio_subdv' => $validatedData['street_sitio_subdv'] ?? null,
-            'barangay' => $validatedData['barangay'] ?? null,
-            'city_municipality' => $validatedData['city_municipality'] ?? null,
-            'province' => $validatedData['province'] ?? null,
-            'region' => $validatedData['region'] ?? null,
-
-
-
-            'place_of_birth_municipality' => $validatedData['place_of_birth_municipality'] ?? null,
-            'place_of_birth_province' => $validatedData['place_of_birth_province'] ?? null,
-            'place_of_birth_country' => $validatedData['place_of_birth_country'] ?? null,
-            'civil_status' => $validatedData['civil_status'] ?? null,
-            'name_of_spouse' => $validatedData['name_of_spouse'] ?? null,
-            'mother_maiden_name' => $validatedData['mother_maiden_name'] ?? null,
-            'religion' => $validatedData['religion'] ?? null,
-
-
-            'household_head' => $validatedData['household_head'] ?? false,
-            'name_of_household_head' => $validatedData['name_of_household_head'] ?? null,
-            'relationship_with_household_head' => $validatedData['relationship_with_household_head'] ?? null,
-            'no_of_living_household_members' => $validatedData['no_of_living_household_members'] ?? 0,
-            'no_of_male' => $validatedData['no_of_male'] ?? 0,
-            'no_of_female' => $validatedData['no_of_female'] ?? 0,
-
-
-
-            'highest_formal_education' => $validatedData['highest_formal_education'] ?? null,
-            'is_pwd' => $validatedData['is_pwd'] ?? false,
-            'is_4ps_beneficiary' => $validatedData['is_4ps_beneficiary'] ?? false,
-            'is_indigenous_group_member' => $validatedData['is_indigenous_group_member'] ?? false,
-            'indigenous_group_name' => $validatedData['indigenous_group_name'] ?? null,
-
-
-            'has_government_id' => $validatedData['has_government_id'] ?? false,
-            'id_type' => $validatedData['id_type'] ?? null,
-            'id_number' => $validatedData['id_number'] ?? null,
-            'is_farmers_association_member' => $validatedData['is_farmers_association_member'] ?? false,
-            'farmers_association_name' => $validatedData['farmers_association_name'] ?? null,
-            'emergency_contact_name' => $validatedData['emergency_contact_name'] ?? null,
-            'emergency_contact_number' => $validatedData['emergency_contact_number'] ?? null,
-
-
-            // New fields (RSBSA Enrollment Form rev. 01-2024)
-            'has_philid' => $validatedData['has_philid'] ?? null,
-            'philsys_card_number' => $validatedData['philsys_card_number'] ?? null,
-            'transaction_reference_number' => $validatedData['transaction_reference_number'] ?? null,
-            'provincial_house_lot_bldg_purok' => $validatedData['provincial_house_lot_bldg_purok'] ?? null,
-            'provincial_street_sitio_subdv' => $validatedData['provincial_street_sitio_subdv'] ?? null,
-            'provincial_barangay' => $validatedData['provincial_barangay'] ?? null,
-            'provincial_city_municipality' => $validatedData['provincial_city_municipality'] ?? null,
-            'provincial_province' => $validatedData['provincial_province'] ?? null,
-            'provincial_region' => $validatedData['provincial_region'] ?? null,
-            'owns_mobile_number' => $validatedData['owns_mobile_number'] ?? null,
-            'mobile_owner_name' => $validatedData['mobile_owner_name'] ?? null,
-            'mobile_owner_relationship' => $validatedData['mobile_owner_relationship'] ?? null,
-            'farmers_association_name_2' => $validatedData['farmers_association_name_2'] ?? null,
-            'farmers_association_name_3' => $validatedData['farmers_association_name_3'] ?? null,
-
-            'main_livelihood' => $validatedData['main_livelihood'] ?? [],
-            'farming_rice' => $validatedData['farming_rice'] ?? false,
-            'farming_corn' => $validatedData['farming_corn'] ?? false,
-            'other_crops' => $validatedData['other_crops'] ?? false,
-            'farming_other_crops' => $validatedData['farming_other_crops'] ?? null,
-            'livestock' => $validatedData['livestock'] ?? false,
-            'farming_livestock' => $validatedData['farming_livestock'] ?? null,
-            'poultry' => $validatedData['poultry'] ?? false,
-            'farming_poultry' => $validatedData['farming_poultry'] ?? null,
-
-            'work_land_preparation' => $validatedData['work_land_preparation'] ?? false,
-            'work_planting_transplanting' => $validatedData['work_planting_transplanting'] ?? false,
-            'work_cultivation' => $validatedData['work_cultivation'] ?? false,
-            'work_harvesting' => $validatedData['work_harvesting'] ?? false,
-            'work_others' => $validatedData['work_others'] ?? false,
-            'work_others_specify' => $validatedData['work_others_specify'] ?? null,
-
-            'fishing_fish_capture' => $validatedData['fishing_fish_capture'] ?? false,
-            'fishing_aquaculture' => $validatedData['fishing_aquaculture'] ?? false,
-            'fishing_gleaning' => $validatedData['fishing_gleaning'] ?? false,
-            'fishing_fish_processing' => $validatedData['fishing_fish_processing'] ?? false,
-            'fishing_fish_vending' => $validatedData['fishing_fish_vending'] ?? false,
-            'fishing_others' => $validatedData['fishing_others'] ?? false,
-            'fishing_others_specify' => $validatedData['fishing_others_specify'] ?? null,
-
-            'youth_farming_household' => $validatedData['youth_farming_household'] ?? false,
-            'youth_agri_course' => $validatedData['youth_agri_course'] ?? false,
-            'youth_nonformal_agri_course' => $validatedData['youth_nonformal_agri_course'] ?? false,
-            'youth_agri_program' => $validatedData['youth_agri_program'] ?? false,
-            'youth_others' => $validatedData['youth_others'] ?? false,
-            'youth_others_specify' => $validatedData['youth_others_specify'] ?? null,
-
-            'gross_annual_income_farming' => $validatedData['gross_annual_income_farming'] ?? null,
-            'gross_annual_income_nonfarming' => $validatedData['gross_annual_income_nonfarming'] ?? null,
-        ];
-
-        //  dd($rsbsaData);
-
-        // Create an RsbsaRecord with validated data
-        $twoByTwo['two_by_two'] = $validatedData['two_by_two'];
-        unset($validatedData['two_by_two']);
-
-        $rsbsaRecord = RsbsaRecord::create($rsbsaData);
-
-        if ($twoByTwo['two_by_two']) {
-            $rsbsaRecord->addMedia(collect($twoByTwo['two_by_two'])->first())->toMediaCollection('two_by_two');
+        if ($twoByTwo) {
+            $rsbsaRecord->addMedia(collect($twoByTwo)->first())->toMediaCollection('two_by_two');
         }
 
-        $rsbsaRecord->syncFarmParcels($validatedData['farm_parcels'] ?? []);
+        $rsbsaRecord->syncFarmParcels($farmParcels);
 
         DB::commit();
 
