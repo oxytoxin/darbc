@@ -5,6 +5,7 @@
         captured: false,
         done: false,
         stream: null,
+        photoData: null,
         start() {
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
                 alert('Camera needs HTTPS and a supported browser.');
@@ -32,7 +33,8 @@
             this.captured = true;
         },
         save() {
-            $wire.captureTwoByTwo(this.$refs.canvas.toDataURL('image/png'));
+            this.photoData = this.$refs.canvas.toDataURL('image/png');
+            $wire.captureTwoByTwo(this.photoData);
             this.stop();
             this.done = true; this.open = false; this.captured = false;
         },
@@ -46,6 +48,12 @@
             <x-heroicon-o-camera class="w-4 h-4" /> Use Camera
         </button>
         <span x-show="done" x-cloak class="text-sm font-medium text-green-600">Photo captured &#10003;</span>
+    </div>
+
+    {{-- Preview of the captured camera photo --}}
+    <div x-show="done && photoData" x-cloak class="mt-1">
+        <img :src="photoData" class="object-cover w-32 h-32 border rounded" alt="2x2 preview">
+        <button type="button" @click="start()" class="block mt-1 text-xs text-primary-600 hover:underline">Retake photo</button>
     </div>
 
     {{-- Centered modal overlay --}}
