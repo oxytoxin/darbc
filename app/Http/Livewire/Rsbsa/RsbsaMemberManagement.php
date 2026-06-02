@@ -173,21 +173,10 @@ class RsbsaMemberManagement extends Component implements HasTable
                 ->button()
                 ->outlined()
                 ->icon('heroicon-o-document-text')
-                ->url(fn ($record): string => route('rsbsa.pdf', ['rsbsa' => $record->rsbsa]))
+                ->url(fn ($record): string => route('rsbsa.view', ['rsbsa' => $record->rsbsa]))
                 ->openUrlInNewTab()
                 ->hidden(fn($record) => !$record->hasRsbsaRecord())
                 ,
-
-            Action::make('Tune PDF')
-                ->label('Adjust Layout')
-                ->button()
-                ->outlined()
-                ->color('warning')
-                ->icon('heroicon-o-adjustments')
-                ->hidden(fn ($record) => !$record->hasRsbsaRecord())
-                ->url(fn ($record): string => route('rsbsa.pdf.tuner', ['rsbsa' => $record->rsbsa]))
-                ->openUrlInNewTab(),
-
 
                 ActionGroup::make([
 

@@ -167,9 +167,34 @@ class RsbsaRecord extends Model implements HasMedia
     ];
     const LIVELIHOOD_OPTION = ['Farmer' => 'Farmer', 'Farmworker/Laborer' => 'Farmworker/Laborer', 'Fisherfolk' => 'Fisherfolk', 'Agri Youth' => 'Agri Youth'];
 
+    // Part II livelihood sub-details (01-2024 form)
+    const FARMER_ACTIVITIES = [
+        'Rice' => 'Rice', 'Corn' => 'Corn', 'Other Crops' => 'Other Crops',
+        'Livestock' => 'Livestock', 'Poultry' => 'Poultry',
+    ];
+    const FARMWORKER_ACTIVITIES = [
+        'Land Preparation' => 'Land Preparation', 'Planting/Transplanting' => 'Planting/Transplanting',
+        'Cultivation' => 'Cultivation', 'Harvesting' => 'Harvesting', 'Others' => 'Others',
+    ];
+    const FISHERFOLK_ACTIVITIES = [
+        'Fish Capture' => 'Fish Capture', 'Aquaculture' => 'Aquaculture', 'Gleaning' => 'Gleaning',
+        'Fish Processing' => 'Fish Processing', 'Fish Vending' => 'Fish Vending', 'Others' => 'Others',
+    ];
+    const AGRI_YOUTH_INVOLVEMENT = [
+        'Part of a farming household' => 'Part of a farming household',
+        'Attending/attended formal agri-fishery related course' => 'Attending/attended formal agri-fishery related course',
+        'Attending/attended non-formal agri-fishery related course' => 'Attending/attended non-formal agri-fishery related course',
+        'Participated in any agricultural activity/program' => 'Participated in any agricultural activity/program',
+        'Others' => 'Others',
+    ];
+
 
     protected $casts = [
         'main_livelihood' => 'array',
+        'farmer_activities' => 'array',
+        'farmworker_activities' => 'array',
+        'fisherfolk_activities' => 'array',
+        'agri_youth_involvement' => 'array',
     ];
 
 

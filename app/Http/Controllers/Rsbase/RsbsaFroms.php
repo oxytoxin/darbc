@@ -357,6 +357,55 @@ class RsbsaFroms extends Controller
 
                     ]),
 
+                    // Sub-details appear only for the livelihoods selected above.
+                    Fieldset::make('Farmer — Type of Farming Activity')
+                        ->columnSpanFull()
+                        ->visible(fn (Closure $get) => in_array('Farmer', (array) $get('main_livelihood')))
+                        ->schema([
+                            CheckboxList::make('farmer_activities')
+                                ->label('Farming activity')
+                                ->options(RsbsaRecord::FARMER_ACTIVITIES)
+                                ->columns(3),
+                            TextInput::make('farmer_activities_other')
+                                ->label('Other crops / livestock / poultry (specify)'),
+                        ]),
+
+                    Fieldset::make('Farmworker / Laborer — Kind of Work')
+                        ->columnSpanFull()
+                        ->visible(fn (Closure $get) => in_array('Farmworker/Laborer', (array) $get('main_livelihood')))
+                        ->schema([
+                            CheckboxList::make('farmworker_activities')
+                                ->label('Kind of work')
+                                ->options(RsbsaRecord::FARMWORKER_ACTIVITIES)
+                                ->columns(3),
+                            TextInput::make('farmworker_activities_other')
+                                ->label('Others (specify)'),
+                        ]),
+
+                    Fieldset::make('Fisherfolk — Kind of Activity')
+                        ->columnSpanFull()
+                        ->visible(fn (Closure $get) => in_array('Fisherfolk', (array) $get('main_livelihood')))
+                        ->schema([
+                            CheckboxList::make('fisherfolk_activities')
+                                ->label('Fishing activity')
+                                ->options(RsbsaRecord::FISHERFOLK_ACTIVITIES)
+                                ->columns(3),
+                            TextInput::make('fisherfolk_activities_other')
+                                ->label('Others (specify)'),
+                        ]),
+
+                    Fieldset::make('Agri-Youth — Type of Involvement')
+                        ->columnSpanFull()
+                        ->visible(fn (Closure $get) => in_array('Agri Youth', (array) $get('main_livelihood')))
+                        ->schema([
+                            CheckboxList::make('agri_youth_involvement')
+                                ->label('Type of involvement')
+                                ->options(RsbsaRecord::AGRI_YOUTH_INVOLVEMENT)
+                                ->columns(2),
+                            TextInput::make('agri_youth_involvement_other')
+                                ->label('Others (specify)'),
+                        ]),
+
                     Fieldset::make('Gross Annual Income (Last Year)')->columns(2)->columnSpanFull()->schema([
                         TextInput::make('gross_annual_income_farming')
                             ->label('Farming')
