@@ -8,6 +8,7 @@
 /public/signatures
 /public/profile_photo
 /public/proof_of_release
+/public/rsbsa_two_by_two
 /storage/*.key
 /vendor
 .env
