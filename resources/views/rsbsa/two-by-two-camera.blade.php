@@ -69,9 +69,9 @@
                 <button type="button" x-show="!captured" @click="capture()"
                     class="px-4 py-2 text-sm font-semibold text-white rounded bg-primary-500 hover:bg-primary-600">Capture</button>
                 <button type="button" x-show="captured" x-cloak @click="retake()"
-                    class="px-4 py-2 text-sm font-semibold text-white rounded bg-amber-500 hover:bg-amber-600">Retake</button>
+                    class="px-4 py-2 text-sm font-semibold border rounded border-primary-500 text-primary-600 hover:bg-primary-50">Retake</button>
                 <button type="button" x-show="captured" x-cloak @click="save()"
-                    class="px-4 py-2 text-sm font-semibold text-white rounded bg-green-600 hover:bg-green-700">Use this photo</button>
+                    class="px-4 py-2 text-sm font-semibold text-white rounded bg-primary-500 hover:bg-primary-600">Use this photo</button>
                 <button type="button" @click="cancel()"
                     class="px-4 py-2 text-sm font-semibold border rounded hover:bg-gray-50">Cancel</button>
             </div>
