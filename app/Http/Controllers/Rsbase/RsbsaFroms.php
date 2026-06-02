@@ -560,9 +560,32 @@ class RsbsaFroms extends Controller
                         ->helperText('Up to 3 parcels — the official form (page 2) has space for 3.')
                         ->columns(2)
                         ->schema([
-                            TextInput::make('farm_location_barangay')->label('Farm Location - Barangay'),
-                            TextInput::make('farm_location_city_municipality')->label('City/Municipality'),
-                            TextInput::make('farm_location_province')->label('Province'),
+                            // Cascading dropdowns (same as the address): Province -> City -> Barangay.
+                            Select::make('farm_location_province')
+                                ->label('Province')
+                                ->options(fn () => self::upperOptions(Province::orderBy('description')->pluck('description')))
+                                ->searchable()->reactive()
+                                ->afterStateUpdated(function (callable $set) {
+                                    $set('farm_location_city_municipality', null);
+                                    $set('farm_location_barangay', null);
+                                }),
+                            Select::make('farm_location_city_municipality')
+                                ->label('City/Municipality')
+                                ->options(function (callable $get) {
+                                    $code = Province::whereRaw('UPPER(description) = ?', [(string) $get('farm_location_province')])->value('code');
+                                    return $code ? self::upperOptions(City::where('province_code', $code)->orderBy('description')->pluck('description')) : [];
+                                })
+                                ->searchable()->reactive()
+                                ->afterStateUpdated(fn (callable $set) => $set('farm_location_barangay', null)),
+                            Select::make('farm_location_barangay')
+                                ->label('Farm Location - Barangay')
+                                ->options(function (callable $get) {
+                                    $provinceCode = Province::whereRaw('UPPER(description) = ?', [(string) $get('farm_location_province')])->value('code');
+                                    $cityCode = City::where('province_code', $provinceCode)
+                                        ->whereRaw('UPPER(description) = ?', [(string) $get('farm_location_city_municipality')])->value('code');
+                                    return $cityCode ? self::upperOptions(Barangay::where('city_code', $cityCode)->orderBy('description')->pluck('description')) : [];
+                                })
+                                ->searchable(),
                             TextInput::make('total_parcel_area')->label('Total Parcel Area (ha)')->numeric()->minValue(0),
 
                             Checkbox::make('within_ancestral_domain')->label('Within Ancestral Domain (AD)?'),
