@@ -37,7 +37,7 @@
 
     {{-- PDF renderer: the overlay PDF embedded in-page (not the raw stream). --}}
     <div class="w-full overflow-hidden border rounded bg-gray-100" style="height: 85vh;">
-        <iframe src="{{ route('rsbsa.pdf', $rsbsa) }}"
+        <iframe src="{{ route('rsbsa.pdf', $rsbsa, false) }}"
                 class="w-full h-full"
                 frameborder="0"
                 title="RSBSA PDF"></iframe>
