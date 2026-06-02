@@ -355,9 +355,21 @@ class RsbsaFroms extends Controller
                         ]),
 
                     Fieldset::make('Birth & Civil Status')->columns(2)->columnSpanFull()->schema([
-                        TextInput::make('place_of_birth_municipality')->label('Municipality')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        TextInput::make('place_of_birth_province')->label('Province/State')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        TextInput::make('place_of_birth_country')->label('Country')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+                        // Place of birth: Province -> Municipality dropdowns (PH). Country
+                        // stays text since a member may be born abroad.
+                        Select::make('place_of_birth_province')
+                            ->label('Province')
+                            ->options(fn () => self::upperOptions(Province::orderBy('description')->pluck('description')))
+                            ->searchable()->reactive()
+                            ->afterStateUpdated(fn (callable $set) => $set('place_of_birth_municipality', null)),
+                        Select::make('place_of_birth_municipality')
+                            ->label('Municipality/City')
+                            ->options(function (callable $get) {
+                                $code = Province::whereRaw('UPPER(description) = ?', [(string) $get('place_of_birth_province')])->value('code');
+                                return $code ? self::upperOptions(City::where('province_code', $code)->orderBy('description')->pluck('description')) : [];
+                            })
+                            ->searchable(),
+                        TextInput::make('place_of_birth_country')->label('Country')->default('PHILIPPINES')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
                         Select::make('civil_status')
                             ->options([
                                 MemberInformation::CS_SINGLE => 'Single',
