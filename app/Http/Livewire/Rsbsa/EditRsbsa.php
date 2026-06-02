@@ -27,10 +27,19 @@ class EditRsbsa extends Component implements HasForms
 
     public RsbsaRecord $rsbsa;
     public $data;
+    /** Base64 data-URL of a 2x2 photo taken with the camera (optional). */
+    public $two_by_two_camera;
 
     protected function getFormSchema(): array
     {
         return RsbsaFroms::editForm($this->rsbsa);
+    }
+
+    /** Receives the camera snapshot (data-URL) from the 2x2 camera widget. */
+    public function captureTwoByTwo($data)
+    {
+        $this->two_by_two_camera = $data;
+        Notification::make()->title('Photo captured')->success()->send();
     }
 
     protected function getFormStatePath(): ?string
@@ -149,7 +158,16 @@ class EditRsbsa extends Component implements HasForms
         // dd($validatedData);
         $this->rsbsa->update($validatedData);
         $this->rsbsa->syncFarmParcels($farmParcels);
-        if ($twoByTwo['two_by_two']) {
+        // Prefer the camera photo if one was taken; otherwise use the upload.
+        if ($this->two_by_two_camera) {
+            $path = storage_path('app/two_by_two_tmp/' . uniqid() . '.png');
+            if (! is_dir(dirname($path))) {
+                mkdir(dirname($path), 0775, true);
+            }
+            \Intervention\Image\Facades\Image::make($this->two_by_two_camera)->save($path);
+            $this->rsbsa->clearMediaCollection('two_by_two');
+            $this->rsbsa->addMedia($path)->toMediaCollection('two_by_two');
+        } elseif ($twoByTwo['two_by_two']) {
             $this->rsbsa->addMedia(collect( $twoByTwo['two_by_two'])?->first())->toMediaCollection('two_by_two');
         }
 

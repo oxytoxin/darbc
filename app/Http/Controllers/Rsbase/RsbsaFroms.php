@@ -205,7 +205,12 @@ class RsbsaFroms extends Controller
                                     ->panelAspectRatio('1:1')              // square upload panel (not a circle)
                                     ->panelLayout('integrated')
                                     ->maxSize(4096)                        // 4 MB cap
-                                    ->helperText('Square (2x2). Non-square images are automatically cropped to a square.'),
+                                    ->helperText('Upload a square (2x2) image, or use the camera below.'),
+
+                                // Alternative to uploading: capture the 2x2 with the device camera.
+                                Placeholder::make('two_by_two_camera_widget')
+                                    ->label('Or take a photo')
+                                    ->content(fn () => new HtmlString(view('rsbsa.two-by-two-camera')->render())),
 
                             ])
                             ->maxWidth('sm')
