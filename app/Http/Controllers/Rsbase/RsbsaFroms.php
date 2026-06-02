@@ -208,6 +208,9 @@ class RsbsaFroms extends Controller
                         TextInput::make('mobile_owner_relationship')
                             ->label('Relationship with Owner')
                             ->hidden(fn (Closure $get) => (bool) $get('owns_mobile_number')),
+                        TextInput::make('landline_number')
+                            ->label('Landline Number')
+                            ->helperText('Optional. Leave blank if not applicable.'),
                     ]),
 
                     Fieldset::make('Address Information')->columns(3)->columnSpanFull()->schema([
@@ -261,6 +264,35 @@ class RsbsaFroms extends Controller
                         TextInput::make('religion'),
                         TextInput::make('name_of_spouse'),
                         TextInput::make('mother_maiden_name'),
+                    ]),
+
+                    Fieldset::make('Household Information')->columns(2)->columnSpanFull()->schema([
+                        Checkbox::make('household_head')
+                            ->label('Are you the household head?')
+                            ->reactive()
+                            ->columnSpanFull(),
+                        TextInput::make('name_of_household_head')
+                            ->label('Name of Household Head')
+                            ->hidden(fn (Closure $get) => (bool) $get('household_head')),
+                        TextInput::make('relationship_with_household_head')
+                            ->label('Relationship with Household Head')
+                            ->hidden(fn (Closure $get) => (bool) $get('household_head')),
+                        TextInput::make('no_of_living_household_members')
+                            ->label('No. of Living Household Members')
+                            ->numeric(),
+                        TextInput::make('no_of_male')
+                            ->label('No. of Male')
+                            ->numeric(),
+                        TextInput::make('no_of_female')
+                            ->label('No. of Female')
+                            ->numeric(),
+                    ]),
+
+                    Fieldset::make('Person to Notify in Case of Emergency')->columns(2)->columnSpanFull()->schema([
+                        TextInput::make('emergency_contact_name')
+                            ->label('Full Name'),
+                        TextInput::make('emergency_contact_number')
+                            ->label('Contact Number'),
                     ]),
 
                     Fieldset::make('Education & Status')->columns(2)->columnSpanFull()->schema([
@@ -323,6 +355,17 @@ class RsbsaFroms extends Controller
                             ->options(RsbsaRecord::LIVELIHOOD_OPTION)
                             ,
 
+                    ]),
+
+                    Fieldset::make('Gross Annual Income (Last Year)')->columns(2)->columnSpanFull()->schema([
+                        TextInput::make('gross_annual_income_farming')
+                            ->label('Farming')
+                            ->numeric()
+                            ->prefix('₱'),
+                        TextInput::make('gross_annual_income_nonfarming')
+                            ->label('Non-Farming')
+                            ->numeric()
+                            ->prefix('₱'),
                     ]),
 
                 ]),

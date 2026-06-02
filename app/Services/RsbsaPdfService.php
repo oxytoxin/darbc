@@ -241,8 +241,6 @@ class RsbsaPdfService
             'id_type'   => $r->id_type,
             'id_number' => $r->id_number,
 
-            'rsbsa_number' => $r->reference_number ? $digits($r->reference_number) : null,
-
             // Provincial address (NCR)
             'prov_house'    => $r->provincial_house_lot_bldg_purok,
             'prov_street'   => $r->provincial_street_sitio_subdv,
@@ -265,6 +263,17 @@ class RsbsaPdfService
             $data['dob_mm'] = strtoupper($dob->format('M')); // 3-letter month: JAN, FEB, ...
             $data['dob_dd'] = $dob->format('d');
             $data['dob_yyyy'] = $dob->format('Y');
+        }
+
+        // RSBSA number prints as XX-XX-XX-XXX-XXXXX (cells 3,6,9,13 are pre-printed
+        // dashes). Split the digits into the 5 groups so none land on a dash cell.
+        if ($r->reference_number) {
+            $rn = preg_replace('/\D/', '', $r->reference_number);
+            $data['rsbsa_g1'] = substr($rn, 0, 2) ?: null;
+            $data['rsbsa_g2'] = substr($rn, 2, 2) ?: null;
+            $data['rsbsa_g3'] = substr($rn, 4, 2) ?: null;
+            $data['rsbsa_g4'] = substr($rn, 6, 3) ?: null;
+            $data['rsbsa_g5'] = substr($rn, 9, 5) ?: null;
         }
 
         // PhilSys PCN: 16 digits split into 4 groups of 4 (to clear the separators)
