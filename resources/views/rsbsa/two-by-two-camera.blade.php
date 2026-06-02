@@ -28,7 +28,14 @@
             });
         },
         capture() {
-            this.$refs.canvas.getContext('2d').drawImage(this.$refs.preview, 0, 0, 480, 360);
+            // Center-crop the largest square from the video so the result is a
+            // true 2x2 (square), matching the upload field.
+            const v = this.$refs.preview;
+            const vw = v.videoWidth || 480, vh = v.videoHeight || 360;
+            const side = Math.min(vw, vh);
+            const sx = (vw - side) / 2, sy = (vh - side) / 2;
+            const c = this.$refs.canvas;
+            c.getContext('2d').drawImage(v, sx, sy, side, side, 0, 0, c.width, c.height);
             this.stop();
             this.captured = true;
         },
@@ -68,10 +75,11 @@
                 </button>
             </div>
 
-            <video x-show="!captured" x-ref="preview" width="480" height="360" autoplay playsinline
-                   class="w-full mx-auto bg-black rounded"></video>
-            <canvas x-show="captured" x-cloak x-ref="canvas" width="480" height="360"
-                    class="w-full mx-auto bg-black rounded"></canvas>
+            {{-- Square preview (object-cover) so it matches the square 2x2 that gets captured. --}}
+            <video x-show="!captured" x-ref="preview" autoplay playsinline
+                   class="object-cover mx-auto bg-black rounded w-72 h-72"></video>
+            <canvas x-show="captured" x-cloak x-ref="canvas" width="600" height="600"
+                    class="object-cover mx-auto bg-black rounded w-72 h-72"></canvas>
 
             <div class="flex flex-wrap justify-end gap-2 mt-4">
                 <button type="button" x-show="!captured" @click="capture()"
