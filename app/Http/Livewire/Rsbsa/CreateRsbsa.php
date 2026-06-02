@@ -80,11 +80,11 @@ class CreateRsbsa extends Component implements HasForms
 
         // Prefer the camera photo if one was taken; otherwise use the upload.
         if ($this->two_by_two_camera) {
-            $path = storage_path('app/two_by_two_tmp/' . uniqid() . '.png');
+            $path = storage_path('app/two_by_two_tmp/' . uniqid() . '.jpg');
             if (! is_dir(dirname($path))) {
                 mkdir(dirname($path), 0775, true);
             }
-            \Intervention\Image\Facades\Image::make($this->two_by_two_camera)->save($path);
+            \Intervention\Image\Facades\Image::make($this->two_by_two_camera)->save($path, 80);
             $rsbsaRecord->addMedia($path)->toMediaCollection('two_by_two');
         } elseif ($twoByTwo) {
             $rsbsaRecord->addMedia(collect($twoByTwo)->first())->toMediaCollection('two_by_two');

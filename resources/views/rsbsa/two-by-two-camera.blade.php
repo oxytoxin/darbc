@@ -40,7 +40,8 @@
             this.captured = true;
         },
         save() {
-            this.photoData = this.$refs.canvas.toDataURL('image/png');
+            // JPEG @ 0.8 quality -> small file, good enough for a 2x2 photo.
+            this.photoData = this.$refs.canvas.toDataURL('image/jpeg', 0.8);
             $wire.captureTwoByTwo(this.photoData);
             this.stop();
             this.done = true; this.open = false; this.captured = false;
