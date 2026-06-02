@@ -42,12 +42,12 @@
     }" class="space-y-2">
 
     {{-- Inline trigger button --}}
-    <div class="flex items-center gap-2">
+    <div>
         <button type="button" @click="start()"
-            class="inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold text-white rounded bg-primary-500 hover:bg-primary-600">
-            <x-heroicon-o-camera class="w-4 h-4" /> Use Camera
+            class="inline-flex items-center justify-center gap-1 px-3 py-2 text-sm font-semibold text-white rounded bg-primary-500 hover:bg-primary-600 whitespace-nowrap">
+            <x-heroicon-o-camera class="w-4 h-4 shrink-0" /> Use Camera
         </button>
-        <span x-show="done" x-cloak class="text-sm font-medium text-green-600">Photo captured &#10003;</span>
+        <span x-show="done" x-cloak class="block mt-1 text-sm font-medium text-green-600">Photo captured &#10003;</span>
     </div>
 
     {{-- Preview of the captured camera photo --}}
