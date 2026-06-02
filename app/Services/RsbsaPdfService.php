@@ -173,19 +173,6 @@ class RsbsaPdfService
         return $d;
     }
 
-    /**
-     * Resolve a stored location value to the name to print. New records store
-     * the PSGC code (look it up); legacy records stored the name (use as-is).
-     */
-    private function locName(string $model, ?string $value): ?string
-    {
-        if (! $value) {
-            return null;
-        }
-        $desc = $model::where('code', $value)->value('description');
-        return strtoupper($desc ?: $value);
-    }
-
     /** Draw a 10pt/50pt measurement grid on the current page (tuner only). */
     private function drawGrid(): void
     {
@@ -237,13 +224,13 @@ class RsbsaPdfService
 
             'perm_house'     => $r->house_lot_bldg_purok,
             'perm_street'    => $r->street_sitio_subdv,
-            'perm_barangay'  => $this->locName(\App\Models\Barangay::class, $r->barangay),
-            'perm_city'      => $this->locName(\App\Models\City::class, $r->city_municipality),
-            'perm_province'  => $this->locName(\App\Models\Province::class, $r->province),
-            'perm_region'    => $this->locName(\App\Models\Region::class, $r->region),
+            'perm_barangay'  => $r->barangay,
+            'perm_city'      => $r->city_municipality,
+            'perm_province'  => $r->province,
+            'perm_region'    => $r->region,
 
-            'place_birth_city'     => $this->locName(\App\Models\City::class, $r->place_of_birth_municipality),
-            'place_birth_province' => $this->locName(\App\Models\Province::class, $r->place_of_birth_province),
+            'place_birth_city'     => $r->place_of_birth_municipality,
+            'place_birth_province' => $r->place_of_birth_province,
 
             'mobile' => $this->mobileDigits($r->contact_number),
             'photo'  => $r->getFirstMediaPath('two_by_two') ?: null,
@@ -257,10 +244,10 @@ class RsbsaPdfService
             // Provincial address (NCR)
             'prov_house'    => $r->provincial_house_lot_bldg_purok,
             'prov_street'   => $r->provincial_street_sitio_subdv,
-            'prov_barangay' => $this->locName(\App\Models\Barangay::class, $r->provincial_barangay),
-            'prov_city'     => $this->locName(\App\Models\City::class, $r->provincial_city_municipality),
-            'prov_province' => $this->locName(\App\Models\Province::class, $r->provincial_province),
-            'prov_region'   => $this->locName(\App\Models\Region::class, $r->provincial_region),
+            'prov_barangay' => $r->provincial_barangay,
+            'prov_city'     => $r->provincial_city_municipality,
+            'prov_province' => $r->provincial_province,
+            'prov_region'   => $r->provincial_region,
 
             // Mobile owner / ICC / FCA
             'mobile_owner_name'         => $r->mobile_owner_name,
