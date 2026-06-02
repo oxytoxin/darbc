@@ -6,9 +6,21 @@
         done: false,
         stream: null,
         photoData: null,
+        cameraError(err) {
+            const name = err && err.name ? err.name : '';
+            let msg = 'Unable to access the camera. Please use Upload instead.';
+            if (name === 'NotFoundError' || name === 'DevicesNotFoundError') {
+                msg = 'No camera was detected on this device. Please connect a camera, or use Upload instead.';
+            } else if (name === 'NotAllowedError' || name === 'PermissionDeniedError' || name === 'SecurityError') {
+                msg = 'Camera access was blocked. Please allow camera permission in your browser, then try again.';
+            } else if (name === 'NotReadableError' || name === 'TrackStartError') {
+                msg = 'The camera is already in use by another application. Close it and try again.';
+            }
+            alert(msg);
+        },
         start() {
             if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-                alert('Camera needs HTTPS and a supported browser.');
+                alert('The camera is not available. It requires HTTPS and a supported browser. Please use Upload instead.');
                 return;
             }
             this.open = true;
@@ -16,7 +28,7 @@
             this.$nextTick(() => {
                 navigator.mediaDevices.getUserMedia({ video: { width: 480, height: 360 } })
                     .then(s => { this.stream = s; this.$refs.preview.srcObject = s; })
-                    .catch(() => { alert('Unable to access the camera.'); this.open = false; });
+                    .catch(err => { this.cameraError(err); this.open = false; });
             });
         },
         stop() { if (this.stream) { this.stream.getVideoTracks().forEach(t => t.stop()); this.stream = null; } },
@@ -24,7 +36,8 @@
             this.captured = false;
             this.$nextTick(() => {
                 navigator.mediaDevices.getUserMedia({ video: { width: 480, height: 360 } })
-                    .then(s => { this.stream = s; this.$refs.preview.srcObject = s; });
+                    .then(s => { this.stream = s; this.$refs.preview.srcObject = s; })
+                    .catch(err => { this.cameraError(err); this.open = false; });
             });
         },
         capture() {
