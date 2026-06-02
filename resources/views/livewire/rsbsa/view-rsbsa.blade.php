@@ -1,6 +1,20 @@
 <div class="mt-10">
+    @php
+        $u = $rsbsa->memberInformation?->user;
+        $fullName = trim(
+            ($rsbsa->surname ?: $u?->surname) . ', ' .
+            ($rsbsa->first_name ?: $u?->first_name) . ' ' .
+            ($rsbsa->middle_name ?: $u?->middle_name)
+        );
+        $fullName = trim($fullName, ', ');
+    @endphp
     <div class="flex flex-col gap-2 mb-4 sm:flex-row sm:items-center sm:justify-between">
-        <h1 class="text-xl font-bold text-primary-500">View RSBSA</h1>
+        <div>
+            <h1 class="text-xl font-bold text-primary-500">View RSBSA</h1>
+            <p class="text-sm font-medium text-gray-600">
+                {{ $fullName ?: 'Unnamed record' }}@if($rsbsa->darbc_id) &middot; DARBC ID {{ $rsbsa->darbc_id }}@endif
+            </p>
+        </div>
 
         <div class="flex items-center gap-2">
             {{-- Edit Layout: redirects to the visual tuner, which renders with this

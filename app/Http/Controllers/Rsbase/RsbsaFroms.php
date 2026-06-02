@@ -142,9 +142,20 @@ class RsbsaFroms extends Controller
                             ->columnSpanFull(),
                         TextInput::make('philsys_card_number')
                             ->label('PhilSys Card Number (PCN)')
+                            ->helperText('16-digit number printed on the PhilID.')
+                            ->mask(fn (TextInput\Mask $mask) => $mask->pattern('0000-0000-0000-0000'))
+                            ->rule('regex:/^\d{4}-\d{4}-\d{4}-\d{4}$/')
                             ->hidden(fn (Closure $get) => (string) $get('has_philid') !== '1'),
                         TextInput::make('transaction_reference_number')
                             ->label('Transaction Reference Number (TRN)')
+                            ->helperText('Numbers only.')
+                            ->maxLength(29)
+                            ->rule('regex:/^\d+$/')
+                            ->extraInputAttributes([
+                                'maxlength' => '29',
+                                'inputmode' => 'numeric',
+                                'oninput'   => "this.value=this.value.replace(/\\D/g,'')",
+                            ])
                             ->hidden(fn (Closure $get) => (string) $get('has_philid') !== '0'),
                     ]),
                 ]),
