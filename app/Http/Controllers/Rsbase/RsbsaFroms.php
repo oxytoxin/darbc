@@ -142,9 +142,14 @@ class RsbsaFroms extends Controller
                             ->columnSpanFull(),
                         TextInput::make('philsys_card_number')
                             ->label('PhilSys Card Number (PCN)')
-                            ->helperText('16-digit number printed on the PhilID.')
-                            ->mask(fn (TextInput\Mask $mask) => $mask->pattern('0000-0000-0000-0000'))
-                            ->rule('regex:/^\d{4}-\d{4}-\d{4}-\d{4}$/')
+                            ->helperText('16 digits, numbers only.')
+                            ->maxLength(16)
+                            ->rule('digits:16')
+                            ->extraInputAttributes([
+                                'maxlength' => '16',
+                                'inputmode' => 'numeric',
+                                'oninput'   => "this.value=this.value.replace(/\\D/g,'')",
+                            ])
                             ->hidden(fn (Closure $get) => (string) $get('has_philid') !== '1'),
                         TextInput::make('transaction_reference_number')
                             ->label('Transaction Reference Number (TRN)')
@@ -179,10 +184,20 @@ class RsbsaFroms extends Controller
                                     ->hidden(fn() => !request()->routeIs('rsbsa.edit')) // Hide in create mode
                                     ->disableLabel()
                                     ->content(fn() => new HtmlString('<img src="' . $rsbsa->getImage() .
-                                        '" class="rounded-full w-32 h-32">')),
+                                        '" class="object-cover w-32 h-32 rounded">')),
 
 
-                                FileUpload::make('two_by_two')->avatar()->label('2x2 Picture'),
+                                FileUpload::make('two_by_two')
+                                    ->label('2x2 Picture')
+                                    ->image()                              // accept images only
+                                    ->imageCropAspectRatio('1:1')          // force square crop
+                                    ->imageResizeTargetWidth('600')
+                                    ->imageResizeTargetHeight('600')
+                                    ->imageResizeMode('cover')             // crop-to-fill -> always 2x2
+                                    ->panelAspectRatio('1:1')              // square upload panel (not a circle)
+                                    ->panelLayout('integrated')
+                                    ->maxSize(4096)                        // 4 MB cap
+                                    ->helperText('Square (2x2). Non-square images are automatically cropped to a square.'),
 
                             ])
                             ->maxWidth('sm')
@@ -207,7 +222,16 @@ class RsbsaFroms extends Controller
                         ->options(Gender::all()->pluck('name', 'id')),
 
                         DatePicker::make('date_of_birth')->hint('(Editable in Profiling)'),
-                        TextInput::make('contact_number')->label('Mobile Number'),
+                        TextInput::make('contact_number')
+                            ->label('Mobile Number')
+                            ->helperText('11 digits starting with 09 (e.g., 09171234567).')
+                            ->maxLength(11)
+                            ->rule('regex:/^09\d{9}$/')
+                            ->extraInputAttributes([
+                                'maxlength' => '11',
+                                'inputmode' => 'numeric',
+                                'oninput'   => "this.value=this.value.replace(/\\D/g,'')",
+                            ]),
                         Checkbox::make('owns_mobile_number')
                             ->label('Do you own the mobile number above?')
                             ->default(true)
@@ -221,7 +245,13 @@ class RsbsaFroms extends Controller
                             ->hidden(fn (Closure $get) => (bool) $get('owns_mobile_number')),
                         TextInput::make('landline_number')
                             ->label('Landline Number')
-                            ->helperText('Optional. Leave blank if not applicable.'),
+                            ->helperText('Optional. Numbers only.')
+                            ->maxLength(12)
+                            ->extraInputAttributes([
+                                'maxlength' => '12',
+                                'inputmode' => 'numeric',
+                                'oninput'   => "this.value=this.value.replace(/\\D/g,'')",
+                            ]),
                     ]),
 
                     Fieldset::make('Address Information')->columns(3)->columnSpanFull()->schema([
@@ -290,20 +320,27 @@ class RsbsaFroms extends Controller
                             ->hidden(fn (Closure $get) => (bool) $get('household_head')),
                         TextInput::make('no_of_living_household_members')
                             ->label('No. of Living Household Members')
-                            ->numeric(),
+                            ->numeric()->minValue(0)->maxValue(99),
                         TextInput::make('no_of_male')
                             ->label('No. of Male')
-                            ->numeric(),
+                            ->numeric()->minValue(0)->maxValue(99),
                         TextInput::make('no_of_female')
                             ->label('No. of Female')
-                            ->numeric(),
+                            ->numeric()->minValue(0)->maxValue(99),
                     ]),
 
                     Fieldset::make('Person to Notify in Case of Emergency')->columns(2)->columnSpanFull()->schema([
                         TextInput::make('emergency_contact_name')
                             ->label('Full Name'),
                         TextInput::make('emergency_contact_number')
-                            ->label('Contact Number'),
+                            ->label('Contact Number')
+                            ->helperText('Numbers only.')
+                            ->maxLength(11)
+                            ->extraInputAttributes([
+                                'maxlength' => '11',
+                                'inputmode' => 'numeric',
+                                'oninput'   => "this.value=this.value.replace(/\\D/g,'')",
+                            ]),
                     ]),
 
                     Fieldset::make('Education & Status')->columns(2)->columnSpanFull()->schema([
@@ -421,10 +458,12 @@ class RsbsaFroms extends Controller
                         TextInput::make('gross_annual_income_farming')
                             ->label('Farming')
                             ->numeric()
+                            ->minValue(0)
                             ->prefix('₱'),
                         TextInput::make('gross_annual_income_nonfarming')
                             ->label('Non-Farming')
                             ->numeric()
+                            ->minValue(0)
                             ->prefix('₱'),
                     ]),
 
@@ -438,12 +477,14 @@ class RsbsaFroms extends Controller
                         ->createItemButtonLabel('Add Farm Parcel')
                         ->collapsible()
                         ->defaultItems(0)
+                        ->maxItems(3)
+                        ->helperText('Up to 3 parcels — the official form (page 2) has space for 3.')
                         ->columns(2)
                         ->schema([
                             TextInput::make('farm_location_barangay')->label('Farm Location - Barangay'),
                             TextInput::make('farm_location_city_municipality')->label('City/Municipality'),
                             TextInput::make('farm_location_province')->label('Province'),
-                            TextInput::make('total_parcel_area')->label('Total Parcel Area (ha)')->numeric(),
+                            TextInput::make('total_parcel_area')->label('Total Parcel Area (ha)')->numeric()->minValue(0),
 
                             Checkbox::make('within_ancestral_domain')->label('Within Ancestral Domain (AD)?'),
                             Checkbox::make('agrarian_reform_beneficiary')->label('Agrarian Reform Beneficiary (ARB)?'),
@@ -458,9 +499,11 @@ class RsbsaFroms extends Controller
                                 ->hidden(fn (Closure $get) => $get('ownership_type') !== 'Others'),
 
                             TextInput::make('land_owner_name')->label('Name of Land Owner'),
-                            TextInput::make('parcel_rsbsa_number')->label('Parcel RSBSA Number (system-generated)'),
+                            TextInput::make('parcel_rsbsa_number')->label('Parcel RSBSA Number (system-generated)')
+                                ->extraInputAttributes(['inputmode' => 'numeric', 'oninput' => "this.value=this.value.replace(/\\D/g,'')"]),
                             TextInput::make('rotational_tiller_name')->label('Rotational Tiller - Full Name'),
-                            TextInput::make('rotational_tiller_rsbsa_number')->label('Rotational Tiller - RSBSA Number'),
+                            TextInput::make('rotational_tiller_rsbsa_number')->label('Rotational Tiller - RSBSA Number')
+                                ->extraInputAttributes(['inputmode' => 'numeric', 'oninput' => "this.value=this.value.replace(/\\D/g,'')"]),
                             Textarea::make('remarks')->label('Remarks')->columnSpanFull(),
 
                             Repeater::make('commodities')
@@ -472,8 +515,8 @@ class RsbsaFroms extends Controller
                                 ->schema([
                                     TextInput::make('cropping_schedule')->label('Cropping Schedule (e.g. Jan-Mar)'),
                                     TextInput::make('commodity')->label('Commodity'),
-                                    TextInput::make('size')->label('Size (ha)')->numeric(),
-                                    TextInput::make('no_of_heads')->label('No. of Heads / Trees')->numeric(),
+                                    TextInput::make('size')->label('Size (ha)')->numeric()->minValue(0),
+                                    TextInput::make('no_of_heads')->label('No. of Heads / Trees')->numeric()->minValue(0),
                                     Select::make('farm_type')
                                         ->label('Farm Type')
                                         ->options(\App\Models\RsbsaFarmParcelCommodity::FARM_TYPES),
