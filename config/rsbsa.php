@@ -17,9 +17,6 @@ return [
 
     'fields' => [
         'photo' => ['type' => 'image', 'page' => 1, 'x' => 434.7, 'y' => 11.7, 'w' => 120, 'h' => 120],
-        // Second 2x2 for the Client's Copy stub (RSBSA requires 2 pieces).
-        // Approximate position — fine-tune with the layout editor.
-        'photo2' => ['type' => 'image', 'page' => 1, 'x' => 8, 'y' => 725, 'w' => 48, 'h' => 48],
         'pcn_1' => ['type' => 'boxed', 'page' => 1, 'x' => 125, 'y' => 99.7, 'gap' => 14],
         'pcn_2' => ['type' => 'boxed', 'page' => 1, 'x' => 204.7, 'y' => 100, 'gap' => 14],
         'pcn_3' => ['type' => 'boxed', 'page' => 1, 'x' => 285.7, 'y' => 99, 'gap' => 14],

@@ -234,7 +234,6 @@ class RsbsaPdfService
 
             'mobile' => $this->mobileDigits($r->contact_number),
             'photo'  => $r->getFirstMediaPath('two_by_two') ?: null,
-            'photo2' => $r->getFirstMediaPath('two_by_two') ?: null,
 
             'mother_maiden_name' => $r->mother_maiden_name,
             'spouse'             => $r->name_of_spouse,
