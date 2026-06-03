@@ -70,6 +70,16 @@ class CreateRsbsa extends Component implements HasForms
         $farmParcels = $validatedData['farm_parcels'] ?? [];
         unset($validatedData['two_by_two'], $validatedData['farm_parcels']);
 
+        // These columns are NOT NULL (default 0) in the DB; the form sends null
+        // when a numeric box / checkbox is left blank, so coerce them to 0.
+        foreach (['no_of_living_household_members', 'no_of_male', 'no_of_female',
+                  'household_head', 'has_government_id', 'is_pwd', 'is_4ps_beneficiary',
+                  'is_indigenous_group_member', 'is_farmers_association_member'] as $col) {
+            if (! isset($validatedData[$col]) || $validatedData[$col] === null || $validatedData[$col] === '') {
+                $validatedData[$col] = 0;
+            }
+        }
+
         // Every remaining form field maps 1:1 to a column; add system fields.
         $rsbsaRecord = RsbsaRecord::create(array_merge($validatedData, [
             'enrollment_type'       => 'New',

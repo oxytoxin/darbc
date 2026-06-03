@@ -138,6 +138,15 @@ class EditRsbsa extends Component implements HasForms
         $farmParcels = $validatedData['farm_parcels'] ?? [];
         unset($validatedData['two_by_two'], $validatedData['farm_parcels']);
 
+        // These columns are NOT NULL (default 0) in the DB; coerce blank values to 0.
+        foreach (['no_of_living_household_members', 'no_of_male', 'no_of_female',
+                  'household_head', 'has_government_id', 'is_pwd', 'is_4ps_beneficiary',
+                  'is_indigenous_group_member', 'is_farmers_association_member'] as $col) {
+            if (array_key_exists($col, $validatedData) && ($validatedData[$col] === null || $validatedData[$col] === '')) {
+                $validatedData[$col] = 0;
+            }
+        }
+
 
         // unset(
         //     $validatedData['darbc_id'],
