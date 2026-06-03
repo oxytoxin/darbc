@@ -16,28 +16,45 @@
             </p>
         </div>
 
-        <div class="flex items-center gap-2">
-            {{-- Edit Layout: redirects to the visual tuner, which renders with this
-                 record's actual values so alignment can be corrected as needed. --}}
-            <a href="{{ route('rsbsa.pdf.tuner', $rsbsa) }}"
-               target="_blank"
-               rel="noopener"
-               class="inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold text-white rounded bg-primary-500 hover:bg-primary-600">
-                <x-heroicon-o-adjustments class="w-4 h-4" />
-                Edit Layout
+        <div class="flex flex-wrap items-center gap-2">
+            {{-- Back to Members: keeps the queue loop tight when processing many
+                 records in a row. --}}
+            <a href="{{ route('rsbsa.manage-members') }}"
+               class="inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold border rounded border-gray-300 text-gray-600 hover:bg-gray-50">
+                <x-heroicon-o-arrow-left class="w-4 h-4" />
+                Back to Members
             </a>
+
+            {{-- Print: prints the embedded PDF directly (same-origin iframe). --}}
+            <button type="button"
+                    onclick="const f = document.getElementById('rsbsa-pdf-frame'); f.contentWindow.focus(); f.contentWindow.print();"
+                    class="inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold text-white rounded bg-primary-500 hover:bg-primary-600">
+                <x-heroicon-o-printer class="w-4 h-4" />
+                Print
+            </button>
 
             <a href="{{ route('rsbsa.pdf.download', $rsbsa) }}"
                class="inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold border rounded border-primary-500 text-primary-600 hover:bg-primary-50">
                 <x-heroicon-o-download class="w-4 h-4" />
                 Download
             </a>
+
+            {{-- Edit Layout: redirects to the visual tuner, which renders with this
+                 record's actual values so alignment can be corrected as needed. --}}
+            <a href="{{ route('rsbsa.pdf.tuner', $rsbsa) }}"
+               target="_blank"
+               rel="noopener"
+               class="inline-flex items-center gap-1 px-3 py-2 text-sm font-semibold border rounded border-gray-300 text-gray-600 hover:bg-gray-50">
+                <x-heroicon-o-adjustments class="w-4 h-4" />
+                Edit Layout
+            </a>
         </div>
     </div>
 
     {{-- PDF renderer: the overlay PDF embedded in-page (not the raw stream). --}}
     <div class="w-full overflow-hidden border rounded bg-gray-100" style="height: 85vh;">
-        <iframe src="{{ route('rsbsa.pdf', $rsbsa, false) }}"
+        <iframe id="rsbsa-pdf-frame"
+                src="{{ route('rsbsa.pdf', $rsbsa, false) }}"
                 class="w-full h-full"
                 frameborder="0"
                 title="RSBSA PDF"></iframe>
