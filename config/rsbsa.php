@@ -23,8 +23,8 @@ return [
         'photo' => ['type' => 'image', 'page' => 1, 'x' => 434.7, 'y' => 11.7, 'w' => 120, 'h' => 120],
         // Second 2x2 for the client's INTERNAL copy (not the official DA layout).
         // Page 2 is full, so this sits at the bottom; position it via the layout editor.
-        // Full duplicate of the top 2x2 (same 120x120), in page 1's extended strip.
-        'photo2' => ['type' => 'image', 'page' => 1, 'x' => 246, 'y' => 802, 'w' => 120, 'h' => 120],
+        // Full duplicate of the top 2x2, vertically aligned with it (same x/width).
+        'photo2' => ['type' => 'image', 'page' => 1, 'x' => 434.7, 'y' => 802, 'w' => 120, 'h' => 120],
         'pcn_1' => ['type' => 'boxed', 'page' => 1, 'x' => 125, 'y' => 99.7, 'gap' => 14],
         'pcn_2' => ['type' => 'boxed', 'page' => 1, 'x' => 204.7, 'y' => 100, 'gap' => 14],
         'pcn_3' => ['type' => 'boxed', 'page' => 1, 'x' => 285.7, 'y' => 99, 'gap' => 14],
