@@ -110,7 +110,7 @@ class RsbsaPdfService
                     'text'  => $this->writeText($f['x'], $f['y'], (string) $value),
                     'boxed' => $this->writeBoxedChars($f['x'], $f['y'], (string) $value, $f['gap']),
                     'check' => $this->checkBox($f['x'], $f['y']),
-                    'image' => $this->putImage($f['x'], $f['y'], $f['w'] ?? 100, $f['h'] ?? 100, (string) $value),
+                    'image' => $this->putImage($f['x'], $f['y'], $f['w'] ?? 100, $f['h'] ?? 100, (string) $value, $f['pad'] ?? 0),
                 };
 
                 if (isset($f['size'])) {
@@ -143,12 +143,21 @@ class RsbsaPdfService
         $this->pdf->SetFont(config('rsbsa.font.family'), '', config('rsbsa.font.size'));
     }
 
-    /** Place an image (e.g. the 2x2 photo). (x, y) is the top-left corner. */
-    private function putImage(float $x, float $y, float $w, float $h, string $path): void
+    /**
+     * Place an image (e.g. the 2x2 photo). (x, y) is the top-left corner.
+     * $pad draws a white background that extends $pad points beyond the image
+     * on all sides, so the photo cleanly covers anything underneath it.
+     */
+    private function putImage(float $x, float $y, float $w, float $h, string $path, float $pad = 0): void
     {
-        if (is_file($path)) {
-            $this->pdf->Image($path, $x, $y, $w, $h);
+        if (! is_file($path)) {
+            return;
         }
+        if ($pad > 0) {
+            $this->pdf->SetFillColor(255, 255, 255);
+            $this->pdf->Rect($x - $pad, $y - $pad, $w + 2 * $pad, $h + 2 * $pad, 'F');
+        }
+        $this->pdf->Image($path, $x, $y, $w, $h);
     }
 
     /**
