@@ -53,6 +53,14 @@ class RsbsaFroms extends Controller
     }
 
 
+    /** Build [UPPERCASE => UPPERCASE] option list from a collection of names. */
+    private static function upperOptions($descriptions): array
+    {
+        return collect($descriptions)
+            ->mapWithKeys(fn ($d) => [strtoupper((string) $d) => strtoupper((string) $d)])
+            ->toArray();
+    }
+
     public static function formFields(?RsbsaRecord $rsbsa = null): array
     {
 
@@ -197,7 +205,12 @@ class RsbsaFroms extends Controller
                                     ->panelAspectRatio('1:1')              // square upload panel (not a circle)
                                     ->panelLayout('integrated')
                                     ->maxSize(4096)                        // 4 MB cap
-                                    ->helperText('Square (2x2). Non-square images are automatically cropped to a square.'),
+                                    ->helperText('Upload a square (2x2) image, or use the camera below.'),
+
+                                // Alternative to uploading: capture the 2x2 with the device camera.
+                                Placeholder::make('two_by_two_camera_widget')
+                                    ->label('Or take a photo')
+                                    ->content(fn () => new HtmlString(view('rsbsa.two-by-two-camera')->render())),
 
                             ])
                             ->maxWidth('sm')
@@ -254,43 +267,114 @@ class RsbsaFroms extends Controller
                             ]),
                     ]),
 
-                    Fieldset::make('Address Information')->columns(3)->columnSpanFull()->schema([
+                    Fieldset::make('Permanent Address (Permanenteng Tirahan)')->columns(3)->columnSpanFull()->schema([
                         TextInput::make('house_lot_bldg_purok')->label('House Lot/Purok')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
                         TextInput::make('street_sitio_subdv')->label('Street/Sitio/Subdivision')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        // Select::make('data.address.region')
-                        // ->reactive()
-                        // ->options(Region::pluck('description', 'code')),
-                        // Select::make('data.address.province')
-                        //     ->reactive()
-                        //     ->visible(fn ($get) => $get(('data.address.region')))
-                        //     ->options(fn ($get) => Province::when($get('data.address.region'), fn ($q) => $q->whereRegionCode($get('data.address.region')))->pluck('description', 'code')),
-                        // Select::make('data.address.city')
-                        //     ->reactive()
-                        //     ->visible(fn ($get) => $get(('data.address.province')))
-                        //     ->options(fn ($get) => City::when($get('data.address.province'), fn ($q) => $q->whereProvinceCode($get('data.address.province')))->pluck('description', 'code')),
-                        // Select::make('data.address.barangay')
-                        //     ->reactive()
-                        //     ->visible(fn ($get) => $get(('data.address.city')))
-                        //     ->options(fn ($get) => Barangay::when($get('data.address.city'), fn ($q) => $q->whereCityCode($get('data.address.city')))->pluck('description', 'code')),
-                        TextInput::make('barangay')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        TextInput::make('city_municipality')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        TextInput::make('province')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        TextInput::make('region')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+
+                        // Cascading dropdowns. Stored as UPPERCASE names so existing
+                        // data and the PDF (which prints the name) keep working.
+                        Select::make('region')
+                            ->label('Region')
+                            ->options(fn () => self::upperOptions(Region::orderBy('description')->pluck('description')))
+                            ->searchable()->reactive()
+                            ->afterStateUpdated(function (callable $set) {
+                                $set('province', null);
+                                $set('city_municipality', null);
+                                $set('barangay', null);
+                            }),
+                        Select::make('province')
+                            ->label('Province')
+                            ->options(function (callable $get) {
+                                $code = Region::whereRaw('UPPER(description) = ?', [(string) $get('region')])->value('code');
+                                return $code ? self::upperOptions(Province::where('region_code', $code)->orderBy('description')->pluck('description')) : [];
+                            })
+                            ->searchable()->reactive()
+                            ->afterStateUpdated(function (callable $set) {
+                                $set('city_municipality', null);
+                                $set('barangay', null);
+                            }),
+                        Select::make('city_municipality')
+                            ->label('City/Municipality')
+                            ->options(function (callable $get) {
+                                $code = Province::whereRaw('UPPER(description) = ?', [(string) $get('province')])->value('code');
+                                return $code ? self::upperOptions(City::where('province_code', $code)->orderBy('description')->pluck('description')) : [];
+                            })
+                            ->searchable()->reactive()
+                            ->afterStateUpdated(fn (callable $set) => $set('barangay', null)),
+                        Select::make('barangay')
+                            ->label('Barangay')
+                            ->options(function (callable $get) {
+                                $provinceCode = Province::whereRaw('UPPER(description) = ?', [(string) $get('province')])->value('code');
+                                $cityCode = City::where('province_code', $provinceCode)
+                                    ->whereRaw('UPPER(description) = ?', [(string) $get('city_municipality')])->value('code');
+                                return $cityCode ? self::upperOptions(Barangay::where('city_code', $cityCode)->orderBy('description')->pluck('description')) : [];
+                            })
+                            ->searchable(),
                     ]),
 
-                    Fieldset::make('Provincial Address (NCR residents only)')->columns(3)->columnSpanFull()->schema([
-                        TextInput::make('provincial_house_lot_bldg_purok')->label('House Lot/Purok')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        TextInput::make('provincial_street_sitio_subdv')->label('Street/Sitio/Subdivision')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        TextInput::make('provincial_barangay')->label('Barangay')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        TextInput::make('provincial_city_municipality')->label('City/Municipality')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        TextInput::make('provincial_province')->label('Province')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        TextInput::make('provincial_region')->label('Region')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                    ]),
+                    Fieldset::make('Provincial Address (NCR residents only)')
+                        ->columns(3)->columnSpanFull()
+                        // Only shown when the permanent address Region is NCR.
+                        ->visible(fn (Closure $get) => str_contains(strtoupper((string) $get('region')), 'NCR'))
+                        ->schema([
+                            TextInput::make('provincial_house_lot_bldg_purok')->label('House Lot/Purok')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+                            TextInput::make('provincial_street_sitio_subdv')->label('Street/Sitio/Subdivision')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+
+                            Select::make('provincial_region')
+                                ->label('Region')
+                                ->options(fn () => self::upperOptions(Region::orderBy('description')->pluck('description')))
+                                ->searchable()->reactive()
+                                ->afterStateUpdated(function (callable $set) {
+                                    $set('provincial_province', null);
+                                    $set('provincial_city_municipality', null);
+                                    $set('provincial_barangay', null);
+                                }),
+                            Select::make('provincial_province')
+                                ->label('Province')
+                                ->options(function (callable $get) {
+                                    $code = Region::whereRaw('UPPER(description) = ?', [(string) $get('provincial_region')])->value('code');
+                                    return $code ? self::upperOptions(Province::where('region_code', $code)->orderBy('description')->pluck('description')) : [];
+                                })
+                                ->searchable()->reactive()
+                                ->afterStateUpdated(function (callable $set) {
+                                    $set('provincial_city_municipality', null);
+                                    $set('provincial_barangay', null);
+                                }),
+                            Select::make('provincial_city_municipality')
+                                ->label('City/Municipality')
+                                ->options(function (callable $get) {
+                                    $code = Province::whereRaw('UPPER(description) = ?', [(string) $get('provincial_province')])->value('code');
+                                    return $code ? self::upperOptions(City::where('province_code', $code)->orderBy('description')->pluck('description')) : [];
+                                })
+                                ->searchable()->reactive()
+                                ->afterStateUpdated(fn (callable $set) => $set('provincial_barangay', null)),
+                            Select::make('provincial_barangay')
+                                ->label('Barangay')
+                                ->options(function (callable $get) {
+                                    $provinceCode = Province::whereRaw('UPPER(description) = ?', [(string) $get('provincial_province')])->value('code');
+                                    $cityCode = City::where('province_code', $provinceCode)
+                                        ->whereRaw('UPPER(description) = ?', [(string) $get('provincial_city_municipality')])->value('code');
+                                    return $cityCode ? self::upperOptions(Barangay::where('city_code', $cityCode)->orderBy('description')->pluck('description')) : [];
+                                })
+                                ->searchable(),
+                        ]),
 
                     Fieldset::make('Birth & Civil Status')->columns(2)->columnSpanFull()->schema([
-                        TextInput::make('place_of_birth_municipality')->label('Municipality')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        TextInput::make('place_of_birth_province')->label('Province/State')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
-                        TextInput::make('place_of_birth_country')->label('Country')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
+                        // Place of birth: Province -> Municipality dropdowns (PH). Country
+                        // stays text since a member may be born abroad.
+                        Select::make('place_of_birth_province')
+                            ->label('Province')
+                            ->options(fn () => self::upperOptions(Province::orderBy('description')->pluck('description')))
+                            ->searchable()->reactive()
+                            ->afterStateUpdated(fn (callable $set) => $set('place_of_birth_municipality', null)),
+                        Select::make('place_of_birth_municipality')
+                            ->label('Municipality/City')
+                            ->options(function (callable $get) {
+                                $code = Province::whereRaw('UPPER(description) = ?', [(string) $get('place_of_birth_province')])->value('code');
+                                return $code ? self::upperOptions(City::where('province_code', $code)->orderBy('description')->pluck('description')) : [];
+                            })
+                            ->searchable(),
+                        TextInput::make('place_of_birth_country')->label('Country')->default('PHILIPPINES')->extraInputAttributes(['onInput' => 'this.value = this.value.toUpperCase()']),
                         Select::make('civil_status')
                             ->options([
                                 MemberInformation::CS_SINGLE => 'Single',
@@ -481,9 +565,32 @@ class RsbsaFroms extends Controller
                         ->helperText('Up to 3 parcels — the official form (page 2) has space for 3.')
                         ->columns(2)
                         ->schema([
-                            TextInput::make('farm_location_barangay')->label('Farm Location - Barangay'),
-                            TextInput::make('farm_location_city_municipality')->label('City/Municipality'),
-                            TextInput::make('farm_location_province')->label('Province'),
+                            // Cascading dropdowns (same as the address): Province -> City -> Barangay.
+                            Select::make('farm_location_province')
+                                ->label('Province')
+                                ->options(fn () => self::upperOptions(Province::orderBy('description')->pluck('description')))
+                                ->searchable()->reactive()
+                                ->afterStateUpdated(function (callable $set) {
+                                    $set('farm_location_city_municipality', null);
+                                    $set('farm_location_barangay', null);
+                                }),
+                            Select::make('farm_location_city_municipality')
+                                ->label('City/Municipality')
+                                ->options(function (callable $get) {
+                                    $code = Province::whereRaw('UPPER(description) = ?', [(string) $get('farm_location_province')])->value('code');
+                                    return $code ? self::upperOptions(City::where('province_code', $code)->orderBy('description')->pluck('description')) : [];
+                                })
+                                ->searchable()->reactive()
+                                ->afterStateUpdated(fn (callable $set) => $set('farm_location_barangay', null)),
+                            Select::make('farm_location_barangay')
+                                ->label('Farm Location - Barangay')
+                                ->options(function (callable $get) {
+                                    $provinceCode = Province::whereRaw('UPPER(description) = ?', [(string) $get('farm_location_province')])->value('code');
+                                    $cityCode = City::where('province_code', $provinceCode)
+                                        ->whereRaw('UPPER(description) = ?', [(string) $get('farm_location_city_municipality')])->value('code');
+                                    return $cityCode ? self::upperOptions(Barangay::where('city_code', $cityCode)->orderBy('description')->pluck('description')) : [];
+                                })
+                                ->searchable(),
                             TextInput::make('total_parcel_area')->label('Total Parcel Area (ha)')->numeric()->minValue(0),
 
                             Checkbox::make('within_ancestral_domain')->label('Within Ancestral Domain (AD)?'),
