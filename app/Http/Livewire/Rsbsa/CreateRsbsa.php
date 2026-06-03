@@ -101,9 +101,9 @@ class CreateRsbsa extends Component implements HasForms
             ->success()
             ->send();
 
-        // Redirect or reset form
-        // dd($rsbsaRecord);
-        return redirect()->route('rsbsa.manage-members'); // Replace with your actual route
+        // Go straight to the record's View page so the officer can print the PDF
+        // immediately, without searching for the member again.
+        return redirect()->route('rsbsa.view', $rsbsaRecord);
     } catch (\Throwable $e) {
         DB::rollBack();
 

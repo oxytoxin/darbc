@@ -181,7 +181,9 @@ class EditRsbsa extends Component implements HasForms
             ->success()
             ->send();
 
-        return redirect()->route('rsbsa.manage-members');
+        // Go straight to the record's View page so the officer can print the PDF
+        // immediately, without searching for the member again.
+        return redirect()->route('rsbsa.view', $this->rsbsa);
 
     }
 
