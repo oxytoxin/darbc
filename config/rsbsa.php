@@ -17,14 +17,14 @@ return [
 
     // Extra height (pt) added below a page so extra content fits WITHOUT overlap.
     // Page 2 gets a blank white strip at the bottom for the 2nd 2x2.
-    'extend' => [2 => 80],
+    'extend' => [2 => 140],
 
     'fields' => [
         'photo' => ['type' => 'image', 'page' => 1, 'x' => 434.7, 'y' => 11.7, 'w' => 120, 'h' => 120],
         // Second 2x2 for the client's INTERNAL copy (not the official DA layout).
         // Page 2 is full, so this sits at the bottom; position it via the layout editor.
-        // In the extended blank strip below the form (y > 792) — covers nothing.
-        'photo2' => ['type' => 'image', 'page' => 2, 'x' => 278, 'y' => 802, 'w' => 56, 'h' => 56],
+        // Full duplicate of the top 2x2 (same 120x120), in the extended blank strip.
+        'photo2' => ['type' => 'image', 'page' => 2, 'x' => 246, 'y' => 802, 'w' => 120, 'h' => 120],
         'pcn_1' => ['type' => 'boxed', 'page' => 1, 'x' => 125, 'y' => 99.7, 'gap' => 14],
         'pcn_2' => ['type' => 'boxed', 'page' => 1, 'x' => 204.7, 'y' => 100, 'gap' => 14],
         'pcn_3' => ['type' => 'boxed', 'page' => 1, 'x' => 285.7, 'y' => 99, 'gap' => 14],
