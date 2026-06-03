@@ -81,12 +81,21 @@ class RsbsaPdfService
         $path = storage_path('app/' . config('rsbsa.template'));
         $this->pageCount = $this->pdf->setSourceFile($path);
 
+        // Optional per-page extra height (pt) — adds a blank white strip below
+        // the form so extra content (e.g. a 2nd 2x2) fits without overlapping.
+        $extend = config('rsbsa.extend', []);
+        $pw = config('rsbsa.page.w');
+        $ph = config('rsbsa.page.h');
+
         // FPDF cannot revisit a page, so each page's fields are stamped while
         // that page is the current one.
         for ($n = 1; $n <= $this->pageCount; $n++) {
-            $this->pdf->AddPage();
+            $extra = (float) ($extend[$n] ?? 0);
+            $extra > 0
+                ? $this->pdf->AddPage('P', [$pw, $ph + $extra])
+                : $this->pdf->AddPage();
             $tpl = $this->pdf->importPage($n);
-            $this->pdf->useTemplate($tpl, 0, 0, config('rsbsa.page.w'), config('rsbsa.page.h'));
+            $this->pdf->useTemplate($tpl, 0, 0, $pw, $ph);
 
             if ($this->debugGrid) {
                 $this->drawGrid();
