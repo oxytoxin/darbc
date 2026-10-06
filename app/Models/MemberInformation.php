@@ -195,7 +195,9 @@ class MemberInformation extends Model implements HasMedia
 
     public function hasRsbsaRecord()
 {
-    return $this->rsbsa()->exists();
+    // Read the relation rather than re-querying: the Members List calls this once
+    // per action per row, which was one EXISTS query each time.
+    return $this->rsbsa !== null;
 }
 
 
