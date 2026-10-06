@@ -93,6 +93,32 @@ class RsbsaRecord extends Model implements HasMedia
 
     ];
 
+    /**
+     * Where an application stands with the DA. Deliberately kept out of self::FIELDS:
+     * that array drives missingDetails(), and a status is not a missing form detail.
+     */
+    const STATUS_FOR_VERIFICATION     = 'for_verification';
+    const STATUS_FOR_TRANSMITTAL      = 'for_transmittal';
+    const STATUS_TRANSMITTED          = 'transmitted';
+    const STATUS_PENDING_REQUIREMENTS = 'pending_requirements';
+    const STATUS_COMPLETED            = 'completed';
+    const STATUS_RETURNED             = 'returned';
+
+    const APPLICATION_STATUSES = [
+        self::STATUS_FOR_VERIFICATION     => 'For Verification',
+        self::STATUS_FOR_TRANSMITTAL      => 'For Transmittal',
+        self::STATUS_TRANSMITTED          => 'Transmitted',
+        self::STATUS_PENDING_REQUIREMENTS => 'Pending Requirements',
+        self::STATUS_COMPLETED            => 'Completed / Registered',
+        self::STATUS_RETURNED             => 'Returned',
+    ];
+
+    /** Human-readable status, or 'Not Set' while the officer has not chosen one. */
+    public function applicationStatusLabel(): string
+    {
+        return self::APPLICATION_STATUSES[$this->application_status] ?? 'Not Set';
+    }
+
     public function missingDetails(): Attribute
     {
         return new Attribute(

@@ -3,16 +3,19 @@
 namespace App\Http\Livewire\Rsbsa;
 
 use Livewire\Component;
+use App\Models\RsbsaRecord;
 use App\Models\MembershipStatus;
 use App\Models\MemberInformation;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\Layout;
+use Filament\Forms\Components\Select;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ViewColumn;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Notifications\Notification;
 
 use Filament\Tables\Columns\BadgeColumn;
 use Filament\Forms\Components\DatePicker;
@@ -26,7 +29,9 @@ class RsbsaMemberManagement extends Component implements HasTable
 
     protected function getTableQuery()
     {
-        return MemberInformation::query();
+        // Eager load the RSBSA record: the status and missing-details columns both
+        // read it per row, which would otherwise be one query per member.
+        return MemberInformation::query()->with('rsbsa');
     }
     protected function getDefaultTableSortDirection(): ?string
     {
@@ -67,6 +72,22 @@ class RsbsaMemberManagement extends Component implements HasTable
             TextColumn::make('application_date')
                 ->label('Member since')
                 ->date(),
+
+            BadgeColumn::make('application_status')
+                ->label('Application Status')
+                ->getStateUsing(fn ($record) => $record->rsbsa
+                    ? $record->rsbsa->applicationStatusLabel()
+                    : 'Not Registered')
+                ->colors([
+                    'secondary',
+                    'warning' => RsbsaRecord::APPLICATION_STATUSES[RsbsaRecord::STATUS_FOR_TRANSMITTAL],
+                    'primary' => RsbsaRecord::APPLICATION_STATUSES[RsbsaRecord::STATUS_TRANSMITTED],
+                    'success' => RsbsaRecord::APPLICATION_STATUSES[RsbsaRecord::STATUS_COMPLETED],
+                    'danger' => fn ($state) => in_array($state, [
+                        RsbsaRecord::APPLICATION_STATUSES[RsbsaRecord::STATUS_PENDING_REQUIREMENTS],
+                        RsbsaRecord::APPLICATION_STATUSES[RsbsaRecord::STATUS_RETURNED],
+                    ]),
+                ]),
 
                 ViewColumn::make('rsbsa_missing_details')->view('tables.columns.rsbsa.rsbsa-missing-details')->label('Missing RSBSA Details')   ->tooltip(function ($record){
                     if($record->rsbsa){
@@ -147,6 +168,21 @@ class RsbsaMemberManagement extends Component implements HasTable
                     $query->whereDoesntHave('rsbsa'); // Members who don't have an RSBSA record
                 }
             }),
+            SelectFilter::make('application_status')
+                ->label('Application Status')
+                ->placeholder('All')
+                ->options(RsbsaRecord::APPLICATION_STATUSES + ['not_set' => 'Not Set'])
+                ->query(function ($query, $data) {
+                    if (blank($data['value'])) {
+                        return;
+                    }
+
+                    $status = $data['value'] === 'not_set' ? null : $data['value'];
+
+                    $query->whereHas('rsbsa', fn ($rsbsa) => $status === null
+                        ? $rsbsa->whereNull('application_status')
+                        : $rsbsa->where('application_status', $status));
+                }),
         ];
     }
 
@@ -177,6 +213,33 @@ class RsbsaMemberManagement extends Component implements HasTable
                 ->openUrlInNewTab()
                 ->hidden(fn($record) => !$record->hasRsbsaRecord())
                 ,
+
+            Action::make('Set Status')
+                ->label('Set Status')
+                ->button()
+                ->outlined()
+                ->icon('heroicon-o-flag')
+                ->modalHeading('Set Application Status')
+                ->modalButton('Save')
+                ->hidden(fn ($record) => !$record->hasRsbsaRecord())
+                ->mountUsing(fn ($form, $record) => $form->fill([
+                    'application_status' => $record->rsbsa->application_status,
+                ]))
+                ->form([
+                    Select::make('application_status')
+                        ->label('Application Status')
+                        ->options(RsbsaRecord::APPLICATION_STATUSES)
+                        ->required(),
+                ])
+                ->action(function ($record, array $data) {
+                    $record->rsbsa->update(['application_status' => $data['application_status']]);
+
+                    Notification::make()
+                        ->title('Application status updated')
+                        ->body($record->rsbsa->applicationStatusLabel())
+                        ->success()
+                        ->send();
+                }),
 
                 ActionGroup::make([
 
